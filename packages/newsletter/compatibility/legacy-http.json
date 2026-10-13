@@ -1,0 +1,857 @@
+{
+  "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+  "sourceHashes": {
+    "libs/newsletter/nest/src/infrastructure-mailerlite/mailerlite-webhook.adapter.ts": "29d233df6bfbce9949b3ef3c9cd723b4e6751129d9aa8c56ad63692106175476",
+    "libs/newsletter/nest/src/presentation/newsletter-presentation.module.ts": "b0a0ddcab6a133081f86dbca96228ef4ae9b8eeecc5ee730bf635baec29f2a2a",
+    "libs/newsletter/nest/src/presentation/newsletter-native.controller.ts": "958f1bb9e43d60322915deb2af6490df2d243bacd8ce33a3dee37094ec66c57f",
+    "libs/forms/nest/src/presentation/controllers/forms.controller.ts": "bc27ad896ecd5f852e14b5d1afdd2ea64d10d4f750e51f0260b29345ee0e8ccf"
+  },
+  "cases": [
+    {
+      "id": "si6-webhook-batch",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "events": [
+              {
+                "event": "subscriber.unsubscribed",
+                "account_id": "42",
+                "subscriber": {
+                  "id": "7",
+                  "email": "Reader@Example.test",
+                  "unsubscribed_at": "2026-01-01 00:00:00.123456"
+                }
+              },
+              {
+                "event": "subscriber.created"
+              }
+            ]
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 1,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": [
+          {
+            "name": "appendWithdrawalOnce",
+            "data": {
+              "email": "reader@example.test",
+              "eventSource": "mailerlite:42",
+              "dedupeKey": "v1:3ffbe6acbd74dacae371fa8a771cb2649389c3ed5acd9fb1fbc55593c3f8a0f9",
+              "kind": "withdrawn",
+              "recordedAt": "<clock>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "si6-webhook-empty-batch",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "account_id": 42,
+            "events": []
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 0,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-batch-ignores-envelope-fields",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "events": [],
+            "event": 123,
+            "subscriber": false
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 0,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-unknown-event",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.created",
+            "subscriber": false
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 0,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-type-alias",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "type": "subscriber.unsubscribed",
+            "subscriber": {
+              "id": "7",
+              "email": "Reader@Example.test",
+              "unsubscribed_at": "2026-01-01 00:00:00.123456"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 1,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": [
+          {
+            "name": "appendWithdrawalOnce",
+            "data": {
+              "email": "reader@example.test",
+              "eventSource": "mailerlite:42",
+              "dedupeKey": "v1:3ffbe6acbd74dacae371fa8a771cb2649389c3ed5acd9fb1fbc55593c3f8a0f9",
+              "kind": "withdrawn",
+              "recordedAt": "<clock>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "si6-webhook-top-level-subscriber",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "id": "7",
+            "email": "Reader@Example.test",
+            "unsubscribed_at": "2026-01-01 00:00:00.123456"
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 1,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": [
+          {
+            "name": "appendWithdrawalOnce",
+            "data": {
+              "email": "reader@example.test",
+              "eventSource": "mailerlite:42",
+              "dedupeKey": "v1:3ffbe6acbd74dacae371fa8a771cb2649389c3ed5acd9fb1fbc55593c3f8a0f9",
+              "kind": "withdrawn",
+              "recordedAt": "<clock>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "si6-webhook-deleted-fallback",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.deleted",
+            "subscriber": {
+              "id": 7,
+              "email": "a@b.c",
+              "forget_at": "2026-01-01T00:00:00.123456Z"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 1,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": [
+          {
+            "name": "appendWithdrawalOnce",
+            "data": {
+              "email": "a@b.c",
+              "eventSource": "mailerlite:42",
+              "dedupeKey": "v1:022e1b25c7913a3cc632523f7787fb63924e56358373791c1e3c8ae7de521ade",
+              "kind": "withdrawn",
+              "recordedAt": "<clock>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "si6-webhook-null-timestamp-fallback",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": "7",
+              "email": "Reader@Example.test",
+              "unsubscribed_at": null,
+              "updated_at": "2026-01-01T00:00:00Z"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 200,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "recorded": 1,
+              "duplicates": 0
+            }
+          }
+        ],
+        "events": [
+          {
+            "name": "appendWithdrawalOnce",
+            "data": {
+              "email": "reader@example.test",
+              "eventSource": "mailerlite:42",
+              "dedupeKey": "v1:87dffead4c66152a596f98b023e2cb4b3e0e00c37caf6b15296e3ec6c59ba516",
+              "kind": "withdrawn",
+              "recordedAt": "<clock>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "si6-webhook-invalid-timestamp",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": "7",
+              "email": "Reader@Example.test",
+              "unsubscribed_at": "2026-99-99 00:00:00"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-conflicting-name",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": "7",
+              "email": "Reader@Example.test",
+              "unsubscribed_at": "2026-01-01 00:00:00.123456"
+            },
+            "type": "subscriber.deleted"
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-null-name",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": null,
+            "type": "unhandled"
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-unsafe-id",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": 9007199254740992,
+              "email": "Reader@Example.test",
+              "unsubscribed_at": "2026-01-01 00:00:00.123456"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-blank-email",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": "7",
+              "email": " a@b.c",
+              "unsubscribed_at": "2026-01-01 00:00:00.123456"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-utf16-email",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": "7",
+              "email": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀@a.b",
+              "unsubscribed_at": "2026-01-01 00:00:00.123456"
+            }
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-entire-batch-before-writes",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "events": [
+              {
+                "event": "subscriber.unsubscribed",
+                "account_id": "42",
+                "subscriber": {
+                  "id": "7",
+                  "email": "Reader@Example.test",
+                  "unsubscribed_at": "2026-01-01 00:00:00.123456"
+                }
+              },
+              {
+                "event": "subscriber.unsubscribed"
+              }
+            ]
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-invalid-batch-no-single-fallback",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "subscriber.unsubscribed",
+            "account_id": "42",
+            "subscriber": {
+              "id": "7",
+              "email": "Reader@Example.test",
+              "unsubscribed_at": "2026-01-01 00:00:00.123456"
+            },
+            "events": null
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-wrong-account-unknown-event",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": {
+            "event": "unhandled",
+            "account_id": "43"
+          },
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-webhook-array-root",
+      "host": "newsletter",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/webhook",
+          "body": [
+            {
+              "event": "subscriber.unsubscribed",
+              "account_id": "42",
+              "subscriber": {
+                "id": "7",
+                "email": "Reader@Example.test",
+                "unsubscribed_at": "2026-01-01 00:00:00.123456"
+              }
+            }
+          ],
+          "signature": "valid"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Invalid newsletter webhook.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-honeypot-over-limit",
+      "host": "newsletter",
+      "controls": {
+        "rateLimited": true
+      },
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/subscribe",
+          "body": {
+            "website": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "consent": false,
+            "ignored": 1
+          }
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 202,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "accepted": true
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-native-utf16-limit",
+      "host": "native",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/confirm",
+          "body": {
+            "token": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"
+          }
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8",
+              "cache-control": "no-store",
+              "referrer-policy": "no-referrer"
+            },
+            "body": {
+              "message": "Invalid newsletter request.",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-native-malformed-json",
+      "host": "native",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/newsletter/confirm",
+          "rawBody": "{"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "message": "Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+              "error": "Bad Request",
+              "statusCode": 400
+            }
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "si6-forms-string-infinity",
+      "host": "core",
+      "steps": [
+        {
+          "method": "POST",
+          "path": "/forms/submit",
+          "body": {
+            "formId": "contact",
+            "formVersion": "Infinity",
+            "payload": {}
+          }
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 500,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "statusCode": 500,
+              "message": "Internal server error"
+            }
+          }
+        ],
+        "events": [
+          {
+            "name": "getFormConfig",
+            "data": {
+              "id": "contact",
+              "version": null
+            }
+          },
+          {
+            "name": "createSubmission",
+            "data": {
+              "formId": "contact",
+              "formVersion": null,
+              "payload": {}
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "si6-forms-duplicate-version",
+      "host": "core",
+      "steps": [
+        {
+          "method": "GET",
+          "path": "/forms/contact?formVersion=1&formVersion=2"
+        }
+      ],
+      "observed": {
+        "responses": [
+          {
+            "status": 400,
+            "headers": {
+              "content-type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "statusCode": 400,
+              "message": "querystring/formVersion must be integer"
+            }
+          }
+        ],
+        "events": []
+      }
+    }
+  ]
+}

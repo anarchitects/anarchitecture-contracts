@@ -21,7 +21,7 @@ schema object in operations; operation metadata never restates its properties.
 | `RegisterResponse`      | `z.infer<typeof RegisterResponseSchema>`; serialized wire response, not a service return model   |
 | `AuthOperation`         | Inferred union from the exported `authOperations` registry; method/path/status literals retained |
 
-Auth and Identity implement this convention in issue #5.
+All four domains implement this convention in issues #5/#6.
 Export no domain entity named `User` merely because a response contains `user`.
 Consumer mappings from domain/service models stay in the consumer repository.
 Keep old Bricks DTO export aliases there during migration if needed; Contracts
