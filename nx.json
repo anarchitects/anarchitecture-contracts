@@ -2,7 +2,6 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "main",
   "analytics": false,
-  "neverConnectToCloud": true,
   "parallel": 2,
   "plugins": [
     {
