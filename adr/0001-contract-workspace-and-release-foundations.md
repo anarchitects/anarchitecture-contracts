@@ -4,6 +4,7 @@
 - Date: 2026-10-13
 - Owners: Architecture maintainers
 - Scope: Repository foundation and package/release conventions
+- Partial supersession: [ADR-0003 — Nx Workspace and Release Governance](0003-nx-workspace-and-release-governance.md) replaces the initial no-Nx development/build strategy and Changesets as ongoing release authority; other foundation decisions remain Accepted.
 - Implements: [issue #2](https://github.com/anarchitects/anarchitecture-contracts/issues/2), under [EPIC #1](https://github.com/anarchitects/anarchitecture-contracts/issues/1)
 
 ## Context and initial audit
@@ -40,7 +41,7 @@ decision refines Meta ownership without changing it.
    Yarn 4.18.1 and Node 24 for repository tooling. Use `node_modules` linking,
    a committed lockfile, exact direct development dependency versions and
    immutable CI installs. Dependency install scripts are disabled by default.
-   Do not require Nx to build or consume contract packages.
+   The initial foundation did not require Nx to build or consume contract packages. **ADR-0003 now requires Nx for repository development/build orchestration**, while consumers must never require Nx.
 2. License this repository under MIT, consistent with the Bricks repositories'
    declared license. Preserve provenance and applicable notices when later
    extracting existing material.
@@ -58,7 +59,7 @@ decision refines Meta ownership without changing it.
    released or immutable pinned artifacts in the downstream direction.
 6. Use independent package versions under `@anarchitects`, with public npm
    access, explicit exports and pack allowlists. Changesets tracks per-package
-   release intent and changelogs; no fixed/linked version group or root release.
+   release intent and changelogs during the initial foundation only; **ADR-0003 establishes Nx Release as the sole long-term release authority**, with an explicit reconciliation of pending Changesets before cutover. No fixed/linked version group or root release.
    Wire compatibility determines version impact, with reviewed migration for
    breaks. [Package conventions](../packages/README.md) and
    [release conventions](../docs/releases.md) define the required evidence.
@@ -84,7 +85,7 @@ require the evidence and staged gates in the epic.
 
 ## Alternatives
 
-Nx is unnecessary for this foundation and would complicate independent consumption.
+Nx was not necessary for the initial foundation. **ADR-0003 supersedes this historical tooling assessment for the release-ready workspace.** Independent consumption remains mandatory.
 A shared repository version would couple domain release cadence. Empty published
 packages would imply availability before the baseline audit and package design.
 Deferring all governance until extraction would leave that work without explicit
