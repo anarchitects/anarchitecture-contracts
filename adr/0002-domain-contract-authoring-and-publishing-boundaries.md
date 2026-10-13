@@ -95,7 +95,7 @@ does not replace providers or implement Nest 12 modernization.
    [baseline disposition register](../docs/baseline-dispositions.md) to the other
    findings; this ADR does not authorize a wire break or approve the recorded
    Forms security defects as a stable contract.
-10. Version each domain independently using **Nx Release after the controlled issue #8 cutover** (Changesets remains a transitional source of pending release intent) and the
+10. Version each domain independently using **Nx Release** (pending Changesets intent is preserved by the [issue #8 migration record](../docs/nx-migration.md)) and the
     [release rules](../docs/releases.md). Treat package exports/types, schema
     parsing and HTTP behavior as compatibility surfaces. Evaluate requests and
     responses in both directions, including negative/security behavior. Changes

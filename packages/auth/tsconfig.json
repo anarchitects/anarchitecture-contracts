@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "rootDir": "../..",
+    "outDir": "../../.nx/typecheck/auth",
+    "tsBuildInfoFile": "../../.nx/typecheck/auth.tsbuildinfo"
+  },
+  "include": [
+    "src/**/*.ts",
+    "../../tools/contract-authoring/operation-definition.ts"
+  ]
+}

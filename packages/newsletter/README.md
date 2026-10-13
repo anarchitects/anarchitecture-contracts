@@ -2,7 +2,7 @@
 
 Zod-first HTTP schemas, inferred types and four operation definitions for the
 existing Newsletter subscription, native action and signed webhook surface.
-This package is unreleased at `0.0.0`, pending an initial Changesets minor release.
+This package is unreleased at `0.0.0`, pending an initial Nx minor release.
 It does not implement consent storage, subscription delivery or token lifecycle.
 
 The root exports schemas, `newsletterSchemas`, `newsletterOperations` and

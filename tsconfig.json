@@ -14,5 +14,19 @@
     "types": [],
     "noEmit": true
   },
-  "include": ["packages/*/src/**/*.ts", "tools/contract-authoring/*.ts"]
+  "include": ["packages/*/src/**/*.ts", "tools/contract-authoring/*.ts"],
+  "references": [
+    {
+      "path": "./packages/newsletter"
+    },
+    {
+      "path": "./packages/identity"
+    },
+    {
+      "path": "./packages/forms"
+    },
+    {
+      "path": "./packages/auth"
+    }
+  ]
 }

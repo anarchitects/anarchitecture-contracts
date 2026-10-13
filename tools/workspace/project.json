@@ -1,0 +1,31 @@
+{
+  "name": "contract-checks",
+  "projectType": "application",
+  "implicitDependencies": [
+    "auth-contracts",
+    "forms-contracts",
+    "identity-contracts",
+    "newsletter-contracts"
+  ],
+  "targets": {
+    "test": {
+      "command": "node --test tools/contract-authoring/*.test.mjs",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "openapi": {
+      "command": "node tools/openapi/cli.mjs check && node --test tools/openapi/*.test.mjs",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "pack": {
+      "command": "node tools/contract-authoring/packed-consumer.mjs",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "baseline": {
+      "command": "node --test tools/legacy-baseline/baseline.test.mjs",
+      "cache": false
+    }
+  }
+}

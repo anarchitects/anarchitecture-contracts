@@ -1,0 +1,45 @@
+{
+  "name": "auth-contracts",
+  "projectType": "library",
+  "sourceRoot": "packages/auth/src",
+  "tags": ["type:contracts", "domain:auth"],
+  "targets": {
+    "build": {
+      "command": "node tools/contract-authoring/build.mjs auth"
+    },
+    "test": {
+      "command": "node --test packages/auth/test/*.test.mjs"
+    },
+    "pack": {
+      "dependsOn": [
+        {
+          "projects": ["contract-checks"],
+          "target": "pack"
+        }
+      ],
+      "cache": false
+    },
+    "contract-check": {
+      "dependsOn": [
+        {
+          "projects": ["contract-checks"],
+          "target": "openapi"
+        }
+      ],
+      "cache": false
+    },
+    "publication-check": {
+      "command": "node tools/release/publication-gate.mjs auth-contracts",
+      "dependsOn": ["contract-check", "pack"],
+      "cache": false
+    },
+    "nx-release-publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/release/publication-gate.mjs auth-contracts",
+        "forwardAllArgs": false
+      },
+      "cache": false
+    }
+  }
+}

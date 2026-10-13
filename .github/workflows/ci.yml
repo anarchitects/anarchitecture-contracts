@@ -6,6 +6,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  NX_DAEMON: 'false'
+  NX_TUI: 'false'
+
 permissions:
   contents: read
 
@@ -40,9 +44,6 @@ jobs:
       - name: Check workspace and packages
         run: yarn check
 
-      - name: Validate release plan
-        run: yarn changeset:status
-
       - name: Enforce package compatibility and release intent
         env:
           CONTRACTS_PR_BASE: ${{ github.event.pull_request.base.sha }}
@@ -55,6 +56,7 @@ jobs:
           else
             contracts_base="HEAD^"
           fi
+          yarn nx affected -t typecheck,build,test --base="$contracts_base" --head=HEAD
           yarn openapi:compatibility "$contracts_base"
 
   packed-consumers:

@@ -57,6 +57,18 @@ This Accepted ADR **partially supersedes** only the _tooling and release-mechani
 
 The existing workflows remain the **actual implemented state** until migration PR(s) and release smoke tests land. Acceptance of this ADR is a direction and does not claim that Nx is already installed, Changesets already retired, npm already configured, or packages already published. If #8 is split, it remains the parent release acceptance gate and each subtask must have its own PR.
 
+## Implementation status — issue #8 preparation
+
+The [migration record](../docs/nx-migration.md) documents the implemented Nx
+workspace and transfer of all pending Changesets to Nx version plans. Nx Release
+is now the only configured versioning authority. This supersedes the transitional
+implementation references above; those paragraphs record the state when this ADR
+was accepted. The current manual workflow performs read-only dry runs.
+
+Signed release automation, standalone conformance packaging, trusted publication,
+remote CI and first real publication evidence remain outstanding. This preparation
+does not satisfy all acceptance evidence below or waive any host/security blocker.
+
 ## Acceptance evidence for #8
 
 - Each publishable package appears correctly in `nx show projects` and is built/tested/packed with reproducible Nx targets and no changed wire contract.

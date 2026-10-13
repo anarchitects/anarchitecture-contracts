@@ -66,6 +66,18 @@ infer anonymous protection, or remove Forms D05/D08 blockers to make checks pass
 Issue #7's tested mechanism can complete independently of host remediation and #8
 publication; preserve outstanding capability blockers in manifests.
 
-## Pending Nx Release migration
+## Nx Release migration in progress
 
-[Accepted ADR-0003](adr/0003-nx-workspace-and-release-governance.md) supersedes the initial no-Nx workspace choice and Changesets as the permanent version/release mechanism. During [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8), preserve outstanding Changesets intent while switching to Nx/`@nx/js` and a **single** Nx Release authority; do not report the migration completed before CI and publication evidence exists. The contracts runtime and standalone conformance CLI must not acquire Nx as a dependency.
+[Accepted ADR-0003](adr/0003-nx-workspace-and-release-governance.md) supersedes the
+initial no-Nx workspace and Changesets release authority. Nx 23.3.0 / `@nx/js` now
+orchestrate builds and inferred typechecks. Nx Release version plans in
+`.nx/version-plans/` are the sole release intent; use `yarn release:plan` for public
+package changes. The [migration record](docs/nx-migration.md) preserves all pending
+Changesets rationale and bump equivalence. Never reintroduce a second versioner.
+Run `yarn test:release` and package compatibility checks when release tooling changes.
+
+Issue #8 is not complete: signed release automation, standalone conformance,
+trusted publication and downstream clean-install evidence remain required.
+Current review-only manifests must continue to fail publication checks. Never
+remove a capability blocker or treat a dry run as deployment approval.
+Contract runtimes and the standalone conformance CLI must not acquire Nx as a dependency.

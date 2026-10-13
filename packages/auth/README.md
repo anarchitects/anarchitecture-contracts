@@ -2,7 +2,7 @@
 
 Canonical Zod 4 schemas and first-class HTTP operations for the existing Auth
 session, JWT and passkey surface. This workspace is unreleased; version `0.0.0`
-is a development placeholder for the first Changesets release, not a published
+is a development placeholder for the first Nx Release, not a published
 or verified deployment contract.
 
 ## Exports

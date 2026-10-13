@@ -2,7 +2,7 @@
 
 Canonical Zod 4 schemas and HTTP operation definitions for profile create/read/
 update. This workspace is unreleased; `0.0.0` is the development version pending
-the first Changesets release.
+the first Nx Release.
 
 The root exports schemas, inferred types, the immutable `identitySchemas` catalog,
 four `identityOperations` and unresolved `identityProfiles` requirements.

@@ -1,0 +1,45 @@
+{
+  "name": "identity-contracts",
+  "projectType": "library",
+  "sourceRoot": "packages/identity/src",
+  "tags": ["type:contracts", "domain:identity"],
+  "targets": {
+    "build": {
+      "command": "node tools/contract-authoring/build.mjs identity"
+    },
+    "test": {
+      "command": "node --test packages/identity/test/*.test.mjs"
+    },
+    "pack": {
+      "dependsOn": [
+        {
+          "projects": ["contract-checks"],
+          "target": "pack"
+        }
+      ],
+      "cache": false
+    },
+    "contract-check": {
+      "dependsOn": [
+        {
+          "projects": ["contract-checks"],
+          "target": "openapi"
+        }
+      ],
+      "cache": false
+    },
+    "publication-check": {
+      "command": "node tools/release/publication-gate.mjs identity-contracts",
+      "dependsOn": ["contract-check", "pack"],
+      "cache": false
+    },
+    "nx-release-publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/release/publication-gate.mjs identity-contracts",
+        "forwardAllArgs": false
+      },
+      "cache": false
+    }
+  }
+}

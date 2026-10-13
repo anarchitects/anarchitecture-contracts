@@ -1,0 +1,44 @@
+name: Release readiness (dry run)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NX_DAEMON: 'false'
+  NX_TUI: 'false'
+
+concurrency:
+  group: contracts-release-readiness
+  cancel-in-progress: false
+
+jobs:
+  readiness:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Validate contracts, packed consumers and independent release plans
+        run: yarn check
+      - name: Preserve reviewable Nx dry-run evidence
+        run: |
+          set -o pipefail
+          yarn release:dry-run | tee release-dry-run.txt
+          git diff --exit-code
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-dry-run-${{ github.sha }}
+          path: release-dry-run.txt
+          retention-days: 14
