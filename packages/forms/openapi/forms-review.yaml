@@ -251,9 +251,39 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: innerType/out/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     forms.FormIdParams.node.70726f70657274792e666f726d4964.Input:
+      allOf:
+        - if:
+            type: string
+          then:
+            type: string
+        - if:
+            maxItems: 1
+            minItems: 1
+            prefixItems:
+              - type: string
+            type: array
+          then:
+            prefixItems:
+              - type: string
       anyOf:
         - anyOf:
             - type: string
@@ -276,6 +306,14 @@ components:
                 - type: boolean
                 - type: "null"
           type: array
+      x-contract-fidelity:
+        constraint: string-coercion-preimage
+        exactBranches:
+          - string
+          - singleton-string
+          - boolean
+          - "null"
+        remaining: Numeric stringification remains a scoped projection exception.
       x-contract-projection:
         limitations:
           - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
@@ -287,8 +325,24 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: in/in/options.0/options.1/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     forms.InternalServerError.Output:
       anyOf:
         - additionalProperties: false
@@ -332,6 +386,30 @@ components:
         - error
       type: object
     forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input:
+      allOf:
+        - if:
+            type: string
+          then:
+            pattern: ^(?:[uU][rR][nN]:[uU][uU][iI][dD]:)?[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$
+            type: string
+        - if:
+            maxItems: 1
+            minItems: 1
+            prefixItems:
+              - type: string
+            type: array
+          then:
+            prefixItems:
+              - pattern: ^(?:[uU][rR][nN]:[uU][uU][iI][dD]:)?[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$
+                type: string
+        - not:
+            enum:
+              - null
+              - false
+              - true
+              - - null
+              - - false
+              - - true
       anyOf:
         - anyOf:
             - type: string
@@ -354,6 +432,14 @@ components:
                 - type: boolean
                 - type: "null"
           type: array
+      x-contract-fidelity:
+        constraint: string-coercion-preimage
+        exactBranches:
+          - string
+          - singleton-string
+          - boolean
+          - "null"
+        remaining: Numeric stringification remains a scoped projection exception.
       x-contract-projection:
         limitations:
           - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
@@ -365,8 +451,24 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: in/in/options.0/options.1/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getSubmission.forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     forms.SubmissionRequest.Input:
       $defs:
         __schema0:
@@ -390,6 +492,20 @@ components:
         $ref: "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
       properties:
         formId:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -412,6 +528,14 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         formVersion:
           anyOf:
             - anyOf:
@@ -469,8 +593,24 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: property.formVersion/out/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: submitForm.forms.SubmissionRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     forms.SubmissionResponse.Output:
       $defs:
         __schema0:
@@ -520,6 +660,26 @@ components:
         - updatedAt
       type: object
     forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input:
+      allOf:
+        - if:
+            type: string
+          then:
+            pattern: ^(?:[\s\S]){1,}(?![\s\S])
+            type: string
+        - if:
+            maxItems: 1
+            minItems: 1
+            prefixItems:
+              - type: string
+            type: array
+          then:
+            prefixItems:
+              - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+        - not:
+            enum:
+              - null
+              - - null
       anyOf:
         - anyOf:
             - type: string
@@ -542,6 +702,14 @@ components:
                 - type: boolean
                 - type: "null"
           type: array
+      x-contract-fidelity:
+        constraint: string-coercion-preimage
+        exactBranches:
+          - string
+          - singleton-string
+          - boolean
+          - "null"
+        remaining: Numeric stringification remains a scoped projection exception.
       x-contract-projection:
         limitations:
           - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
@@ -553,8 +721,24 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: innerType/in/in/options.0/options.1/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input:
       anyOf:
         - anyOf:
@@ -595,8 +779,24 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: innerType/out/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     forms.SubmissionsResponse.Output:
       $defs:
         __schema0:
@@ -665,7 +865,7 @@ components:
   securitySchemes: {}
 info:
   description: Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.
-  title: REVIEW ONLY — Anarchitecture forms-review
+  title: REVIEW-ONLY — Anarchitecture forms-review
   version: 0.0.0
 jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
 openapi: 3.1.1

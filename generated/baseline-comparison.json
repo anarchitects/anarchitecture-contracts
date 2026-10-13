@@ -1,6 +1,6 @@
 {
   "baselineRevision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
-  "note": "Structural comparison is not semantic equivalence. Existing differential and frozen HTTP tests remain mandatory; projection proposal and host bindings remain unapproved.",
+  "note": "Structural comparison is not semantic equivalence. Existing differential and frozen HTTP tests remain mandatory; projection exceptions are scoped and reviewed; host bindings remain unverified.",
   "operations": [
     {
       "baselineOpenApiDigest": "7fab813bf77a6e156b79daacaa292cad8fd573c27aaafb120ceea9243d5bf60f",

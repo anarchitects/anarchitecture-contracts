@@ -1,9 +1,44 @@
 {
   "artifacts": {
-    "inventory.json": "5dbacfc3f97b5775d766a49bcb0f18ae6e443fe28a7b1a01f9423891b56fe032",
-    "newsletter-review.json": "bb7a9e632227c9b0ad5373c7a0ffe86a244f491ceb859afc9956bc798067c490",
-    "newsletter-review.yaml": "a0ae200610c3190273a1e2b4ad6688b150a63d571262635a4f85e4ae70f7613a"
+    "inventory.json": "782ef8a345a6b6f449b855977324598fc26d18022a5088a1fcbc760b8ad9de0c",
+    "newsletter-review.json": "065e8600018ee353b0c29939025f7cecd0e43a9ca270f6ae5917b38847776571",
+    "newsletter-review.yaml": "2d7b3b4af2c5e3c1b82ce9705134c9edb22ec1ab48f997a12a945153a847741d"
   },
+  "capabilityBlockers": [
+    {
+      "capability": "newsletter.native",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.subscription",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.webhook",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    }
+  ],
   "dependencies": {
     "@anarchitects/newsletter-contracts": {
       "zod": "4.5.0"
@@ -20,8 +55,11 @@
   "formatVersion": 1,
   "generator": {
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
-    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
-    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
+    "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
+    "tools/openapi/model.mjs": "96f7c0c7ab3379ba10bdad962e0c2aa954eede028a8e47c643cfab3b3a300421",
+    "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
+    "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
   },
   "operationCount": 4,
@@ -39,41 +77,94 @@
     "id": "newsletter-review",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only"
+    "status": "review-only",
+    "variants": [
+      "newsletter.native",
+      "newsletter.subscription",
+      "newsletter.subscription-webhook"
+    ]
   },
   "projectionProposal": {
-    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
-    "id": "P07-legacy-input-projection",
-    "status": "proposed"
+    "digest": "34003efb9978e9e6853b95a0d426e60dfd11525ac90d6674be8ed3d6f3644db5",
+    "id": "P07",
+    "status": "reviewed-register"
+  },
+  "projectionReviews": {
+    "confirmNewsletterSubscription.newsletter.NewsletterNativeActionRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "confirmNewsletterSubscription.newsletter.NewsletterNativeActionRequest.input",
+      "kind": "faithful-conversion",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Exact UTF-16 unit bounds derived from canonical Zod checks without changing wire acceptance.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "receiveNewsletterWebhook.newsletter.NewsletterWebhookPayload.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "receiveNewsletterWebhook.newsletter.NewsletterWebhookPayload.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "subscribeToNewsletter.newsletter.NewsletterSubscribeRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "subscribeToNewsletter.newsletter.NewsletterSubscribeRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "unsubscribeFromNewsletter.newsletter.NewsletterNativeActionRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "unsubscribeFromNewsletter.newsletter.NewsletterNativeActionRequest.input",
+      "kind": "faithful-conversion",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Exact UTF-16 unit bounds derived from canonical Zod checks without changing wire acceptance.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    }
   },
   "projections": {
-    "newsletter.NewsletterNativeActionRequest.Input": [
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "property.token"
-      }
-    ],
     "newsletter.NewsletterSubscribeRequest.Input": [
       {
         "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
         "kind": "custom-value",
         "path": "options.0/catchall/lazy/options.1/options.1"
-      },
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "options.1/property.email"
-      },
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "options.1/property.source/innerType"
-      },
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "options.1/property.website/innerType"
       }
     ],
     "newsletter.NewsletterWebhookPayload.Input": [
@@ -99,6 +190,7 @@
       }
     ]
   },
+  "provenance": null,
   "releaseBlockers": [],
   "schemaOrigins": {
     "newsletter.BadRequestError.Output": {

@@ -29,7 +29,7 @@ review. These values must not be treated as stable capability approval.
 Repository checks compare the frozen HTTP evidence, expanded AJV inputs, response
 formats and packed consumers. See `packages/forms/compatibility/README.md` in the
 source repository for exact scope, source revisions and remaining gates.
-OpenAPI/profile generation remains #7, publication/conformance remains #8, and
+OpenAPI/profile generation is implemented by #7; #8 owns publication, and
 runtime integration belongs to Bricks adoption work.
 
 ## Generated review artifacts
@@ -40,6 +40,14 @@ They are generated from these canonical schemas and operations and are verified
 in clean tarballs. Runtime imports do not load the files.
 
 The files are **review-only** and claim no supported deployment capabilities.
-Projection proposal P07 is not approved; protected routes remain in the inventory
+P07 exceptions are reviewed per operation and pinned to source/generator bytes.
+Real host evidence remains unresolved; protected routes remain in the inventory
 until host security bindings are resolved. Review `docs/openapi.md` and
 `docs/openapi-projection-proposal.md` in the source repository before using them.
+
+The additive `PublicFormDefinitionResponseSchema` and
+`PublicFormDefinitionEnvelopeResponseSchema` are D08 migration targets without
+delivery configuration. `FormDeliveryStatusSchema` permits a configured indicator
+only. The legacy route is still frozen and blocked. See
+`docs/forms-security-migration.md` for D05 validation, D08 redaction and rollout
+requirements owned by Bricks #489.

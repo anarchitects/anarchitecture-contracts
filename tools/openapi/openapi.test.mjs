@@ -6,6 +6,7 @@ import YAML from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { loadDomains, schemaIndex, project } from './model.mjs';
+import { syntheticProfile } from './fixtures/synthetic-profile.mjs';
 import { generate, reviewProfile } from './generate.mjs';
 import { validateRegistry, lintDocument } from './validate.mjs';
 import {
@@ -200,7 +201,10 @@ test('registry rejects malformed metadata and security without weakening valid d
 });
 
 test('unrepresentable constructs, omitted refinements and unapproved proposals fail closed', () => {
-  const origin = { id: 'newsletter.Example', domain: 'newsletter' };
+  const origin = {
+    id: 'newsletter.NewsletterNativeActionRequest',
+    domain: 'newsletter',
+  };
   for (const schema of [
     z.custom(() => true),
     z.string().refine((value) => value !== 'x'),
@@ -218,7 +222,7 @@ test('unrepresentable constructs, omitted refinements and unapproved proposals f
         'input',
         origin,
         proposal,
-        proposal.sourceDigests.newsletter,
+        digest(json(models[3].sourceFiles)),
       ),
     );
     assert.throws(() =>
@@ -227,20 +231,27 @@ test('unrepresentable constructs, omitted refinements and unapproved proposals f
         'input',
         origin,
         proposal,
-        proposal.sourceDigests.newsletter,
+        digest(json(models[3].sourceFiles)),
         true,
       ),
     );
   }
   const schema = models[3].schemas['newsletter.NewsletterNativeActionRequest'];
   assert.throws(
-    () => project(schema, 'input', origin, proposal, 'changed-source', true),
+    () =>
+      project(schema, 'input', origin, proposal, 'changed-source', true, {
+        operationId: 'confirmNewsletterSubscription',
+      }),
     /source bytes/,
   );
 });
 
 const validator = () => {
-  const ajv = new Ajv2020({ strict: false, allErrors: true });
+  const ajv = new Ajv2020({
+    strict: false,
+    strictNumbers: true,
+    allErrors: true,
+  });
   addFormats(ajv);
   ajv.addSchema({ ...result.document, $id: 'urn:contracts:review' });
   return (ref) => ajv.compile({ $ref: `urn:contracts:review${ref}` });
@@ -254,7 +265,7 @@ test('proposal has executable counterexamples: projection is never represented a
   const nativeSchema =
     native.definition.requestBody.content['application/json'].schema;
   const nonBmp = { token: '😀'.repeat(65) };
-  assert.equal(validate(nativeSchema.$ref)(nonBmp), true);
+  assert.equal(validate(nativeSchema.$ref)(nonBmp), false);
   assert.equal(
     models[3].schemas['newsletter.NewsletterNativeActionRequest'].safeParse(
       nonBmp,
@@ -264,7 +275,7 @@ test('proposal has executable counterexamples: projection is never represented a
   const login = result.inventory.operations.find(
     (op) => op.definition.operationId === 'login',
   );
-  const weakPassword = { credential: 'reader@example.test', password: 'x' };
+  const weakPassword = { credential: 'reader@example.test', password: 1 };
   assert.equal(
     validate(
       login.definition.requestBody.content['application/json'].schema.$ref,
@@ -278,7 +289,10 @@ test('proposal has executable counterexamples: projection is never represented a
   const webhook = result.inventory.operations.find(
     (op) => op.definition.operationId === 'receiveNewsletterWebhook',
   );
-  const invalid = { event: 'subscriber.unsubscribed' };
+  const invalid = {
+    event: 'subscriber.created',
+    type: 'a-different-unhandled-event',
+  };
   assert.equal(
     validate(
       webhook.definition.requestBody.content['application/json'].schema.$ref,
@@ -290,7 +304,7 @@ test('proposal has executable counterexamples: projection is never represented a
       .success,
     false,
   );
-  for (const operation of [native, login, webhook]) {
+  for (const operation of [login, webhook]) {
     const name = operation.definition.requestBody.content[
       'application/json'
     ].schema.$ref
@@ -298,7 +312,7 @@ test('proposal has executable counterexamples: projection is never represented a
       .at(-1);
     assert.equal(
       result.document.components.schemas[name]['x-contract-projection'].status,
-      'proposed',
+      'reviewed-exception',
     );
   }
 });
@@ -443,7 +457,7 @@ test('protected routes never default to anonymous; disabled routes are omitted; 
   const nativeProfile = { ...approved, capabilities: ['newsletter.native'] };
   await assert.rejects(
     generate([nativeModel], { profile: nativeProfile, proposal }),
-    /unsupported schema projection/,
+    /Unresolved host|variants|configurationPointer|invalid/i,
   );
 });
 
@@ -462,19 +476,19 @@ test('resolved generation succeeds for representable schemas and explicit bindin
     ...base,
     schemas: { ...base.schemas, 'newsletter.TestOnlyRequest': request },
     operations: [operation],
-    profiles: {},
+    profiles: {
+      fixture: { capabilities: [operation.capability], requiredBindings: [] },
+    },
     blockers: [],
   };
-  const profile = {
-    ...reviewProfile([model]),
-    status: 'approved',
-    approval: {
-      owner: 'Unit test fixture',
-      decision: 'Not a deployment approval',
-    },
-  };
-  const clean = await generate([model], { profile, proposal });
-  assert.equal(clean.manifest.status, 'resolved');
+  const profile = syntheticProfile([model]);
+  const clean = await generate([model], {
+    profile,
+    proposal,
+    verification: true,
+  });
+  assert.equal(clean.manifest.status, 'test-only');
+  assert.deepEqual(clean.manifest.supportedCapabilities, []);
   assert.deepEqual(clean.manifest.projections, {});
   const bad = structuredClone(clean.document);
   bad.paths['/newsletter/confirm'].post.requestBody.content[
@@ -516,6 +530,15 @@ test('compatibility gates classify changes conservatively in both directions and
     },
     (value) => {
       value.manifest.profile.hostBindings.changed = 'weakened';
+    },
+    (value) => {
+      value.manifest.capabilityBlockers = [];
+    },
+    (value) => {
+      value.manifest.projectionReviews = {};
+    },
+    (value) => {
+      value.manifest.status = 'resolved';
     },
   ]) {
     const after = structuredClone(before);

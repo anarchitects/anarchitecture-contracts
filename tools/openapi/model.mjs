@@ -1,5 +1,12 @@
 import { z } from 'zod';
 import {
+  applyFidelity,
+  webhookFidelity,
+  utf16Check,
+  utf16Limit,
+} from './fidelity.mjs';
+import { authorizeProjection, generatorDigest } from './projection-review.mjs';
+import {
   domains,
   readJson,
   digest,
@@ -124,7 +131,13 @@ export function gaps(schema, io) {
       );
     for (const check of def.checks ?? []) {
       const checkDef = check._zod.def;
-      if (checkDef.check === 'custom')
+      if (
+        checkDef.check === 'custom' &&
+        !(
+          utf16Limit(node) !== null &&
+          digest(String(checkDef.fn)) === utf16Check
+        )
+      )
         add('custom-refinement', checkDef.fn ?? check._zod.check);
       if (checkDef.check === 'overwrite') add('overwrite', checkDef.tx);
     }
@@ -132,36 +145,59 @@ export function gaps(schema, io) {
   return result;
 }
 
+export function fidelity(schema) {
+  const result = [];
+  walk(schema, (node, path) => {
+    const max = utf16Limit(node);
+    if (max !== null)
+      result.push({ kind: 'utf16-length', path: path.join('/'), max });
+  });
+  return result;
+}
+
+export function projectionReview(
+  schema,
+  io,
+  origin,
+  register,
+  sourceDigest,
+  operationId,
+  generator = generatorDigest(),
+) {
+  const limitations = gaps(schema, io),
+    faithful = fidelity(schema);
+  const review = authorizeProjection({
+    origin,
+    io,
+    operationId,
+    sourceDigest,
+    limitations,
+    faithful,
+    register,
+    generator,
+  });
+  return { limitations, faithful, review };
+}
+
 export function project(
   schema,
   io,
   origin,
-  proposal,
+  register,
   sourceDigest,
-  review = false,
+  reviewMode = false,
+  context = {},
 ) {
-  const limitations = gaps(schema, io);
-  if (limitations.length) {
-    invariant(
-      review,
-      `${origin.id}: unsupported schema projection (${limitations.map((gap) => gap.kind).join(', ')})`,
-    );
-    invariant(
-      proposal.status === 'proposed' &&
-        proposal.sourceDigests[origin.domain] === sourceDigest,
-      `${origin.id}: projection proposal does not cover these source bytes`,
-    );
-    for (const gap of limitations)
-      invariant(
-        proposal.rules.some(
-          (rule) =>
-            rule.domain === origin.domain &&
-            rule.kind === gap.kind &&
-            rule.implementation === gap.implementation,
-        ),
-        `${origin.id}: unreviewed projection rule ${gap.kind}/${gap.implementation}`,
-      );
-  }
+  const assessment = projectionReview(
+    schema,
+    io,
+    origin,
+    register,
+    sourceDigest,
+    context.operationId,
+    context.generator,
+  );
+  const { limitations, faithful, review } = assessment;
   const finiteAlternatives = new Map();
   walk(schema, (node) => {
     if (node._zod.def.type !== 'union') return;
@@ -173,15 +209,21 @@ export function project(
     )
       finiteAlternatives.set(options[1], options[0]);
   });
+  const applyWebhook = webhookFidelity(context.canonicalSchemas);
   const output = z.toJSONSchema(schema, {
     io,
     target: 'draft-2020-12',
     metadata: z.registry(),
+    override: (entry) => {
+      applyFidelity(entry);
+      applyWebhook(entry);
+    },
     unrepresentable: ({ zodSchema, message }) => {
-      // The draft exception permits exactly the pinned overflow branch's finite
-      // sibling projection. No {} fallback, arbitrary custom type or rewrite.
+      // Only an operation-scoped, source/generator-pinned exception permits
+      // the existing finite sibling. Arbitrary custom types remain forbidden.
       invariant(
-        review && finiteAlternatives.has(zodSchema),
+        review?.kind === 'bounded-exception' &&
+          finiteAlternatives.has(zodSchema),
         `${origin.id}: ${message}`,
       );
       return z.toJSONSchema(finiteAlternatives.get(zodSchema), {
@@ -192,9 +234,12 @@ export function project(
   });
   if (limitations.length)
     output['x-contract-projection'] = {
-      proposal: proposal.id,
-      status: 'proposed',
+      status: 'reviewed-exception',
+      reviews: [review],
+      runtimeValidationRequired: true,
+      warning:
+        'OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.',
       limitations,
     };
-  return { schema: output, limitations };
+  return { schema: output, limitations, faithful, review };
 }

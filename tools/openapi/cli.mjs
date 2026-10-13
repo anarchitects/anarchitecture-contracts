@@ -15,7 +15,7 @@ const [command = 'check', ...args] = process.argv.slice(2);
 const models = await loadDomains();
 const proposal = readJson('tools/openapi/projection-proposal.json');
 const expected = new Map();
-if (command === 'release') {
+if (command === 'release' || command === 'verify-profile') {
   invariant(
     args.length === 2,
     'Usage: release <approved-profile.json> <output-directory>',
@@ -23,6 +23,7 @@ if (command === 'release') {
   const result = await generate(models, {
     profile: readJson(args[0]),
     proposal,
+    verification: command === 'verify-profile',
   });
   invariant(!existsSync(args[1]), 'Release output directory must not exist');
   mkdirSync(args[1], { recursive: true });
@@ -42,7 +43,7 @@ if (command === 'release') {
 } else {
   invariant(
     ['check', 'write'].includes(command) && args.length === 0,
-    'Usage: [check|write|compatibility <base-ref>|release <profile> <output>]',
+    'Usage: [check|write|compatibility <base-ref>|release <profile> <output>|verify-profile <profile> <output>]',
   );
   const inventories = [];
   for (const group of [...models.map((model) => [model]), models]) {
@@ -75,7 +76,7 @@ if (command === 'release') {
     json({
       status: 'review-only',
       baselineRevision: 'ecda1b6e0d9bc39c66373452a92dce91e06abee0',
-      note: 'Structural comparison is not semantic equivalence. Existing differential and frozen HTTP tests remain mandatory; projection proposal and host bindings remain unapproved.',
+      note: 'Structural comparison is not semantic equivalence. Existing differential and frozen HTTP tests remain mandatory; projection exceptions are scoped and reviewed; host bindings remain unverified.',
       operations: comparison,
     }),
   );

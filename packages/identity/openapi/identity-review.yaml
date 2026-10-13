@@ -50,6 +50,20 @@ components:
         $ref: "#/components/schemas/identity.CreateUserProfileRequest.Input/$defs/__schema0"
       properties:
         authUserId:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -72,7 +86,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         avatarUrl:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -95,7 +131,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         displayName:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -118,7 +176,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         familyName:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -141,7 +221,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         givenName:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -164,7 +266,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         locale:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -187,7 +311,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         timeZone:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -210,6 +356,14 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
       required:
         - authUserId
       type: object
@@ -224,8 +378,24 @@ components:
           - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
             kind: input-pipeline
             path: property.authUserId/in
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: createUserProfile.identity.CreateUserProfileRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     identity.ForbiddenError.Output:
       additionalProperties: false
       properties:
@@ -272,6 +442,39 @@ components:
         - error
       type: object
     identity.ProfileId.Input:
+      allOf:
+        - if:
+            type: string
+          then:
+            type: string
+        - if:
+            maxItems: 1
+            minItems: 1
+            prefixItems:
+              - type: string
+            type: array
+          then:
+            prefixItems:
+              - type: string
+        - if:
+            type: string
+          then:
+            pattern: ^\S+$
+            type: string
+        - if:
+            maxItems: 1
+            minItems: 1
+            prefixItems:
+              - type: string
+            type: array
+          then:
+            prefixItems:
+              - pattern: ^\S+$
+                type: string
+        - not:
+            enum:
+              - null
+              - - null
       anyOf:
         - anyOf:
             - type: string
@@ -294,6 +497,14 @@ components:
                 - type: boolean
                 - type: "null"
           type: array
+      x-contract-fidelity:
+        constraint: string-coercion-preimage
+        exactBranches:
+          - string
+          - singleton-string
+          - boolean
+          - "null"
+        remaining: Numeric stringification remains a scoped projection exception.
       x-contract-projection:
         limitations:
           - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
@@ -308,8 +519,52 @@ components:
           - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
             kind: custom-value
             path: in/in/in/options.0/options.1/options.1
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getUserProfileByAuthUserId.identity.ProfileId.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: getUserProfileById.identity.ProfileId.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: updateUserProfile.identity.ProfileId.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     identity.UnauthorizedError.Output:
       additionalProperties: false
       properties:
@@ -348,6 +603,20 @@ components:
         $ref: "#/components/schemas/identity.UpdateUserProfileRequest.Input/$defs/__schema0"
       properties:
         avatarUrl:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -370,7 +639,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         displayName:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -393,7 +684,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         familyName:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -416,7 +729,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         givenName:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -439,7 +774,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         locale:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -462,7 +819,29 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
         timeZone:
+          allOf:
+            - if:
+                type: string
+              then:
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - type: string
           anyOf:
             - anyOf:
                 - type: string
@@ -485,6 +864,14 @@ components:
                     - type: boolean
                     - type: "null"
               type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
       type: object
       x-contract-projection:
         limitations:
@@ -497,8 +884,24 @@ components:
           - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
             kind: input-pipeline
             path: property.displayName/innerType/in
-        proposal: P07-legacy-input-projection
-        status: proposed
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: updateUserProfile.identity.UpdateUserProfileRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: 716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
     identity.UserProfileResponse.Output:
       additionalProperties: false
       properties:
@@ -553,7 +956,7 @@ components:
   securitySchemes: {}
 info:
   description: Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.
-  title: REVIEW ONLY — Anarchitecture identity-review
+  title: REVIEW-ONLY — Anarchitecture identity-review
   version: 0.0.0
 jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
 openapi: 3.1.1

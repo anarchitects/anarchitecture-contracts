@@ -361,18 +361,26 @@ export const formsReleaseBlockers = Object.freeze([
     id: 'D05',
     capability: 'forms.submissions',
     status: 'blocked',
+    decision:
+      'https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328',
+    implementation:
+      'https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489',
     owner:
       'Contracts architecture maintainers and Bricks Forms/security maintainers',
     requirement:
-      'Review dynamic-validation bypass and agree a versioned migration or constrained legacy disposition before stable support.',
+      'Require server-side validation against the exact form definition/version before persistence or delivery; malformed fields return the existing 400 envelope. Bricks #489 must supply negative HTTP and no-side-effect evidence. See docs/forms-security-migration.md.',
   },
   {
     id: 'D08',
     capability: 'forms.definitions',
     status: 'blocked',
+    decision:
+      'https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328',
+    implementation:
+      'https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489',
     owner:
       'Contracts architecture maintainers and Bricks Forms/security maintainers',
     requirement:
-      'Review delivery-secret access scope and agree a versioned redaction or explicit constrained legacy disposition before stable support.',
+      'Require PublicFormDefinitionEnvelopeResponseSchema at the public boundary; no delivery configuration or secrets. Bricks #489 must prove redaction, access policy, rotation and serialized output. See docs/forms-security-migration.md.',
   },
 ] as const);

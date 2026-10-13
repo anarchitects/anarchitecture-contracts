@@ -46,7 +46,7 @@ baseline is Bricks revision `ecda1b6e0d9bc39c66373452a92dce91e06abee0`.
 See `packages/auth/compatibility/README.md` in the source repository for the
 migration record and evidence limits.
 
-OpenAPI generation and resolved security artifacts arrive in #7. Provider/session
+OpenAPI generation and profile resolution are implemented by #7. Provider/session
 integration, cryptographic passkey verification, policy evaluation parity and
 actual consumer adoption remain in the owning Bricks work; these schemas do not
 implement those services. Publication and independent conformance gates remain
@@ -60,6 +60,7 @@ They are generated from these canonical schemas and operations and are verified
 in clean tarballs. Runtime imports do not load the files.
 
 The files are **review-only** and claim no supported deployment capabilities.
-Projection proposal P07 is not approved; protected routes remain in the inventory
+P07 exceptions are reviewed per operation and pinned to source/generator bytes.
+Real host evidence remains unresolved; protected routes remain in the inventory
 until host security bindings are resolved. Review `docs/openapi.md` and
 `docs/openapi-projection-proposal.md` in the source repository before using them.

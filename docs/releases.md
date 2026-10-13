@@ -20,8 +20,9 @@ release entries. Their installed-consumer checks are an early subset of #8;
 request generation and resolved host profiles remain explicit release blockers.
 
 Issue #7 now supplies [deterministic generation and compatibility gates](openapi.md).
-Generated files are review-only until the [bounded projection proposal](openapi-projection-proposal.md)
-and real host profiles are approved. Package-aware PR checks require new release
+Generated files remain review-only until real host profiles are approved.
+The [scoped P07 register](openapi-projection-proposal.md) implements the accepted
+projection decision; synthetic verification cannot authorize release. Package-aware PR checks require new release
 intent for each affected package and matching migration evidence for breaks;
 these gates do not enable publication.
 

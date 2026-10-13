@@ -118,3 +118,16 @@ export const SubmissionResponseSchema = z.strictObject({
   updatedAt: z.iso.datetime({ offset: true }),
 });
 export const SubmissionsResponseSchema = z.array(SubmissionResponseSchema);
+
+// D08 migration target. Hosts must construct this DTO before serialization;
+// strict parsing rejects leaked configuration rather than silently redacting it.
+export const PublicFormDefinitionResponseSchema =
+  FormDefinitionResponseSchema.omit({ delivery: true });
+export const PublicFormDefinitionEnvelopeResponseSchema = z.strictObject({
+  config: PublicFormDefinitionResponseSchema,
+  schema: z.json(),
+});
+// Administrative reads expose configuration state, never credential material.
+export const FormDeliveryStatusSchema = z.strictObject({
+  configured: z.boolean(),
+});

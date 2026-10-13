@@ -1,9 +1,128 @@
 {
   "artifacts": {
-    "aggregate-review.json": "49fc933ce7b9a4bf60ccbc154d5d023495c643df3e0d8c1c12e7648da79bf693",
-    "aggregate-review.yaml": "6eca81fa114de771826c6d39c32ad64c1c8e16bb211a58c02cc337e2dc58f001",
-    "inventory.json": "a1cbb614bbda714c5d3cde2f045a2d2cd4e0f549a228e0f625ebb3561c88ab30"
+    "aggregate-review.json": "fb21aa137cf046aa9375a530d51a0ba7e589dba94838e33af33290ad590faa0f",
+    "aggregate-review.yaml": "06d8aa960c31998769fee305a50a0c31ff67d8d67a4a91313a33c35eddcac56a",
+    "inventory.json": "ccfbab29ecce927443cc7de39c3b5608930be265b4aac1fefcadd72c0436faea"
   },
+  "capabilityBlockers": [
+    {
+      "capability": "auth.jwt",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "auth.passkeys",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "auth.session",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.definitions",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.submissions",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "identity.profiles",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.native",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.subscription",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.webhook",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.submissions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "id": "D05",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Require server-side validation against the exact form definition/version before persistence or delivery; malformed fields return the existing 400 envelope. Bricks #489 must supply negative HTTP and no-side-effect evidence. See docs/forms-security-migration.md.",
+      "status": "blocked"
+    },
+    {
+      "capability": "forms.definitions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "id": "D08",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Require PublicFormDefinitionEnvelopeResponseSchema at the public boundary; no delivery configuration or secrets. Bricks #489 must prove redaction, access policy, rotation and serialized output. See docs/forms-security-migration.md.",
+      "status": "blocked"
+    }
+  ],
   "dependencies": {
     "@anarchitects/auth-contracts": {
       "zod": "4.5.0"
@@ -99,8 +218,11 @@
   "formatVersion": 1,
   "generator": {
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
-    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
-    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
+    "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
+    "tools/openapi/model.mjs": "96f7c0c7ab3379ba10bdad962e0c2aa954eede028a8e47c643cfab3b3a300421",
+    "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
+    "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
   },
   "operationCount": 29,
@@ -127,12 +249,551 @@
     "id": "aggregate-review",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only"
+    "status": "review-only",
+    "variants": [
+      "auth.jwt-plugin",
+      "auth.session",
+      "auth.session-passkeys",
+      "forms.protected",
+      "identity.protected",
+      "newsletter.native",
+      "newsletter.subscription",
+      "newsletter.subscription-webhook"
+    ]
   },
   "projectionProposal": {
-    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
-    "id": "P07-legacy-input-projection",
-    "status": "proposed"
+    "digest": "34003efb9978e9e6853b95a0d426e60dfd11525ac90d6674be8ed3d6f3644db5",
+    "id": "P07",
+    "status": "reviewed-register"
+  },
+  "projectionReviews": {
+    "activateUser.auth.ActivateUserRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "activateUser.auth.ActivateUserRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "beginRegistration.auth.passkeys.PasskeyRegistrationBeginRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "beginRegistration.auth.passkeys.PasskeyRegistrationBeginRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "changePassword.auth.ChangePasswordRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "changePassword.auth.ChangePasswordRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "changePassword.auth.UserIdParams.node.70726f70657274792e757365724964.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "changePassword.auth.UserIdParams.node.70726f70657274792e757365724964.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "confirmNewsletterSubscription.newsletter.NewsletterNativeActionRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "confirmNewsletterSubscription.newsletter.NewsletterNativeActionRequest.input",
+      "kind": "faithful-conversion",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Exact UTF-16 unit bounds derived from canonical Zod checks without changing wire acceptance.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "createUserProfile.identity.CreateUserProfileRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "createUserProfile.identity.CreateUserProfileRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897"
+    },
+    "finishAuthentication.auth.passkeys.PasskeyAuthenticationFinishRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "finishAuthentication.auth.passkeys.PasskeyAuthenticationFinishRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "finishRegistration.auth.passkeys.PasskeyRegistrationFinishRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "finishRegistration.auth.passkeys.PasskeyRegistrationFinishRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "forgotPassword.auth.ForgotPasswordRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "forgotPassword.auth.ForgotPasswordRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+    },
+    "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+    },
+    "getSubmission.forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getSubmission.forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+    },
+    "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+    },
+    "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+    },
+    "getUserProfileByAuthUserId.identity.ProfileId.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getUserProfileByAuthUserId.identity.ProfileId.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897"
+    },
+    "getUserProfileById.identity.ProfileId.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "getUserProfileById.identity.ProfileId.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897"
+    },
+    "login.auth.LoginRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "login.auth.LoginRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "loginWithJwt.auth.LoginRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "loginWithJwt.auth.LoginRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "logoutWithJwt.auth.jwt.JwtLogoutRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "logoutWithJwt.auth.jwt.JwtLogoutRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "receiveNewsletterWebhook.newsletter.NewsletterWebhookPayload.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "receiveNewsletterWebhook.newsletter.NewsletterWebhookPayload.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "refreshJwtTokens.auth.jwt.JwtRefreshRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "refreshJwtTokens.auth.jwt.JwtRefreshRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "registerUser.auth.RegisterRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "registerUser.auth.RegisterRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "resetPassword.auth.ResetPasswordRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "resetPassword.auth.ResetPasswordRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "submitForm.forms.SubmissionRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "submitForm.forms.SubmissionRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+    },
+    "subscribeToNewsletter.newsletter.NewsletterSubscribeRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "subscribeToNewsletter.newsletter.NewsletterSubscribeRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "unsubscribeFromNewsletter.newsletter.NewsletterNativeActionRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "unsubscribeFromNewsletter.newsletter.NewsletterNativeActionRequest.input",
+      "kind": "faithful-conversion",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Exact UTF-16 unit bounds derived from canonical Zod checks without changing wire acceptance.",
+      "sourceDigest": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+    },
+    "updateEmail.auth.UpdateEmailRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "updateEmail.auth.UpdateEmailRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "updateEmail.auth.UserIdParams.node.70726f70657274792e757365724964.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "updateEmail.auth.UserIdParams.node.70726f70657274792e757365724964.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    },
+    "updateUserProfile.identity.ProfileId.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "updateUserProfile.identity.ProfileId.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897"
+    },
+    "updateUserProfile.identity.UpdateUserProfileRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "updateUserProfile.identity.UpdateUserProfileRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897"
+    },
+    "verifyEmail.auth.VerifyEmailRequest.input": {
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "evidence": [
+        "tools/openapi/openapi.test.mjs",
+        "tools/openapi/fidelity.test.mjs",
+        "tools/openapi/profiles.test.mjs",
+        "tools/contract-authoring/compatibility.test.mjs",
+        "tools/contract-authoring/forms-newsletter.test.mjs",
+        "docs/openapi-projection-proposal.md"
+      ],
+      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "id": "verifyEmail.auth.VerifyEmailRequest.input",
+      "kind": "bounded-exception",
+      "owner": "Contracts architecture and affected domain maintainers",
+      "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+      "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+    }
   },
   "projections": {
     "auth.ActivateUserRequest.Input": [
@@ -726,33 +1387,11 @@
         "path": "property.displayName/innerType/in"
       }
     ],
-    "newsletter.NewsletterNativeActionRequest.Input": [
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "property.token"
-      }
-    ],
     "newsletter.NewsletterSubscribeRequest.Input": [
       {
         "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
         "kind": "custom-value",
         "path": "options.0/catchall/lazy/options.1/options.1"
-      },
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "options.1/property.email"
-      },
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "options.1/property.source/innerType"
-      },
-      {
-        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
-        "kind": "custom-refinement",
-        "path": "options.1/property.website/innerType"
       }
     ],
     "newsletter.NewsletterWebhookPayload.Input": [
@@ -778,19 +1417,24 @@
       }
     ]
   },
+  "provenance": null,
   "releaseBlockers": [
     {
       "capability": "forms.submissions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
       "id": "D05",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
       "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
-      "requirement": "Review dynamic-validation bypass and agree a versioned migration or constrained legacy disposition before stable support.",
+      "requirement": "Require server-side validation against the exact form definition/version before persistence or delivery; malformed fields return the existing 400 envelope. Bricks #489 must supply negative HTTP and no-side-effect evidence. See docs/forms-security-migration.md.",
       "status": "blocked"
     },
     {
       "capability": "forms.definitions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
       "id": "D08",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
       "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
-      "requirement": "Review delivery-secret access scope and agree a versioned redaction or explicit constrained legacy disposition before stable support.",
+      "requirement": "Require PublicFormDefinitionEnvelopeResponseSchema at the public boundary; no delivery configuration or secrets. Bricks #489 must prove redaction, access policy, rotation and serialized output. See docs/forms-security-migration.md.",
       "status": "blocked"
     }
   ],
@@ -1198,11 +1842,11 @@
       "packages/auth/src/schemas/policy.ts": "c171d27d1fcc94b8d12bcdddfd1f41e156aa3591c676262dc14c29e57e8c8319",
       "packages/auth/src/schemas/session.ts": "333b59f98cf3caa0fcea08375c1fa269d2e5d8b8d1dbac79646b7a09a31047e1",
       "packages/forms/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
-      "packages/forms/src/operations/index.ts": "f4662a99aed2ee16546304233651eccee340ba1b80f800c19c49269a10b9ffed",
+      "packages/forms/src/operations/index.ts": "643e9663c1487fa66a25e0564e3ab0373f1083910757a4feb7247abe2bccc808",
       "packages/forms/src/schemas/errors.ts": "9c80b329924ae7476545bc47b5f4a46619bf67ad68cd202d7a1d11f47ef493bd",
       "packages/forms/src/schemas/formats.ts": "00856f6486e0d2f7c26344e0ca71fdd6289ff49d0173eac50d63aba80ca99fc4",
-      "packages/forms/src/schemas/forms.ts": "976fc4c81ca00720538bd3d7e725563c551c15195f29652acd27ae32fbfb56d9",
-      "packages/forms/src/schemas/index.ts": "ec20d3a7f554019e6ae9f329fafd3e9b6fb62fcf0fd3ae55a1d0faee2fc8a653",
+      "packages/forms/src/schemas/forms.ts": "1b1015a0ce92b4f3f11a5caa9a336475d2edb8b5691a8afb3283843f64be2d8a",
+      "packages/forms/src/schemas/index.ts": "ed82e3854f2c24db2bf3235471db8bbd9bbeaa2065f96a44073737e3ec61e533",
       "packages/forms/src/schemas/input.ts": "72f47b889fd67539cb909aaa816351d23c809cc46ee00a1334b09af2a34139da",
       "packages/identity/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
       "packages/identity/src/operations/index.ts": "6aeeacc6843af51e2552aff256fc9de485ff48f039fedfa4c2a71b9c159e936e",
@@ -1223,7 +1867,7 @@
       "packages/newsletter/src/webhook.ts": "02889b06181d6bfb7c4275d3a23911a9a65d71c8128d0d2cfd3d6dd09922c86d",
       "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
     },
-    "revision": "sha256:f7f939d7a776cc0f42938465e28ec05bbef7e000174a02150188e156e2704665"
+    "revision": "sha256:e2f4aa7784ffb24be0ab7c77dc23b61efe1ebab39ce4a5cd94a4599fd1a94821"
   },
   "status": "review-only",
   "supportedCapabilities": [],
