@@ -20,6 +20,10 @@ templates, examples, tests and migrations:
 4. Read relevant engineering guides, [package conventions](packages/README.md)
    and [release rules](docs/releases.md). For public API changes, also read the
    applicable canonical contract/version, frozen baseline and compatibility rules.
+   The accepted #4 design includes [schema authoring](docs/schema-authoring.md),
+   [operation definitions](docs/operation-definitions.md) and
+   [baseline dispositions](docs/baseline-dispositions.md); read these before
+   extracting or changing contract packages.
    Re-check this review when scope or evidence changes.
 
 ## Boundaries

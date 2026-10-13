@@ -16,6 +16,12 @@ There are **no public contract packages or consumer adoption claims yet**.
 The legacy evidence is not the canonical Zod contract source. Meta's ownership
 decision is accepted; publication and verified migration remain separate gates.
 
+[Accepted ADR-0002](adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
+completes the #4 design: four independently versioned domain packages, Zod-first
+schemas and inferred types, explicit HTTP operations, dual ESM/CommonJS packaging
+and compatibility/release boundaries. The packages are designed, not implemented
+or published. Extraction starts in #5/#6.
+
 Before writing code, read [AGENTS.md](AGENTS.md), every Meta and local ADR, and
 the relevant engineering guides.
 
@@ -46,15 +52,18 @@ Changesets status needs a committed `HEAD` and a fetched `origin/main` base.
 
 ## Layout
 
-| Path                       | Purpose                                                        |
-| -------------------------- | -------------------------------------------------------------- |
-| `adr/`                     | Local architecture decisions                                   |
-| `packages/`                | Future independent contract workspaces; conventions only today |
-| `.changeset/`              | Package-level version and changelog configuration              |
-| `docs/releases.md`         | Publication conventions, compatibility and adoption gates      |
-| `baselines/legacy-3tier/`  | Frozen legacy evidence and migration discrepancy register      |
-| `tools/legacy-baseline/`   | Offline evidence checks and optional source HTTP replay        |
-| `.github/workflows/ci.yml` | Foundation checks; no publishing                               |
+| Path                            | Purpose                                                        |
+| ------------------------------- | -------------------------------------------------------------- |
+| `adr/`                          | Local architecture decisions                                   |
+| `packages/`                     | Future independent contract workspaces; conventions only today |
+| `.changeset/`                   | Package-level version and changelog configuration              |
+| `docs/releases.md`              | Publication conventions, compatibility and adoption gates      |
+| `docs/schema-authoring.md`      | Zod schema, inferred type and normalization conventions        |
+| `docs/operation-definitions.md` | HTTP metadata, security profiles and generation requirements   |
+| `docs/baseline-dispositions.md` | Migration decisions and extraction/release blockers            |
+| `baselines/legacy-3tier/`       | Frozen legacy evidence and migration discrepancy register      |
+| `tools/legacy-baseline/`        | Offline evidence checks and optional source HTTP replay        |
+| `.github/workflows/ci.yml`      | Foundation checks; no publishing                               |
 
 The workspace root is private. Runtime contract packages will not depend on
 Nest, Fastify, Express, Angular, Nx or either Bricks implementation. Domain models
@@ -62,12 +71,12 @@ and business logic remain in their owning bounded contexts.
 
 ## Next delivery steps
 
-1. [#4](https://github.com/anarchitects/anarchitecture-contracts/issues/4): define domain package boundaries and schema/operation conventions using the legacy audit.
-2. [#5](https://github.com/anarchitects/anarchitecture-contracts/issues/5) and [#6](https://github.com/anarchitects/anarchitecture-contracts/issues/6): extract audited contracts and resolve the recorded migration decisions.
-3. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): deterministic OpenAPI and compatibility gates.
-4. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
+1. [#5](https://github.com/anarchitects/anarchitecture-contracts/issues/5) and [#6](https://github.com/anarchitects/anarchitecture-contracts/issues/6): implement the accepted package/schema/operation design, extract audited contracts and resolve the recorded migration decisions.
+2. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): deterministic OpenAPI and compatibility gates.
+3. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
 
 See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
+[ADR-0002](adr/0002-domain-contract-authoring-and-publishing-boundaries.md),
 [package conventions](packages/README.md) and [release conventions](docs/releases.md).
 
 ## License
