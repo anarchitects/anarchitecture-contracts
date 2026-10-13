@@ -1,86 +1,97 @@
-# Proposed exception P07: legacy input projections
+# P07: reviewed, scoped projection register
 
-**Status: Proposed — not approved for release.** Prepared at the maintainer's
-request during issue #7. Approval of preparation is not approval of this exception.
-Owners: Contracts architecture maintainers and the affected domain/security
-maintainers. Review the generated inventories and counterexamples before deciding.
+The [issue #7 decision](https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328)
+accepts faithful conversion by default and narrowly scoped exceptions where
+portable OpenAPI cannot fully describe the existing parser. This replaces the
+initial blanket proposal. It does not approve a deployment, security bypass or
+wire-language change. Canonical Zod validation remains mandatory.
 
-## Decision requested
+[projection-proposal.json](../tools/openapi/projection-proposal.json) retains its
+historical filename but is now the reviewed register. Each entry names exactly
+one domain, operation, component and input/output view, its owner and decision,
+source and generator SHA-256 digests, constraint/function locations, rationale
+and executable evidence. Both diagnostic and release generation enforce these
+entries on **every use**, including cached components. Missing, stale or altered
+records fail closed. `review-candidates.mjs` emits drafts for review only; ordinary
+generation never updates approvals or pins.
 
-Permit a bounded OpenAPI input projection for the existing legacy-compatible
-parsers, with canonical Zod validation and operation semantics remaining mandatory.
-The OpenAPI schema alone would describe a broader input language in the cases
-below. Consumers could not use it as a complete replacement for those parsers.
-This is a proposed exception to
-[ADR-0002, decision 4](../adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
-and [schema authoring](schema-authoring.md#normalization-and-generation), which
-require faithful input representations or a reviewed exception.
+## Faithful UTF-16 length
 
-The current implementation generates **review-only** artifacts to make this
-decision concrete. It does not enable the exception in release mode, alter any
-canonical parser, approve a host profile, or change a runtime implementation.
-Keeping affected operations excluded from releasable OpenAPI remains the default.
+Newsletter's canonical check counts UTF-16 units; JSON Schema `maxLength` counts
+Unicode code points. That difference is representable without changing inputs.
+If a string has `n` code points and `k` supplementary characters, its UTF-16 length
+is `n + k`. In addition to the canonical `maxLength: M`, the converter emits, for
+each `k` from 1 through `floor(M / 2) + 1`, a Unicode-regex condition: if at least
+`k` supplementary characters occur, require `maxLength: M - k`. These conditions
+are necessary and sufficient. BMP characters, line breaks and lone surrogates
+cost one unit; supplementary characters cost two. A zero bound needs no extra
+condition. The implementation bounds the audited conversion at 2048 units.
 
-## Exact scope and consumer impact
+This requires a conforming JSON Schema 2020-12 evaluator with Unicode regular
+expressions. The pinned AJV tests exercise both sides of each boundary, mixed
+strings and the honeypot branch. A native token of 65 emoji now fails both the
+projection and Zod. UTF-16 length is **not** an exception.
 
-| Gap                                       | Affected inputs                                                                                                                   | Proposed projection and retained obligation                                                                                                                                                                                                                  |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Decoded numeric overflow                  | Auth, Forms and Identity coercion; open JSON extras including Newsletter honeypot/webhook                                         | Project the existing finite-number sibling of the narrowly scoped overflow union. JSON exponent overflow such as `1e309` requires canonical parsing after decoding; OpenAPI does not describe JavaScript infinity normalization.                             |
-| Pipelines and post-conversion constraints | Auth string/integer/array coercion and passkeys; Identity null/string normalization and identifiers; Forms strings/version checks | Emit the native input view. Field constraints after normalization, integer conversion failures and exact parsed values still require the canonical pipeline. For example, the review projection accepts a one-character login password while Zod rejects it. |
-| UTF-16 length                             | Newsletter email/source/version/website fields and native tokens                                                                  | Preserve the native code-point `maxLength` projection and disclose the additional canonical UTF-16 check. A token of 65 emoji passes projected `maxLength: 128` but fails the legacy-compatible parser.                                                      |
-| Conditional payload refinements           | Newsletter webhook event/type consistency, subscriber fields, timestamp parsing/fallbacks and batch discrimination                | Emit native structural fields and retain the canonical whole-payload checks after raw-byte verification. An unsubscribe event without subscriber data passes the structural projection but fails canonical validation.                                       |
+## Representable constraints retained
 
-The immutable source-byte scope and custom-function fingerprints are in
-[projection-proposal.json](../tools/openapi/projection-proposal.json).
-Each affected generated component carries `x-contract-projection` with the
-proposal ID, proposed status and exact graph locations. Manifests list every
-affected component. Unexpected source bytes or custom functions fail generation;
-there is no arbitrary `{}` fallback or separately authored input schema.
+Known scalar-to-string pipelines retain output constraints for raw strings and
+singleton strings, and exactly exclude invalid boolean/null inputs and singleton
+wrappers. For example, both parsers now reject a one-character login password.
+The converter recognizes the audited function and each operation's exact source
+bytes; it does not guess behavior for arbitrary transforms.
 
-Request parsing and response serialization are different boundaries. Response
-schemas still use native output conversion. Generated output schemas are tested
-against the frozen HTTP responses and relevant header values. A matching output
-does not establish request equivalence or runtime security conformance.
+Newsletter webhook conversion retains nonblank event names, conditional
+subscriber identifiers/email, timestamp grammar and nullish fallback order, and
+batch discrimination. Leaf constraints come from canonical Zod schemas. Invalid
+withdrawal data and invalid batches cannot fall through to an unhandled event.
+Arbitrary event/type equality and exact JavaScript timestamp parseability remain
+outside this portable projection.
 
-## Proposed conditions of acceptance
+## Remaining exceptions and consumer impact
 
-1. Record a maintainer decision identifying approved domains, operations and exact
-   source/proposal digests. A status edit alone is insufficient: release-mode
-   implementation and tests must be reviewed in the same follow-up.
-2. Keep the projected input language and canonical input/parsed-output types
-   visibly distinct. Require consumers to retain the canonical parser; client
-   generation must not be advertised as complete server validation.
-3. Preserve all existing parsing/differential and HTTP evidence tests. Keep the
-   executable non-equivalence examples in
-   [openapi.test.mjs](../tools/openapi/openapi.test.mjs).
-4. Resolve each actual host's security and behavior bindings independently, with
-   deployment evidence. Review inventories are not approved deployment profiles.
-5. Keep Forms D05/D08 blocked. This exception cannot approve dynamic-validation
-   bypass, delivery-secret exposure, anonymous access, HMAC omission or other
-   security changes.
-6. Revisit before the first publication in #8 and on any affected parser,
-   converter, dependency, profile or consumer validation change. A faithful
-   representation should replace an exception when demonstrated without changing
-   wire acceptance. Any wire change requires a separate migration/version plan.
+| Constraint                                    | Scope recorded per operation/component                                            | Remaining obligation                                                                                                                                                                                                                                                            |
+| --------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Decoded exponent overflow                     | Auth, Forms and Identity coercion; decoded open JSON extras, including Newsletter | `JSON.parse('1e309')` produces JavaScript infinity. The projection uses the existing finite-number sibling, never `{}`. Canonical decoding/normalization can accept values the projection rejects.                                                                              |
+| Normalization and post-conversion constraints | Auth/Identity/Forms scalar, integer, array and nullable pipelines                 | JSON Schema is a predicate, not a JavaScript transformation. Numeric stringification, `Number` parsing, parsed output and constraints on transformed values still require Zod. A numeric password of `1` is a disclosed overacceptance; `123456` becomes the string `"123456"`. |
+| Runtime/cross-field refinements               | Newsletter webhook                                                                | Portable JSON Schema has no general equality comparison between arbitrary sibling values and does not implement JavaScript `Date.parse`. Conflicting unhandled event aliases and an impossible month are executable negative counterexamples.                                   |
 
-## Review evidence and unresolved decisions
+These exceptions can overaccept **or underaccept** decoded values. OpenAPI-only
+validators and generated clients cannot replace canonical validation. Every
+affected component carries `x-contract-projection` with reviewed scope,
+limitations and this warning; manifests include the review records and register
+digest. Faithful conversions have separate review records. No arbitrary custom
+schema, omitted constraint or new operation acquires an exception implicitly.
 
-The [aggregate manifest](../generated/contract-manifest.json) records 29 inventoried
-operations. Fourteen public operations appear in the
-[review OpenAPI](../generated/openapi/aggregate-review.json); fifteen protected
-operations remain in the [inventory](../generated/openapi/inventory.json) with
-their unresolved security bindings. No generated profile claims supported
-capabilities. Forms and Identity review documents have empty `paths` deliberately.
+The proof suite is [fidelity.test.mjs](../tools/openapi/fidelity.test.mjs), alongside
+[openapi.test.mjs](../tools/openapi/openapi.test.mjs), the canonical differential
+tests, supplemental webhook probes and frozen HTTP fixtures. Request acceptance,
+parsed output and serialized responses are separate assertions. No frozen
+baseline or canonical legacy parser is changed to make conversion pass.
 
-The review documents are not a complete specification for deploying all 29 routes.
-The generator can emit all 29 only when explicit bindings are supplied; tests
-exercise that path using clearly synthetic bindings, without approving them for
-production. Release mode currently rejects both this proposal and unresolved
-profiles. #7's complete releasable-profile outcome remains pending these decisions.
+Reassess entries whenever canonical source, generator, pinned Zod, validation
+consumers or profile behavior changes, and before publication. A newly proven
+faithful conversion replaces the relevant exception; a wire-language change needs
+its own reviewed migration and version plan.
+
+## Security and completion boundary
+
+P07 cannot approve anonymous protection, missing HMAC, unchecked dynamic Forms
+fields or delivery-secret exposure. Profiles independently require exact-version
+host configuration and reviewed positive/negative HTTP evidence. Synthetic
+profiles exercise those gates and remain `test-only`, with no supported capability
+claim. Current checked-in artifacts remain `review-only` because real host
+bindings are unresolved.
+
+Issue #7 is complete when this generator and its fail-closed gates are implemented
+and tested. Actual host evidence belongs to the relevant Bricks capabilities;
+Forms remediation belongs to [3-tier #489](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489).
+[Contracts #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8)
+owns packaging/publication, not creation of deployment evidence. Neither issue
+must finish before #7 can close. Outstanding blockers stay in generated manifests.
 
 All 15 Meta ADRs were reviewed at
 `e2f34553c6e2492d0ab6f80ac795de44fc592a70`, matching upstream, and all three local
-ADRs at `82a5c1e`. Accepted ownership, platform independence and compatibility
-requirements apply. Governance proposals remain contextual; no runtime/provider
-modernization is authorized. Accepted ADR-0003 assigns the Nx Release cutover to
-issue #8; the current Changesets adapter is transitional only.
+ADRs at `401d8e4` (unchanged since the prior review). Accepted ownership, platform
+independence and compatibility requirements apply; proposed governance remains
+contextual. ADR-0003 assigns the Nx Release cutover to #8. The current Changesets
+adapter remains transitional.

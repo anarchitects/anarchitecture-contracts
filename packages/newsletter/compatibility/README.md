@@ -108,6 +108,8 @@ packages. The supplemental data and audit tooling are excluded from npm tarballs
 
 Generated JSON/YAML review artifacts, inventories and package manifests now exist.
 The [generation guide](../../../docs/openapi.md) and
-[proposed projection exception P07](../../../docs/openapi-projection-proposal.md)
-record the exact remaining conversion and profile gates. No parser changes or
-release approvals are introduced; earlier runtime and security limits still apply.
+[reviewed, scoped projection register P07](../../../docs/openapi-projection-proposal.md)
+record faithful constraints, remaining exceptions and strict profile/evidence gates.
+Synthetic verification is test-only; actual host evidence and capability blockers
+remain outstanding. Existing legacy parsers and frozen HTTP observations are
+preserved. #7 can complete independently of host remediation and #8 publication.

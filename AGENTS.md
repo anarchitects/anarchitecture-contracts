@@ -58,10 +58,13 @@ Keep each epic subissue in a separate PR and report validation gaps accurately.
 ## OpenAPI review artifacts
 
 Use [the generation guide](docs/openapi.md) for #7 commands and compatibility gates.
-Generated OpenAPI and manifests are review-only while
-[projection proposal P07](docs/openapi-projection-proposal.md) and host bindings
-remain unresolved. Never mark that proposal approved, infer anonymous protection,
-or remove Forms D05/D08 blockers to make generation or release checks pass.
+Current generated OpenAPI and manifests are review-only while real host bindings
+remain unresolved. [P07](docs/openapi-projection-proposal.md) now implements the
+accepted #7 decision through source/generator-pinned, operation-scoped reviews.
+Never broaden those reviews, infer deployment approval from synthetic evidence,
+infer anonymous protection, or remove Forms D05/D08 blockers to make checks pass.
+Issue #7's tested mechanism can complete independently of host remediation and #8
+publication; preserve outstanding capability blockers in manifests.
 
 ## Pending Nx Release migration
 

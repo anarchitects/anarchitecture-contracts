@@ -2,12 +2,15 @@ import { readFileSync } from 'node:fs';
 import { z } from 'zod';
 import YAML from 'yaml';
 import { digest, json, sorted, invariant } from './common.mjs';
-import { project, schemaIndex } from './model.mjs';
+import { project, projectionReview, schemaIndex } from './model.mjs';
 import {
   validateRegistry,
   validateRequirements,
   lintDocument,
 } from './validate.mjs';
+
+import { generatorFiles, generatorDigest } from './projection-review.mjs';
+import { validateResolvedProfile, capabilityBlockers } from './profiles.mjs';
 
 export function reviewProfile(models) {
   return {
@@ -18,6 +21,11 @@ export function reviewProfile(models) {
         models.flatMap((model) => model.operations.map((op) => op.capability)),
       ),
     ].sort(),
+    variants: models
+      .flatMap((model) =>
+        Object.keys(model.profiles).map((name) => `${model.domain}.${name}`),
+      )
+      .sort(),
     securityBindings: {},
     securitySchemes: {},
     hostBindings: {},
@@ -26,7 +34,10 @@ export function reviewProfile(models) {
   };
 }
 
-export async function generate(models, { profile, proposal, review = false }) {
+export async function generate(
+  models,
+  { profile, proposal, review = false, verification = false },
+) {
   models = models.toSorted((a, b) => a.domain.localeCompare(b.domain, 'en'));
   invariant(
     z.core.version.major === 4 &&
@@ -62,10 +73,15 @@ export async function generate(models, { profile, proposal, review = false }) {
     profile.securityBindings && profile.securitySchemes && profile.hostBindings,
     'Missing profile bindings',
   );
-  const reviewOnly = profile.status !== 'approved' || review;
+  const reviewOnly = review || verification;
+  const status = review
+    ? 'review-only'
+    : verification
+      ? 'test-only'
+      : 'resolved';
   if (!review)
     invariant(
-      profile.status === 'approved' &&
+      profile.status === (verification ? 'test-fixture' : 'approved') &&
         profile.approval?.decision &&
         profile.approval?.owner,
       'Release requires an approved profile with review evidence',
@@ -75,6 +91,9 @@ export async function generate(models, { profile, proposal, review = false }) {
   const sourceDigests = Object.fromEntries(
     models.map((model) => [model.domain, digest(json(model.sourceFiles))]),
   );
+  const generator = generatorDigest();
+  let operationId;
+  const projectionReviews = {};
   const components = {},
     origins = {},
     projections = {};
@@ -82,6 +101,17 @@ export async function generate(models, { profile, proposal, review = false }) {
     const origin = index.get(schema);
     invariant(origin, 'Unregistered schema reference');
     const name = `${origin.id}.${io === 'input' ? 'Input' : 'Output'}`;
+    const assessment = projectionReview(
+      schema,
+      io,
+      origin,
+      proposal,
+      sourceDigests[origin.domain],
+      operationId,
+      generator,
+    );
+    if (assessment.review)
+      projectionReviews[assessment.review.id] = assessment.review;
     if (!Object.hasOwn(components, name)) {
       const result = project(
         schema,
@@ -90,6 +120,13 @@ export async function generate(models, { profile, proposal, review = false }) {
         proposal,
         sourceDigests[origin.domain],
         review,
+        {
+          operationId,
+          generator,
+          canonicalSchemas: models.find(
+            (model) => model.domain === origin.domain,
+          ).schemas,
+        },
       );
       const component = structuredClone(result.schema);
       delete component.$schema;
@@ -106,6 +143,12 @@ export async function generate(models, { profile, proposal, review = false }) {
       origins[name] = { ...origin, io };
       if (result.limitations.length) projections[name] = result.limitations;
     }
+    const annotation = components[name]['x-contract-projection'];
+    if (
+      annotation &&
+      !annotation.reviews.some((entry) => entry.id === assessment.review.id)
+    )
+      annotation.reviews.push(assessment.review);
     return { $ref: `#/components/schemas/${name}` };
   }
   function content(body, io) {
@@ -137,6 +180,8 @@ export async function generate(models, { profile, proposal, review = false }) {
     releaseBlockers = [];
   for (const model of models) {
     for (const [name, requirement] of Object.entries(model.profiles)) {
+      if (!review && !profile.variants?.includes(`${model.domain}.${name}`))
+        continue;
       if (
         !requirement.capabilities.some((capability) =>
           enabledCapabilities.has(capability),
@@ -165,6 +210,14 @@ export async function generate(models, { profile, proposal, review = false }) {
       `Blocked capabilities: ${releaseBlockers.map((blocker) => blocker.id).join(', ')}`,
     );
   }
+  const enabledOperations = models
+    .flatMap((model) => model.operations)
+    .filter((op) => enabledCapabilities.has(op.capability));
+  const provenance = review
+    ? null
+    : validateResolvedProfile(profile, models, enabledOperations, {
+        verification,
+      });
   for (const op of models
     .flatMap((model) => model.operations)
     .sort((a, b) => a.operationId.localeCompare(b.operationId, 'en'))) {
@@ -178,6 +231,7 @@ export async function generate(models, { profile, proposal, review = false }) {
       });
       continue;
     }
+    operationId = op.operationId;
     let security;
     if (op.security.kind === 'public') security = [];
     else if (op.security.kind === 'required')
@@ -265,7 +319,7 @@ export async function generate(models, { profile, proposal, review = false }) {
     openapi: '3.1.1',
     jsonSchemaDialect: 'https://json-schema.org/draft/2020-12/schema',
     info: {
-      title: `${reviewOnly ? 'REVIEW ONLY — ' : ''}Anarchitecture ${profile.id}`,
+      title: `${reviewOnly ? `${status.toUpperCase()} — ` : ''}Anarchitecture ${profile.id}`,
       // Aggregate identity is a content digest, never a shared domain release.
       version:
         models.length === 1
@@ -281,7 +335,7 @@ export async function generate(models, { profile, proposal, review = false }) {
       schemas: components,
       securitySchemes: profile.securitySchemes,
     },
-    'x-contract-status': reviewOnly ? 'review-only' : 'resolved',
+    'x-contract-status': status,
     'x-contract-profile': profile.id,
     'x-contract-versions': versions,
     'x-contract-excluded-operations': excluded,
@@ -301,7 +355,7 @@ export async function generate(models, { profile, proposal, review = false }) {
   const rootPackage = JSON.parse(readFileSync('package.json', 'utf8'));
   const manifest = {
     formatVersion: 1,
-    status: reviewOnly ? 'review-only' : 'resolved',
+    status,
     profile,
     packages: versions,
     dependencies: Object.fromEntries(
@@ -313,21 +367,21 @@ export async function generate(models, { profile, proposal, review = false }) {
         rootPackage.devDependencies[name],
       ]),
     ),
-    generator: Object.fromEntries(
-      ['common.mjs', 'model.mjs', 'generate.mjs', 'validate.mjs'].map(
-        (file) => [
-          `tools/openapi/${file}`,
-          digest(readFileSync(`tools/openapi/${file}`)),
-        ],
-      ),
-    ),
+    generator: generatorFiles(),
+    provenance,
+    projectionReviews,
+    capabilityBlockers: capabilityBlockers(models)
+      .filter(
+        (blocker) => reviewOnly || !enabledCapabilities.has(blocker.capability),
+      )
+      .concat(models.flatMap((model) => model.blockers)),
     source: {
       revision: `sha256:${digest(json(models.map((model) => ({ domain: model.domain, files: model.sourceFiles }))))}`,
       files: Object.assign({}, ...models.map((model) => model.sourceFiles)),
     },
     schemaOrigins: origins,
     projections,
-    projectionProposal: Object.keys(projections).length
+    projectionProposal: Object.keys(projectionReviews).length
       ? {
           id: proposal.id,
           status: proposal.status,

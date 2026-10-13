@@ -48,6 +48,47 @@
         },
         "properties": {
           "token": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -105,7 +146,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -130,8 +181,28 @@
               "path": "property.token/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "activateUser.auth.ActivateUserRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.BadRequestError.Output": {
@@ -223,6 +294,55 @@
         },
         "properties": {
           "confirmPassword": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -280,9 +400,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "currentPassword": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -340,9 +519,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "newPassword": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -400,7 +638,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -427,8 +675,28 @@
               "path": "property.currentPassword/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "changePassword.auth.ChangePasswordRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.ForbiddenError.Output": {
@@ -499,6 +767,55 @@
         },
         "properties": {
           "email": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -556,7 +873,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -581,8 +908,28 @@
               "path": "property.email/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "forgotPassword.auth.ForgotPasswordRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.InternalServerError.Output": {
@@ -774,6 +1121,47 @@
         },
         "properties": {
           "credential": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){2,100}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){2,100}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -831,9 +1219,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "password": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -891,7 +1338,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -927,8 +1384,45 @@
               "path": "property.password/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "login.auth.LoginRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            },
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "loginWithJwt.auth.LoginRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.LogoutRequest.Input": {
@@ -982,6 +1476,55 @@
         },
         "properties": {
           "confirmPassword": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1039,9 +1582,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "email": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1099,9 +1701,60 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "name": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){2,100}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){2,100}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1159,9 +1812,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "password": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1219,7 +1931,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -1266,8 +1988,28 @@
               "path": "property.name/innerType/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "registerUser.auth.RegisterRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.ResetPasswordRequest.Input": {
@@ -1317,6 +2059,55 @@
         },
         "properties": {
           "confirmPassword": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1374,9 +2165,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "password": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1434,9 +2284,60 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "token": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1494,7 +2395,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -1531,8 +2442,28 @@
               "path": "property.password/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "resetPassword.auth.ResetPasswordRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.SetCookieHeader.Output": {
@@ -1618,6 +2549,55 @@
         },
         "properties": {
           "newEmail": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1675,9 +2655,68 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "password": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){6,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    false,
+                    true,
+                    [
+                      null
+                    ],
+                    [
+                      false
+                    ],
+                    [
+                      true
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1735,7 +2774,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -1770,11 +2819,60 @@
               "path": "property.password/innerType/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "updateEmail.auth.UpdateEmailRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.UserIdParams.node.70726f70657274792e757365724964.Input": {
+        "allOf": [
+          {
+            "if": {
+              "type": "string"
+            },
+            "then": {
+              "type": "string"
+            }
+          },
+          {
+            "if": {
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "type": "string"
+                }
+              ],
+              "type": "array"
+            },
+            "then": {
+              "prefixItems": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
         "anyOf": [
           {
             "anyOf": [
@@ -1833,6 +2931,16 @@
             "type": "array"
           }
         ],
+        "x-contract-fidelity": {
+          "constraint": "string-coercion-preimage",
+          "exactBranches": [
+            "string",
+            "singleton-string",
+            "boolean",
+            "null"
+          ],
+          "remaining": "Numeric stringification remains a scoped projection exception."
+        },
         "x-contract-projection": {
           "limitations": [
             {
@@ -1851,8 +2959,45 @@
               "path": "in/in/options.0/options.1/options.1"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "changePassword.auth.UserIdParams.node.70726f70657274792e757365724964.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            },
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "updateEmail.auth.UserIdParams.node.70726f70657274792e757365724964.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.VerifyEmailRequest.Input": {
@@ -1902,6 +3047,47 @@
         },
         "properties": {
           "token": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -1959,7 +3145,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -1984,8 +3180,28 @@
               "path": "property.token/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "verifyEmail.auth.VerifyEmailRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.jwt.JwtLogoutRequest.Input": {
@@ -2035,6 +3251,47 @@
         },
         "properties": {
           "accessToken": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -2092,9 +3349,60 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "refreshToken": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -2152,7 +3460,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -2187,8 +3505,28 @@
               "path": "property.accessToken/innerType/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "logoutWithJwt.auth.jwt.JwtLogoutRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.jwt.JwtRefreshRequest.Input": {
@@ -2238,6 +3576,47 @@
         },
         "properties": {
           "refreshToken": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -2295,7 +3674,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           }
         },
         "required": [
@@ -2320,8 +3709,28 @@
               "path": "property.refreshToken/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "refreshJwtTokens.auth.jwt.JwtRefreshRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.jwt.JwtTokensResponse.Output": {
@@ -2568,6 +3977,47 @@
                 "type": "object"
               },
               "id": {
+                "allOf": [
+                  {
+                    "if": {
+                      "type": "string"
+                    },
+                    "then": {
+                      "pattern": "^[A-Za-z0-9_-]+$",
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "if": {
+                      "maxItems": 1,
+                      "minItems": 1,
+                      "prefixItems": [
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "then": {
+                      "prefixItems": [
+                        {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "not": {
+                      "enum": [
+                        null,
+                        [
+                          null
+                        ]
+                      ]
+                    }
+                  }
+                ],
                 "anyOf": [
                   {
                     "anyOf": [
@@ -2625,9 +4075,60 @@
                     ],
                     "type": "array"
                   }
-                ]
+                ],
+                "x-contract-fidelity": {
+                  "constraint": "string-coercion-preimage",
+                  "exactBranches": [
+                    "string",
+                    "singleton-string",
+                    "boolean",
+                    "null"
+                  ],
+                  "remaining": "Numeric stringification remains a scoped projection exception."
+                }
               },
               "rawId": {
+                "allOf": [
+                  {
+                    "if": {
+                      "type": "string"
+                    },
+                    "then": {
+                      "pattern": "^[A-Za-z0-9_-]+$",
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "if": {
+                      "maxItems": 1,
+                      "minItems": 1,
+                      "prefixItems": [
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "then": {
+                      "prefixItems": [
+                        {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "not": {
+                      "enum": [
+                        null,
+                        [
+                          null
+                        ]
+                      ]
+                    }
+                  }
+                ],
                 "anyOf": [
                   {
                     "anyOf": [
@@ -2685,11 +4186,62 @@
                     ],
                     "type": "array"
                   }
-                ]
+                ],
+                "x-contract-fidelity": {
+                  "constraint": "string-coercion-preimage",
+                  "exactBranches": [
+                    "string",
+                    "singleton-string",
+                    "boolean",
+                    "null"
+                  ],
+                  "remaining": "Numeric stringification remains a scoped projection exception."
+                }
               },
               "response": {
                 "properties": {
                   "authenticatorData": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -2747,9 +4299,60 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "clientDataJSON": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -2807,9 +4410,60 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "signature": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -2867,9 +4521,48 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "userHandle": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -2927,7 +4620,17 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   }
                 },
                 "required": [
@@ -3070,8 +4773,28 @@
               "path": "property.response/property.response/property.userHandle/innerType/in/in/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "finishAuthentication.auth.passkeys.PasskeyAuthenticationFinishRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.passkeys.PasskeyRegistrationBeginRequest.Input": {
@@ -3156,8 +4879,28 @@
               "path": "property.authenticatorAttachment/innerType/in/in/options.0/options.1/options.1"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "beginRegistration.auth.passkeys.PasskeyRegistrationBeginRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       },
       "auth.passkeys.PasskeyRegistrationBeginResponse.Output": {
@@ -3418,6 +5161,61 @@
         },
         "properties": {
           "name": {
+            "allOf": [
+              {
+                "if": {
+                  "type": "string"
+                },
+                "then": {
+                  "allOf": [
+                    {
+                      "pattern": "^(?:[\\s\\S]){1,255}(?![\\s\\S])"
+                    },
+                    {
+                      "pattern": "\\S"
+                    }
+                  ],
+                  "type": "string"
+                }
+              },
+              {
+                "if": {
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "then": {
+                  "prefixItems": [
+                    {
+                      "allOf": [
+                        {
+                          "pattern": "^(?:[\\s\\S]){1,255}(?![\\s\\S])"
+                        },
+                        {
+                          "pattern": "\\S"
+                        }
+                      ],
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "enum": [
+                    null,
+                    [
+                      null
+                    ]
+                  ]
+                }
+              }
+            ],
             "anyOf": [
               {
                 "anyOf": [
@@ -3475,7 +5273,17 @@
                 ],
                 "type": "array"
               }
-            ]
+            ],
+            "x-contract-fidelity": {
+              "constraint": "string-coercion-preimage",
+              "exactBranches": [
+                "string",
+                "singleton-string",
+                "boolean",
+                "null"
+              ],
+              "remaining": "Numeric stringification remains a scoped projection exception."
+            }
           },
           "response": {
             "properties": {
@@ -3549,6 +5357,47 @@
                 "type": "object"
               },
               "id": {
+                "allOf": [
+                  {
+                    "if": {
+                      "type": "string"
+                    },
+                    "then": {
+                      "pattern": "^[A-Za-z0-9_-]+$",
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "if": {
+                      "maxItems": 1,
+                      "minItems": 1,
+                      "prefixItems": [
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "then": {
+                      "prefixItems": [
+                        {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "not": {
+                      "enum": [
+                        null,
+                        [
+                          null
+                        ]
+                      ]
+                    }
+                  }
+                ],
                 "anyOf": [
                   {
                     "anyOf": [
@@ -3606,9 +5455,60 @@
                     ],
                     "type": "array"
                   }
-                ]
+                ],
+                "x-contract-fidelity": {
+                  "constraint": "string-coercion-preimage",
+                  "exactBranches": [
+                    "string",
+                    "singleton-string",
+                    "boolean",
+                    "null"
+                  ],
+                  "remaining": "Numeric stringification remains a scoped projection exception."
+                }
               },
               "rawId": {
+                "allOf": [
+                  {
+                    "if": {
+                      "type": "string"
+                    },
+                    "then": {
+                      "pattern": "^[A-Za-z0-9_-]+$",
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "if": {
+                      "maxItems": 1,
+                      "minItems": 1,
+                      "prefixItems": [
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "then": {
+                      "prefixItems": [
+                        {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "not": {
+                      "enum": [
+                        null,
+                        [
+                          null
+                        ]
+                      ]
+                    }
+                  }
+                ],
                 "anyOf": [
                   {
                     "anyOf": [
@@ -3666,11 +5566,62 @@
                     ],
                     "type": "array"
                   }
-                ]
+                ],
+                "x-contract-fidelity": {
+                  "constraint": "string-coercion-preimage",
+                  "exactBranches": [
+                    "string",
+                    "singleton-string",
+                    "boolean",
+                    "null"
+                  ],
+                  "remaining": "Numeric stringification remains a scoped projection exception."
+                }
               },
               "response": {
                 "properties": {
                   "attestationObject": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -3728,9 +5679,60 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "authenticatorData": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -3788,9 +5790,60 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "clientDataJSON": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -3848,9 +5901,60 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "publicKey": {
+                    "allOf": [
+                      {
+                        "if": {
+                          "type": "string"
+                        },
+                        "then": {
+                          "pattern": "^[A-Za-z0-9_-]+$",
+                          "type": "string"
+                        }
+                      },
+                      {
+                        "if": {
+                          "maxItems": 1,
+                          "minItems": 1,
+                          "prefixItems": [
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "then": {
+                          "prefixItems": [
+                            {
+                              "pattern": "^[A-Za-z0-9_-]+$",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "enum": [
+                            null,
+                            [
+                              null
+                            ]
+                          ]
+                        }
+                      }
+                    ],
                     "anyOf": [
                       {
                         "anyOf": [
@@ -3908,7 +6012,17 @@
                         ],
                         "type": "array"
                       }
-                    ]
+                    ],
+                    "x-contract-fidelity": {
+                      "constraint": "string-coercion-preimage",
+                      "exactBranches": [
+                        "string",
+                        "singleton-string",
+                        "boolean",
+                        "null"
+                      ],
+                      "remaining": "Numeric stringification remains a scoped projection exception."
+                    }
                   },
                   "publicKeyAlgorithm": {
                     "anyOf": [
@@ -3974,6 +6088,47 @@
                     "anyOf": [
                       {
                         "items": {
+                          "allOf": [
+                            {
+                              "if": {
+                                "type": "string"
+                              },
+                              "then": {
+                                "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                                "type": "string"
+                              }
+                            },
+                            {
+                              "if": {
+                                "maxItems": 1,
+                                "minItems": 1,
+                                "prefixItems": [
+                                  {
+                                    "type": "string"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "then": {
+                                "prefixItems": [
+                                  {
+                                    "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                                    "type": "string"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "not": {
+                                "enum": [
+                                  null,
+                                  [
+                                    null
+                                  ]
+                                ]
+                              }
+                            }
+                          ],
                           "anyOf": [
                             {
                               "anyOf": [
@@ -4031,11 +6186,62 @@
                               ],
                               "type": "array"
                             }
-                          ]
+                          ],
+                          "x-contract-fidelity": {
+                            "constraint": "string-coercion-preimage",
+                            "exactBranches": [
+                              "string",
+                              "singleton-string",
+                              "boolean",
+                              "null"
+                            ],
+                            "remaining": "Numeric stringification remains a scoped projection exception."
+                          }
                         },
                         "type": "array"
                       },
                       {
+                        "allOf": [
+                          {
+                            "if": {
+                              "type": "string"
+                            },
+                            "then": {
+                              "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                              "type": "string"
+                            }
+                          },
+                          {
+                            "if": {
+                              "maxItems": 1,
+                              "minItems": 1,
+                              "prefixItems": [
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "type": "array"
+                            },
+                            "then": {
+                              "prefixItems": [
+                                {
+                                  "pattern": "^(?:[\\s\\S]){1,}(?![\\s\\S])",
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "not": {
+                              "enum": [
+                                null,
+                                [
+                                  null
+                                ]
+                              ]
+                            }
+                          }
+                        ],
                         "anyOf": [
                           {
                             "anyOf": [
@@ -4093,7 +6299,17 @@
                             ],
                             "type": "array"
                           }
-                        ]
+                        ],
+                        "x-contract-fidelity": {
+                          "constraint": "string-coercion-preimage",
+                          "exactBranches": [
+                            "string",
+                            "singleton-string",
+                            "boolean",
+                            "null"
+                          ],
+                          "remaining": "Numeric stringification remains a scoped projection exception."
+                        }
                       }
                     ]
                   }
@@ -4252,8 +6468,28 @@
               "path": "property.name/innerType/in"
             }
           ],
-          "proposal": "P07-legacy-input-projection",
-          "status": "proposed"
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md"
+              ],
+              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "id": "finishRegistration.auth.passkeys.PasskeyRegistrationFinishRequest.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
         }
       }
     },
@@ -4261,7 +6497,7 @@
   },
   "info": {
     "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
-    "title": "REVIEW ONLY — Anarchitecture auth-review",
+    "title": "REVIEW-ONLY — Anarchitecture auth-review",
     "version": "0.0.0"
   },
   "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",

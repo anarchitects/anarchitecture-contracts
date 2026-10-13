@@ -121,6 +121,12 @@ export function diffContracts(before, after) {
   for (const key of [
     'profile',
     'releaseBlockers',
+    'capabilityBlockers',
+    'projectionReviews',
+    'projectionProposal',
+    'provenance',
+    'supportedCapabilities',
+    'status',
     'unresolvedHostBindings',
     'excludedOperations',
   ])
@@ -189,7 +195,7 @@ export function gitFile(ref, file) {
     return null;
   }
 }
-export function checkReleasePlans(models, baseRef) {
+export function releaseReports(models, baseRef) {
   const revision = execFileSync(
     'git',
     ['rev-parse', '--verify', `${baseRef}^{commit}`],
@@ -325,7 +331,7 @@ export function checkReleasePlans(models, baseRef) {
       });
     }
     const migrationPath = `tools/openapi/migrations/${model.domain}.json`;
-    validateReleasePlan({
+    const review = {
       name: model.package.name,
       version: previousPackage.version,
       nextVersion: model.package.version,
@@ -333,12 +339,20 @@ export function checkReleasePlans(models, baseRef) {
       plan,
       baseRevision: revision,
       migration: existsSync(migrationPath) ? readJson(migrationPath) : null,
-    });
+    };
     reports.push({
       package: model.package.name,
       requiredBump: requiredBump(previousPackage.version, findings),
+      review,
       findings,
     });
   }
   return reports;
+}
+
+export function checkReleasePlans(models, baseRef) {
+  return releaseReports(models, baseRef).map(({ review, ...report }) => {
+    validateReleasePlan(review);
+    return report;
+  });
 }

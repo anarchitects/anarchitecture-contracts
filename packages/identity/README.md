@@ -26,7 +26,7 @@ bindings; unguarded baseline success is not a promise of anonymous access.
 Repository `yarn check` verifies the frozen cases, expanded validator comparisons,
 packed exports/types and browser bundling. See
 `packages/identity/compatibility/README.md` in the source repository for evidence
-and scope. Generated OpenAPI and resolved profiles remain #7; publication and
+and scope. Generated OpenAPI and the profile-resolution mechanism are implemented by #7; publication and
 independent conformance tooling remain #8. Runtime adoption is separate Bricks
 work, and no deployment or migration claim is made by this package.
 
@@ -38,6 +38,7 @@ They are generated from these canonical schemas and operations and are verified
 in clean tarballs. Runtime imports do not load the files.
 
 The files are **review-only** and claim no supported deployment capabilities.
-Projection proposal P07 is not approved; protected routes remain in the inventory
+P07 exceptions are reviewed per operation and pinned to source/generator bytes.
+Real host evidence remains unresolved; protected routes remain in the inventory
 until host security bindings are resolved. Review `docs/openapi.md` and
 `docs/openapi-projection-proposal.md` in the source repository before using them.

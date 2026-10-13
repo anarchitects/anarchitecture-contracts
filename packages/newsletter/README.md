@@ -46,6 +46,7 @@ They are generated from these canonical schemas and operations and are verified
 in clean tarballs. Runtime imports do not load the files.
 
 The files are **review-only** and claim no supported deployment capabilities.
-Projection proposal P07 is not approved; protected routes remain in the inventory
+P07 exceptions are reviewed per operation and pinned to source/generator bytes.
+Real host evidence remains unresolved; protected routes remain in the inventory
 until host security bindings are resolved. Review `docs/openapi.md` and
 `docs/openapi-projection-proposal.md` in the source repository before using them.

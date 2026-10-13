@@ -32,8 +32,9 @@ methods, paths, 200 outcomes and fixture references. No pagination is added.
 
 `formsReleaseBlockers` exports D05/D08 with blocked status and maintainers responsible
 for review. Contracts architecture maintainers and Bricks Forms/security maintainers
-must agree an explicitly constrained legacy disposition or a separately reviewed,
-versioned validation/redaction migration, with access-scope and consumer evidence.
+have accepted the validation/redaction direction. The versioned implementation
+migration still needs access-scope and consumer evidence; see the
+[Forms migration requirements](../../../docs/forms-security-migration.md).
 The existing [3-tier adoption issue #489](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489)
 and its [epic #485](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/485)
 own downstream integration. This change opens no separate implementation issue
@@ -69,9 +70,9 @@ TypeScript 5.5.4/6.0.3 with strict NodeNext/bundler resolution, and browser bund
 All public exports are exercised outside the workspace; only Zod is installed as
 a runtime dependency. CI runs the same package/runtime checks.
 
-Native input generation remains blocked on decoded non-finite values and
-post-coercion constraints. Issue #7 must establish faithful representation or a
-reviewed exception; no `{}` fallback or validation change is authorized. Resolved
+Native input conversion has decoded non-finite and post-coercion gaps. The #7
+generator implements faithful constraints and scoped reviewed exceptions; no
+`{}` fallback or legacy validation change is authorized. Resolved
 host authentication/authorization, actual provider/storage behavior and the
 D05/D08 security decisions are not proven by schema tests. Publication/provenance
 and independent conformance remain #8; package existence is not adoption.
@@ -80,6 +81,8 @@ and independent conformance remain #8; package existence is not adoption.
 
 Generated JSON/YAML review artifacts, inventories and package manifests now exist.
 The [generation guide](../../../docs/openapi.md) and
-[proposed projection exception P07](../../../docs/openapi-projection-proposal.md)
-record the exact remaining conversion and profile gates. No parser changes or
-release approvals are introduced; earlier runtime and security limits still apply.
+[reviewed, scoped projection register P07](../../../docs/openapi-projection-proposal.md)
+record faithful constraints, remaining exceptions and strict profile/evidence gates.
+Synthetic verification is test-only; actual host evidence and capability blockers
+remain outstanding. Existing legacy parsers and frozen HTTP observations are
+preserved. #7 can complete independently of host remediation and #8 publication.

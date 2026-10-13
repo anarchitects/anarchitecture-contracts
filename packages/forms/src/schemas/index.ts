@@ -1,6 +1,9 @@
 import { z } from 'zod';
 export * from './forms.js';
 import {
+  PublicFormDefinitionResponseSchema,
+  PublicFormDefinitionEnvelopeResponseSchema,
+  FormDeliveryStatusSchema,
   FormIdParamsSchema,
   FormDefinitionQuerySchema,
   SubmissionsQuerySchema,
@@ -59,6 +62,10 @@ export type ForbiddenError = z.infer<typeof ForbiddenErrorSchema>;
 export type NotFoundError = z.infer<typeof NotFoundErrorSchema>;
 export type InternalServerError = z.infer<typeof InternalServerErrorSchema>;
 export const formsSchemas = Object.freeze({
+  'forms.PublicFormDefinitionResponse': PublicFormDefinitionResponseSchema,
+  'forms.PublicFormDefinitionEnvelopeResponse':
+    PublicFormDefinitionEnvelopeResponseSchema,
+  'forms.FormDeliveryStatus': FormDeliveryStatusSchema,
   'forms.FormIdParams': FormIdParamsSchema,
   'forms.FormDefinitionQuery': FormDefinitionQuerySchema,
   'forms.SubmissionsQuery': SubmissionsQuerySchema,
@@ -79,3 +86,11 @@ export const formsSchemas = Object.freeze({
   'forms.NotFoundError': NotFoundErrorSchema,
   'forms.InternalServerError': InternalServerErrorSchema,
 });
+
+export type PublicFormDefinitionResponse = z.infer<
+  typeof PublicFormDefinitionResponseSchema
+>;
+export type PublicFormDefinitionEnvelopeResponse = z.infer<
+  typeof PublicFormDefinitionEnvelopeResponseSchema
+>;
+export type FormDeliveryStatus = z.infer<typeof FormDeliveryStatusSchema>;
