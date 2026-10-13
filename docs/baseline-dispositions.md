@@ -60,3 +60,18 @@ authorization rule. Use [release conventions](releases.md) for the version plan.
 
 3-tier adoption and DDD conformance remain the separate implementation work linked
 by EPIC #1. DDD capabilities it does not implement stay explicitly unsupported.
+
+## Issue #6 extraction evidence
+
+Forms and Newsletter now have authored Zod packages and operation registries.
+The [Forms compatibility record](../packages/forms/compatibility/README.md)
+preserves D05/D08 as explicit stable capability blockers, exported through
+`formsReleaseBlockers`. Contracts architecture maintainers and Bricks Forms/security
+maintainers own their disposition, with downstream integration tracked in
+[3-tier #489](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489).
+No security decision is bypassed by extraction or a pending Changeset.
+
+The [Newsletter compatibility record](../packages/newsletter/compatibility/README.md)
+documents D03/D04/D09, strict UTF-16 limits, honeypot precedence and signed webhook
+semantics. Issue #7 must account for conversion gaps and resolve deployment
+profiles; successful schema conversion alone does not establish equivalence.

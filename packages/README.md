@@ -4,7 +4,8 @@
 defines the package design for #4. These are selected names and boundaries, not
 published packages or reserved npm names. Issue #5 implements [Auth](auth/README.md)
 and [Identity](identity/README.md), with real schemas, operations and tests.
-Forms/Newsletter follow in #6; do not publish empty placeholders.
+Issue #6 implements [Forms](forms/README.md) and [Newsletter](newsletter/README.md).
+All four remain unreleased; compatibility records describe explicit release gates.
 
 ## Ownership and public entry points
 

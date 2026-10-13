@@ -28,6 +28,8 @@ try {
     'node_modules/zod',
     'packages/auth',
     'packages/identity',
+    'packages/forms',
+    'packages/newsletter',
   ]) {
     const [pack] = JSON.parse(
       run('npm', [
@@ -72,7 +74,7 @@ try {
     import { createRequire } from 'node:module';
     import { readFileSync } from 'node:fs';
     const require = createRequire(import.meta.url);
-    for (const domain of ['auth', 'identity']) {
+    for (const domain of ['auth', 'identity', 'forms', 'newsletter']) {
       const name = '@anarchitects/' + domain + '-contracts';
       const pkg = JSON.parse(readFileSync(new URL('./node_modules/' + name + '/package.json', import.meta.url), 'utf8'));
       for (const subpath of Object.keys(pkg.exports)) {
@@ -81,8 +83,12 @@ try {
         assert.deepEqual(Object.keys(esm).sort(), Object.keys(cjs).sort(), specifier);
       }
       const esm = await import(name), cjs = require(name);
-      const schemaName = domain === 'auth' ? 'LoginRequestSchema' : 'CreateUserProfileRequestSchema';
-      const input = domain === 'auth' ? { credential: 123456, password: 123456 } : { authUserId: 123, displayName: null };
+      const [schemaName, input] = {
+        auth: ['LoginRequestSchema', { credential: 123456, password: 123456 }],
+        identity: ['CreateUserProfileRequestSchema', { authUserId: 123, displayName: null }],
+        forms: ['SubmissionRequestSchema', { formId: 123, formVersion: '2', payload: {} }],
+        newsletter: ['NewsletterSubscribeRequestSchema', { website: 'bot' }],
+      }[domain];
       assert.deepEqual(esm[schemaName].parse(input), cjs[schemaName].parse(input));
       assert.throws(() => require(name + '/src/index'), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
     }
@@ -95,7 +101,7 @@ try {
   if (process.env.CONTRACTS_NODE22_BIN)
     console.log(run(process.env.CONTRACTS_NODE22_BIN, ['runtime.mjs']).trim());
 
-  for (const domain of ['auth', 'identity']) {
+  for (const domain of ['auth', 'identity', 'forms', 'newsletter']) {
     const base = join(
       directory,
       'node_modules',
@@ -126,6 +132,23 @@ try {
     import { PolicyRuleSchema } from '@anarchitects/auth-contracts/policy';
     import { PasskeyRegistrationFinishRequestSchema } from '@anarchitects/auth-contracts/passkeys';
     import { CreateUserProfileRequestSchema, type CreateUserProfileRequestInput, type UserProfileResponse } from '@anarchitects/identity-contracts';
+    import { SubmissionRequestSchema, submitForm, type SubmissionRequestInput, type SubmissionRequest } from '@anarchitects/forms-contracts';
+    import { NewsletterSubscriptionRequestSchema, type NewsletterSubscriptionRequest } from '@anarchitects/newsletter-contracts';
+    import { NewsletterNativeActionRequestSchema, confirmNewsletterSubscription } from '@anarchitects/newsletter-contracts/native';
+    import { NewsletterWebhookPayloadSchema, receiveNewsletterWebhook } from '@anarchitects/newsletter-contracts/webhook';
+    const formRaw: SubmissionRequestInput = { formId: 123, formVersion: '2', payload: {} };
+    const formParsed: SubmissionRequest = SubmissionRequestSchema.parse(formRaw);
+    const version: number = formParsed.formVersion;
+    const formPath: '/forms/submit' = submitForm.path;
+    const actionPath: '/newsletter/confirm' = confirmNewsletterSubscription.path;
+    const rawKind: 'raw' = receiveNewsletterWebhook.requestBody.kind;
+    const subscribed: NewsletterSubscriptionRequest = NewsletterSubscriptionRequestSchema.parse({ email: 'a@b.c', consent: true, consentVersion: 'v1' });
+    const consent: true = subscribed.consent;
+    // @ts-expect-error request consent cannot be a string
+    const badConsent: NewsletterSubscriptionRequest = { email: 'a@b.c', consent: 'true', consentVersion: 'v1' };
+    // @ts-expect-error parsed formVersion cannot be a string
+    const badVersion: string = formParsed.formVersion;
+    void [version, formPath, actionPath, rawKind, consent, badConsent, badVersion, NewsletterNativeActionRequestSchema, NewsletterWebhookPayloadSchema];
     const raw: LoginRequestInput = { credential: 123456, password: ['password'] };
     const parsed: LoginRequest = LoginRequestSchema.parse(raw);
     const text: string = parsed.password;
@@ -143,7 +166,7 @@ try {
   writeFileSync(join(directory, 'consumer.mts'), types);
   writeFileSync(
     join(directory, 'consumer.cts'),
-    `import auth = require('@anarchitects/auth-contracts');\nimport identity = require('@anarchitects/identity-contracts');\nconst method: 'POST' = auth.login.method;\nconst value: string = identity.CreateUserProfileRequestSchema.parse({ authUserId: 123 }).authUserId;\nvoid [method, value];\n`,
+    `import auth = require('@anarchitects/auth-contracts');\nimport identity = require('@anarchitects/identity-contracts');\nconst method: 'POST' = auth.login.method;\nconst value: string = identity.CreateUserProfileRequestSchema.parse({ authUserId: 123 }).authUserId;\nimport forms = require('@anarchitects/forms-contracts');\nimport newsletter = require('@anarchitects/newsletter-contracts');\nconst version: number = forms.SubmissionRequestSchema.parse({formId: 'x', formVersion: '2', payload: {}}).formVersion;\nconst accepted: true = newsletter.NewsletterAcceptedResponseSchema.parse({accepted: true}).accepted;\nvoid [method, value, version, accepted];\n`,
   );
   for (const [resolution, files] of [
     ['NodeNext', ['consumer.mts', 'consumer.cts']],
@@ -180,7 +203,7 @@ try {
   }
   writeFileSync(
     join(directory, 'browser.mjs'),
-    `export { LoginRequestSchema, authOperations } from '@anarchitects/auth-contracts';\nexport { identityOperations } from '@anarchitects/identity-contracts';\n`,
+    `export { LoginRequestSchema, authOperations } from '@anarchitects/auth-contracts';\nexport { identityOperations } from '@anarchitects/identity-contracts';\nexport { formsOperations } from '@anarchitects/forms-contracts';\nexport { newsletterOperations } from '@anarchitects/newsletter-contracts';\n`,
   );
   const bundle = await build({
     entryPoints: [join(directory, 'browser.mjs')],

@@ -22,7 +22,10 @@ schemas and inferred types, explicit HTTP operations, dual ESM/CommonJS packagin
 and compatibility/release boundaries. Issue #5 implements the unreleased
 [Auth](packages/auth/README.md) and [Identity](packages/identity/README.md)
 packages: 21 operations with inferred types and compatibility tests.
-Forms/Newsletter extraction follows in #6.
+Issue #6 adds [Forms](packages/forms/README.md) and
+[Newsletter](packages/newsletter/README.md), completing the 29-operation inventory.
+Forms security dispositions and request-generation/profile gaps remain explicit
+release gates; no stable capability or deployment adoption is implied.
 
 Before writing code, read [AGENTS.md](AGENTS.md), every Meta and local ADR, and
 the relevant engineering guides.
@@ -58,7 +61,7 @@ Changesets status needs a committed `HEAD` and a fetched `origin/main` base.
 | Path                            | Purpose                                                      |
 | ------------------------------- | ------------------------------------------------------------ |
 | `adr/`                          | Local architecture decisions                                 |
-| `packages/`                     | Auth/Identity workspaces and future domain conventions       |
+| `packages/`                     | Four independent contract workspaces and domain conventions  |
 | `.changeset/`                   | Package-level version and changelog configuration            |
 | `docs/releases.md`              | Publication conventions, compatibility and adoption gates    |
 | `docs/schema-authoring.md`      | Zod schema, inferred type and normalization conventions      |
@@ -75,9 +78,8 @@ and business logic remain in their owning bounded contexts.
 
 ## Next delivery steps
 
-1. [#6](https://github.com/anarchitects/anarchitecture-contracts/issues/6): extract Forms/Newsletter and resolve their migration decisions.
-2. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): deterministic OpenAPI and compatibility gates.
-3. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
+1. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): deterministic OpenAPI and compatibility gates.
+2. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
 
 See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
 [ADR-0002](adr/0002-domain-contract-authoring-and-publishing-boundaries.md),

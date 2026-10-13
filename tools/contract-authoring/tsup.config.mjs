@@ -3,7 +3,9 @@ import { basename, resolve } from 'node:path';
 const names =
   basename(process.cwd()) === 'auth'
     ? ['index', 'schemas', 'operations', 'jwt', 'passkeys', 'policy']
-    : ['index', 'schemas', 'operations'];
+    : basename(process.cwd()) === 'newsletter'
+      ? ['index', 'schemas', 'operations', 'native', 'webhook']
+      : ['index', 'schemas', 'operations'];
 export default {
   entry: Object.fromEntries(
     names.map((name) => [

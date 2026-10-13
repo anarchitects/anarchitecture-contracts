@@ -7,7 +7,7 @@ execFileSync(
   ['node_modules/typescript/bin/tsc', '--noEmit'],
   { stdio: 'inherit' },
 );
-for (const domain of ['auth', 'identity']) {
+for (const domain of ['auth', 'identity', 'forms', 'newsletter']) {
   for (const format of ['esm', 'cjs']) {
     // A separate process resolves package type and all build workers consistently.
     execFileSync(
