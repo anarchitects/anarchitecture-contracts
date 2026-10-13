@@ -12,7 +12,7 @@
 
 Contracts was bootstrapped in #2 as a minimal private Yarn 4 workspace with Changesets and no Nx requirement. ADR-0001 deliberately scoped this choice to the **foundation**; ADR-0002 subsequently established four independently released Zod-first packages and applied the then-current Changesets workflow. Existing package authoring, build, type, test and clean packed-consumer checks must not be discarded.
 
-Bricks 3-Tier, Plugins and Community use Nx projects, Nx Release and dedicated GitHub release/publish workflows. Contracts must use the same maintainable workspace and delivery model without becoming dependent on either implementation repository, making Nx mandatory for *consumers*, or losing canonical Zod/OpenAPI/compatibility guarantees.
+Bricks 3-Tier, Plugins and Community use Nx projects, Nx Release and dedicated GitHub release/publish workflows. Contracts must use the same maintainable workspace and delivery model without becoming dependent on either implementation repository, making Nx mandatory for _consumers_, or losing canonical Zod/OpenAPI/compatibility guarantees.
 
 ## Decision
 
@@ -41,14 +41,14 @@ Bricks 3-Tier, Plugins and Community use Nx projects, Nx Release and dedicated G
 
 ### 4. Contract conformance and adoption remain separate gates
 
-- Retain independent conformance tooling and fixtures for OpenAPI comparison **and real positive, negative and security-sensitive HTTP behavior**. They can be invoked as Nx tasks in this repository, but consumers must be able to run the same tooling *without* Nx.
+- Retain independent conformance tooling and fixtures for OpenAPI comparison **and real positive, negative and security-sensitive HTTP behavior**. They can be invoked as Nx tasks in this repository, but consumers must be able to run the same tooling _without_ Nx.
 - Maintain CI on pull requests and `main`: immutable Yarn install, affected builds/types/tests where appropriate, deterministic OpenAPI verification, SemVer/breaking-change analysis, packed ESM/CJS/Node/browser consumers and required runtime conformance cases. The release workflow cannot treat a green code build alone as a contract compatibility approval.
 - Coordinate with [3-Tier EPIC #485](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/485), [DDD EPIC #23](https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23) and optional [Plugins EPIC #581](https://github.com/anarchitects/anarchitecture-plugins/issues/581). Bricks consume independently published/pinned contract versions; the Plugins integration, if any, wraps the framework-neutral CLI. Missing DDD capabilities are never declared implemented.
 - **Contracts migration precedes Nest 12-native modernization.** Neither this ADR nor #8 authorizes runtime authentication, authorization, mail, HTTP-adapter or domain changes.
 
 ## Precedence and transition
 
-This Accepted ADR **partially supersedes** only the *tooling and release-mechanism* decisions of earlier local ADRs:
+This Accepted ADR **partially supersedes** only the _tooling and release-mechanism_ decisions of earlier local ADRs:
 
 - **ADR-0001, Decision 1 (Nx for development):** The initial no-Nx foundation choice is historical. Nx is now required in the development workspace, but must never be required to consume published contracts or standalone conformance tools. Yarn, Node, the lockfile and immutable installations remain valid.
 - **ADR-0001, Decision 6 (Changesets):** Changesets remains only as the currently implemented transitional state while issue #8 migrates pending entries. Nx Release becomes the sole permanent release authority. Independent versions, npm scope and compatibility safeguards remain valid.
