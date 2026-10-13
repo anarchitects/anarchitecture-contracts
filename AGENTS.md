@@ -54,3 +54,7 @@ package build, type, compatibility, packed-consumer and behavioral checks as
 packages evolve;
 do not add placeholder checks that claim conformance without exercising it.
 Keep each epic subissue in a separate PR and report validation gaps accurately.
+
+## Pending Nx Release migration
+
+[Accepted ADR-0003](adr/0003-nx-workspace-and-release-governance.md) supersedes the initial no-Nx workspace choice and Changesets as the permanent version/release mechanism. During [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8), preserve outstanding Changesets intent while switching to Nx/`@nx/js` and a **single** Nx Release authority; do not report the migration completed before CI and publication evidence exists. The contracts runtime and standalone conformance CLI must not acquire Nx as a dependency.

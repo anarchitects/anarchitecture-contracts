@@ -143,3 +143,7 @@ or silently change a shared contract inside an implementation repository.
 - [Yarn workspaces and published workspace ranges](https://yarnpkg.com/features/workspaces)
 - [Changesets configuration](https://github.com/changesets/changesets/blob/main/docs/config-file-options.md)
 - [Meta ADR-0012](https://github.com/anarchitects/anarchitecture-meta/blob/main/adr/0012-canonical-public-api-contract-ownership.md)
+
+## Accepted Nx Release migration (target for issue #8)
+
+[ADR-0003](../adr/0003-nx-workspace-and-release-governance.md) **supersedes Changesets as the permanent release authority** and requires Nx/`@nx/js` for repository build orchestration. The Changesets process described in this document is **the currently implemented transitional process only**. Issue #8 must map all outstanding Changesets intent to independently versioned Nx Release plans, then replace the scripts, workflows, release commands and this runbook in the same controlled cutover. No concurrent long-term versioning or publishing mechanisms are permitted. Published contract packages and the standalone conformance CLI remain usable without Nx. Until #8 implements and verifies the switch, do not claim Nx Release or npm publishing is operational.

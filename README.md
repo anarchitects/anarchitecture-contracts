@@ -88,3 +88,7 @@ See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
 ## License
 
 [MIT](LICENSE).
+
+## Accepted Nx workspace and release direction
+
+[ADR-0003](adr/0003-nx-workspace-and-release-governance.md) establishes Nx/`@nx/js` as the **target repository tooling** and Nx Release as the **sole future versioning/release authority**, replacing the present Changesets workflow in [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8). Existing commands above describe the **current implementation**, not completed Nx adoption. The released Zod/OpenAPI contracts and independent conformance tooling must remain usable without Nx.
