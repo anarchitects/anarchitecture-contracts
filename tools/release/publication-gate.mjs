@@ -1,4 +1,5 @@
 import { pathToFileURL } from 'node:url';
+import semver from 'semver';
 import { invariant, readJson } from '../openapi/common.mjs';
 import { releaseProjects } from './plans.mjs';
 
@@ -8,7 +9,20 @@ export function assertPublishable(project) {
     'Ineligible release project',
   );
   const domain = project.replace(/-contracts$/, '');
+  const pkg = readJson(`packages/${domain}/package.json`);
+  if (process.env.RELEASE_VERSION) {
+    invariant(
+      semver.valid(process.env.RELEASE_VERSION) ===
+        process.env.RELEASE_VERSION &&
+        pkg.version === process.env.RELEASE_VERSION,
+      'Release tag must match the exact package SemVer',
+    );
+  }
   const manifest = readJson(`packages/${domain}/contract-manifest.json`);
+  invariant(
+    manifest.packages?.[pkg.name] === pkg.version,
+    'Regenerate contract artifacts after changing the package version',
+  );
   invariant(
     manifest.status === 'resolved' &&
       manifest.supportedCapabilities?.length > 0,
@@ -21,9 +35,4 @@ if (
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
   assertPublishable(process.argv[2]);
-  // Scoped Nx publishing skips dependsOn: the preparation target itself must
-  // fail closed, and deliberately cannot invoke npm under any circumstances.
-  throw new Error(
-    'Publication disabled until #8 delivers reviewed signed release and immutable-tag trusted-publishing workflows.',
-  );
 }

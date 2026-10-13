@@ -3,8 +3,8 @@
 This is the first implementation increment of [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8).
 It makes the four contract packages Nx projects and transfers release intent to
 Nx Release. It does not complete #8, create a release, publish to npm or claim
-downstream adoption. The manual workflow currently provides read-only dry-run
-evidence. Signed release/publish automation and standalone HTTP conformance
+downstream adoption. Community-style release/publish workflows now use Nx targets and the standard
+Nx publisher. Live credential/signing verification and standalone HTTP conformance
 remain required by the [release runbook](releases.md).
 
 ## Architecture review
@@ -46,10 +46,9 @@ Each `<domain>-contracts` project has:
   `pack`/`contract-check` targets schedule the full shared suite, once per task
   graph, including all published subpaths, TS 5.5/6 and browser bundles.
 - An uncached publication check after artifact and consumer validation. The
-  publish target itself is a fail-closed preparation guard and cannot call npm:
-  scoped Nx publishing skips task dependencies. It must be replaced only with
-  the reviewed signing and immutable-tag publishing workflow. This is an early
-  blocker, not completed provenance or host-runtime verification.
+  publish target uses the standard `@nx/js:release-publish` executor. Because
+  scoped Nx publishing skips dependencies, `publish.yml` explicitly runs the
+  gate before publishing. Current review-only artifacts still fail it.
 
 The private `contract-checks` project depends on all four domains. The domain
 projects have no invented cross-domain dependencies. Builds use `^build` for
@@ -87,7 +86,8 @@ independent expected versions and unchanged manifests, lockfile and plan files.
 
 Nx version plans are the sole ongoing bump/changelog input. Conventional commit
 classification informs reviewed plans; it cannot override semantic compatibility.
-Git actions and GitHub Release creation are disabled during preparation. The
+Direct CLI Git actions remain disabled by default; the workflow release target
+explicitly enables signed Git actions and Nx GitHub Release creation. The
 root and tooling project are absent from the explicit release allowlist.
 All Changesets scripts, config, dependency and CI authority have been removed.
 The ledger is historical evidence, not another executable release plan.
@@ -114,19 +114,19 @@ Validated on Node 24.21.0 and Yarn 4.18.1:
 - `yarn openapi:compatibility HEAD`: patch intent for the four package README
   updates; no canonical source or generated-contract change.
 - Nx Release dry runs produce independent `0.1.0` versions and preserve all
-  pending rationale. The real scoped publish dry run rejects review-only artifacts
-  without invoking npm. Regression checks run through `yarn test:release`.
+  pending rationale. The publication gate rejects review-only artifacts before the workflow can
+  invoke npm. Regression checks run through `yarn test:release`.
 
 Node 22 is retained in the CI installed-consumer matrix; no local Node 22 binary
-was available for this increment. Remote CI, signed release and actual npm
-publication have not been exercised. These are validation gaps, not successes
+was available for this increment. The initial PR CI passed on GitHub, including both consumer runtimes. Signed
+release and actual npm publication have not been exercised. These are validation gaps, not successes
 inferred from local builds.
 
 ## Remaining acceptance gates
 
 The repository migration is not the completed release migration. #8 still needs
-remote CI evidence, a separately reviewed signing/trusted-publishing setup,
-immutable-tag release/publish workflow verification, independent HTTP runner
+CI evidence for the workflow changes, a separately reviewed signing/trusted-publishing
+setup, live workflow verification, independent HTTP runner
 packaging and real host conformance. A reviewed first publication must record
 versions, tags, integrity, provenance and clean installed-consumer evidence.
 Host blockers (including Forms D05/D08) and unsupported DDD capabilities remain
@@ -136,3 +136,19 @@ Rollback before publication is a reviewed revert of this tooling change; the
 immutable ledger and Git history retain release intent. After publication, keep
 the last verified immutable consumer pin and fix forward. Never overwrite a
 released artifact or revive two independent release authorities.
+
+## Community-style workflows and Nx commands
+
+Rechecked ADR-0003 and the unchanged Meta revision above for this follow-up.
+The release/publish split follows Community's small workflow model. Root scripts
+now delegate to `contract-checks` Nx targets, with dependencies scheduling the
+existing checks once per graph. CI and delivery invoke Nx directly. No domain
+release groups or alternative version authority were introduced.
+
+The sole release orchestration helper uses Nx's public API to insert deterministic
+artifact generation and checks between versioning and signed changelog/tag creation.
+A read-only dry run exercises that same Nx version/changelog path. Inputs cannot
+silently override pending plans. The publisher resolves a verified annotated tag
+to an immutable SHA and uses the standard Nx executor after the explicit gate.
+See the [runbook](releases.md#workflow-operation) for required credentials, npm
+mapping, replay behavior and the remaining live-evidence limitations.

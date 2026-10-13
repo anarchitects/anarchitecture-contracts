@@ -65,6 +65,9 @@ Nx 23.3.0 and `@nx/js` provide per-package builds and inferred typechecks.
 Use `yarn nx show projects`, `yarn nx graph` and `yarn nx run auth-contracts:build`
 to inspect or run the graph. `yarn release:plan` records per-project release intent;
 `yarn release:dry-run` previews the initial independent releases without publication.
+Root scripts delegate to Nx targets. Manual release and tag-based publication use
+the [Community-style workflows](docs/releases.md#workflow-operation), with current
+host-profile blockers enforced before publication.
 See the [migration record](docs/nx-migration.md) for preserved Changesets intent
 and the remaining #8 gates. No Nx Cloud account is needed.
 

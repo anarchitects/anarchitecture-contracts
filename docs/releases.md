@@ -9,18 +9,16 @@ Pending Changesets were transferred to `.nx/version-plans/`, preserving their
 minor intent (`0.1.0`) and complete rationale. See the [migration record](nx-migration.md).
 Changesets dependencies, scripts, configuration and CI validation are removed.
 
-This is the workspace and release-planning preparation for [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8),
-not its completed publication acceptance gate. Git commit/tag/push and GitHub
-Release creation are disabled in the current Nx configuration. The manual
-release-readiness workflow only performs dry runs with read-only permissions.
-No npm publication workflow or credentials are introduced.
+The Community-style `release.yml` and `publish.yml` workflows now prepare signed
+independent releases and publish from immutable tagged commits. They are pipeline
+implementation, not completed publication evidence for [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8).
 
 Generated OpenAPI remains review-only. Real host security/behavior profiles and
 Forms D05/D08 remain explicit blockers; no npm publication or downstream adoption
-is approved. The Nx publish target itself is an uncached fail-closed guard during preparation;
-it cannot call npm. A separate readiness target also runs artifact and consumer
-checks. Scoped Nx publishing skips dependencies, so those checks alone cannot
-protect publication. Removing the guard is not a way to complete #8.
+is approved. The existing publication gate runs before a live release and again
+before npm publication. Scoped Nx publishing skips target dependencies, so the
+publish workflow invokes this gate explicitly. The publisher itself is the standard
+`@nx/js:release-publish` executor; local ad hoc publication is unsupported.
 
 Issue #7 supplies [deterministic generation and compatibility gates](openapi.md).
 The accepted [scoped P07 register](openapi-projection-proposal.md) stays unchanged;
@@ -124,8 +122,62 @@ yarn openapi:compatibility origin/main    # independent semantic/intent gate
 Remove that flag after the first release; normal releases resolve the previous
 version from project-scoped tags. Package versions and generated manifests must
 always be updated together before release; the dry run intentionally writes neither.
-Prerelease identifiers and dist-tags need the controlled workflow validation
-tracked below before use. Do not publish locally through an ad hoc command.
+Prereleases publish under `next`; stable releases use `latest`.
+
+## Workflow operation
+
+Use **Release (Manual)** on `main`. Leave `projects` empty to release all pending
+plans, or supply comma-separated eligible Nx project names. Shared version plans
+must be released together, as enforced by Nx. Set `first_release` for selected
+packages still at `0.0.0`. Keep `dry_run` enabled to preview versions, changelogs,
+and signing/tag actions without writes or credentials. A specifier is optional
+and cannot override pending reviewed plans; update the plan in a PR instead.
+
+For a live run, disable `dry_run`. The workflow runs `nx run contract-checks:check`,
+then `nx run contract-checks:release`. The release target uses Nx's public
+`releaseVersion` and `releaseChangelog` APIs, with no npm publishing phase. This
+is the one required orchestration exception to direct Nx Release CLI calls:
+independent `versionData` must survive artifact regeneration between versioning
+and the signed commit/tag. Nx's changelog CLI only accepts one version string.
+The helper delegates generation, validation and compatibility to Nx targets;
+Nx still controls bumps, plan consumption, changelogs, signed commits/tags,
+atomic push and GitHub Releases. There is no domain release runner.
+
+**Publish** runs on `release.published`, or manually with an existing published
+release tag. It validates the tag/project, requires GitHub-verified tag and commit
+signatures, checks out the resolved commit SHA and requires ancestry on `main`.
+It runs `contract-checks:verify` (the existing full artifact/consumer suite),
+compatibility against the previous package tag (the release commit's parent for
+a first release), and `<project>:publication-check`. The tag, package and manifest
+versions must agree. Only then does it invoke scoped `nx release publish` with
+OIDC/provenance. Concurrency serializes replay of the same tag; Nx detects an
+already-published version rather than overwriting it. Manual replay does not
+create tags or approve an unpublished GitHub Release.
+
+Required setup before the first live run:
+
+- GitHub App secrets `ANARCHITECTS_BOT_CLIENT_ID` and
+  `ANARCHITECTS_BOT_PRIVATE_KEY`, with repository contents access. The App token
+  also lets the GitHub Release event trigger the separate publish workflow.
+- `RELEASE_GPG_PRIVATE_KEY` and, if needed, `RELEASE_GPG_PASSPHRASE`. Use an
+  approved signing identity whose public key and email are registered with GitHub.
+  App authentication and setting a bot author alone do not produce verified signatures.
+- Preserve existing branch rules. If a signed release commit cannot be pushed
+  under those rules, the atomic push stops; do not grant a bypass or disable checks.
+  A repository requiring release changes through PRs needs a separately reviewed
+  integration before live automation can run.
+- Configure npm trusted publishing for each eligible package with owner
+  `anarchitects`, repository `anarchitecture-contracts`, workflow `publish.yml`,
+  environment `npm`. Node 24 must provide npm >=11.5.1. No npm token is introduced.
+  First-package onboarding/organization permissions must be resolved with npm
+  maintainers before the first release; configuration is not assumed by this PR.
+
+All root verification/formatting scripts are now aliases for Nx commands. Plain
+Node implementations remain behind targets for schema generation, compatibility,
+packed consumers and behavioral checks; Nx schedules these domain-specific tools
+but cannot replace their semantics. The CI Node 22 packed-consumer invocation
+intentionally remains direct Node to exercise the independently usable tooling
+without running the Node 24 Nx workspace under Node 22.
 
 ## Release sequence and evidence
 
@@ -152,13 +204,8 @@ tracked below before use. Do not publish locally through an ad hoc command.
 
 The sequence above remains gated. The rest of #8 must implement and verify:
 
-- Manual release from reviewed `main`, validated project/specifier/first-release
-  inputs, regeneration after versioning, compatibility review, and an approved
-  signing mechanism. App authentication alone does not sign a commit. Required
-  signed commits, verified tags and protected-branch rules must remain enforced.
-- A separate immutable-tag publish workflow, strict project/version allowlist,
-  dependency-first publication, npm pack inspection, scoped `nx release publish`,
-  replay protection, minimal permissions, trusted npm OIDC mappings and provenance.
+- Live verification of signed release automation and immutable-tag trusted
+  publishing with the approved credentials and unchanged branch protections.
 - An independently consumable conformance CLI/fixtures with actual positive,
   negative and security-sensitive HTTP checks. Current offline fixture checks
   do not establish deployed host conformance.
@@ -197,8 +244,8 @@ or silently change a shared contract inside an implementation repository.
 ## Architecture and completion
 
 [ADR-0003](../adr/0003-nx-workspace-and-release-governance.md) supersedes the
-historical Changesets/no-Nx choices. This branch implements the workspace and
-single release-planning authority. #8 remains open until signed CI delivery,
+historical Changesets/no-Nx choices. This branch implements the workspace, single release authority and the split
+release/publish workflows. #8 remains open until signed CI delivery,
 independent conformance packaging, trusted publication and clean downstream
 consumer evidence exist. Contract runtimes and the standalone CLI must remain
 usable without Nx.

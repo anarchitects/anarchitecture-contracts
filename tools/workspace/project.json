@@ -14,7 +14,7 @@
       "cache": false
     },
     "openapi": {
-      "command": "node tools/openapi/cli.mjs check && node --test tools/openapi/*.test.mjs",
+      "command": "node tools/openapi/cli.mjs check",
       "dependsOn": ["^build"],
       "cache": false
     },
@@ -25,6 +25,68 @@
     },
     "baseline": {
       "command": "node --test tools/legacy-baseline/baseline.test.mjs",
+      "cache": false
+    },
+    "openapi-test": {
+      "command": "node --test tools/openapi/*.test.mjs",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "generate": {
+      "command": "node tools/openapi/cli.mjs write",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "compatibility": {
+      "command": "node tools/openapi/cli.mjs compatibility",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "profile-release": {
+      "command": "node tools/openapi/cli.mjs release",
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "baseline-verify": {
+      "command": "node tools/legacy-baseline/capture.mjs verify",
+      "cache": false
+    },
+    "format": {
+      "command": "prettier --write .",
+      "cache": false
+    },
+    "format-check": {
+      "command": "prettier --check .",
+      "cache": false
+    },
+    "lint": {
+      "command": "markdownlint-cli2",
+      "cache": false
+    },
+    "release-test": {
+      "command": "node --test tools/release/*.test.mjs && node tools/release/smoke.mjs",
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "release": {
+      "command": "node tools/release/release.mjs",
+      "cache": false
+    },
+    "verify": {
+      "dependsOn": [
+        "format-check",
+        "lint",
+        "baseline",
+        "test",
+        "^test",
+        "openapi",
+        "openapi-test",
+        "pack"
+      ],
+      "cache": false
+    },
+    "check": {
+      "dependsOn": ["verify", "release-test"],
       "cache": false
     }
   }

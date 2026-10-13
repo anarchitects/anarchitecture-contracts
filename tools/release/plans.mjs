@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import YAML from 'yaml';
 import { invariant } from '../openapi/common.mjs';
@@ -49,6 +49,7 @@ export function readReleasePlans({
   previous = () => null,
 } = {}) {
   const plan = {};
+  if (!existsSync(directory)) return plan;
   const rank = { patch: 1, minor: 2, major: 3 };
   for (const file of readdirSync(directory)
     .filter((name) => name.endsWith('.md'))

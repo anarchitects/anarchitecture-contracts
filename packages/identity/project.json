@@ -34,10 +34,9 @@
       "cache": false
     },
     "nx-release-publish": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/js:release-publish",
       "options": {
-        "command": "node tools/release/publication-gate.mjs identity-contracts",
-        "forwardAllArgs": false
+        "access": "public"
       },
       "cache": false
     }

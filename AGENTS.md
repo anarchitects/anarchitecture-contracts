@@ -76,7 +76,7 @@ package changes. The [migration record](docs/nx-migration.md) preserves all pend
 Changesets rationale and bump equivalence. Never reintroduce a second versioner.
 Run `yarn test:release` and package compatibility checks when release tooling changes.
 
-Issue #8 is not complete: signed release automation, standalone conformance,
+Issue #8 is not complete: live signed release verification, standalone conformance,
 trusted publication and downstream clean-install evidence remain required.
 Current review-only manifests must continue to fail publication checks. Never
 remove a capability blocker or treat a dry run as deployment approval.
