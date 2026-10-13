@@ -1,0 +1,179 @@
+{
+  "decision": "docs/openapi-projection-proposal.md",
+  "id": "P07-legacy-input-projection",
+  "owner": "Contracts architecture maintainers and affected domain/security maintainers",
+  "rules": [
+    {
+      "domain": "auth",
+      "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+      "kind": "custom-value"
+    },
+    {
+      "domain": "auth",
+      "implementation": "25863f77b8136cd3be1ab2637962dc59eb6e3611343345761fc63a3abad3edea",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "9fa88652403646385e328b834b932ecd9d9052a910d43c48da6f23204136a68a",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "25863f77b8136cd3be1ab2637962dc59eb6e3611343345761fc63a3abad3edea",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "9fa88652403646385e328b834b932ecd9d9052a910d43c48da6f23204136a68a",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "auth",
+      "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "forms",
+      "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+      "kind": "custom-refinement"
+    },
+    {
+      "domain": "forms",
+      "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+      "kind": "custom-value"
+    },
+    {
+      "domain": "forms",
+      "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "forms",
+      "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "forms",
+      "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "forms",
+      "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "forms",
+      "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "forms",
+      "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "identity",
+      "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+      "kind": "custom-value"
+    },
+    {
+      "domain": "identity",
+      "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "identity",
+      "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+      "kind": "input-pipeline"
+    },
+    {
+      "domain": "identity",
+      "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "identity",
+      "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+      "kind": "output-pipeline"
+    },
+    {
+      "domain": "newsletter",
+      "implementation": "02cfe0bb9590c66091d11668d83931e18ac9778c273188f5e719519832a118ee",
+      "kind": "custom-refinement"
+    },
+    {
+      "domain": "newsletter",
+      "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+      "kind": "custom-refinement"
+    },
+    {
+      "domain": "newsletter",
+      "implementation": "a84fb5c0c6dd474ecf0722607d82f2e276ff24ee4de95274028485cd562e6a62",
+      "kind": "custom-refinement"
+    },
+    {
+      "domain": "newsletter",
+      "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+      "kind": "custom-refinement"
+    },
+    {
+      "domain": "newsletter",
+      "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+      "kind": "custom-value"
+    }
+  ],
+  "sourceDigests": {
+    "auth": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763",
+    "forms": "a3c53c5eb31711492a69b511ebcfac51a95ce1952cb769fbec414f930f819bd6",
+    "identity": "716a208f384a3e304b81ff6b5db6e90bd3737f311dcc7b0334f38908c1985897",
+    "newsletter": "addadecbc9664a8f5607b3cbb513612703834e6b6946b473eab03e6c4d4a25e0"
+  },
+  "status": "proposed"
+}

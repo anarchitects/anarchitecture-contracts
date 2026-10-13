@@ -1,0 +1,1287 @@
+{
+  "operations": [
+    {
+      "availability": {
+        "capability": "newsletter.native",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Invoke the enabled native confirmation action and return a neutral result.",
+        "operationId": "confirmNewsletterSubscription",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newsletter.NewsletterNativeActionRequest.Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NewsletterAcceptedResponse.Output"
+                }
+              }
+            },
+            "description": "Neutral action acceptance.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              }
+            },
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Invalid newsletter request. Preserve generic messages and the applicable malformed-JSON boundary.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NotFoundError.Output"
+                }
+              }
+            },
+            "description": "The capability is disabled; no action or evidence write occurs.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.TooManyRequestsError.Output"
+                }
+              }
+            },
+            "description": "Too many newsletter requests.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              },
+              "retry-after": {
+                "description": "Required when the configured limiter denies a request; seconds are rounded up from retryAfterMs.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.RetryAfterHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required when the configured limiter denies a request; seconds are rounded up from retryAfterMs."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ServiceUnavailableError.Output"
+                }
+              }
+            },
+            "description": "Sanitized processing failure; do not expose persistence/provider details.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Confirm a newsletter subscription",
+        "tags": [
+          "Newsletter"
+        ],
+        "x-contract-capability": "newsletter.native",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04",
+            "D09"
+          ],
+          "fixtures": [
+            "newsletter-confirm",
+            "newsletter-confirm-empty-token",
+            "newsletter-confirm-wrong-type",
+            "newsletter-confirm-unknown-field",
+            "newsletter-confirm-failure",
+            "newsletter-confirm-disabled"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "POST /newsletter/confirm"
+        },
+        "x-contract-domain": "newsletter",
+        "x-contract-semantics": [
+          {
+            "description": "Enabled POST actions accept strict token objects, including empty string, and return neutral 202. Token purpose, expiry, reuse and action semantics belong to the implementation. GET or disabled capabilities return 404 without invoking actions; do not expose tokens through response caching or referrers.",
+            "fixtures": [
+              "newsletter-confirm-empty-token",
+              "newsletter-unsubscribe-empty-token",
+              "newsletter-confirm-get-not-supported",
+              "newsletter-unsubscribe-get-not-supported",
+              "newsletter-confirm-disabled",
+              "newsletter-unsubscribe-disabled"
+            ],
+            "id": "newsletter.native-actions",
+            "phase": "application outcome"
+          },
+          {
+            "description": "After honeypot handling and payload validation, apply the configured limiter before service work. Denial is 429 with rounded-up Retry-After seconds; missing client key or limiter failure is sanitized 503. The limiter is host runtime logic.",
+            "fixtures": [
+              "newsletter-rate-limit",
+              "newsletter-limiter-unavailable",
+              "newsletter-missing-client-key"
+            ],
+            "id": "newsletter.rate-limit",
+            "phase": "application outcome"
+          }
+        ]
+      },
+      "method": "POST",
+      "path": "/newsletter/confirm",
+      "security": {
+        "kind": "public"
+      }
+    },
+    {
+      "availability": {
+        "capability": "newsletter.webhook",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Verify the exact raw bytes before parsing or recording withdrawals. The parsed schema describes the audited MailerLite payload profile, not a generic provider protocol.",
+        "operationId": "receiveNewsletterWebhook",
+        "parameters": [
+          {
+            "description": "SHA-256 HMAC of the exact raw body, encoded as 64 hexadecimal characters. Shape validation does not verify authenticity.",
+            "explode": false,
+            "in": "header",
+            "name": "signature",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/newsletter.NewsletterSignatureHeader.Input"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newsletter.NewsletterWebhookPayload.Input"
+              }
+            }
+          },
+          "required": true,
+          "x-contract-raw-body": {
+            "preserveExactBytes": true,
+            "semantics": [
+              "newsletter.signed-bytes",
+              "newsletter.webhook-payload",
+              "newsletter.withdrawal-order"
+            ],
+            "validationOrder": "Verify the exact bytes before parsing this schema."
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NewsletterWebhookResponse.Output"
+                }
+              }
+            },
+            "description": "Recorded and duplicate withdrawal counts.",
+            "headers": {},
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Invalid newsletter request. Preserve generic messages and the applicable malformed-JSON boundary.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.UnauthorizedError.Output"
+                }
+              }
+            },
+            "description": "Missing, malformed or mismatched webhook signature.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NotFoundError.Output"
+                }
+              }
+            },
+            "description": "The capability is disabled; no action or evidence write occurs.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.PayloadTooLargeError.Output"
+                }
+              }
+            },
+            "description": "The configured raw-body byte limit was exceeded.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ServiceUnavailableError.Output"
+                }
+              }
+            },
+            "description": "Sanitized processing failure; do not expose persistence/provider details.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Receive a signed newsletter webhook",
+        "tags": [
+          "Newsletter"
+        ],
+        "x-contract-capability": "newsletter.webhook",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D09"
+          ],
+          "fixtures": [
+            "newsletter-webhook-valid",
+            "newsletter-webhook-missing-signature",
+            "newsletter-webhook-changed-signed-bytes",
+            "newsletter-webhook-invalid-payload",
+            "newsletter-webhook-wrong-account",
+            "newsletter-webhook-no-raw-body",
+            "newsletter-webhook-storage-failure",
+            "newsletter-webhook-size-limit",
+            "newsletter-webhook-disabled",
+            "newsletter-webhook-duplicate"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "POST /newsletter/webhook"
+        },
+        "x-contract-domain": "newsletter",
+        "x-contract-semantics": [
+          {
+            "description": "Require captured raw bytes, enforce the configured byte limit, then verify the signature with the host secret using constant-time comparison before UTF-8/JSON decoding. Never reserialize JSON for signature checking. Missing raw capture is 503; missing/invalid signature is 401; invalid signed UTF-8/JSON is 400. The host may reject malformed JSON before controller entry.",
+            "fixtures": [
+              "newsletter-webhook-valid",
+              "newsletter-webhook-missing-signature",
+              "newsletter-webhook-changed-signed-bytes",
+              "newsletter-webhook-size-limit",
+              "newsletter-webhook-no-raw-body"
+            ],
+            "id": "newsletter.signed-bytes",
+            "phase": "authentication/authorization"
+          },
+          {
+            "description": "Use the parsed payload schema only after byte verification. Check every supplied top-level/event account_id against the configured account, enforce maxEvents and validate the entire batch before writes. Ignore well-formed unhandled event names. Native timestamp parseability and conditional event fields are additional generation constraints; no profile may silently omit them.",
+            "fixtures": [
+              "newsletter-webhook-invalid-payload",
+              "newsletter-webhook-wrong-account"
+            ],
+            "id": "newsletter.webhook-payload",
+            "phase": "application outcome"
+          },
+          {
+            "description": "Normalize withdrawal email in the owning service; preserve occurrence timestamp precision and stable event identity for deduplication. Only verified, fully validated events reach persistence. Return recorded/duplicates from persistence; storage failure is sanitized 503. Schema checks do not prove durable idempotency.",
+            "fixtures": [
+              "newsletter-webhook-valid",
+              "newsletter-webhook-duplicate",
+              "newsletter-webhook-storage-failure"
+            ],
+            "id": "newsletter.withdrawal-order",
+            "phase": "application outcome"
+          }
+        ]
+      },
+      "method": "POST",
+      "path": "/newsletter/webhook",
+      "security": {
+        "binding": "newsletter.webhook-signature",
+        "kind": "profile"
+      }
+    },
+    {
+      "availability": {
+        "capability": "newsletter.subscription",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Accept consent-bearing subscriptions or neutral honeypot submissions; host consent policy and evidence ordering remain explicit application obligations.",
+        "operationId": "subscribeToNewsletter",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newsletter.NewsletterSubscribeRequest.Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NewsletterAcceptedResponse.Output"
+                }
+              }
+            },
+            "description": "Neutral acceptance, including the honeypot short-circuit.",
+            "headers": {},
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Invalid newsletter request. Preserve generic messages and the applicable malformed-JSON boundary.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.TooManyRequestsError.Output"
+                }
+              }
+            },
+            "description": "Too many newsletter requests.",
+            "headers": {
+              "retry-after": {
+                "description": "Required when the configured limiter denies a request; seconds are rounded up from retryAfterMs.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.RetryAfterHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required when the configured limiter denies a request; seconds are rounded up from retryAfterMs."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ServiceUnavailableError.Output"
+                }
+              }
+            },
+            "description": "Sanitized processing failure; do not expose persistence/provider details.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Request newsletter subscription",
+        "tags": [
+          "Newsletter"
+        ],
+        "x-contract-capability": "newsletter.subscription",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04"
+          ],
+          "fixtures": [
+            "newsletter-subscribe",
+            "newsletter-unknown-property",
+            "newsletter-consent-string-not-coerced",
+            "newsletter-consent-false",
+            "newsletter-stale-consent",
+            "newsletter-email-whitespace",
+            "newsletter-null-source",
+            "newsletter-honeypot-bypasses-invalid-body",
+            "newsletter-honeypot-bypasses-limiter",
+            "newsletter-rate-limit",
+            "newsletter-limiter-unavailable",
+            "newsletter-missing-client-key",
+            "newsletter-storage-failure",
+            "newsletter-provider-failure-keeps-grant"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "POST /newsletter/subscribe"
+        },
+        "x-contract-domain": "newsletter",
+        "x-contract-semantics": [
+          {
+            "description": "Any nonempty website string returns 202 before normal shape/length validation, rate limiting, context resolution or consent/provider work. Do not create evidence for this branch.",
+            "fixtures": [
+              "newsletter-honeypot-bypasses-invalid-body",
+              "newsletter-honeypot-bypasses-limiter"
+            ],
+            "id": "newsletter.honeypot",
+            "phase": "pre-validation"
+          },
+          {
+            "description": "Normal subscription is strict, with no coercion or trimming. Lengths count UTF-16 code units, preserving Value.Check. Consent must be boolean true. Email lowercasing happens only in the application.",
+            "fixtures": [
+              "newsletter-subscribe",
+              "newsletter-email-whitespace",
+              "newsletter-null-source"
+            ],
+            "id": "newsletter.strict-input",
+            "phase": "normalization"
+          },
+          {
+            "description": "After honeypot handling and payload validation, apply the configured limiter before service work. Denial is 429 with rounded-up Retry-After seconds; missing client key or limiter failure is sanitized 503. The limiter is host runtime logic.",
+            "fixtures": [
+              "newsletter-rate-limit",
+              "newsletter-limiter-unavailable",
+              "newsletter-missing-client-key"
+            ],
+            "id": "newsletter.rate-limit",
+            "phase": "application outcome"
+          },
+          {
+            "description": "Require the configured consent version and trusted context. Lowercase email; append grant evidence before subscriber transport. Storage failure prevents transport; transport failure returns sanitized 503 without deleting the grant. No transaction guarantee is inferred.",
+            "fixtures": [
+              "newsletter-subscribe",
+              "newsletter-stale-consent",
+              "newsletter-storage-failure",
+              "newsletter-provider-failure-keeps-grant"
+            ],
+            "id": "newsletter.consent-evidence",
+            "phase": "application outcome"
+          }
+        ]
+      },
+      "method": "POST",
+      "path": "/newsletter/subscribe",
+      "security": {
+        "kind": "public"
+      }
+    },
+    {
+      "availability": {
+        "capability": "newsletter.native",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Invoke the enabled native unsubscribe action and return a neutral result.",
+        "operationId": "unsubscribeFromNewsletter",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newsletter.NewsletterNativeActionRequest.Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NewsletterAcceptedResponse.Output"
+                }
+              }
+            },
+            "description": "Neutral action acceptance.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              }
+            },
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Invalid newsletter request. Preserve generic messages and the applicable malformed-JSON boundary.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.NotFoundError.Output"
+                }
+              }
+            },
+            "description": "The capability is disabled; no action or evidence write occurs.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.TooManyRequestsError.Output"
+                }
+              }
+            },
+            "description": "Too many newsletter requests.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              },
+              "retry-after": {
+                "description": "Required when the configured limiter denies a request; seconds are rounded up from retryAfterMs.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.RetryAfterHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required when the configured limiter denies a request; seconds are rounded up from retryAfterMs."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ServiceUnavailableError.Output"
+                }
+              }
+            },
+            "description": "Sanitized processing failure; do not expose persistence/provider details.",
+            "headers": {
+              "cache-control": {
+                "description": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.CacheControlHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Required on outcomes reached through the enabled native action controller, including validation/rate/service errors; not promised for pre-controller malformed JSON or disabled routes."
+              },
+              "referrer-policy": {
+                "description": "Same enabled-controller condition as Cache-Control.",
+                "schema": {
+                  "$ref": "#/components/schemas/newsletter.ReferrerPolicyHeader.Output"
+                },
+                "x-contract-cardinality": "single",
+                "x-contract-presence": "Same enabled-controller condition as Cache-Control."
+              }
+            },
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Unsubscribe through a native action",
+        "tags": [
+          "Newsletter"
+        ],
+        "x-contract-capability": "newsletter.native",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04",
+            "D09"
+          ],
+          "fixtures": [
+            "newsletter-unsubscribe",
+            "newsletter-unsubscribe-empty-token",
+            "newsletter-unsubscribe-wrong-type",
+            "newsletter-unsubscribe-unknown-field",
+            "newsletter-unsubscribe-failure",
+            "newsletter-unsubscribe-disabled"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "POST /newsletter/unsubscribe"
+        },
+        "x-contract-domain": "newsletter",
+        "x-contract-semantics": [
+          {
+            "description": "Enabled POST actions accept strict token objects, including empty string, and return neutral 202. Token purpose, expiry, reuse and action semantics belong to the implementation. GET or disabled capabilities return 404 without invoking actions; do not expose tokens through response caching or referrers.",
+            "fixtures": [
+              "newsletter-confirm-empty-token",
+              "newsletter-unsubscribe-empty-token",
+              "newsletter-confirm-get-not-supported",
+              "newsletter-unsubscribe-get-not-supported",
+              "newsletter-confirm-disabled",
+              "newsletter-unsubscribe-disabled"
+            ],
+            "id": "newsletter.native-actions",
+            "phase": "application outcome"
+          },
+          {
+            "description": "After honeypot handling and payload validation, apply the configured limiter before service work. Denial is 429 with rounded-up Retry-After seconds; missing client key or limiter failure is sanitized 503. The limiter is host runtime logic.",
+            "fixtures": [
+              "newsletter-rate-limit",
+              "newsletter-limiter-unavailable",
+              "newsletter-missing-client-key"
+            ],
+            "id": "newsletter.rate-limit",
+            "phase": "application outcome"
+          }
+        ]
+      },
+      "method": "POST",
+      "path": "/newsletter/unsubscribe",
+      "security": {
+        "kind": "public"
+      }
+    }
+  ],
+  "profile": "newsletter-review",
+  "schemas": {
+    "newsletter.BadRequestError.Output": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "statusCode": {
+              "const": 400,
+              "type": "number"
+            }
+          },
+          "required": [
+            "statusCode",
+            "message"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "statusCode": {
+              "const": 400,
+              "type": "number"
+            }
+          },
+          "required": [
+            "statusCode",
+            "message",
+            "error"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "newsletter.CacheControlHeader.Output": {
+      "const": "no-store",
+      "type": "string"
+    },
+    "newsletter.NewsletterAcceptedResponse.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "accepted"
+      ],
+      "type": "object"
+    },
+    "newsletter.NewsletterNativeActionRequest.Input": {
+      "additionalProperties": false,
+      "properties": {
+        "token": {
+          "maxLength": 128,
+          "type": "string"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "type": "object",
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+            "kind": "custom-refinement",
+            "path": "property.token"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "newsletter.NewsletterSignatureHeader.Input": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[a-fA-F\\d]{64}$",
+      "type": "string"
+    },
+    "newsletter.NewsletterSubscribeRequest.Input": {
+      "$defs": {
+        "__schema0": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "$ref": "#/components/schemas/newsletter.NewsletterSubscribeRequest.Input/$defs/__schema0"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/newsletter.NewsletterSubscribeRequest.Input/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "$ref": "#/components/schemas/newsletter.NewsletterSubscribeRequest.Input/$defs/__schema0"
+          },
+          "properties": {
+            "website": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "website"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "consent": {
+              "const": true,
+              "type": "boolean"
+            },
+            "consentVersion": {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "email": {
+              "maxLength": 254,
+              "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+(?![\\s\\S])",
+              "type": "string"
+            },
+            "source": {
+              "maxLength": 2048,
+              "type": "string"
+            },
+            "website": {
+              "maxLength": 2048,
+              "type": "string"
+            }
+          },
+          "required": [
+            "email",
+            "consent",
+            "consentVersion"
+          ],
+          "type": "object"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "options.0/catchall/lazy/options.1/options.1"
+          },
+          {
+            "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+            "kind": "custom-refinement",
+            "path": "options.1/property.email"
+          },
+          {
+            "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+            "kind": "custom-refinement",
+            "path": "options.1/property.source/innerType"
+          },
+          {
+            "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+            "kind": "custom-refinement",
+            "path": "options.1/property.website/innerType"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "newsletter.NewsletterWebhookPayload.Input": {
+      "$defs": {
+        "__schema0": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "$ref": "#/components/schemas/newsletter.NewsletterWebhookPayload.Input/$defs/__schema0"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/newsletter.NewsletterWebhookPayload.Input/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "$ref": "#/components/schemas/newsletter.NewsletterWebhookPayload.Input/$defs/__schema0"
+          },
+          "properties": {
+            "account_id": {
+              "anyOf": [
+                {
+                  "pattern": "^\\d+(?![\\s\\S])",
+                  "type": "string"
+                },
+                {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              ]
+            },
+            "events": {
+              "items": {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/newsletter.NewsletterWebhookPayload.Input/$defs/__schema0"
+                },
+                "properties": {
+                  "account_id": {
+                    "anyOf": [
+                      {
+                        "pattern": "^\\d+(?![\\s\\S])",
+                        "type": "string"
+                      },
+                      {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    ]
+                  },
+                  "event": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "events"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": {
+            "$ref": "#/components/schemas/newsletter.NewsletterWebhookPayload.Input/$defs/__schema0"
+          },
+          "properties": {
+            "account_id": {
+              "anyOf": [
+                {
+                  "pattern": "^\\d+(?![\\s\\S])",
+                  "type": "string"
+                },
+                {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              ]
+            },
+            "event": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "options.0/catchall/lazy/options.1/options.1"
+          },
+          {
+            "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+            "kind": "custom-refinement",
+            "path": "options.0/property.events/element"
+          },
+          {
+            "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+            "kind": "custom-refinement",
+            "path": "options.1"
+          },
+          {
+            "implementation": "a84fb5c0c6dd474ecf0722607d82f2e276ff24ee4de95274028485cd562e6a62",
+            "kind": "custom-refinement",
+            "path": "options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "newsletter.NewsletterWebhookResponse.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "duplicates": {
+          "minimum": 0,
+          "multipleOf": 1,
+          "type": "number"
+        },
+        "recorded": {
+          "minimum": 0,
+          "multipleOf": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "recorded",
+        "duplicates"
+      ],
+      "type": "object"
+    },
+    "newsletter.NotFoundError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 404,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    },
+    "newsletter.PayloadTooLargeError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 413,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    },
+    "newsletter.ReferrerPolicyHeader.Output": {
+      "const": "no-referrer",
+      "type": "string"
+    },
+    "newsletter.RetryAfterHeader.Output": {
+      "pattern": "^\\d+(?![\\s\\S])",
+      "type": "string"
+    },
+    "newsletter.ServiceUnavailableError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 503,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    },
+    "newsletter.TooManyRequestsError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 429,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message"
+      ],
+      "type": "object"
+    },
+    "newsletter.UnauthorizedError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 401,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    }
+  },
+  "status": "diagnostic-only"
+}

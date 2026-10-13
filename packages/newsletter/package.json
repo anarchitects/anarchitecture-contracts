@@ -16,7 +16,9 @@
     "dist",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "openapi",
+    "contract-manifest.json"
   ],
   "exports": {
     ".": {
@@ -68,7 +70,11 @@
         "types": "./dist/cjs/webhook.d.cts",
         "default": "./dist/cjs/webhook.cjs"
       }
-    }
+    },
+    "./openapi/newsletter-review.json": "./openapi/newsletter-review.json",
+    "./openapi/newsletter-review.yaml": "./openapi/newsletter-review.yaml",
+    "./openapi/inventory.json": "./openapi/inventory.json",
+    "./manifest.json": "./contract-manifest.json"
   },
   "dependencies": {
     "zod": "4.5.0"

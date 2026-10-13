@@ -1,0 +1,636 @@
+{
+  "baselineRevision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+  "note": "Structural comparison is not semantic equivalence. Existing differential and frozen HTTP tests remain mandatory; projection proposal and host bindings remain unapproved.",
+  "operations": [
+    {
+      "baselineOpenApiDigest": "7fab813bf77a6e156b79daacaa292cad8fd573c27aaafb120ceea9243d5bf60f",
+      "baselineOperationId": "getLoggedInUserInfo",
+      "baselineSchemaDigest": "3cb8de846f6f04c6f490efae1b375aa844d5b92d59204cae56cec04dd4c50e3d",
+      "canonicalDefinitionDigest": "9c3dfb2b8b3d629a1ef85ce04fbaa4785a52255c4d8cd9df012ce2112c452b96",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D07"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-me",
+        "auth-me-no-session-unguarded",
+        "auth-me-no-session-guarded",
+        "auth-guard-valid-session",
+        "auth-guard-invalid-session"
+      ],
+      "operationId": "getLoggedInUserInfo",
+      "route": "GET /auth/me",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "dc39e00480780e0782818a21b7edaac5dfde33baabd30e1aeb00fbb2c26d475f",
+      "baselineOperationId": "getFormDefinition",
+      "baselineSchemaDigest": "65053d63cbb3a68e05f0877deefd68392f6e18771c2554ea84c5303b0d890b1d",
+      "canonicalDefinitionDigest": "d3b11c266e8583a278f5760de2bee4951bf28bdc7796f93c24ae95eae7098fb4",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D06",
+        "D08"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/forms/compatibility/README.md",
+      "fixtures": [
+        "forms-definition-default-version",
+        "forms-definition-query-coercion",
+        "forms-definition-delivery-secret",
+        "forms-definition-invalid-version",
+        "forms-definition-missing"
+      ],
+      "operationId": "getFormDefinition",
+      "route": "GET /forms/{formId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "35b28088685786090289c19d5a0b450c37be694efadf0039519f39a6fc629ec4",
+      "baselineOperationId": "getSubmissions",
+      "baselineSchemaDigest": "c0df60c328ea9cca270a341e5b029aaeebe04f67728595f8844eeca34b2d676d",
+      "canonicalDefinitionDigest": "d6ba71f0da904744f290a0dbcdc78b4d7db57fb50ec1b2076f6ac08e06f25efa",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D10"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/forms/compatibility/README.md",
+      "fixtures": [
+        "forms-list-filters",
+        "forms-list-unknown-query"
+      ],
+      "operationId": "getSubmissions",
+      "route": "GET /forms/submissions",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "15a550c76f52693000de05bbaedbaf8fd83e71bfb34301ed95294ccc18ff89a8",
+      "baselineOperationId": "getSubmission",
+      "baselineSchemaDigest": "1c67225e4e2d874f6daad189b2214bd4d5e6f2866397030a3dea5c424d9d47b3",
+      "canonicalDefinitionDigest": "b65c4a48eece19fdb573345b0d336fb3d854539836b694362bb5616141a97555",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/forms/compatibility/README.md",
+      "fixtures": [
+        "forms-detail",
+        "forms-detail-missing",
+        "forms-detail-invalid-uuid"
+      ],
+      "operationId": "getSubmission",
+      "route": "GET /forms/submissions/{submissionId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "a679e04ba98945fc7e3b051aa86684dbd276d36f8be2f96d6f2e329972de1e0b",
+      "baselineOperationId": "getUserProfileById",
+      "baselineSchemaDigest": "6d49129717955160546b3e67f135f7b31ea52b7e0eb4d0198765474f99f4735f",
+      "canonicalDefinitionDigest": "35d447f6c954dbccd2d9941a6f41baa6f3e963f6417b6962f043d26cc1d56e8a",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D11"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/identity/compatibility/README.md",
+      "fixtures": [
+        "identity-get-by-id",
+        "identity-get-missing",
+        "identity-invalid-param"
+      ],
+      "operationId": "getUserProfileById",
+      "route": "GET /identity/profiles/{profileId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "cbc63cfafc5665a82fd3a85e832d84a2e921e882f90a14089f82e1d5e71fd6cd",
+      "baselineOperationId": "getUserProfileByAuthUserId",
+      "baselineSchemaDigest": "83d3bfaa75d061e3cabdd186ffb9d31294e7d112f7bdeaa222fe37f46eb80388",
+      "canonicalDefinitionDigest": "849a7370efa4c5794590eb15f2a9305583986a389294b9a7ec9fce0c4331b34c",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D11"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/identity/compatibility/README.md",
+      "fixtures": [
+        "identity-get-by-auth-user"
+      ],
+      "operationId": "getUserProfileByAuthUserId",
+      "route": "GET /identity/profiles/by-auth-user/{authUserId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "7daf5d86e8e8ff06c2114851f4db0e2d02d56df62cc2f430b40f35e8067dce4e",
+      "baselineOperationId": "activateUser",
+      "baselineSchemaDigest": "6490e380ae6ce9e1f72d89f5e70c6eeb29489898dca1569b7220f4355b635073",
+      "canonicalDefinitionDigest": "8b7faf6cbcf87fe6daa2f97a6772073874a2138bbb7d777a8d938a6a5ecf0cb4",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-activate"
+      ],
+      "operationId": "activateUser",
+      "route": "PATCH /auth/activate",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "9d11c8b99ef2ea65d65cd4b6a719b8724e7fd8b8795f48e40ff64f14e1d152ee",
+      "baselineOperationId": "changePassword",
+      "baselineSchemaDigest": "9496f893b3da621ec8a825d4de62fa6a3cbeafc2e6b5a8ba6ce8d8c94031325d",
+      "canonicalDefinitionDigest": "6257eb8deadb4b18d9e53c84b3eabdc103436e6a73cc295c64811f8cf35a48aa",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-change-password",
+        "auth-change-wrong-password"
+      ],
+      "operationId": "changePassword",
+      "route": "PATCH /auth/change-password/{userId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "b1e9f0668779801292a41bb1d5ab023442dd8192877bfd78f6ce426e00b7c7a0",
+      "baselineOperationId": "updateEmail",
+      "baselineSchemaDigest": "43011c59dc651009483d4df84701d6735651d7966597a0936686bbe184628ee3",
+      "canonicalDefinitionDigest": "fcef678faae70d6d993dd265a7b6fc3e36f456c60f586cda12564ea1b9c4f53c",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-update-email"
+      ],
+      "operationId": "updateEmail",
+      "route": "PATCH /auth/update-email/{userId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "aa4438b72f5937bc454183ecbcc551e69bceb8cd1f3dccb0f3d251df161fdc96",
+      "baselineOperationId": "updateUserProfile",
+      "baselineSchemaDigest": "5c4e2e2f75dd50178e58e34bfeab0284e6a3db8caa8498ed9f45bb2a51f907b6",
+      "canonicalDefinitionDigest": "8a398582694aeb30f77de82493ffd9f424fa84c358b87cf90fc04fe906bdb3e6",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D11"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/identity/compatibility/README.md",
+      "fixtures": [
+        "identity-patch-null",
+        "identity-patch-empty",
+        "identity-patch-owner-ignored",
+        "identity-patch-invalid-shape",
+        "identity-patch-missing"
+      ],
+      "operationId": "updateUserProfile",
+      "route": "PATCH /identity/profiles/{profileId}",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "364870390b5779193932d7386833be1c4ae417f81fabbf3577ad79dcffe4c804",
+      "baselineOperationId": "forgotPassword",
+      "baselineSchemaDigest": "f8a914eceb3c7d5b30cfc063f7bca55904c0c8e095238b83c9bab69884c32dcd",
+      "canonicalDefinitionDigest": "ab3deb15d8e7fded222b7e00ac8dabc971a25dd4659ca465613f33ab554141d6",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-forgot-password"
+      ],
+      "operationId": "forgotPassword",
+      "route": "POST /auth/forgot-password",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": null,
+      "baselineOperationId": null,
+      "baselineSchemaDigest": "d72dfed6be8b50853bc00a5cc5d773677a475c1ddddbf1c898440fa48f6e6d48",
+      "canonicalDefinitionDigest": "091b889e47d6d35833a8f36d06c3441fff450be025b539cc97befb5b19e5d738",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D01"
+      ],
+      "disposition": "D01-document-existing-JWT-route",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "jwt-login",
+        "jwt-invalid-password"
+      ],
+      "operationId": "loginWithJwt",
+      "route": "POST /auth/jwt/login",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": null,
+      "baselineOperationId": null,
+      "baselineSchemaDigest": "09b5dfd4e578f26da286527d45042d5ab8346699b331fef717d685e764b0ce9d",
+      "canonicalDefinitionDigest": "51ae064a691ce3d78ae63cb43a60d7b9610acbf75ffeb77740f1d5a2376747ec",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D01"
+      ],
+      "disposition": "D01-document-existing-JWT-route",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "jwt-logout-invalid-token",
+        "jwt-logout"
+      ],
+      "operationId": "logoutWithJwt",
+      "route": "POST /auth/jwt/logout",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": null,
+      "baselineOperationId": null,
+      "baselineSchemaDigest": "bb1d4248d5d6818fb0cdc7b229732a134f2b0705d2da20645341dfcc63f3d231",
+      "canonicalDefinitionDigest": "4490cc5b3e2188839f33f2070e3cab59c46eb142d8bb285c6cfe931c73b2aaeb",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D01"
+      ],
+      "disposition": "D01-document-existing-JWT-route",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "jwt-refresh-invalid-token",
+        "jwt-refresh",
+        "jwt-refresh-invalidated"
+      ],
+      "operationId": "refreshJwtTokens",
+      "route": "POST /auth/jwt/refresh",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "15749ce464fba663f88ae20c2f1eddae5f66a5eeb3a4ecf065bdd0abec2853af",
+      "baselineOperationId": "login",
+      "baselineSchemaDigest": "601a8ae21c631a3b07b8e37af844f018cff11f946eadb7d74ebc4042cb992777",
+      "canonicalDefinitionDigest": "822e05a22696590212ac9f3f26e8a2b32b134c09b2b4530474b6e7acd824e61c",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D07"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-login",
+        "auth-login-engine-denial",
+        "auth-login-policy-wire-order",
+        "auth-login-number-coercion",
+        "auth-login-short-password",
+        "auth-guard-public-login"
+      ],
+      "operationId": "login",
+      "route": "POST /auth/login",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "564349feb9719b3668ceffd0dd21a88aa9d7ef4d5a810cdb3635e80299d4cb05",
+      "baselineOperationId": "logout",
+      "baselineSchemaDigest": "b77a7e4fba534571b63f8a897f0ac63bebbead86105469cee364177d5b0d67c8",
+      "canonicalDefinitionDigest": "ef9ecafc3d0d0cdc0cea8e8f7d3faf9fe69628c76e9e95e2094aaf09dadf7ba2",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-logout",
+        "auth-logout-strips-unknown"
+      ],
+      "operationId": "logout",
+      "route": "POST /auth/logout",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "a3c9c272148221dbac0ef4ae567490e99d0415f9db2579190d8e3095225eaf4b",
+      "baselineOperationId": "beginAuthentication",
+      "baselineSchemaDigest": "098ef5abd7c753a5b8c1cef65397c4021f7316449c91e449426c7cf08e715252",
+      "canonicalDefinitionDigest": "cad7055a48696265d8b20061907d05478c32a0dcc17190f050e3b73d59dfc85d",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "passkey-guard-public-authentication",
+        "passkey-authentication-begin"
+      ],
+      "operationId": "beginAuthentication",
+      "route": "POST /auth/passkeys/authentication/begin",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "a6dfd8ceb1103976840cdfccd48f5d7800f914e6abf331e9dfeb3811a939e19c",
+      "baselineOperationId": "finishAuthentication",
+      "baselineSchemaDigest": "67c2e540a58e3499e53f95be3ba6883679d10404cad5206f3be24cf449d77406",
+      "canonicalDefinitionDigest": "34d15b62a34898a6f5104b0aa83aac6a31a07c8dd9153c5ab503552ead6088cc",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "passkey-authentication-finish-null-handle",
+        "passkey-authentication-verifier-rejects",
+        "passkey-authentication-invalid-base64url"
+      ],
+      "operationId": "finishAuthentication",
+      "route": "POST /auth/passkeys/authentication/finish",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "1ff6bfb9fcb1da4552456bf4430ecde30cbff3be2d1dcc133a1f9c71e774fc01",
+      "baselineOperationId": "beginRegistration",
+      "baselineSchemaDigest": "ee2497c89d25c169fac02c5d54e1a7e130d18cfb1298c7b2540e6b4bd4508e32",
+      "canonicalDefinitionDigest": "9e6d81692a70f32cf0d110b9e07a3ea668b8f975a62c56ae8edf6af4e49ecd77",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "passkey-guard-registration",
+        "passkey-registration-begin",
+        "passkey-registration-strips-user-id",
+        "passkey-registration-invalid-attachment"
+      ],
+      "operationId": "beginRegistration",
+      "route": "POST /auth/passkeys/registration/begin",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "8759a89b9fcafcb7f491a68597eb11880d536f776e97ee8a08f71a8be01e469d",
+      "baselineOperationId": "finishRegistration",
+      "baselineSchemaDigest": "af619fd407c9b5550885da655b61b13dcb4d6b215d48c9ce1088518eccccda3d",
+      "canonicalDefinitionDigest": "727ac41269e9afda1b037658dbbbc22d72238c1d5ac0213affce0e3a665a4875",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "passkey-registration-finish",
+        "passkey-registration-missing-response"
+      ],
+      "operationId": "finishRegistration",
+      "route": "POST /auth/passkeys/registration/finish",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "2d806a34a4e779de20df5359fb58ddaa9fc19898000cea7ac5667a5767ddfba8",
+      "baselineOperationId": "registerUser",
+      "baselineSchemaDigest": "6b78687a825eebbc5a1d08f301aeb1e74a5a382f2b133631de5eaad8d7edd76a",
+      "canonicalDefinitionDigest": "eee7232dde63b4096fe04fae82e595e1b42018e5bc20dfc33e6336dc1938ada4",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-register",
+        "auth-register-empty-optional-name",
+        "auth-register-missing-password",
+        "auth-register-short-password",
+        "auth-register-mismatch",
+        "auth-register-malformed-email",
+        "auth-register-null-name",
+        "auth-register-unknown-property",
+        "auth-register-existing"
+      ],
+      "operationId": "registerUser",
+      "route": "POST /auth/register",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "407c9e2f9f6dd477516da57cc7d21c55a41994bf0152209739cc8a03e9922e5b",
+      "baselineOperationId": "resetPassword",
+      "baselineSchemaDigest": "9480e1d76a74512a88b820625cece6cdced7acdf033b93892eaa9f1a56728152",
+      "canonicalDefinitionDigest": "954ef75bcec51845d1f2b6eeeb97fc49279b4878d81570ebf600bae8bae7db52",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-reset-password",
+        "auth-reset-mismatch",
+        "auth-reset-invalid-token"
+      ],
+      "operationId": "resetPassword",
+      "route": "POST /auth/reset-password",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "4dfbeb4776c1c09a834839b2499ecf9356fad670cc0cbd405f74c45e9e89dd4c",
+      "baselineOperationId": "verifyEmail",
+      "baselineSchemaDigest": "6490e380ae6ce9e1f72d89f5e70c6eeb29489898dca1569b7220f4355b635073",
+      "canonicalDefinitionDigest": "3871767442d271f2e45c08c30ad678e723f1ee0424d77307aaa30ec9cda02dd0",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/auth/compatibility/README.md",
+      "fixtures": [
+        "auth-verify-email",
+        "auth-verify-invalid-token"
+      ],
+      "operationId": "verifyEmail",
+      "route": "POST /auth/verify-email",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "572c66fbc9d4b127f39876d30800135b304ea31f5c2d0b10c572fce701712ada",
+      "baselineOperationId": "submitForm",
+      "baselineSchemaDigest": "0811564dae37b17bb836e404109a81aab60fa639c841d0f524e9b5e40474502f",
+      "canonicalDefinitionDigest": "81d17398b3a16ecccbcdf039864f658dbbee829dd9b904ff9ede4ba1530c80cb",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D05",
+        "D06"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/forms/compatibility/README.md",
+      "fixtures": [
+        "forms-submit",
+        "forms-submit-no-version",
+        "forms-submit-string-version",
+        "forms-submit-missing-required-dynamic-field",
+        "forms-submit-invalid-dynamic-email",
+        "forms-submit-unknown-payload-property",
+        "forms-submit-null-payload",
+        "forms-submit-malformed-json"
+      ],
+      "operationId": "submitForm",
+      "route": "POST /forms/submit",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "4dade1ed3f896047f50a62696ea9a1904d28f33908d722c61c47af5b1931c80b",
+      "baselineOperationId": "createUserProfile",
+      "baselineSchemaDigest": "0d87bd1db357905d274ca2e75e65e0c6d1e31d43774a5fc0f3f1eee6b1fd138f",
+      "canonicalDefinitionDigest": "249f7fd5696eb264203e43983eabfe113b353d24cadb3bf5043de26b57b41d98",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D11"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/identity/compatibility/README.md",
+      "fixtures": [
+        "identity-create",
+        "identity-response-drops-extra",
+        "identity-create-nullable",
+        "identity-create-number-coercion",
+        "identity-create-extra-fields",
+        "identity-create-duplicate",
+        "identity-create-missing-owner"
+      ],
+      "operationId": "createUserProfile",
+      "route": "POST /identity/profiles",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "3a3c3dc133e01972cdfd091e8ce94a43733cbdb8d084ed1cb7e8630c98c60fe9",
+      "baselineOperationId": "confirmNewsletterSubscription",
+      "baselineSchemaDigest": "523fe6dc722eb95067d341f28ec94957d38f4c0fdeb6ea1814720a8496d7635d",
+      "canonicalDefinitionDigest": "1095d1422794c5ba30ddf54dd575446d0f8a6e566ca3cdf30d0470ddf4186b93",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D09"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/newsletter/compatibility/README.md",
+      "fixtures": [
+        "newsletter-confirm",
+        "newsletter-confirm-empty-token",
+        "newsletter-confirm-wrong-type",
+        "newsletter-confirm-unknown-field",
+        "newsletter-confirm-failure",
+        "newsletter-confirm-disabled"
+      ],
+      "operationId": "confirmNewsletterSubscription",
+      "route": "POST /newsletter/confirm",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "7fa23d741ed3cd551e1291d465afd6f2950cb9c6febe2da33a5077162b2b6f49",
+      "baselineOperationId": "subscribeToNewsletter",
+      "baselineSchemaDigest": "a7567229036395a5978405de991c23e29e0a29f0be866a437b19f50fedca2922",
+      "canonicalDefinitionDigest": "2c3a9d6d805ffb74df18d1fce5ce187def265b4f43f1bed3e0add6b127b7a8c0",
+      "discrepancies": [
+        "D03",
+        "D04"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/newsletter/compatibility/README.md",
+      "fixtures": [
+        "newsletter-subscribe",
+        "newsletter-unknown-property",
+        "newsletter-consent-string-not-coerced",
+        "newsletter-consent-false",
+        "newsletter-stale-consent",
+        "newsletter-email-whitespace",
+        "newsletter-null-source",
+        "newsletter-honeypot-bypasses-invalid-body",
+        "newsletter-honeypot-bypasses-limiter",
+        "newsletter-rate-limit",
+        "newsletter-limiter-unavailable",
+        "newsletter-missing-client-key",
+        "newsletter-storage-failure",
+        "newsletter-provider-failure-keeps-grant"
+      ],
+      "operationId": "subscribeToNewsletter",
+      "route": "POST /newsletter/subscribe",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "47d97affdb893101d0dd861484b7b065fe9d6df9ff62dabf325537c0e1e949d9",
+      "baselineOperationId": "unsubscribeFromNewsletter",
+      "baselineSchemaDigest": "523fe6dc722eb95067d341f28ec94957d38f4c0fdeb6ea1814720a8496d7635d",
+      "canonicalDefinitionDigest": "445a026bb8d4b5540d1cb41610bb94bb314eb242bfccc48402fd81a2d2d45959",
+      "discrepancies": [
+        "D03",
+        "D04",
+        "D09"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/newsletter/compatibility/README.md",
+      "fixtures": [
+        "newsletter-unsubscribe",
+        "newsletter-unsubscribe-empty-token",
+        "newsletter-unsubscribe-wrong-type",
+        "newsletter-unsubscribe-unknown-field",
+        "newsletter-unsubscribe-failure",
+        "newsletter-unsubscribe-disabled"
+      ],
+      "operationId": "unsubscribeFromNewsletter",
+      "route": "POST /newsletter/unsubscribe",
+      "status": "review-only"
+    },
+    {
+      "baselineOpenApiDigest": "f80300b23f4a7271eceaec3912e749896a4032a3279c756b73f3bfa7b4c0e522",
+      "baselineOperationId": "receiveNewsletterWebhook",
+      "baselineSchemaDigest": "f49ad7169846973bf3f4c90d6b79579c8c8c9e54dc6e562fc449bf235d6e6e79",
+      "canonicalDefinitionDigest": "1edcf44fde2cddf8271b513201b69cc483fade15eed3401f16f7f493d279bf9b",
+      "discrepancies": [
+        "D03",
+        "D09"
+      ],
+      "disposition": "semantic-extraction-evidence-required",
+      "evidence": "packages/newsletter/compatibility/README.md",
+      "fixtures": [
+        "newsletter-webhook-valid",
+        "newsletter-webhook-missing-signature",
+        "newsletter-webhook-changed-signed-bytes",
+        "newsletter-webhook-invalid-payload",
+        "newsletter-webhook-wrong-account",
+        "newsletter-webhook-no-raw-body",
+        "newsletter-webhook-storage-failure",
+        "newsletter-webhook-size-limit",
+        "newsletter-webhook-disabled",
+        "newsletter-webhook-duplicate"
+      ],
+      "operationId": "receiveNewsletterWebhook",
+      "route": "POST /newsletter/webhook",
+      "status": "review-only"
+    }
+  ],
+  "status": "review-only"
+}

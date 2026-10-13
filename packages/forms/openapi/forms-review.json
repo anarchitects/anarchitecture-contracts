@@ -1,0 +1,1250 @@
+{
+  "components": {
+    "schemas": {
+      "forms.BadRequestError.Output": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "statusCode": {
+                "const": 400,
+                "type": "number"
+              }
+            },
+            "required": [
+              "statusCode",
+              "message"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "statusCode": {
+                "const": 400,
+                "type": "number"
+              }
+            },
+            "required": [
+              "statusCode",
+              "message",
+              "error"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "forms.ForbiddenError.Output": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "const": 403,
+            "type": "number"
+          }
+        },
+        "required": [
+          "statusCode",
+          "message",
+          "error"
+        ],
+        "type": "object"
+      },
+      "forms.FormDefinitionEnvelopeResponse.Output": {
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+                },
+                "type": "array"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+                },
+                "propertyNames": {
+                  "type": "string"
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "properties": {
+          "config": {
+            "additionalProperties": false,
+            "properties": {
+              "delivery": {
+                "additionalProperties": false,
+                "properties": {
+                  "adminEmail": {
+                    "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                    "type": "string"
+                  },
+                  "autoReply": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "templateId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "enabled",
+                      "templateId",
+                      "subject"
+                    ],
+                    "type": "object"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "templateId": {
+                    "type": "string"
+                  },
+                  "webhooks": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "secret": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "pattern": "^(?:[A-Za-z][A-Za-z0-9+\\-.]*:)(?:\\/?\\/(?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*@)?(?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*)(?::\\d*)?(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*|\\/(?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?|(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)(?:\\?(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*)?(?:#(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*)?$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "url"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "fields": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "string",
+                        "password",
+                        "email",
+                        "textarea",
+                        "boolean",
+                        "select",
+                        "file"
+                      ],
+                      "type": "string"
+                    },
+                    "maxLength": {
+                      "minimum": 0,
+                      "multipleOf": 1,
+                      "type": "number"
+                    },
+                    "minLength": {
+                      "minimum": 0,
+                      "multipleOf": 1,
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "options": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "label"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "pattern": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "ui": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "help": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "placeholder": {
+                          "type": "string"
+                        },
+                        "rows": {
+                          "minimum": 1,
+                          "multipleOf": 1,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "kind"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "id": {
+                "type": "string"
+              },
+              "security": {
+                "additionalProperties": false,
+                "properties": {
+                  "captcha": {
+                    "enum": [
+                      "turnstile",
+                      "hcaptcha",
+                      "none"
+                    ],
+                    "type": "string"
+                  },
+                  "honeypot": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "captcha"
+                ],
+                "type": "object"
+              },
+              "validationRules": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "matchFields",
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "sourceField": {
+                      "type": "string"
+                    },
+                    "targetField": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "sourceField",
+                    "targetField"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "version": {
+                "minimum": 1,
+                "multipleOf": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "fields"
+            ],
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+          }
+        },
+        "required": [
+          "config",
+          "schema"
+        ],
+        "type": "object"
+      },
+      "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+              "kind": "input-pipeline",
+              "path": "innerType"
+            },
+            {
+              "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+              "kind": "custom-refinement",
+              "path": "innerType"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "innerType/in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/in/in/options.0/options.1/options.1"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/out/options.1"
+            }
+          ],
+          "proposal": "P07-legacy-input-projection",
+          "status": "proposed"
+        }
+      },
+      "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": {
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": ""
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "in/in/options.0/options.1/options.1"
+            }
+          ],
+          "proposal": "P07-legacy-input-projection",
+          "status": "proposed"
+        }
+      },
+      "forms.InternalServerError.Output": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "statusCode": {
+                "const": 500,
+                "type": "number"
+              }
+            },
+            "required": [
+              "statusCode",
+              "message"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "statusCode": {
+                "const": 500,
+                "type": "number"
+              }
+            },
+            "required": [
+              "statusCode",
+              "message",
+              "error"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "forms.NotFoundError.Output": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "const": 404,
+            "type": "number"
+          }
+        },
+        "required": [
+          "statusCode",
+          "message",
+          "error"
+        ],
+        "type": "object"
+      },
+      "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input": {
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": ""
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "in/in/options.0/options.1/options.1"
+            }
+          ],
+          "proposal": "P07-legacy-input-projection",
+          "status": "proposed"
+        }
+      },
+      "forms.SubmissionRequest.Input": {
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+                },
+                "type": "array"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+                },
+                "propertyNames": {
+                  "type": "string"
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "additionalProperties": {
+          "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+        },
+        "properties": {
+          "formId": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              {
+                "items": false,
+                "maxItems": 1,
+                "minItems": 1,
+                "prefixItems": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "$schema": "https://json-schema.org/draft/2020-12/schema",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                ],
+                "type": "array"
+              }
+            ]
+          },
+          "formVersion": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              {
+                "items": false,
+                "maxItems": 1,
+                "minItems": 1,
+                "prefixItems": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "$schema": "https://json-schema.org/draft/2020-12/schema",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                ],
+                "type": "array"
+              }
+            ]
+          },
+          "payload": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+            },
+            "propertyNames": {
+              "type": "string"
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "formId",
+          "formVersion",
+          "payload"
+        ],
+        "type": "object",
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "catchall/lazy/options.1/options.1"
+            },
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": "property.formId"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "property.formId/in"
+            },
+            {
+              "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+              "kind": "input-pipeline",
+              "path": "property.formVersion"
+            },
+            {
+              "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+              "kind": "custom-refinement",
+              "path": "property.formVersion"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "property.formVersion/in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "property.formVersion/out/options.1"
+            }
+          ],
+          "proposal": "P07-legacy-input-projection",
+          "status": "proposed"
+        }
+      },
+      "forms.SubmissionResponse.Output": {
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/forms.SubmissionResponse.Output/$defs/__schema0"
+                },
+                "type": "array"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/forms.SubmissionResponse.Output/$defs/__schema0"
+                },
+                "propertyNames": {
+                  "type": "string"
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "properties": {
+          "createdAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "formId": {
+            "type": "string"
+          },
+          "formVersion": {
+            "minimum": 1,
+            "multipleOf": 1,
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "payload": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/forms.SubmissionResponse.Output/$defs/__schema0"
+            },
+            "propertyNames": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "formId",
+          "formVersion",
+          "payload",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
+      "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input": {
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": "innerType"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "innerType/in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/in/in/options.0/options.1/options.1"
+            }
+          ],
+          "proposal": "P07-legacy-input-projection",
+          "status": "proposed"
+        }
+      },
+      "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+              "kind": "input-pipeline",
+              "path": "innerType"
+            },
+            {
+              "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+              "kind": "custom-refinement",
+              "path": "innerType"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "innerType/in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/in/in/options.0/options.1/options.1"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/out/options.1"
+            }
+          ],
+          "proposal": "P07-legacy-input-projection",
+          "status": "proposed"
+        }
+      },
+      "forms.SubmissionsResponse.Output": {
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/forms.SubmissionsResponse.Output/$defs/__schema0"
+                },
+                "type": "array"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/forms.SubmissionsResponse.Output/$defs/__schema0"
+                },
+                "propertyNames": {
+                  "type": "string"
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "createdAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            },
+            "formId": {
+              "type": "string"
+            },
+            "formVersion": {
+              "minimum": 1,
+              "multipleOf": 1,
+              "type": "number"
+            },
+            "id": {
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/forms.SubmissionsResponse.Output/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "formId",
+            "formVersion",
+            "payload",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "forms.UnauthorizedError.Output": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "const": 401,
+            "type": "number"
+          }
+        },
+        "required": [
+          "statusCode",
+          "message",
+          "error"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {}
+  },
+  "info": {
+    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "title": "REVIEW ONLY — Anarchitecture forms-review",
+    "version": "0.0.0"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "openapi": "3.1.1",
+  "paths": {},
+  "tags": [
+    {
+      "name": "Forms"
+    }
+  ],
+  "x-contract-excluded-operations": [
+    {
+      "binding": "forms.protected",
+      "operationId": "getFormDefinition",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getSubmission",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getSubmissions",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "submitForm",
+      "reason": "unresolved-security"
+    }
+  ],
+  "x-contract-profile": "forms-review",
+  "x-contract-status": "review-only",
+  "x-contract-versions": {
+    "@anarchitects/forms-contracts": "0.0.0"
+  }
+}

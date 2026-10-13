@@ -1,0 +1,197 @@
+{
+  "artifacts": {
+    "identity-review.json": "8020302098ecc619d5fc1086ab1a61762bd2230ea88edc1591a42cba6f067cfb",
+    "identity-review.yaml": "464bb512ebf3561fb0a5b028a73daa9c74a915d8e56044f0b89d1973d5e159ea",
+    "inventory.json": "d782536a23de44a2c058a9b555d82b3b4c8925d329b76a4bd8eead8f0e37e0ec"
+  },
+  "dependencies": {
+    "@anarchitects/identity-contracts": {
+      "zod": "4.5.0"
+    }
+  },
+  "documentedOperationCount": 0,
+  "excludedOperations": [
+    {
+      "binding": "identity.protected",
+      "operationId": "createUserProfile",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "getUserProfileByAuthUserId",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "getUserProfileById",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "updateUserProfile",
+      "reason": "unresolved-security"
+    }
+  ],
+  "formatVersion": 1,
+  "generator": {
+    "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
+    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
+    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "operationCount": 4,
+  "packages": {
+    "@anarchitects/identity-contracts": "0.0.0"
+  },
+  "profile": {
+    "capabilities": [
+      "identity.profiles"
+    ],
+    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "hostBindings": {},
+    "id": "identity-review",
+    "securityBindings": {},
+    "securitySchemes": {},
+    "status": "review-only"
+  },
+  "projectionProposal": {
+    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
+    "id": "P07-legacy-input-projection",
+    "status": "proposed"
+  },
+  "projections": {
+    "identity.CreateUserProfileRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.authUserId"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.authUserId/in"
+      }
+    ],
+    "identity.ProfileId.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/in/options.0/options.1/options.1"
+      }
+    ],
+    "identity.UpdateUserProfileRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.displayName/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.displayName/innerType/in"
+      }
+    ]
+  },
+  "releaseBlockers": [],
+  "schemaOrigins": {
+    "identity.BadRequestError.Output": {
+      "domain": "identity",
+      "id": "identity.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.CreateUserProfileRequest.Input": {
+      "domain": "identity",
+      "id": "identity.CreateUserProfileRequest",
+      "io": "input",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.ForbiddenError.Output": {
+      "domain": "identity",
+      "id": "identity.ForbiddenError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.InternalServerError.Output": {
+      "domain": "identity",
+      "id": "identity.InternalServerError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.NotFoundError.Output": {
+      "domain": "identity",
+      "id": "identity.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.ProfileId.Input": {
+      "domain": "identity",
+      "id": "identity.ProfileId",
+      "io": "input",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.UnauthorizedError.Output": {
+      "domain": "identity",
+      "id": "identity.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.UpdateUserProfileRequest.Input": {
+      "domain": "identity",
+      "id": "identity.UpdateUserProfileRequest",
+      "io": "input",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.UserProfileResponse.Output": {
+      "domain": "identity",
+      "id": "identity.UserProfileResponse",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    }
+  },
+  "source": {
+    "files": {
+      "packages/identity/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/identity/src/operations/index.ts": "6aeeacc6843af51e2552aff256fc9de485ff48f039fedfa4c2a71b9c159e936e",
+      "packages/identity/src/schemas/index.ts": "97bb20ea553afc2ff7dd91d34bd15c5df60b27f99cfa71f37a4cff8dda03e297",
+      "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
+    },
+    "revision": "sha256:9d7d50e3098f5d7400d660b387fe24e4c7dc38262aea5e37b035e079509e8f98"
+  },
+  "status": "review-only",
+  "supportedCapabilities": [],
+  "tools": {
+    "@apidevtools/swagger-parser": "13.1.0",
+    "yaml": "2.9.1",
+    "zod": "4.5.0"
+  },
+  "unresolvedHostBindings": [
+    "identity.protected:authentication transport",
+    "identity.protected:resource authorization policy"
+  ]
+}

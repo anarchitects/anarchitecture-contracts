@@ -46,7 +46,7 @@ try {
       for (const { path: name } of pack.files)
         assert.match(
           name,
-          /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$)/,
+          /^(dist\/|openapi\/|contract-manifest\.json$|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$)/,
           `${path}: unexpected packed file ${name}`,
         );
       for (const required of ['README.md', 'LICENSE', 'package.json'])
@@ -79,6 +79,25 @@ try {
       const pkg = JSON.parse(readFileSync(new URL('./node_modules/' + name + '/package.json', import.meta.url), 'utf8'));
       for (const subpath of Object.keys(pkg.exports)) {
         const specifier = subpath === '.' ? name : name + subpath.slice(1);
+        if (typeof pkg.exports[subpath] === 'string') {
+          const target = require.resolve(specifier);
+          const content = readFileSync(target, 'utf8');
+          assert.ok(content.length > 0);
+          if (subpath.endsWith('.json')) {
+            const artifact = JSON.parse(content);
+            if (subpath === './manifest.json') {
+              assert.equal(artifact.status, 'review-only');
+              assert.deepEqual(artifact.supportedCapabilities, []);
+              assert.equal(artifact.packages[name], pkg.version);
+              const { createHash } = await import('node:crypto');
+              for (const [file, hash] of Object.entries(artifact.artifacts)) {
+                const bytes = readFileSync(new URL('./node_modules/' + name + '/openapi/' + file, import.meta.url));
+                assert.equal(createHash('sha256').update(bytes).digest('hex'), hash);
+              }
+            }
+          }
+          continue;
+        }
         const esm = await import(specifier), cjs = require(specifier);
         assert.deepEqual(Object.keys(esm).sort(), Object.keys(cjs).sort(), specifier);
       }

@@ -3,8 +3,9 @@
 [ADR-0002](../adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
 accepts this protocol design. #5 introduces the shared repository-only authoring
 type and Auth/Identity definitions; #6 applies it to Forms/Newsletter. #7 implements
-registry validation and deterministic OpenAPI generation. No operation runtime
-or generator is implemented by this document.
+registry validation and deterministic OpenAPI generation. The executable
+[generation guide](openapi.md) describes the implementation and remaining
+projection/profile review gates. This protocol implements no operation runtime.
 
 ## Authored values
 

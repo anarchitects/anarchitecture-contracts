@@ -1,0 +1,1260 @@
+{
+  "artifacts": {
+    "aggregate-review.json": "49fc933ce7b9a4bf60ccbc154d5d023495c643df3e0d8c1c12e7648da79bf693",
+    "aggregate-review.yaml": "6eca81fa114de771826c6d39c32ad64c1c8e16bb211a58c02cc337e2dc58f001",
+    "inventory.json": "a1cbb614bbda714c5d3cde2f045a2d2cd4e0f549a228e0f625ebb3561c88ab30"
+  },
+  "dependencies": {
+    "@anarchitects/auth-contracts": {
+      "zod": "4.5.0"
+    },
+    "@anarchitects/forms-contracts": {
+      "zod": "4.5.0"
+    },
+    "@anarchitects/identity-contracts": {
+      "zod": "4.5.0"
+    },
+    "@anarchitects/newsletter-contracts": {
+      "zod": "4.5.0"
+    }
+  },
+  "documentedOperationCount": 14,
+  "excludedOperations": [
+    {
+      "binding": "auth.protected",
+      "operationId": "beginRegistration",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "changePassword",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "createUserProfile",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "finishRegistration",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getFormDefinition",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "getLoggedInUserInfo",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getSubmission",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getSubmissions",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "getUserProfileByAuthUserId",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "getUserProfileById",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "logout",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "newsletter.webhook-signature",
+      "operationId": "receiveNewsletterWebhook",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "submitForm",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "updateEmail",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "identity.protected",
+      "operationId": "updateUserProfile",
+      "reason": "unresolved-security"
+    }
+  ],
+  "formatVersion": 1,
+  "generator": {
+    "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
+    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
+    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "operationCount": 29,
+  "packages": {
+    "@anarchitects/auth-contracts": "0.0.0",
+    "@anarchitects/forms-contracts": "0.0.0",
+    "@anarchitects/identity-contracts": "0.0.0",
+    "@anarchitects/newsletter-contracts": "0.0.0"
+  },
+  "profile": {
+    "capabilities": [
+      "auth.jwt",
+      "auth.passkeys",
+      "auth.session",
+      "forms.definitions",
+      "forms.submissions",
+      "identity.profiles",
+      "newsletter.native",
+      "newsletter.subscription",
+      "newsletter.webhook"
+    ],
+    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "hostBindings": {},
+    "id": "aggregate-review",
+    "securityBindings": {},
+    "securitySchemes": {},
+    "status": "review-only"
+  },
+  "projectionProposal": {
+    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
+    "id": "P07-legacy-input-projection",
+    "status": "proposed"
+  },
+  "projections": {
+    "auth.ActivateUserRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.token"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.token/in"
+      }
+    ],
+    "auth.ChangePasswordRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.currentPassword"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.currentPassword/in"
+      }
+    ],
+    "auth.ForgotPasswordRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.email"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.email/in"
+      }
+    ],
+    "auth.LoginRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.credential"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.credential/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/in"
+      }
+    ],
+    "auth.RegisterRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.email"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.email/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType/in"
+      }
+    ],
+    "auth.ResetPasswordRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.token"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.token/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/in"
+      }
+    ],
+    "auth.UpdateEmailRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.newEmail"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.newEmail/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/innerType/in"
+      }
+    ],
+    "auth.UserIdParams.node.70726f70657274792e757365724964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/options.0/options.1/options.1"
+      }
+    ],
+    "auth.VerifyEmailRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.token"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.token/in"
+      }
+    ],
+    "auth.jwt.JwtLogoutRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.accessToken/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.accessToken/innerType/in"
+      }
+    ],
+    "auth.jwt.JwtRefreshRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken/in"
+      }
+    ],
+    "auth.passkeys.PasskeyAuthenticationFinishRequest.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.response/property.id/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type/in"
+      },
+      {
+        "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType/in"
+      },
+      {
+        "implementation": "9fa88652403646385e328b834b932ecd9d9052a910d43c48da6f23204136a68a",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType"
+      },
+      {
+        "implementation": "8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType/in/in"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType/in/in/in"
+      }
+    ],
+    "auth.passkeys.PasskeyRegistrationBeginRequest.Input": [
+      {
+        "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+        "kind": "input-pipeline",
+        "path": "property.authenticatorAttachment/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.authenticatorAttachment/innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.authenticatorAttachment/innerType/in/in/options.0/options.1/options.1"
+      }
+    ],
+    "auth.passkeys.PasskeyRegistrationFinishRequest.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.response/property.id/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type/in"
+      },
+      {
+        "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType/in"
+      },
+      {
+        "implementation": "25863f77b8136cd3be1ab2637962dc59eb6e3611343345761fc63a3abad3edea",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.publicKeyAlgorithm/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.publicKeyAlgorithm/innerType/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.transports/innerType/options.0/element"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.transports/innerType/options.0/element/in"
+      },
+      {
+        "implementation": "8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.transports/innerType/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType/in"
+      }
+    ],
+    "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": [
+      {
+        "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+        "kind": "input-pipeline",
+        "path": "innerType"
+      },
+      {
+        "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+        "kind": "custom-refinement",
+        "path": "innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/out/options.1"
+      }
+    ],
+    "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/options.0/options.1/options.1"
+      }
+    ],
+    "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/options.0/options.1/options.1"
+      }
+    ],
+    "forms.SubmissionRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.formId"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.formId/in"
+      },
+      {
+        "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+        "kind": "input-pipeline",
+        "path": "property.formVersion"
+      },
+      {
+        "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+        "kind": "custom-refinement",
+        "path": "property.formVersion"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.formVersion/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.formVersion/out/options.1"
+      }
+    ],
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/in/in/options.0/options.1/options.1"
+      }
+    ],
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input": [
+      {
+        "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+        "kind": "input-pipeline",
+        "path": "innerType"
+      },
+      {
+        "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+        "kind": "custom-refinement",
+        "path": "innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/out/options.1"
+      }
+    ],
+    "identity.CreateUserProfileRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.authUserId"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.authUserId/in"
+      }
+    ],
+    "identity.ProfileId.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/in/options.0/options.1/options.1"
+      }
+    ],
+    "identity.UpdateUserProfileRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.displayName/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.displayName/innerType/in"
+      }
+    ],
+    "newsletter.NewsletterNativeActionRequest.Input": [
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "property.token"
+      }
+    ],
+    "newsletter.NewsletterSubscribeRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "options.0/catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "options.1/property.email"
+      },
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "options.1/property.source/innerType"
+      },
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "options.1/property.website/innerType"
+      }
+    ],
+    "newsletter.NewsletterWebhookPayload.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "options.0/catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+        "kind": "custom-refinement",
+        "path": "options.0/property.events/element"
+      },
+      {
+        "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+        "kind": "custom-refinement",
+        "path": "options.1"
+      },
+      {
+        "implementation": "a84fb5c0c6dd474ecf0722607d82f2e276ff24ee4de95274028485cd562e6a62",
+        "kind": "custom-refinement",
+        "path": "options.1"
+      }
+    ]
+  },
+  "releaseBlockers": [
+    {
+      "capability": "forms.submissions",
+      "id": "D05",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Review dynamic-validation bypass and agree a versioned migration or constrained legacy disposition before stable support.",
+      "status": "blocked"
+    },
+    {
+      "capability": "forms.definitions",
+      "id": "D08",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Review delivery-secret access scope and agree a versioned redaction or explicit constrained legacy disposition before stable support.",
+      "status": "blocked"
+    }
+  ],
+  "schemaOrigins": {
+    "auth.ActivateUserRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ActivateUserRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.BadRequestError.Output": {
+      "domain": "auth",
+      "id": "auth.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ChangePasswordRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ChangePasswordRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ForbiddenError.Output": {
+      "domain": "auth",
+      "id": "auth.ForbiddenError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ForgotPasswordRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ForgotPasswordRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.InternalServerError.Output": {
+      "domain": "auth",
+      "id": "auth.InternalServerError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.LoggedInUserInfoResponse.Output": {
+      "domain": "auth",
+      "id": "auth.LoggedInUserInfoResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.LoginRequest.Input": {
+      "domain": "auth",
+      "id": "auth.LoginRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.LogoutRequest.Input": {
+      "domain": "auth",
+      "id": "auth.LogoutRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.RegisterRequest.Input": {
+      "domain": "auth",
+      "id": "auth.RegisterRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ResetPasswordRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ResetPasswordRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.SetCookieHeader.Output": {
+      "domain": "auth",
+      "id": "auth.SetCookieHeader",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.SuccessResponse.Output": {
+      "domain": "auth",
+      "id": "auth.SuccessResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.UnauthorizedError.Output": {
+      "domain": "auth",
+      "id": "auth.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.UpdateEmailRequest.Input": {
+      "domain": "auth",
+      "id": "auth.UpdateEmailRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.UserIdParams.node.70726f70657274792e757365724964.Input": {
+      "domain": "auth",
+      "id": "auth.UserIdParams.node.70726f70657274792e757365724964",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.VerifyEmailRequest.Input": {
+      "domain": "auth",
+      "id": "auth.VerifyEmailRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.jwt.JwtLogoutRequest.Input": {
+      "domain": "auth",
+      "id": "auth.jwt.JwtLogoutRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.jwt.JwtRefreshRequest.Input": {
+      "domain": "auth",
+      "id": "auth.jwt.JwtRefreshRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.jwt.JwtTokensResponse.Output": {
+      "domain": "auth",
+      "id": "auth.jwt.JwtTokensResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyAuthenticationBeginRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyAuthenticationBeginRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyAuthenticationBeginResponse.Output": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyAuthenticationBeginResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyAuthenticationFinishRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyAuthenticationFinishRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyRegistrationBeginRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyRegistrationBeginRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyRegistrationBeginResponse.Output": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyRegistrationBeginResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyRegistrationFinishRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyRegistrationFinishRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "forms.BadRequestError.Output": {
+      "domain": "forms",
+      "id": "forms.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.ForbiddenError.Output": {
+      "domain": "forms",
+      "id": "forms.ForbiddenError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.FormDefinitionEnvelopeResponse.Output": {
+      "domain": "forms",
+      "id": "forms.FormDefinitionEnvelopeResponse",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+      "domain": "forms",
+      "id": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": {
+      "domain": "forms",
+      "id": "forms.FormIdParams.node.70726f70657274792e666f726d4964",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.InternalServerError.Output": {
+      "domain": "forms",
+      "id": "forms.InternalServerError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.NotFoundError.Output": {
+      "domain": "forms",
+      "id": "forms.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionRequest.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionRequest",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionResponse.Output": {
+      "domain": "forms",
+      "id": "forms.SubmissionResponse",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionsResponse.Output": {
+      "domain": "forms",
+      "id": "forms.SubmissionsResponse",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.UnauthorizedError.Output": {
+      "domain": "forms",
+      "id": "forms.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "identity.BadRequestError.Output": {
+      "domain": "identity",
+      "id": "identity.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.CreateUserProfileRequest.Input": {
+      "domain": "identity",
+      "id": "identity.CreateUserProfileRequest",
+      "io": "input",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.ForbiddenError.Output": {
+      "domain": "identity",
+      "id": "identity.ForbiddenError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.InternalServerError.Output": {
+      "domain": "identity",
+      "id": "identity.InternalServerError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.NotFoundError.Output": {
+      "domain": "identity",
+      "id": "identity.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.ProfileId.Input": {
+      "domain": "identity",
+      "id": "identity.ProfileId",
+      "io": "input",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.UnauthorizedError.Output": {
+      "domain": "identity",
+      "id": "identity.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.UpdateUserProfileRequest.Input": {
+      "domain": "identity",
+      "id": "identity.UpdateUserProfileRequest",
+      "io": "input",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "identity.UserProfileResponse.Output": {
+      "domain": "identity",
+      "id": "identity.UserProfileResponse",
+      "io": "output",
+      "package": "@anarchitects/identity-contracts"
+    },
+    "newsletter.BadRequestError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.CacheControlHeader.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.CacheControlHeader",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterAcceptedResponse.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterAcceptedResponse",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterNativeActionRequest.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterNativeActionRequest",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterSignatureHeader.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterSignatureHeader",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterSubscribeRequest.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterSubscribeRequest",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterWebhookPayload.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterWebhookPayload",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterWebhookResponse.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterWebhookResponse",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NotFoundError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.PayloadTooLargeError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.PayloadTooLargeError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.ReferrerPolicyHeader.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.ReferrerPolicyHeader",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.RetryAfterHeader.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.RetryAfterHeader",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.ServiceUnavailableError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.ServiceUnavailableError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.TooManyRequestsError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.TooManyRequestsError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.UnauthorizedError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    }
+  },
+  "source": {
+    "files": {
+      "packages/auth/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/auth/src/jwt.ts": "97712a20710eb6bb442ed6144e14c9c57abd6b6107e92d0416024cfb36c73e47",
+      "packages/auth/src/operations/index.ts": "0a733a3f8acffb651afefcde2da7d07c0225d3225658e91e24523e3cf89fa1b4",
+      "packages/auth/src/operations/jwt.ts": "41f9398763a1ed782efe4e3d38736a281fc3bc528b054d7ef89b4ce20240c53a",
+      "packages/auth/src/operations/passkeys.ts": "3ce9a169cb69e887ba673e348cdd31120424526ff21b180f63ea8959c6469172",
+      "packages/auth/src/operations/session.ts": "0604f319d2b261df994bcee8a874fb0c482bb5ee8423929df11a3551ccab58ae",
+      "packages/auth/src/operations/support.ts": "d45d55d5e3d67ccbb307ac35155a8efb6391b42194565fbbe1a832f3b2774321",
+      "packages/auth/src/passkeys.ts": "1d972eb7ef7b9d6e7b5e9793c11f72c0460210a4f40ec1e402721f0155e34f12",
+      "packages/auth/src/policy.ts": "6eb97f519875e67b7466adcb020bcb8a8010cada8bb4d140657779c9237a206b",
+      "packages/auth/src/schemas/index.ts": "9a6fcb6e3ba9a8645b561f2616bb91f81326d9f25136e7f4269fd75de1800c77",
+      "packages/auth/src/schemas/input.ts": "43ea6771aaf5a9570d7cb33aeed5426e447493c26f9736bbc8c9495efbd9038d",
+      "packages/auth/src/schemas/jwt.ts": "575b1a5fbdc5d39ecf9f2fe3f5e282c4a8a1004b502944981c6e4c81c387d875",
+      "packages/auth/src/schemas/passkeys.ts": "1653d75cb6c172bac5977c1a66c66ba0828e2959e3290b962d2220e97d4d8461",
+      "packages/auth/src/schemas/policy.ts": "c171d27d1fcc94b8d12bcdddfd1f41e156aa3591c676262dc14c29e57e8c8319",
+      "packages/auth/src/schemas/session.ts": "333b59f98cf3caa0fcea08375c1fa269d2e5d8b8d1dbac79646b7a09a31047e1",
+      "packages/forms/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/forms/src/operations/index.ts": "f4662a99aed2ee16546304233651eccee340ba1b80f800c19c49269a10b9ffed",
+      "packages/forms/src/schemas/errors.ts": "9c80b329924ae7476545bc47b5f4a46619bf67ad68cd202d7a1d11f47ef493bd",
+      "packages/forms/src/schemas/formats.ts": "00856f6486e0d2f7c26344e0ca71fdd6289ff49d0173eac50d63aba80ca99fc4",
+      "packages/forms/src/schemas/forms.ts": "976fc4c81ca00720538bd3d7e725563c551c15195f29652acd27ae32fbfb56d9",
+      "packages/forms/src/schemas/index.ts": "ec20d3a7f554019e6ae9f329fafd3e9b6fb62fcf0fd3ae55a1d0faee2fc8a653",
+      "packages/forms/src/schemas/input.ts": "72f47b889fd67539cb909aaa816351d23c809cc46ee00a1334b09af2a34139da",
+      "packages/identity/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/identity/src/operations/index.ts": "6aeeacc6843af51e2552aff256fc9de485ff48f039fedfa4c2a71b9c159e936e",
+      "packages/identity/src/schemas/index.ts": "97bb20ea553afc2ff7dd91d34bd15c5df60b27f99cfa71f37a4cff8dda03e297",
+      "packages/newsletter/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/newsletter/src/native.ts": "fa3d79ed42e5abb7985e3e672b55c1594568ea07b7e7cfb625a7269dc439d038",
+      "packages/newsletter/src/operations/index.ts": "4602154a2f30fe27007164bc886c992bf08805a0854e2bcfda5710d85d159464",
+      "packages/newsletter/src/operations/native.ts": "6cc0ea8bc4f628a518d2b61b78199351cf5277bc97f2bbf5c86b67be2b2ec599",
+      "packages/newsletter/src/operations/subscription.ts": "97890df0e89711eac4269cca283904b53a8562f258a2e9aaea5e6bd1ce74a3c0",
+      "packages/newsletter/src/operations/support.ts": "4cb8ce1ef0ea1b25d01946d9c2cd4f55628713c2e51cc213a723ee840ae34c73",
+      "packages/newsletter/src/operations/webhook.ts": "658d40f2dc2c1ab8db9c2979d145e4129e4147e02a76dc54717e4201bde72141",
+      "packages/newsletter/src/schemas/errors.ts": "cf8e51dc70ce452ac653aec586d935a7cd7013831fceca85bb56d091008e7afe",
+      "packages/newsletter/src/schemas/index.ts": "999f0cbe502d1335772f4918044beadafcdc7bed14e012812ffac68049c10bf9",
+      "packages/newsletter/src/schemas/input.ts": "1468dcc8acc8c4510bc2eb0b39aee9095904af571a9e0ca9156d4a163c236f41",
+      "packages/newsletter/src/schemas/native.ts": "022e724907bf103294b62d5d0f42e38343e120cd4c5a6859585e8e0466d96b6b",
+      "packages/newsletter/src/schemas/subscription.ts": "18cb7b1898c261dc9bc0881b0e6a948a45dde8c4902aca486b5bb6bc15367843",
+      "packages/newsletter/src/schemas/webhook.ts": "ecbd8f79194ace3dcd2c6ec2a40ae471f7202e3db307a0962cb01798ee4cb305",
+      "packages/newsletter/src/webhook.ts": "02889b06181d6bfb7c4275d3a23911a9a65d71c8128d0d2cfd3d6dd09922c86d",
+      "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
+    },
+    "revision": "sha256:f7f939d7a776cc0f42938465e28ec05bbef7e000174a02150188e156e2704665"
+  },
+  "status": "review-only",
+  "supportedCapabilities": [],
+  "tools": {
+    "@apidevtools/swagger-parser": "13.1.0",
+    "yaml": "2.9.1",
+    "zod": "4.5.0"
+  },
+  "unresolvedHostBindings": [
+    "auth.jwt-plugin:JWT verification and invalidation service",
+    "auth.session-passkeys:WebAuthn origin/RP and verifier",
+    "auth.session-passkeys:resource authorization policy",
+    "auth.session-passkeys:session cookie transport",
+    "auth.session:resource authorization policy",
+    "auth.session:session cookie transport",
+    "forms.protected:authentication transport",
+    "forms.protected:resource authorization policy",
+    "identity.protected:authentication transport",
+    "identity.protected:resource authorization policy",
+    "newsletter.native:consent version/text",
+    "newsletter.native:native action lifecycle",
+    "newsletter.native:rate-limit policy",
+    "newsletter.subscription-webhook:account id",
+    "newsletter.subscription-webhook:byte/event limits",
+    "newsletter.subscription-webhook:consent version/text",
+    "newsletter.subscription-webhook:rate-limit policy",
+    "newsletter.subscription-webhook:raw-body capture",
+    "newsletter.subscription-webhook:signature secret",
+    "newsletter.subscription-webhook:withdrawal persistence",
+    "newsletter.subscription:consent version/text",
+    "newsletter.subscription:rate-limit policy",
+    "newsletter.subscription:trusted request context"
+  ]
+}

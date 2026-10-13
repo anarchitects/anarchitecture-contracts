@@ -16,7 +16,9 @@
     "dist",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "openapi",
+    "contract-manifest.json"
   ],
   "exports": {
     ".": {
@@ -48,7 +50,11 @@
         "types": "./dist/cjs/operations.d.cts",
         "default": "./dist/cjs/operations.cjs"
       }
-    }
+    },
+    "./openapi/identity-review.json": "./openapi/identity-review.json",
+    "./openapi/identity-review.yaml": "./openapi/identity-review.yaml",
+    "./openapi/inventory.json": "./openapi/inventory.json",
+    "./manifest.json": "./contract-manifest.json"
   },
   "dependencies": {
     "zod": "4.5.0"

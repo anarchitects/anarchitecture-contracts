@@ -1,5 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
+import { writeFileSync } from 'node:fs';
+import { json, sourceFiles } from '../openapi/common.mjs';
 
 const root = process.cwd();
 execFileSync(
@@ -25,4 +27,8 @@ for (const domain of ['auth', 'identity', 'forms', 'newsletter']) {
     );
   }
   console.log(`Built ${domain} ESM/CommonJS and declarations.`);
+  writeFileSync(
+    `packages/${domain}/dist/build-inputs.json`,
+    json(sourceFiles(domain)),
+  );
 }
