@@ -6,6 +6,7 @@
 - Scope: Public HTTP contract package design; implementation follows in #5–#8
 - Implements: [issue #4](https://github.com/anarchitects/anarchitecture-contracts/issues/4), under [EPIC #1](https://github.com/anarchitects/anarchitecture-contracts/issues/1)
 - Refines: [ADR-0001](0001-contract-workspace-and-release-foundations.md)
+- Release-tooling override: [ADR-0003](0003-nx-workspace-and-release-governance.md) supersedes Changesets-specific versioning; package boundaries and wire compatibility rules remain Accepted.
 
 ## Context and reviewed evidence
 
@@ -94,7 +95,7 @@ does not replace providers or implement Nest 12 modernization.
    [baseline disposition register](../docs/baseline-dispositions.md) to the other
    findings; this ADR does not authorize a wire break or approve the recorded
    Forms security defects as a stable contract.
-10. Version each domain independently using Changesets and the
+10. Version each domain independently using **Nx Release after the controlled issue #8 cutover** (Changesets remains a transitional source of pending release intent) and the
     [release rules](../docs/releases.md). Treat package exports/types, schema
     parsing and HTTP behavior as compatibility surfaces. Evaluate requests and
     responses in both directions, including negative/security behavior. Changes
