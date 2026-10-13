@@ -17,11 +17,21 @@
     "changeset:status": "changeset status",
     "baseline:check": "node --test tools/legacy-baseline/baseline.test.mjs",
     "baseline:verify": "node tools/legacy-baseline/capture.mjs verify",
-    "check": "yarn format:check && yarn lint:md && yarn baseline:check"
+    "check": "yarn format:check && yarn lint:md && yarn baseline:check && yarn build && yarn test:contracts && yarn test:packed",
+    "build": "node tools/contract-authoring/build.mjs",
+    "test:contracts": "node --test tools/contract-authoring/*.test.mjs packages/*/test/*.test.mjs",
+    "test:packed": "node tools/contract-authoring/packed-consumer.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.8",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "esbuild": "0.28.2",
     "markdownlint-cli2": "0.18.1",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "typescript-5-5": "npm:typescript@5.5.4",
+    "zod": "4.5.0"
   }
 }

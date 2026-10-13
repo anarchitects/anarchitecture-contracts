@@ -2,7 +2,7 @@
 
 [ADR-0002](../adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
 accepts this protocol design. #5 introduces the shared repository-only authoring
-type and Auth definitions; #6 applies it to the other domains. #7 implements
+type and Auth/Identity definitions; #6 applies it to Forms/Newsletter. #7 implements
 registry validation and deterministic OpenAPI generation. No operation runtime
 or generator is implemented by this document.
 

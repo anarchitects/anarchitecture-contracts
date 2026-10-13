@@ -24,7 +24,7 @@ an implementation/provider replacement or a silent breaking fix.
 | D08: Forms delivery-secret forwarding    | Block stable Forms definition capability pending security review                                                               | #6 Forms extraction and linked 3-tier follow-up | Record access scope and a deliberate redaction/migration or explicit constrained legacy decision; synthetic evidence is not proof of production exposure. No automatic removal or acceptance in this PR. |
 | D09: conditional routes always in spec   | Document capability/profile availability and generate only resolved enabled routes                                             | #6 Newsletter, #7                               | Enabled/disabled and wrong-method evidence; no deployment support claim from generator inclusion.                                                                                                        |
 | D10: undeclared Forms pagination         | Preserve the array response and declared filters; do not add pagination                                                        | #6 Forms                                        | Record unknown query forwarding as legacy behavior. Any pagination/envelope redesign requires a separate version decision.                                                                               |
-| D11: null-to-empty-string mutation       | Preserve this explicit request normalization for the legacy-compatible profile; keep omitted fields and response null distinct | #6 Identity                                     | Compare raw input, mapper-facing values and serialized output. Restoring literal null writes would be a deliberate semantic change requiring review/versioning.                                          |
+| D11: null-to-empty-string mutation       | Preserve this explicit request normalization for the legacy-compatible profile; keep omitted fields and response null distinct | #5 Identity                                     | Compare raw input, mapper-facing values and serialized output. Restoring literal null writes would be a deliberate semantic change requiring review/versioning.                                          |
 
 The Forms blockers apply to the affected capabilities, not to writing extraction
 code and tests. A prerelease may carry quarantined work with explicit unsupported
@@ -50,13 +50,13 @@ authorization rule. Use [release conventions](releases.md) for the version plan.
 
 ## Scope completion by epic issue
 
-| Issue | Required result                                                                                                                        |
-| ----- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| #4    | Accepted ADR, package/export/module design, schema/type rules, operation protocol, SemVer/cross-domain rules and disposition ownership |
-| #5    | Auth schemas/operations and shared private authoring type; schema/type/packed-consumer evidence, policy boundary and Auth dispositions |
-| #6    | Forms/Identity/Newsletter schemas/operations and domain evidence; resolve or explicitly block the affected capabilities                |
-| #7    | Executable operation validation, deterministic OpenAPI 3.1/profile manifests and compatibility/release-plan enforcement                |
-| #8    | Publication/provenance and independent conformance tooling, with actual support evidence; no adoption claim from package availability  |
+| Issue | Required result                                                                                                                                   |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| #4    | Accepted ADR, package/export/module design, schema/type rules, operation protocol, SemVer/cross-domain rules and disposition ownership            |
+| #5    | Auth/Identity schemas/operations and shared private authoring type; schema/type/packed-consumer evidence, policy boundary and domain dispositions |
+| #6    | Forms/Newsletter schemas/operations and domain evidence; resolve or explicitly block the affected capabilities                                    |
+| #7    | Executable operation validation, deterministic OpenAPI 3.1/profile manifests and compatibility/release-plan enforcement                           |
+| #8    | Publication/provenance and independent conformance tooling, with actual support evidence; no adoption claim from package availability             |
 
 3-tier adoption and DDD conformance remain the separate implementation work linked
 by EPIC #1. DDD capabilities it does not implement stay explicitly unsupported.

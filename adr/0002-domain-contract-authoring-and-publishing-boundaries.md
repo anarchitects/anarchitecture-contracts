@@ -105,8 +105,10 @@ does not replace providers or implement Nest 12 modernization.
 
 Issue #4 delivers this Accepted design and its linked conventions. It creates no
 placeholder package, publishes nothing and leaves the frozen baseline untouched.
-Issues #5/#6 implement actual schema/operation exports and their package tests;
-issue #7 implements generation, operation validation and semantic compatibility
+Issue #5 implements Auth/Identity schema/operation exports and package tests;
+issue #6 implements Forms/Newsletter. This corrects the initial design guides
+that assigned Identity to #6; issue #5 explicitly owns both Auth and Identity.
+Issue #7 implements generation, operation validation and semantic compatibility
 gates; #8 implements publication and independent conformance tooling. Each stays a
 separate reviewed PR. Existing Nest 11 maintenance commitments remain intact.
 
