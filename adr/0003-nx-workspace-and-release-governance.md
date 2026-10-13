@@ -50,12 +50,10 @@ Bricks 3-Tier, Plugins and Community use Nx projects, Nx Release and dedicated G
 
 This Accepted ADR **partially supersedes** only the *tooling and release-mechanism* decisions of earlier local ADRs:
 
-| Earlier decision | Interpretation after this ADR |
-| --- | --- |
-| ADR-0001 §Decision 1: no Nx for build or consumption | Historical initial-foundation choice; **Nx now required in the development workspace**, but **never required to consume published contracts or independent conformance tools**. Yarn/Node/lockfile and immutable installations remain valid. |
-| ADR-0001 §Decision 6: Changesets records release intent/changelogs | Valid only as **current transitional state** until issue #8 migrates pending entries; **Nx Release becomes the only permanent release authority**. Independent versions, npm scope and compatibility safeguards remain valid. |
-| ADR-0001 §Alternatives: Nx unnecessary for foundation | Historical scope assessment, not an ongoing prohibition. |
-| ADR-0002 §Decision 10: domain versions via Changesets | Independent domain versioning and wire compatibility remain accepted; **use Nx Release for ongoing versioning/publication after issue #8's explicit cutover**. |
+- **ADR-0001, Decision 1 (Nx for development):** The initial no-Nx foundation choice is historical. Nx is now required in the development workspace, but must never be required to consume published contracts or standalone conformance tools. Yarn, Node, the lockfile and immutable installations remain valid.
+- **ADR-0001, Decision 6 (Changesets):** Changesets remains only as the currently implemented transitional state while issue #8 migrates pending entries. Nx Release becomes the sole permanent release authority. Independent versions, npm scope and compatibility safeguards remain valid.
+- **ADR-0001, Alternatives (Nx unnecessary for the foundation):** This was the original foundation assessment, not a continuing prohibition.
+- **ADR-0002, Decision 10 (domain versions via Changesets):** Independent domain versioning and wire compatibility remain accepted. Use Nx Release for ongoing versioning and publication after issue #8's explicit cutover.
 
 The existing workflows remain the **actual implemented state** until migration PR(s) and release smoke tests land. Acceptance of this ADR is a direction and does not claim that Nx is already installed, Changesets already retired, npm already configured, or packages already published. If #8 is split, it remains the parent release acceptance gate and each subtask must have its own PR.
 
