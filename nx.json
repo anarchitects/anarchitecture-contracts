@@ -1,0 +1,89 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "analytics": false,
+  "parallel": 2,
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "include": ["packages/*/tsconfig.json"],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": false
+      }
+    }
+  ],
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "!{projectRoot}/dist/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/.yarnrc.yml",
+      "{workspaceRoot}/tsconfig.json",
+      "{workspaceRoot}/tools/contract-authoring/**/*",
+      "{workspaceRoot}/tools/openapi/common.mjs",
+      {
+        "runtime": "node --version"
+      }
+    ]
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": ["typecheck", "^build"],
+      "inputs": ["default", "^default"],
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "test": {
+      "cache": true,
+      "dependsOn": ["build"],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/baselines/legacy-3tier/**/*"
+      ],
+      "outputs": []
+    }
+  },
+  "release": {
+    "projects": [
+      "auth-contracts",
+      "forms-contracts",
+      "identity-contracts",
+      "newsletter-contracts"
+    ],
+    "projectsRelationship": "independent",
+    "releaseTag": {
+      "pattern": "{projectName}@{version}",
+      "requireSemver": true
+    },
+    "versionPlans": true,
+    "version": {
+      "currentVersionResolver": "git-tag",
+      "specifierSource": "version-plans",
+      "updateDependents": "auto",
+      "preserveLocalDependencyProtocols": false,
+      "adjustSemverBumpsForZeroMajorVersion": false
+    },
+    "changelog": {
+      "workspaceChangelog": false,
+      "projectChangelogs": {
+        "createRelease": false
+      }
+    },
+    "git": {
+      "commit": false,
+      "tag": false,
+      "push": false
+    }
+  },
+  "tui": {
+    "enabled": false
+  }
+}

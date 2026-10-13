@@ -93,5 +93,5 @@ All 15 Meta ADRs were reviewed at
 `e2f34553c6e2492d0ab6f80ac795de44fc592a70`, matching upstream, and all three local
 ADRs at `401d8e4` (unchanged since the prior review). Accepted ownership, platform
 independence and compatibility requirements apply; proposed governance remains
-contextual. ADR-0003 assigns the Nx Release cutover to #8. The current Changesets
-adapter remains transitional.
+contextual. ADR-0003 assigns the Nx Release cutover to #8. The Changesets input
+adapter has since been replaced by Nx version plans in the [migration preparation](nx-migration.md).

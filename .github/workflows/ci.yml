@@ -6,6 +6,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  NX_DAEMON: 'false'
+  NX_TUI: 'false'
+
 permissions:
   contents: read
 
@@ -38,10 +42,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Check workspace and packages
-        run: yarn check
-
-      - name: Validate release plan
-        run: yarn changeset:status
+        run: yarn nx run contract-checks:check
 
       - name: Enforce package compatibility and release intent
         env:
@@ -55,7 +56,8 @@ jobs:
           else
             contracts_base="HEAD^"
           fi
-          yarn openapi:compatibility "$contracts_base"
+          yarn nx affected -t typecheck,build,test --base="$contracts_base" --head=HEAD
+          yarn nx run contract-checks:compatibility -- "$contracts_base"
 
   packed-consumers:
     name: Packed consumers (Node ${{ matrix.node }})
@@ -74,7 +76,7 @@ jobs:
           package-manager-cache: false
       - run: corepack enable
       - run: yarn install --immutable
-      - run: yarn build
+      - run: yarn nx run-many -t build
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}

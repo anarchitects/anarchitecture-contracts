@@ -1,8 +1,8 @@
 ---
-'@anarchitects/auth-contracts': minor
-'@anarchitects/forms-contracts': minor
-'@anarchitects/identity-contracts': minor
-'@anarchitects/newsletter-contracts': minor
+auth-contracts: minor
+forms-contracts: minor
+identity-contracts: minor
+newsletter-contracts: minor
 ---
 
 Add explicit generated OpenAPI review JSON/YAML, diagnostic inventories and

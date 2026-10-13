@@ -1,15 +1,25 @@
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { writeFileSync } from 'node:fs';
-import { json, sourceFiles } from '../openapi/common.mjs';
+import { domains, invariant, json, sourceFiles } from '../openapi/common.mjs';
 
 const root = process.cwd();
-execFileSync(
-  process.execPath,
-  ['node_modules/typescript/bin/tsc', '--noEmit'],
-  { stdio: 'inherit' },
+const selected = process.argv.slice(2);
+invariant(
+  selected.every((domain) => domains.includes(domain)),
+  'Unknown contract domain',
 );
-for (const domain of ['auth', 'identity', 'forms', 'newsletter']) {
+for (const domain of selected.length ? selected : domains) {
+  execFileSync(
+    process.execPath,
+    [
+      'node_modules/typescript/bin/tsc',
+      '--noEmit',
+      '-p',
+      `packages/${domain}/tsconfig.json`,
+    ],
+    { stdio: 'inherit' },
+  );
   for (const format of ['esm', 'cjs']) {
     // A separate process resolves package type and all build workers consistently.
     execFileSync(

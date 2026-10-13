@@ -1,0 +1,93 @@
+name: Release (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      projects:
+        description: Optional comma-separated Nx projects; empty releases all pending plans
+        required: false
+        type: string
+      specifier:
+        description: Optional SemVer specifier when no pending version plans exist
+        required: false
+        type: string
+      first_release:
+        description: First release for all selected projects
+        default: false
+        type: boolean
+      dry_run:
+        description: Preview versions and changelogs without writing or releasing
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contracts-release
+  cancel-in-progress: false
+
+env:
+  NX_DAEMON: 'false'
+  NX_TUI: 'false'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Require main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo 'Release must run from reviewed main.'
+          exit 1
+      - name: Check live release credentials
+        if: ${{ !inputs.dry_run }}
+        env:
+          APP_ID: ${{ secrets.ANARCHITECTS_BOT_CLIENT_ID }}
+          APP_KEY: ${{ secrets.ANARCHITECTS_BOT_PRIVATE_KEY }}
+          SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APP_ID" ] || [ -z "$APP_KEY" ] || [ -z "$SIGNING_KEY" ]; then
+            echo 'Configure the GitHub App and approved GitHub-registered release signing key; see docs/releases.md. Do not bypass branch protection.'
+            exit 1
+          fi
+      - name: Generate GitHub App token
+        if: ${{ !inputs.dry_run }}
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.ANARCHITECTS_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.ANARCHITECTS_BOT_PRIVATE_KEY }}
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token || github.token }}
+          persist-credentials: ${{ !inputs.dry_run }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Configure verified signing identity
+        if: ${{ !inputs.dry_run }}
+        uses: crazy-max/ghaction-import-gpg@e89d40939c28e39f97cf32126055eeae86ba74ec # v6
+        with:
+          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          # Optional: only needed when the private key is passphrase-protected.
+          passphrase: ${{ secrets.RELEASE_GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_tag_gpgsign: true
+      - name: Validate workspace
+        run: yarn nx run contract-checks:check
+      - name: Release through Nx (never publishes npm)
+        run: yarn nx run contract-checks:release
+        env:
+          RELEASE_PROJECTS: ${{ inputs.projects }}
+          RELEASE_SPECIFIER: ${{ inputs.specifier }}
+          RELEASE_FIRST: ${{ inputs.first_release }}
+          RELEASE_DRY_RUN: ${{ inputs.dry_run }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || github.token }}

@@ -30,8 +30,8 @@ release gates; no stable capability or deployment adoption is implied.
 Issue #7 adds [OpenAPI generation and compatibility checks](docs/openapi.md),
 including 29-operation diagnostic inventories, JSON/YAML review artifacts,
 package manifests and CI release-plan checks. The
-[projection exception proposal](docs/openapi-projection-proposal.md) and host
-bindings remain unapproved; the artifacts are not deployable profiles.
+[scoped projection register](docs/openapi-projection-proposal.md) implements the accepted
+decision for #7. Real host bindings remain unresolved; artifacts are not deployable profiles.
 
 Before writing code, read [AGENTS.md](AGENTS.md), every Meta and local ADR, and
 the relevant engineering guides.
@@ -54,14 +54,22 @@ If your Node distribution omits Corepack, install it using the
 Zod/AJV differential fixtures, deterministic OpenAPI/lint/snapshot checks and
 clean packed ESM/CommonJS/type/browser checks.
 `yarn format` fixes formatting, excluding frozen artifact bytes.
-CI runs the same checks, an immutable install and `yarn changeset:status` with
+CI runs the same checks, an immutable install and Nx release dry-run validation with
 full Git history on pull requests and pushes to `main`. Actual legacy HTTP replay
 is available with `yarn baseline:verify ../anarchitecture-bricks-3tier`; see its
 [prerequisites and limits](baselines/legacy-3tier/README.md#reproduce).
 CI also runs packed consumers on Node 22 and 24. Independent deployment
-conformance and publication remain #8; projection/profile approval remains a #7 gate.
+conformance and publication remain #8; approved host profiles remain a release gate.
 
-Changesets status needs a committed `HEAD` and a fetched `origin/main` base.
+Nx 23.3.0 and `@nx/js` provide per-package builds and inferred typechecks.
+Use `yarn nx show projects`, `yarn nx graph` and `yarn nx run auth-contracts:build`
+to inspect or run the graph. `yarn release:plan` records per-project release intent;
+`yarn release:dry-run` previews the initial independent releases without publication.
+Root scripts delegate to Nx targets. Manual release and tag-based publication use
+the [Community-style workflows](docs/releases.md#workflow-operation), with current
+host-profile blockers enforced before publication.
+See the [migration record](docs/nx-migration.md) for preserved Changesets intent
+and the remaining #8 gates. No Nx Cloud account is needed.
 
 ## Layout
 
@@ -69,7 +77,7 @@ Changesets status needs a committed `HEAD` and a fetched `origin/main` base.
 | ------------------------------- | ------------------------------------------------------------ |
 | `adr/`                          | Local architecture decisions                                 |
 | `packages/`                     | Four independent contract workspaces and domain conventions  |
-| `.changeset/`                   | Package-level version and changelog configuration            |
+| `.nx/version-plans/`            | Package-level version and changelog configuration            |
 | `docs/releases.md`              | Publication conventions, compatibility and adoption gates    |
 | `docs/schema-authoring.md`      | Zod schema, inferred type and normalization conventions      |
 | `docs/operation-definitions.md` | HTTP metadata, security profiles and generation requirements |
@@ -87,7 +95,7 @@ and business logic remain in their owning bounded contexts.
 
 ## Next delivery steps
 
-1. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): review the bounded projection proposal and resolve deployment profiles.
+1. Obtain approved real host profiles and conformance evidence; preserve Forms D05/D08 blockers.
 2. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
 
 See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
@@ -98,6 +106,10 @@ See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
 
 [MIT](LICENSE).
 
-## Accepted Nx workspace and release direction
+## Nx workspace and release preparation
 
-[ADR-0003](adr/0003-nx-workspace-and-release-governance.md) establishes Nx/`@nx/js` as the **target repository tooling** and Nx Release as the **sole future versioning/release authority**, replacing the present Changesets workflow in [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8). Existing commands above describe the **current implementation**, not completed Nx adoption. The released Zod/OpenAPI contracts and independent conformance tooling must remain usable without Nx.
+[ADR-0003](adr/0003-nx-workspace-and-release-governance.md) establishes Nx/`@nx/js`
+for repository tooling and Nx Release as the sole versioning authority. The
+workspace migration and version-plan transfer are implemented; signed release,
+trusted npm publication and independent conformance delivery remain under #8.
+Released contracts and conformance tools must remain usable without Nx.

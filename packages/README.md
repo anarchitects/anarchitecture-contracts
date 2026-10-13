@@ -8,7 +8,7 @@ Issue #6 implements [Forms](forms/README.md) and [Newsletter](newsletter/README.
 All four remain unreleased; compatibility records describe explicit release gates.
 Issue #7 adds [generated review artifacts](../docs/openapi.md), explicit file exports,
 manifests and compatibility gates. These artifacts claim no supported capabilities
-until the projection proposal and host profiles are resolved.
+until real host profiles are resolved; scoped projection reviews remain pinned.
 
 ## Ownership and public entry points
 
@@ -134,3 +134,19 @@ See [schema conventions](../docs/schema-authoring.md),
 [operation definitions](../docs/operation-definitions.md) and
 [release rules](../docs/releases.md). No package or consumer support is claimed by
 this design document alone.
+
+## Nx development and release planning
+
+Each domain is a distinct `@nx/js` project named `<domain>-contracts`, with inferred
+`typecheck` and the preserved dual-format `build`. Per-package `test` runs the
+package tests; shared differential suites run through `contract-checks:test`.
+`pack` and `contract-check` delegate to the shared installed-consumer/OpenAPI
+suites, so Nx schedules their real checks once when several packages request them.
+The shared suites deliberately verify the complete four-package graph.
+
+Nx Release uses independent versions and `.nx/version-plans/`. Only the four
+explicit domain projects are eligible. The private `contract-checks` project
+is never published. Nx/`@nx/js` are development-only and never enter package
+manifests or tarballs. See the [runbook](../docs/releases.md) and
+[migration record](../docs/nx-migration.md) for the preparation status and remaining
+publication/conformance evidence.

@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
-import { readdirSync, existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import semver from 'semver';
-import YAML from 'yaml';
+import { readReleasePlans } from '../release/plans.mjs';
 import { digest, json, invariant, readJson } from './common.mjs';
 
 export function compareLegacy(models, baseline, legacyDocument, inventories) {
@@ -190,9 +190,19 @@ export function gitFile(ref, file) {
     return execFileSync('git', ['show', `${ref}:${file}`], {
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
+      maxBuffer: 64 * 1024 * 1024,
     });
-  } catch {
-    return null;
+  } catch (error) {
+    // Only a missing historical path is an absent baseline. Buffer exhaustion,
+    // invalid revisions and other Git failures must never erase evidence.
+    if (
+      error.status === 128 &&
+      /does not exist in|exists on disk, but not in/.test(
+        error.stderr?.toString() ?? '',
+      )
+    )
+      return null;
+    throw error;
   }
 }
 export function releaseReports(models, baseRef) {
@@ -201,27 +211,9 @@ export function releaseReports(models, baseRef) {
     ['rev-parse', '--verify', `${baseRef}^{commit}`],
     { encoding: 'utf8' },
   ).trim();
-  const plan = {};
-  for (const name of readdirSync('.changeset').filter(
-    (file) => file.endsWith('.md') && file !== 'README.md',
-  )) {
-    const path = `.changeset/${name}`,
-      body = readFileSync(path, 'utf8');
-    if (gitFile(revision, path) === body) continue;
-    const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-    invariant(frontmatter, `Missing Changeset frontmatter: ${path}`);
-    for (const [pkg, bump] of Object.entries(YAML.parse(frontmatter[1]))) {
-      invariant(
-        ['patch', 'minor', 'major'].includes(bump),
-        `Invalid bump in ${path}`,
-      );
-      if (
-        { patch: 1, minor: 2, major: 3 }[bump] >
-        ({ patch: 1, minor: 2, major: 3 }[plan[pkg]] ?? 0)
-      )
-        plan[pkg] = bump;
-    }
-  }
+  const plan = readReleasePlans({
+    previous: (path) => gitFile(revision, path),
+  });
   const reports = [];
   for (const model of models) {
     const basePackageText = gitFile(

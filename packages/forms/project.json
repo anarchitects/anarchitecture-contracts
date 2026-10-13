@@ -1,0 +1,44 @@
+{
+  "name": "forms-contracts",
+  "projectType": "library",
+  "sourceRoot": "packages/forms/src",
+  "tags": ["type:contracts", "domain:forms"],
+  "targets": {
+    "build": {
+      "command": "node tools/contract-authoring/build.mjs forms"
+    },
+    "test": {
+      "command": "node --test packages/forms/test/*.test.mjs"
+    },
+    "pack": {
+      "dependsOn": [
+        {
+          "projects": ["contract-checks"],
+          "target": "pack"
+        }
+      ],
+      "cache": false
+    },
+    "contract-check": {
+      "dependsOn": [
+        {
+          "projects": ["contract-checks"],
+          "target": "openapi"
+        }
+      ],
+      "cache": false
+    },
+    "publication-check": {
+      "command": "node tools/release/publication-gate.mjs forms-contracts",
+      "dependsOn": ["contract-check", "pack"],
+      "cache": false
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "options": {
+        "access": "public"
+      },
+      "cache": false
+    }
+  }
+}

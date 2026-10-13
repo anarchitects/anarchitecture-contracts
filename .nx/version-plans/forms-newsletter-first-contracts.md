@@ -1,6 +1,6 @@
 ---
-'@anarchitects/forms-contracts': minor
-'@anarchitects/newsletter-contracts': minor
+forms-contracts: minor
+newsletter-contracts: minor
 ---
 
 Introduce the first Zod-first Forms and Newsletter HTTP contracts with inferred

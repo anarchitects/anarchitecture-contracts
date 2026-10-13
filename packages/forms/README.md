@@ -2,7 +2,7 @@
 
 Zod-first HTTP schemas, inferred types and operation definitions for the existing
 Forms definition, submission and read surface. This package is unreleased at
-`0.0.0`, pending an initial Changesets minor release. Both stable capabilities
+`0.0.0`, pending an initial Nx minor release. Both stable capabilities
 remain blocked by the recorded D05/D08 security dispositions.
 
 The root, `./schemas` and `./operations` provide ESM and CommonJS exports with

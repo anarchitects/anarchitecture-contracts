@@ -1,6 +1,6 @@
 ---
-'@anarchitects/auth-contracts': minor
-'@anarchitects/identity-contracts': minor
+auth-contracts: minor
+identity-contracts: minor
 ---
 
 Introduce the first Zod-first Auth and Identity HTTP contracts, with inferred

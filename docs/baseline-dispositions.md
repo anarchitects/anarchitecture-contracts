@@ -69,7 +69,7 @@ preserves D05/D08 as explicit stable capability blockers, exported through
 `formsReleaseBlockers`. Contracts architecture maintainers and Bricks Forms/security
 maintainers own their disposition, with downstream integration tracked in
 [3-tier #489](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489).
-No security decision is bypassed by extraction or a pending Changeset.
+No security decision is bypassed by extraction or a pending release plan.
 
 The [Newsletter compatibility record](../packages/newsletter/compatibility/README.md)
 documents D03/D04/D09, strict UTF-16 limits, honeypot precedence and signed webhook

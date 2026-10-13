@@ -3,7 +3,7 @@
 ## Scope and provenance
 
 `@anarchitects/identity-contracts` is an unreleased `0.0.0` workspace, with a
-pending minor Changeset for `0.1.0`. Issue #5 explicitly covers Auth and Identity;
+pending minor Nx version plan for `0.1.0`. Issue #5 explicitly covers Auth and Identity;
 the #4 design guides' assignment of Identity to #6 is corrected without changing
 package ownership or introducing a wire migration.
 
@@ -64,7 +64,7 @@ Node 22.13.0 and 24.21.0 locally and in CI.
   database behavior, concurrency, authorization or production adoption. Runtime
   adapters and domain mappings belong to Bricks adoption work.
 - Generated OpenAPI/profile artifacts remain #7; publication, provenance and
-  independent conformance remain #8. A pending Changeset does not authorize
+  independent conformance remain #8. A pending Nx version plan does not authorize
   publishing or establish deployment compatibility.
 
 ## Issue #7 generation status

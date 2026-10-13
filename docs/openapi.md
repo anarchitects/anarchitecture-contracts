@@ -24,10 +24,11 @@ yarn check                          # full workspace, contract and package check
 
 CI runs generation verification and tests through `yarn check`, then compares the
 PR against its exact base SHA. Pushes compare against the previous commit. New or
-changed Changesets must cover every affected package; an unrelated pending entry
+changed Nx version plans must cover every affected package; an unrelated pending entry
 cannot satisfy a PR's release intent. A versioned release commit can satisfy the
-bump directly. #8 will replace the Changesets input adapter with Nx Release while
-retaining the compatibility classifier and migration checks as independent gates.
+bump directly. #8 replaces the Changesets input adapter with Nx version plans while retaining
+the compatibility classifier and migration checks as independent gates. Mechanical
+plan migration cannot count as new release intent against a pre-cutover base.
 
 Do not edit generated files. Regenerate after source, package version, dependency
 or generator changes, inspect the diff, then run checks. The loader rejects stale

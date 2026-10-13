@@ -1,0 +1,88 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Published release tag, for example auth-contracts@0.1.0
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ inputs.tag || github.event.release.tag_name }}
+  cancel-in-progress: false
+
+env:
+  NX_DAEMON: 'false'
+  NX_TUI: 'false'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: npm
+    steps:
+      - name: Resolve published release and verified immutable revision
+        id: release
+        uses: actions/github-script@v8
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        with:
+          script: |
+            const tag = process.env.RELEASE_TAG;
+            const match = /^(auth|forms|identity|newsletter)-contracts@(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?$/.exec(tag);
+            if (!match || match[0] !== tag) throw new Error('Expected an eligible <project>@<SemVer> release tag');
+            const repo = context.repo;
+            const { data: release } = await github.rest.repos.getReleaseByTag({ ...repo, tag });
+            if (release.draft || !release.published_at) throw new Error('Only published GitHub Releases can be replayed');
+            const { data: ref } = await github.rest.git.getRef({ ...repo, ref: `tags/${tag}` });
+            if (ref.object.type !== 'tag') throw new Error('Release requires a signed annotated tag');
+            const { data: annotated } = await github.rest.git.getTag({ ...repo, tag_sha: ref.object.sha });
+            if (!annotated.verification?.verified || annotated.object.type !== 'commit') throw new Error('GitHub must verify the release tag signature');
+            const sha = annotated.object.sha;
+            const { data: commit } = await github.rest.git.getCommit({ ...repo, commit_sha: sha });
+            if (!commit.verification?.verified) throw new Error('GitHub must verify the release commit signature');
+            core.setOutput('sha', sha);
+            core.setOutput('project', `${match[1]}-contracts`);
+            core.setOutput('version', tag.slice(tag.indexOf('@') + 1));
+            core.setOutput('dist-tag', match[5] ? 'next' : 'latest');
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.release.outputs.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require released commit on main
+        run: git merge-base --is-ancestor HEAD origin/main
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Validate immutable contracts and packed consumers
+        run: yarn nx run contract-checks:verify
+      - name: Verify release compatibility
+        env:
+          RELEASE_PROJECT: ${{ steps.release.outputs.project }}
+        run: |
+          base=$(git describe --tags --match "$RELEASE_PROJECT@*" --abbrev=0 HEAD^ 2>/dev/null || git rev-parse HEAD^)
+          yarn nx run contract-checks:compatibility -- "$base"
+      - name: Enforce publication gate and tagged package version
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          RELEASE_PROJECT: ${{ steps.release.outputs.project }}
+        run: yarn nx run "$RELEASE_PROJECT:publication-check"
+      - name: Publish with npm trusted publishing and provenance
+        env:
+          RELEASE_PROJECT: ${{ steps.release.outputs.project }}
+          RELEASE_DIST_TAG: ${{ steps.release.outputs.dist-tag }}
+          NPM_CONFIG_PROVENANCE: 'true'
+        run: |
+          git diff --exit-code
+          yarn nx release publish --projects "$RELEASE_PROJECT" --tag "$RELEASE_DIST_TAG" --yes

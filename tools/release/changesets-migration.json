@@ -1,0 +1,30 @@
+{
+  "revision": "8e920d0a6ff546e49e4a9000b8b6ac69e145ffb9",
+  "expectedFirstVersion": "0.1.0",
+  "entries": [
+    {
+      "source": ".changeset/auth-identity-first-contracts.md",
+      "destination": ".nx/version-plans/auth-identity-first-contracts.md",
+      "sha256": "0375fbca3dfe5d359c254be7276411af6808b910fde4e05c01025e44463b336d",
+      "body": "---\n'@anarchitects/auth-contracts': minor\n'@anarchitects/identity-contracts': minor\n---\n\nIntroduce the first Zod-first Auth and Identity HTTP contracts, with inferred\ninput/output types, 21 operation definitions and dual ESM/CommonJS exports.\nPreserve the frozen session/JWT/passkey and profile wire semantics, including\ncoercion, nullable fields, policy order, cookie obligations and existing operation\nIDs. Assign IDs to the three previously undocumented JWT routes; do not restore\nthe obsolete refresh-tokens endpoint.\n\nThese initial development packages do not claim deployment adoption. Request\nJSON Schema projection and resolved host security profiles remain release gates\nfor issue #7; publication and independent conformance remain issue #8. Consumers\nmust retain their current immutable pins until those gates and their runtime\nadoption checks pass. No intentional wire migration is introduced.\n"
+    },
+    {
+      "source": ".changeset/forms-newsletter-first-contracts.md",
+      "destination": ".nx/version-plans/forms-newsletter-first-contracts.md",
+      "sha256": "689c99547d2ba7c12f3e527d7cf95e1112df6a90fcc262aab8008d22397eb73c",
+      "body": "---\n'@anarchitects/forms-contracts': minor\n'@anarchitects/newsletter-contracts': minor\n---\n\nIntroduce the first Zod-first Forms and Newsletter HTTP contracts with inferred\ninput/output types, eight operation definitions and dual ESM/CommonJS exports.\nPreserve legacy coercion, strict Newsletter input and UTF-16 limits, honeypot\nordering, signed webhook raw-body/header obligations, response/error shapes and\nexisting operationIds. No new runtime business logic or intended wire migration\nis introduced.\n\nThese are unreleased development workspaces. Forms D05 (dynamic validation bypass)\nand D08 (delivery-secret forwarding) remain explicit stable capability blockers.\nNative schema projection and resolved host profiles require #7 decisions before\nrelease; publication and independent conformance remain #8. Consumer adoption\nand any validation/redaction migration require separate reviewed Bricks work.\n"
+    },
+    {
+      "source": ".changeset/openapi-review-artifacts.md",
+      "destination": ".nx/version-plans/openapi-review-artifacts.md",
+      "sha256": "29f92bbcf501aeccb8d016750e2598083f30497e77177e30c45641284ec0d6e5",
+      "body": "---\n'@anarchitects/auth-contracts': minor\n'@anarchitects/forms-contracts': minor\n'@anarchitects/identity-contracts': minor\n'@anarchitects/newsletter-contracts': minor\n---\n\nAdd explicit generated OpenAPI review JSON/YAML, diagnostic inventories and\nversion/profile/digest manifest exports. Preserve canonical parsing and wire\nbehavior. All artifacts remain review-only: bounded projection proposal P07,\nunresolved host bindings and Forms D05/D08 prevent release or adoption claims.\nGeneration, baseline comparison and package-aware compatibility gates do not\nreplace actual HTTP conformance or #8 publication approval.\n"
+    },
+    {
+      "source": ".changeset/profile-resolution-gates.md",
+      "destination": ".nx/version-plans/profile-resolution-gates.md",
+      "sha256": "c4779de79d3b2d30f1a850f6093f931553cf4d508856883e64eac5742f919149",
+      "body": "---\n'@anarchitects/auth-contracts': minor\n'@anarchitects/forms-contracts': minor\n'@anarchitects/identity-contracts': minor\n'@anarchitects/newsletter-contracts': minor\n---\n\nImplement scoped P07 projections, faithful representable constraints and strict\nhost-profile resolution/evidence gates. Preserve explicit capability blockers and\ndistinguish synthetic verification from release. Add public Forms definition and\nadministrative delivery-status migration targets without changing frozen routes.\nCanonical runtime validation remains mandatory; no deployment evidence is approved.\n"
+    }
+  ]
+}
