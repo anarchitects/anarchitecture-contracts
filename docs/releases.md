@@ -179,6 +179,96 @@ but cannot replace their semantics. The CI Node 22 packed-consumer invocation
 intentionally remains direct Node to exercise the independently usable tooling
 without running the Node 24 Nx workspace under Node 22.
 
+### Signing setup with the GitHub CLI
+
+Run these commands yourself in a local terminal. Use a dedicated release key
+associated with your GitHub account or an approved automation account. The key's
+email must be verified on that account. The import action derives the Git author
+and committer from the key; the GitHub App authenticates the push, but is not the
+signing identity. Do not use the App's `[bot]` email for a key registered to your
+personal account.
+
+1. Authenticate the CLI as the signing account, with access to manage repository
+   Actions secrets. On macOS, install `gh` and `gnupg` with Homebrew if missing.
+
+   ```sh
+   gh auth login --hostname github.com
+   gh auth refresh --hostname github.com --scopes write:gpg_key
+   gh auth status
+   ```
+
+2. Generate a dedicated key. Choose **RSA and RSA**, **4096 bits**, an expiry
+   such as **1 year**, your account's name and verified email, and a strong
+   passphrase. Save the passphrase in your password manager.
+
+   ```sh
+   export GPG_TTY=$(tty)
+   gpg --full-generate-key
+   gpg --list-secret-keys --keyid-format LONG
+   ```
+
+   Copy the full fingerprint shown below the new `sec` entry. In the same terminal:
+
+   ```sh
+   RELEASE_KEY_FPR='REPLACE_WITH_THE_FULL_FINGERPRINT'
+   CONTRACTS_REPO='anarchitects/anarchitecture-contracts'
+   set -o pipefail
+   ```
+
+3. Register the **public** key with the signed-in GitHub account:
+
+   ```sh
+   gpg --armor --export "$RELEASE_KEY_FPR" |
+     gh gpg-key add --title 'Contracts release signing'
+   ```
+
+4. Export the **private** key straight into a repository Actions secret. This
+   avoids writing a private-key file or displaying its contents. GPG may prompt
+   for the passphrase while exporting; `gh` encrypts the secret before upload.
+
+   ```sh
+   gpg --armor --export-secret-keys "$RELEASE_KEY_FPR" |
+     gh secret set RELEASE_GPG_PRIVATE_KEY --app actions --repo "$CONTRACTS_REPO"
+   ```
+
+5. Store the same passphrase using the CLI's hidden interactive prompt:
+
+   ```sh
+   gh secret set RELEASE_GPG_PASSPHRASE --app actions --repo "$CONTRACTS_REPO"
+   ```
+
+   Paste the passphrase at the prompt, not as a command argument. This secret is
+   optional only if the private key was created without a passphrase.
+
+6. Confirm the public key and secret names are present (secret values are not
+   displayed):
+
+   ```sh
+   gh gpg-key list
+   gh secret list --app actions --repo "$CONTRACTS_REPO"
+   ```
+
+These are repository secrets, not secrets on the `npm` environment: signing runs
+in `release.yml`, while `npm` belongs to the separate publish job. Keep the App
+credentials listed above configured as well. Rotate the signing key before its
+expiry and update both the GitHub public key and Actions secrets together.
+
+After the workflow is merged to `main`, preview the initial release with:
+
+```sh
+gh workflow run release.yml --repo "$CONTRACTS_REPO" --ref main \
+  -f first_release=true -f dry_run=true
+```
+
+The dry run skips key import and tests Nx release planning, not the signing secrets.
+A live release still requires approved publishable host profiles and unchanged
+branch protections. Setting secrets does not remove the current publication blockers.
+
+References: [GitHub key generation](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key),
+[GitHub public-key registration](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account),
+[gh gpg-key add](https://cli.github.com/manual/gh_gpg-key_add), and
+[gh secret set](https://cli.github.com/manual/gh_secret_set).
+
 ## Release sequence and evidence
 
 1. Complete the frozen API inventory and discrepancy review before extraction.

@@ -125,8 +125,7 @@ inferred from local builds.
 ## Remaining acceptance gates
 
 The repository migration is not the completed release migration. #8 still needs
-CI evidence for the workflow changes, a separately reviewed signing/trusted-publishing
-setup, live workflow verification, independent HTTP runner
+an approved signing/trusted-publishing setup, live workflow verification, independent HTTP runner
 packaging and real host conformance. A reviewed first publication must record
 versions, tags, integrity, provenance and clean installed-consumer evidence.
 Host blockers (including Forms D05/D08) and unsupported DDD capabilities remain
@@ -152,3 +151,10 @@ silently override pending plans. The publisher resolves a verified annotated tag
 to an immutable SHA and uses the standard Nx executor after the explicit gate.
 See the [runbook](releases.md#workflow-operation) for required credentials, npm
 mapping, replay behavior and the remaining live-evidence limitations.
+
+GitHub CI passed at workflow implementation revision
+`99b0e95f0563eb5cc517096fa75416425d963729`, including the full workspace suite and
+both Node 22/24 consumer jobs ([run](https://github.com/anarchitects/anarchitecture-contracts/actions/runs/38423737123)).
+The signing setup is documented as a local GitHub CLI procedure; no private key
+or passphrase is committed or handled by the repository tools. The key-import
+action is pinned to the reviewed v6 commit.
