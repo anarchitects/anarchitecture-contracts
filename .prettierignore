@@ -6,3 +6,6 @@ yarn.lock
 LICENSE
 baselines/legacy-3tier/*.json
 baselines/legacy-3tier/*.yaml
+generated/
+packages/*/openapi/
+packages/*/contract-manifest.json

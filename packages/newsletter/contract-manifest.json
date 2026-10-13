@@ -1,0 +1,237 @@
+{
+  "artifacts": {
+    "inventory.json": "5dbacfc3f97b5775d766a49bcb0f18ae6e443fe28a7b1a01f9423891b56fe032",
+    "newsletter-review.json": "bb7a9e632227c9b0ad5373c7a0ffe86a244f491ceb859afc9956bc798067c490",
+    "newsletter-review.yaml": "a0ae200610c3190273a1e2b4ad6688b150a63d571262635a4f85e4ae70f7613a"
+  },
+  "dependencies": {
+    "@anarchitects/newsletter-contracts": {
+      "zod": "4.5.0"
+    }
+  },
+  "documentedOperationCount": 3,
+  "excludedOperations": [
+    {
+      "binding": "newsletter.webhook-signature",
+      "operationId": "receiveNewsletterWebhook",
+      "reason": "unresolved-security"
+    }
+  ],
+  "formatVersion": 1,
+  "generator": {
+    "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
+    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
+    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "operationCount": 4,
+  "packages": {
+    "@anarchitects/newsletter-contracts": "0.0.0"
+  },
+  "profile": {
+    "capabilities": [
+      "newsletter.native",
+      "newsletter.subscription",
+      "newsletter.webhook"
+    ],
+    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "hostBindings": {},
+    "id": "newsletter-review",
+    "securityBindings": {},
+    "securitySchemes": {},
+    "status": "review-only"
+  },
+  "projectionProposal": {
+    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
+    "id": "P07-legacy-input-projection",
+    "status": "proposed"
+  },
+  "projections": {
+    "newsletter.NewsletterNativeActionRequest.Input": [
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "property.token"
+      }
+    ],
+    "newsletter.NewsletterSubscribeRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "options.0/catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "options.1/property.email"
+      },
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "options.1/property.source/innerType"
+      },
+      {
+        "implementation": "db237a03f3eacd803096e0ae3e950ad26a74db0e8148e0d53b084cfe48e0cec7",
+        "kind": "custom-refinement",
+        "path": "options.1/property.website/innerType"
+      }
+    ],
+    "newsletter.NewsletterWebhookPayload.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "options.0/catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+        "kind": "custom-refinement",
+        "path": "options.0/property.events/element"
+      },
+      {
+        "implementation": "145e772418a6dca23ce4b6028911c0d85d212140aabe07a2be30043052075086",
+        "kind": "custom-refinement",
+        "path": "options.1"
+      },
+      {
+        "implementation": "a84fb5c0c6dd474ecf0722607d82f2e276ff24ee4de95274028485cd562e6a62",
+        "kind": "custom-refinement",
+        "path": "options.1"
+      }
+    ]
+  },
+  "releaseBlockers": [],
+  "schemaOrigins": {
+    "newsletter.BadRequestError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.CacheControlHeader.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.CacheControlHeader",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterAcceptedResponse.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterAcceptedResponse",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterNativeActionRequest.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterNativeActionRequest",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterSignatureHeader.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterSignatureHeader",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterSubscribeRequest.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterSubscribeRequest",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterWebhookPayload.Input": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterWebhookPayload",
+      "io": "input",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NewsletterWebhookResponse.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.NewsletterWebhookResponse",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.NotFoundError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.PayloadTooLargeError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.PayloadTooLargeError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.ReferrerPolicyHeader.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.ReferrerPolicyHeader",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.RetryAfterHeader.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.RetryAfterHeader",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.ServiceUnavailableError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.ServiceUnavailableError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.TooManyRequestsError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.TooManyRequestsError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    },
+    "newsletter.UnauthorizedError.Output": {
+      "domain": "newsletter",
+      "id": "newsletter.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/newsletter-contracts"
+    }
+  },
+  "source": {
+    "files": {
+      "packages/newsletter/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/newsletter/src/native.ts": "fa3d79ed42e5abb7985e3e672b55c1594568ea07b7e7cfb625a7269dc439d038",
+      "packages/newsletter/src/operations/index.ts": "4602154a2f30fe27007164bc886c992bf08805a0854e2bcfda5710d85d159464",
+      "packages/newsletter/src/operations/native.ts": "6cc0ea8bc4f628a518d2b61b78199351cf5277bc97f2bbf5c86b67be2b2ec599",
+      "packages/newsletter/src/operations/subscription.ts": "97890df0e89711eac4269cca283904b53a8562f258a2e9aaea5e6bd1ce74a3c0",
+      "packages/newsletter/src/operations/support.ts": "4cb8ce1ef0ea1b25d01946d9c2cd4f55628713c2e51cc213a723ee840ae34c73",
+      "packages/newsletter/src/operations/webhook.ts": "658d40f2dc2c1ab8db9c2979d145e4129e4147e02a76dc54717e4201bde72141",
+      "packages/newsletter/src/schemas/errors.ts": "cf8e51dc70ce452ac653aec586d935a7cd7013831fceca85bb56d091008e7afe",
+      "packages/newsletter/src/schemas/index.ts": "999f0cbe502d1335772f4918044beadafcdc7bed14e012812ffac68049c10bf9",
+      "packages/newsletter/src/schemas/input.ts": "1468dcc8acc8c4510bc2eb0b39aee9095904af571a9e0ca9156d4a163c236f41",
+      "packages/newsletter/src/schemas/native.ts": "022e724907bf103294b62d5d0f42e38343e120cd4c5a6859585e8e0466d96b6b",
+      "packages/newsletter/src/schemas/subscription.ts": "18cb7b1898c261dc9bc0881b0e6a948a45dde8c4902aca486b5bb6bc15367843",
+      "packages/newsletter/src/schemas/webhook.ts": "ecbd8f79194ace3dcd2c6ec2a40ae471f7202e3db307a0962cb01798ee4cb305",
+      "packages/newsletter/src/webhook.ts": "02889b06181d6bfb7c4275d3a23911a9a65d71c8128d0d2cfd3d6dd09922c86d",
+      "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
+    },
+    "revision": "sha256:2ded05cce54654bfa2e78c35e545224f45747b8a07b2d4a6f8874a544ac96543"
+  },
+  "status": "review-only",
+  "supportedCapabilities": [],
+  "tools": {
+    "@apidevtools/swagger-parser": "13.1.0",
+    "yaml": "2.9.1",
+    "zod": "4.5.0"
+  },
+  "unresolvedHostBindings": [
+    "newsletter.native:consent version/text",
+    "newsletter.native:native action lifecycle",
+    "newsletter.native:rate-limit policy",
+    "newsletter.subscription-webhook:account id",
+    "newsletter.subscription-webhook:byte/event limits",
+    "newsletter.subscription-webhook:consent version/text",
+    "newsletter.subscription-webhook:rate-limit policy",
+    "newsletter.subscription-webhook:raw-body capture",
+    "newsletter.subscription-webhook:signature secret",
+    "newsletter.subscription-webhook:withdrawal persistence",
+    "newsletter.subscription:consent version/text",
+    "newsletter.subscription:rate-limit policy",
+    "newsletter.subscription:trusted request context"
+  ]
+}

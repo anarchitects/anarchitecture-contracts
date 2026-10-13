@@ -31,3 +31,15 @@ formats and packed consumers. See `packages/forms/compatibility/README.md` in th
 source repository for exact scope, source revisions and remaining gates.
 OpenAPI/profile generation remains #7, publication/conformance remains #8, and
 runtime integration belongs to Bricks adoption work.
+
+## Generated review artifacts
+
+Explicit file exports now include `./openapi/forms-review.json`,
+`./openapi/forms-review.yaml`, `./openapi/inventory.json` and `./manifest.json`.
+They are generated from these canonical schemas and operations and are verified
+in clean tarballs. Runtime imports do not load the files.
+
+The files are **review-only** and claim no supported deployment capabilities.
+Projection proposal P07 is not approved; protected routes remain in the inventory
+until host security bindings are resolved. Review `docs/openapi.md` and
+`docs/openapi-projection-proposal.md` in the source repository before using them.

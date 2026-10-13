@@ -6,6 +6,9 @@ published packages or reserved npm names. Issue #5 implements [Auth](auth/README
 and [Identity](identity/README.md), with real schemas, operations and tests.
 Issue #6 implements [Forms](forms/README.md) and [Newsletter](newsletter/README.md).
 All four remain unreleased; compatibility records describe explicit release gates.
+Issue #7 adds [generated review artifacts](../docs/openapi.md), explicit file exports,
+manifests and compatibility gates. These artifacts claim no supported capabilities
+until the projection proposal and host profiles are resolved.
 
 ## Ownership and public entry points
 
@@ -30,7 +33,7 @@ conformance runners are development tools, not dependencies of schema consumers.
 
 ## Layout and module artifacts
 
-Implemented workspaces follow this layout; generated artifacts follow in #7:
+Implemented workspaces follow this layout, including #7 review artifacts:
 
 ```text
 packages/<domain>/

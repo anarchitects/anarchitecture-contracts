@@ -17,22 +17,32 @@
     "changeset:status": "changeset status",
     "baseline:check": "node --test tools/legacy-baseline/baseline.test.mjs",
     "baseline:verify": "node tools/legacy-baseline/capture.mjs verify",
-    "check": "yarn format:check && yarn lint:md && yarn baseline:check && yarn build && yarn test:contracts && yarn test:packed",
+    "check": "yarn format:check && yarn lint:md && yarn baseline:check && yarn build && yarn test:contracts && yarn openapi:check && yarn test:openapi && yarn test:packed",
     "build": "node tools/contract-authoring/build.mjs",
     "test:contracts": "node --test tools/contract-authoring/*.test.mjs packages/*/test/*.test.mjs",
-    "test:packed": "node tools/contract-authoring/packed-consumer.mjs"
+    "test:packed": "node tools/contract-authoring/packed-consumer.mjs",
+    "openapi:generate": "yarn build && node tools/openapi/cli.mjs write",
+    "openapi:check": "node tools/openapi/cli.mjs check",
+    "openapi:compatibility": "node tools/openapi/cli.mjs compatibility",
+    "openapi:release": "node tools/openapi/cli.mjs release",
+    "test:openapi": "node --test tools/openapi/*.test.mjs"
   },
   "devDependencies": {
+    "@apidevtools/swagger-parser": "13.1.0",
     "@changesets/cli": "2.29.8",
     "@sinclair/typebox": "0.34.41",
+    "@types/semver": "^7",
     "ajv": "8.17.1",
     "ajv-formats": "3.0.1",
     "esbuild": "0.28.2",
     "markdownlint-cli2": "0.18.1",
+    "openapi-types": "12.1.3",
     "prettier": "3.6.2",
+    "semver": "7.8.5",
     "tsup": "8.5.1",
     "typescript": "6.0.3",
     "typescript-5-5": "npm:typescript@5.5.4",
+    "yaml": "2.9.1",
     "zod": "4.5.0"
   }
 }

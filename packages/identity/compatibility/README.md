@@ -66,3 +66,11 @@ Node 22.13.0 and 24.21.0 locally and in CI.
 - Generated OpenAPI/profile artifacts remain #7; publication, provenance and
   independent conformance remain #8. A pending Changeset does not authorize
   publishing or establish deployment compatibility.
+
+## Issue #7 generation status
+
+Generated JSON/YAML review artifacts, inventories and package manifests now exist.
+The [generation guide](../../../docs/openapi.md) and
+[proposed projection exception P07](../../../docs/openapi-projection-proposal.md)
+record the exact remaining conversion and profile gates. No parser changes or
+release approvals are introduced; earlier runtime and security limits still apply.

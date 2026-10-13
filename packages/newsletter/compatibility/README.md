@@ -103,3 +103,11 @@ The default mode verifies all captured results against `legacy-http.json`.
 Explicit `record` replaces this supplemental record and requires review of every
 changed outcome. It never rewrites the frozen #3 baseline or changes runtime
 packages. The supplemental data and audit tooling are excluded from npm tarballs.
+
+## Issue #7 generation status
+
+Generated JSON/YAML review artifacts, inventories and package manifests now exist.
+The [generation guide](../../../docs/openapi.md) and
+[proposed projection exception P07](../../../docs/openapi-projection-proposal.md)
+record the exact remaining conversion and profile gates. No parser changes or
+release approvals are introduced; earlier runtime and security limits still apply.

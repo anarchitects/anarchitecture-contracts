@@ -27,6 +27,12 @@ Issue #6 adds [Forms](packages/forms/README.md) and
 Forms security dispositions and request-generation/profile gaps remain explicit
 release gates; no stable capability or deployment adoption is implied.
 
+Issue #7 adds [OpenAPI generation and compatibility checks](docs/openapi.md),
+including 29-operation diagnostic inventories, JSON/YAML review artifacts,
+package manifests and CI release-plan checks. The
+[projection exception proposal](docs/openapi-projection-proposal.md) and host
+bindings remain unapproved; the artifacts are not deployable profiles.
+
 Before writing code, read [AGENTS.md](AGENTS.md), every Meta and local ADR, and
 the relevant engineering guides.
 
@@ -45,14 +51,15 @@ If your Node distribution omits Corepack, install it using the
 [Corepack instructions](https://github.com/nodejs/corepack#manual-installs) first.
 
 `yarn check` runs formatting/lint, offline baseline checks, package builds,
-Zod/AJV differential fixtures and clean packed ESM/CommonJS/type/browser checks.
+Zod/AJV differential fixtures, deterministic OpenAPI/lint/snapshot checks and
+clean packed ESM/CommonJS/type/browser checks.
 `yarn format` fixes formatting, excluding frozen artifact bytes.
 CI runs the same checks, an immutable install and `yarn changeset:status` with
 full Git history on pull requests and pushes to `main`. Actual legacy HTTP replay
 is available with `yarn baseline:verify ../anarchitecture-bricks-3tier`; see its
 [prerequisites and limits](baselines/legacy-3tier/README.md#reproduce).
 CI also runs packed consumers on Node 22 and 24. Independent deployment
-conformance and publication remain #8; OpenAPI generation remains #7.
+conformance and publication remain #8; projection/profile approval remains a #7 gate.
 
 Changesets status needs a committed `HEAD` and a fetched `origin/main` base.
 
@@ -70,6 +77,8 @@ Changesets status needs a committed `HEAD` and a fetched `origin/main` base.
 | `baselines/legacy-3tier/`       | Frozen legacy evidence and migration discrepancy register    |
 | `tools/legacy-baseline/`        | Offline evidence checks and optional source HTTP replay      |
 | `tools/contract-authoring/`     | Shared authoring type, builds and compatibility checks       |
+| `tools/openapi/`                | Generation, validation and package compatibility gates       |
+| `generated/`                    | Aggregate review artifacts and baseline comparison           |
 | `.github/workflows/ci.yml`      | Workspace/package checks; no publishing                      |
 
 The workspace root is private. Runtime contract packages will not depend on
@@ -78,7 +87,7 @@ and business logic remain in their owning bounded contexts.
 
 ## Next delivery steps
 
-1. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): deterministic OpenAPI and compatibility gates.
+1. [#7](https://github.com/anarchitects/anarchitecture-contracts/issues/7): review the bounded projection proposal and resolve deployment profiles.
 2. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
 
 See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),

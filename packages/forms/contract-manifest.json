@@ -1,0 +1,333 @@
+{
+  "artifacts": {
+    "forms-review.json": "5929670b0ff582e00310ced038063839d969871ac9ba3779dab898d0ba2fa259",
+    "forms-review.yaml": "5671a0dcd8a1fa732be6fbf551af6ed176ce30f48286ba0cce57f95907e02de5",
+    "inventory.json": "150ef1001d5c2dac4702cc62c9da394b094a200d0923eb05a5aa63d948ba3c5c"
+  },
+  "dependencies": {
+    "@anarchitects/forms-contracts": {
+      "zod": "4.5.0"
+    }
+  },
+  "documentedOperationCount": 0,
+  "excludedOperations": [
+    {
+      "binding": "forms.protected",
+      "operationId": "getFormDefinition",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getSubmission",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "getSubmissions",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "forms.protected",
+      "operationId": "submitForm",
+      "reason": "unresolved-security"
+    }
+  ],
+  "formatVersion": 1,
+  "generator": {
+    "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
+    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
+    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "operationCount": 4,
+  "packages": {
+    "@anarchitects/forms-contracts": "0.0.0"
+  },
+  "profile": {
+    "capabilities": [
+      "forms.definitions",
+      "forms.submissions"
+    ],
+    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "hostBindings": {},
+    "id": "forms-review",
+    "securityBindings": {},
+    "securitySchemes": {},
+    "status": "review-only"
+  },
+  "projectionProposal": {
+    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
+    "id": "P07-legacy-input-projection",
+    "status": "proposed"
+  },
+  "projections": {
+    "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": [
+      {
+        "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+        "kind": "input-pipeline",
+        "path": "innerType"
+      },
+      {
+        "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+        "kind": "custom-refinement",
+        "path": "innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/out/options.1"
+      }
+    ],
+    "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/options.0/options.1/options.1"
+      }
+    ],
+    "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/options.0/options.1/options.1"
+      }
+    ],
+    "forms.SubmissionRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.formId"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.formId/in"
+      },
+      {
+        "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+        "kind": "input-pipeline",
+        "path": "property.formVersion"
+      },
+      {
+        "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+        "kind": "custom-refinement",
+        "path": "property.formVersion"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.formVersion/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.formVersion/out/options.1"
+      }
+    ],
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/in/in/options.0/options.1/options.1"
+      }
+    ],
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input": [
+      {
+        "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+        "kind": "input-pipeline",
+        "path": "innerType"
+      },
+      {
+        "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+        "kind": "custom-refinement",
+        "path": "innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "innerType/out/options.1"
+      }
+    ]
+  },
+  "releaseBlockers": [
+    {
+      "capability": "forms.submissions",
+      "id": "D05",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Review dynamic-validation bypass and agree a versioned migration or constrained legacy disposition before stable support.",
+      "status": "blocked"
+    },
+    {
+      "capability": "forms.definitions",
+      "id": "D08",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Review delivery-secret access scope and agree a versioned redaction or explicit constrained legacy disposition before stable support.",
+      "status": "blocked"
+    }
+  ],
+  "schemaOrigins": {
+    "forms.BadRequestError.Output": {
+      "domain": "forms",
+      "id": "forms.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.ForbiddenError.Output": {
+      "domain": "forms",
+      "id": "forms.ForbiddenError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.FormDefinitionEnvelopeResponse.Output": {
+      "domain": "forms",
+      "id": "forms.FormDefinitionEnvelopeResponse",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+      "domain": "forms",
+      "id": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": {
+      "domain": "forms",
+      "id": "forms.FormIdParams.node.70726f70657274792e666f726d4964",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.InternalServerError.Output": {
+      "domain": "forms",
+      "id": "forms.InternalServerError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.NotFoundError.Output": {
+      "domain": "forms",
+      "id": "forms.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionRequest.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionRequest",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionResponse.Output": {
+      "domain": "forms",
+      "id": "forms.SubmissionResponse",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+      "domain": "forms",
+      "id": "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e",
+      "io": "input",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.SubmissionsResponse.Output": {
+      "domain": "forms",
+      "id": "forms.SubmissionsResponse",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.UnauthorizedError.Output": {
+      "domain": "forms",
+      "id": "forms.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    }
+  },
+  "source": {
+    "files": {
+      "packages/forms/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/forms/src/operations/index.ts": "f4662a99aed2ee16546304233651eccee340ba1b80f800c19c49269a10b9ffed",
+      "packages/forms/src/schemas/errors.ts": "9c80b329924ae7476545bc47b5f4a46619bf67ad68cd202d7a1d11f47ef493bd",
+      "packages/forms/src/schemas/formats.ts": "00856f6486e0d2f7c26344e0ca71fdd6289ff49d0173eac50d63aba80ca99fc4",
+      "packages/forms/src/schemas/forms.ts": "976fc4c81ca00720538bd3d7e725563c551c15195f29652acd27ae32fbfb56d9",
+      "packages/forms/src/schemas/index.ts": "ec20d3a7f554019e6ae9f329fafd3e9b6fb62fcf0fd3ae55a1d0faee2fc8a653",
+      "packages/forms/src/schemas/input.ts": "72f47b889fd67539cb909aaa816351d23c809cc46ee00a1334b09af2a34139da",
+      "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
+    },
+    "revision": "sha256:5edd7c1912d18701fcf2ebcf4b023b4601a74eeeec77fcf9aacd760a05e47678"
+  },
+  "status": "review-only",
+  "supportedCapabilities": [],
+  "tools": {
+    "@apidevtools/swagger-parser": "13.1.0",
+    "yaml": "2.9.1",
+    "zod": "4.5.0"
+  },
+  "unresolvedHostBindings": [
+    "forms.protected:authentication transport",
+    "forms.protected:resource authorization policy"
+  ]
+}

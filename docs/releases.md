@@ -19,6 +19,12 @@ cross-domain dependency rules. Issues #5/#6 add the four packages and initial
 release entries. Their installed-consumer checks are an early subset of #8;
 request generation and resolved host profiles remain explicit release blockers.
 
+Issue #7 now supplies [deterministic generation and compatibility gates](openapi.md).
+Generated files are review-only until the [bounded projection proposal](openapi-projection-proposal.md)
+and real host profiles are approved. Package-aware PR checks require new release
+intent for each affected package and matching migration evidence for breaks;
+these gates do not enable publication.
+
 ## Changes and compatibility
 
 Include a `yarn changeset` entry for each public package
@@ -90,9 +96,10 @@ stable capability claim; a new package version cannot bypass them.
 `yarn changeset:status` needs a committed `HEAD` and a fetched `origin/main` base. It
 inspects pending entries without changing files or publishing, and detects
 changed versionable packages when no changesets exist. It does not prove that
-every affected package has the correct bump. Complete package-aware PR
-enforcement and semantic compatibility diffs must be added with
-[issue #7](https://github.com/anarchitects/anarchitecture-contracts/issues/7).
+every affected package has the correct bump. The #7
+`yarn openapi:compatibility <base-ref>` gate now checks affected packages against
+their exact base, rejects insufficient release intent, and requires explicit
+migration records for conservatively classified breaks.
 
 ## Release sequence and evidence
 

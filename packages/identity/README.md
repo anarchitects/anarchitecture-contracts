@@ -29,3 +29,15 @@ packed exports/types and browser bundling. See
 and scope. Generated OpenAPI and resolved profiles remain #7; publication and
 independent conformance tooling remain #8. Runtime adoption is separate Bricks
 work, and no deployment or migration claim is made by this package.
+
+## Generated review artifacts
+
+Explicit file exports now include `./openapi/identity-review.json`,
+`./openapi/identity-review.yaml`, `./openapi/inventory.json` and `./manifest.json`.
+They are generated from these canonical schemas and operations and are verified
+in clean tarballs. Runtime imports do not load the files.
+
+The files are **review-only** and claim no supported deployment capabilities.
+Projection proposal P07 is not approved; protected routes remain in the inventory
+until host security bindings are resolved. Review `docs/openapi.md` and
+`docs/openapi-projection-proposal.md` in the source repository before using them.

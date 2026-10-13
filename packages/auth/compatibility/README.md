@@ -85,3 +85,11 @@ The following prevent stable capability/release claims:
 4. **Publication (#8):** npm name/permission checks, provenance, immutable adoption
    pins and independent deployment conformance remain required. No artifacts are
    published by this change.
+
+## Issue #7 generation status
+
+Generated JSON/YAML review artifacts, inventories and package manifests now exist.
+The [generation guide](../../../docs/openapi.md) and
+[proposed projection exception P07](../../../docs/openapi-projection-proposal.md)
+record the exact remaining conversion and profile gates. No parser changes or
+release approvals are introduced; earlier runtime and security limits still apply.

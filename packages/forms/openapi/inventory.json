@@ -1,0 +1,1868 @@
+{
+  "operations": [
+    {
+      "availability": {
+        "capability": "forms.definitions",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Return the config and its dynamic schema. Delivery-secret exposure blocks stable capability approval (D08).",
+        "operationId": "getFormDefinition",
+        "parameters": [
+          {
+            "description": "Existing route identifier.",
+            "explode": false,
+            "in": "path",
+            "name": "formId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/forms.FormIdParams.node.70726f70657274792e666f726d4964.Input"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "Optional integer version; after validation the controller uses 1 when omitted.",
+            "explode": true,
+            "in": "query",
+            "name": "formVersion",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output"
+                }
+              }
+            },
+            "description": "Config and dynamically derived schema.",
+            "headers": {},
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Malformed JSON or invalid route input; dynamic field validation is not enforced by the audited submit route.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.UnauthorizedError.Output"
+                }
+              }
+            },
+            "description": "When the resolved host authentication binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.ForbiddenError.Output"
+                }
+              }
+            },
+            "description": "When the resolved resource authorization binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.NotFoundError.Output"
+                }
+              }
+            },
+            "description": "The form definition or submission was not found.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.InternalServerError.Output"
+                }
+              }
+            },
+            "description": "Sanitized host failure; application/persistence/delivery failures are not transport validation errors.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Read a form definition",
+        "tags": [
+          "Forms"
+        ],
+        "x-contract-capability": "forms.definitions",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04",
+            "D06",
+            "D08"
+          ],
+          "fixtures": [
+            "forms-definition-default-version",
+            "forms-definition-query-coercion",
+            "forms-definition-delivery-secret",
+            "forms-definition-invalid-version",
+            "forms-definition-missing"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "GET /forms/{formId}"
+        },
+        "x-contract-domain": "forms",
+        "x-contract-semantics": [
+          {
+            "description": "Require an approved host authentication and resource-authorization policy. Unguarded fixtures do not authorize anonymous access to definitions or submitted data.",
+            "fixtures": [],
+            "id": "forms.host-protection",
+            "phase": "authentication/authorization"
+          },
+          {
+            "description": "Preserve AJV scalar/singleton-array coercion, Unicode code-point lengths and unknown request/query fields. Validate integer versions >=1; never silently add pagination.",
+            "fixtures": [
+              "forms-definition-query-coercion",
+              "forms-submit-string-version",
+              "forms-list-unknown-query"
+            ],
+            "id": "forms.transport-normalization",
+            "phase": "normalization"
+          },
+          {
+            "description": "Only the definition controller defaults an omitted formVersion to 1. The query parser leaves it omitted.",
+            "fixtures": [
+              "forms-definition-default-version",
+              "forms-definition-query-coercion",
+              "forms-definition-invalid-version"
+            ],
+            "id": "forms.definition-default",
+            "phase": "application outcome"
+          },
+          {
+            "description": "D08 remains unresolved: the legacy config includes delivery metadata and webhook secrets. Preserve evidence but block stable definitions until architecture/security maintainers approve access scope or a separately versioned redaction.",
+            "fixtures": [
+              "forms-definition-delivery-secret"
+            ],
+            "id": "forms.delivery-exposure",
+            "phase": "response"
+          }
+        ]
+      },
+      "method": "GET",
+      "path": "/forms/{formId}",
+      "security": {
+        "binding": "forms.protected",
+        "kind": "profile"
+      }
+    },
+    {
+      "availability": {
+        "capability": "forms.submissions",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Validate the legacy UUID grammar and return 404 when no submission exists.",
+        "operationId": "getSubmission",
+        "parameters": [
+          {
+            "description": "Existing route identifier.",
+            "explode": false,
+            "in": "path",
+            "name": "submissionId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.SubmissionResponse.Output"
+                }
+              }
+            },
+            "description": "Serialized submission.",
+            "headers": {},
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Malformed JSON or invalid route input; dynamic field validation is not enforced by the audited submit route.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.UnauthorizedError.Output"
+                }
+              }
+            },
+            "description": "When the resolved host authentication binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.ForbiddenError.Output"
+                }
+              }
+            },
+            "description": "When the resolved resource authorization binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.NotFoundError.Output"
+                }
+              }
+            },
+            "description": "The form definition or submission was not found.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.InternalServerError.Output"
+                }
+              }
+            },
+            "description": "Sanitized host failure; application/persistence/delivery failures are not transport validation errors.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Read a form submission",
+        "tags": [
+          "Forms"
+        ],
+        "x-contract-capability": "forms.submissions",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04"
+          ],
+          "fixtures": [
+            "forms-detail",
+            "forms-detail-missing",
+            "forms-detail-invalid-uuid"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "GET /forms/submissions/{submissionId}"
+        },
+        "x-contract-domain": "forms",
+        "x-contract-semantics": [
+          {
+            "description": "Require an approved host authentication and resource-authorization policy. Unguarded fixtures do not authorize anonymous access to definitions or submitted data.",
+            "fixtures": [],
+            "id": "forms.host-protection",
+            "phase": "authentication/authorization"
+          },
+          {
+            "description": "Preserve AJV scalar/singleton-array coercion, Unicode code-point lengths and unknown request/query fields. Validate integer versions >=1; never silently add pagination.",
+            "fixtures": [
+              "forms-definition-query-coercion",
+              "forms-submit-string-version",
+              "forms-list-unknown-query"
+            ],
+            "id": "forms.transport-normalization",
+            "phase": "normalization"
+          }
+        ]
+      },
+      "method": "GET",
+      "path": "/forms/submissions/{submissionId}",
+      "security": {
+        "binding": "forms.protected",
+        "kind": "profile"
+      }
+    },
+    {
+      "availability": {
+        "capability": "forms.submissions",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Return the existing array with optional formId/formVersion filters; no pagination contract is introduced.",
+        "operationId": "getSubmissions",
+        "parameters": [
+          {
+            "description": "Optional nonempty form identifier.",
+            "explode": true,
+            "in": "query",
+            "name": "formId",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Optional positive integer version.",
+            "explode": true,
+            "in": "query",
+            "name": "formVersion",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.SubmissionsResponse.Output"
+                }
+              }
+            },
+            "description": "Unpaginated submission array.",
+            "headers": {},
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Malformed JSON or invalid route input; dynamic field validation is not enforced by the audited submit route.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.UnauthorizedError.Output"
+                }
+              }
+            },
+            "description": "When the resolved host authentication binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.ForbiddenError.Output"
+                }
+              }
+            },
+            "description": "When the resolved resource authorization binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.InternalServerError.Output"
+                }
+              }
+            },
+            "description": "Sanitized host failure; application/persistence/delivery failures are not transport validation errors.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "List form submissions",
+        "tags": [
+          "Forms"
+        ],
+        "x-contract-capability": "forms.submissions",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04",
+            "D10"
+          ],
+          "fixtures": [
+            "forms-list-filters",
+            "forms-list-unknown-query"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "GET /forms/submissions"
+        },
+        "x-contract-domain": "forms",
+        "x-contract-semantics": [
+          {
+            "description": "Require an approved host authentication and resource-authorization policy. Unguarded fixtures do not authorize anonymous access to definitions or submitted data.",
+            "fixtures": [],
+            "id": "forms.host-protection",
+            "phase": "authentication/authorization"
+          },
+          {
+            "description": "Preserve AJV scalar/singleton-array coercion, Unicode code-point lengths and unknown request/query fields. Validate integer versions >=1; never silently add pagination.",
+            "fixtures": [
+              "forms-definition-query-coercion",
+              "forms-submit-string-version",
+              "forms-list-unknown-query"
+            ],
+            "id": "forms.transport-normalization",
+            "phase": "normalization"
+          },
+          {
+            "description": "D10: preserve the array response and pass-through unknown query values. limit/offset acceptance is not a pagination guarantee.",
+            "fixtures": [
+              "forms-list-filters",
+              "forms-list-unknown-query"
+            ],
+            "id": "forms.list-envelope",
+            "phase": "response"
+          }
+        ]
+      },
+      "method": "GET",
+      "path": "/forms/submissions",
+      "security": {
+        "binding": "forms.protected",
+        "kind": "profile"
+      }
+    },
+    {
+      "availability": {
+        "capability": "forms.submissions",
+        "kind": "capability"
+      },
+      "definition": {
+        "deprecated": false,
+        "description": "Preserve the audited envelope. Dynamic field validation is bypassed in the legacy implementation (D05); stable submission support remains blocked.",
+        "operationId": "submitForm",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/forms.SubmissionRequest.Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.SubmissionResponse.Output"
+                }
+              }
+            },
+            "description": "Serialized submission.",
+            "headers": {},
+            "x-contract-outcome": "success",
+            "x-contract-semantics": []
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.BadRequestError.Output"
+                }
+              }
+            },
+            "description": "Malformed JSON or invalid route input; dynamic field validation is not enforced by the audited submit route.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.UnauthorizedError.Output"
+                }
+              }
+            },
+            "description": "When the resolved host authentication binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.ForbiddenError.Output"
+                }
+              }
+            },
+            "description": "When the resolved resource authorization binding rejects the request.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.NotFoundError.Output"
+                }
+              }
+            },
+            "description": "The form definition or submission was not found.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forms.InternalServerError.Output"
+                }
+              }
+            },
+            "description": "Sanitized host failure; application/persistence/delivery failures are not transport validation errors.",
+            "headers": {},
+            "x-contract-outcome": "error",
+            "x-contract-semantics": []
+          }
+        },
+        "summary": "Submit a form payload",
+        "tags": [
+          "Forms"
+        ],
+        "x-contract-capability": "forms.submissions",
+        "x-contract-compatibility": {
+          "discrepancies": [
+            "D03",
+            "D04",
+            "D05",
+            "D06"
+          ],
+          "fixtures": [
+            "forms-submit",
+            "forms-submit-no-version",
+            "forms-submit-string-version",
+            "forms-submit-missing-required-dynamic-field",
+            "forms-submit-invalid-dynamic-email",
+            "forms-submit-unknown-payload-property",
+            "forms-submit-null-payload",
+            "forms-submit-malformed-json"
+          ],
+          "migrations": [],
+          "revision": "ecda1b6e0d9bc39c66373452a92dce91e06abee0",
+          "route": "POST /forms/submit"
+        },
+        "x-contract-domain": "forms",
+        "x-contract-semantics": [
+          {
+            "description": "Require an approved host authentication and resource-authorization policy. Unguarded fixtures do not authorize anonymous access to definitions or submitted data.",
+            "fixtures": [],
+            "id": "forms.host-protection",
+            "phase": "authentication/authorization"
+          },
+          {
+            "description": "Preserve AJV scalar/singleton-array coercion, Unicode code-point lengths and unknown request/query fields. Validate integer versions >=1; never silently add pagination.",
+            "fixtures": [
+              "forms-definition-query-coercion",
+              "forms-submit-string-version",
+              "forms-list-unknown-query"
+            ],
+            "id": "forms.transport-normalization",
+            "phase": "normalization"
+          },
+          {
+            "description": "D05 remains unresolved: missing required dynamic fields, invalid email and extra payload fields reach persistence. Do not add dynamic validation in this transport extraction or advertise stable conformance; a fix needs a reviewed migration. Persistence and delivery stay application concerns.",
+            "fixtures": [
+              "forms-submit-missing-required-dynamic-field",
+              "forms-submit-invalid-dynamic-email",
+              "forms-submit-unknown-payload-property"
+            ],
+            "id": "forms.dynamic-validation-bypass",
+            "phase": "application outcome"
+          },
+          {
+            "description": "formVersion is required before application entry. The internal default does not make omission valid. A null/array payload fails; payload objects remain open.",
+            "fixtures": [
+              "forms-submit-no-version",
+              "forms-submit-null-payload",
+              "forms-submit-string-version"
+            ],
+            "id": "forms.required-submit-version",
+            "phase": "normalization"
+          }
+        ]
+      },
+      "method": "POST",
+      "path": "/forms/submit",
+      "security": {
+        "binding": "forms.protected",
+        "kind": "profile"
+      }
+    }
+  ],
+  "profile": "forms-review",
+  "schemas": {
+    "forms.BadRequestError.Output": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "statusCode": {
+              "const": 400,
+              "type": "number"
+            }
+          },
+          "required": [
+            "statusCode",
+            "message"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "statusCode": {
+              "const": 400,
+              "type": "number"
+            }
+          },
+          "required": [
+            "statusCode",
+            "message",
+            "error"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "forms.ForbiddenError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 403,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    },
+    "forms.FormDefinitionEnvelopeResponse.Output": {
+      "$defs": {
+        "__schema0": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "config": {
+          "additionalProperties": false,
+          "properties": {
+            "delivery": {
+              "additionalProperties": false,
+              "properties": {
+                "adminEmail": {
+                  "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
+                  "type": "string"
+                },
+                "autoReply": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "templateId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "templateId",
+                    "subject"
+                  ],
+                  "type": "object"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "templateId": {
+                  "type": "string"
+                },
+                "webhooks": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "secret": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "pattern": "^(?:[A-Za-z][A-Za-z0-9+\\-.]*:)(?:\\/?\\/(?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*@)?(?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*)(?::\\d*)?(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*|\\/(?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?|(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)(?:\\?(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*)?(?:#(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*)?$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "fields": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "string",
+                      "password",
+                      "email",
+                      "textarea",
+                      "boolean",
+                      "select",
+                      "file"
+                    ],
+                    "type": "string"
+                  },
+                  "maxLength": {
+                    "minimum": 0,
+                    "multipleOf": 1,
+                    "type": "number"
+                  },
+                  "minLength": {
+                    "minimum": 0,
+                    "multipleOf": 1,
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "label"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "pattern": {
+                    "type": "string"
+                  },
+                  "required": {
+                    "type": "boolean"
+                  },
+                  "ui": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "help": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "placeholder": {
+                        "type": "string"
+                      },
+                      "rows": {
+                        "minimum": 1,
+                        "multipleOf": 1,
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "name",
+                  "kind"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "id": {
+              "type": "string"
+            },
+            "security": {
+              "additionalProperties": false,
+              "properties": {
+                "captcha": {
+                  "enum": [
+                    "turnstile",
+                    "hcaptcha",
+                    "none"
+                  ],
+                  "type": "string"
+                },
+                "honeypot": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "captcha"
+              ],
+              "type": "object"
+            },
+            "validationRules": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "matchFields",
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "sourceField": {
+                    "type": "string"
+                  },
+                  "targetField": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "sourceField",
+                  "targetField"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "version": {
+              "minimum": 1,
+              "multipleOf": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "id",
+            "version",
+            "fields"
+          ],
+          "type": "object"
+        },
+        "schema": {
+          "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+        }
+      },
+      "required": [
+        "config",
+        "schema"
+      ],
+      "type": "object"
+    },
+    "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "items": false,
+          "maxItems": 1,
+          "minItems": 1,
+          "prefixItems": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          ],
+          "type": "array"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+            "kind": "input-pipeline",
+            "path": "innerType"
+          },
+          {
+            "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+            "kind": "custom-refinement",
+            "path": "innerType"
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "innerType/in"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "innerType/in/in/options.0/options.1/options.1"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "innerType/out/options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "items": false,
+          "maxItems": 1,
+          "minItems": 1,
+          "prefixItems": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          ],
+          "type": "array"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+            "kind": "input-pipeline",
+            "path": ""
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "in"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "in/in/options.0/options.1/options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "forms.InternalServerError.Output": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "statusCode": {
+              "const": 500,
+              "type": "number"
+            }
+          },
+          "required": [
+            "statusCode",
+            "message"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "statusCode": {
+              "const": 500,
+              "type": "number"
+            }
+          },
+          "required": [
+            "statusCode",
+            "message",
+            "error"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "forms.NotFoundError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 404,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    },
+    "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "items": false,
+          "maxItems": 1,
+          "minItems": 1,
+          "prefixItems": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          ],
+          "type": "array"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+            "kind": "input-pipeline",
+            "path": ""
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "in"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "in/in/options.0/options.1/options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "forms.SubmissionRequest.Input": {
+      "$defs": {
+        "__schema0": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+      },
+      "properties": {
+        "formId": {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "$schema": "https://json-schema.org/draft/2020-12/schema",
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              ],
+              "type": "array"
+            }
+          ]
+        },
+        "formVersion": {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "$schema": "https://json-schema.org/draft/2020-12/schema",
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              ],
+              "type": "array"
+            }
+          ]
+        },
+        "payload": {
+          "additionalProperties": {
+            "$ref": "#/components/schemas/forms.SubmissionRequest.Input/$defs/__schema0"
+          },
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "formId",
+        "formVersion",
+        "payload"
+      ],
+      "type": "object",
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "catchall/lazy/options.1/options.1"
+          },
+          {
+            "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+            "kind": "input-pipeline",
+            "path": "property.formId"
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "property.formId/in"
+          },
+          {
+            "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+            "kind": "input-pipeline",
+            "path": "property.formVersion"
+          },
+          {
+            "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+            "kind": "custom-refinement",
+            "path": "property.formVersion"
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "property.formVersion/in"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "property.formVersion/out/options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "forms.SubmissionResponse.Output": {
+      "$defs": {
+        "__schema0": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "$ref": "#/components/schemas/forms.SubmissionResponse.Output/$defs/__schema0"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/forms.SubmissionResponse.Output/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        },
+        "formId": {
+          "type": "string"
+        },
+        "formVersion": {
+          "minimum": 1,
+          "multipleOf": 1,
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": {
+            "$ref": "#/components/schemas/forms.SubmissionResponse.Output/$defs/__schema0"
+          },
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "updatedAt": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "formId",
+        "formVersion",
+        "payload",
+        "createdAt",
+        "updatedAt"
+      ],
+      "type": "object"
+    },
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "items": false,
+          "maxItems": 1,
+          "minItems": 1,
+          "prefixItems": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          ],
+          "type": "array"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+            "kind": "input-pipeline",
+            "path": "innerType"
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "innerType/in"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "innerType/in/in/options.0/options.1/options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "items": false,
+          "maxItems": 1,
+          "minItems": 1,
+          "prefixItems": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "$schema": "https://json-schema.org/draft/2020-12/schema",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          ],
+          "type": "array"
+        }
+      ],
+      "x-contract-projection": {
+        "limitations": [
+          {
+            "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+            "kind": "input-pipeline",
+            "path": "innerType"
+          },
+          {
+            "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+            "kind": "custom-refinement",
+            "path": "innerType"
+          },
+          {
+            "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+            "kind": "input-pipeline",
+            "path": "innerType/in"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "innerType/in/in/options.0/options.1/options.1"
+          },
+          {
+            "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+            "kind": "custom-value",
+            "path": "innerType/out/options.1"
+          }
+        ],
+        "proposal": "P07-legacy-input-projection",
+        "status": "proposed"
+      }
+    },
+    "forms.SubmissionsResponse.Output": {
+      "$defs": {
+        "__schema0": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "$ref": "#/components/schemas/forms.SubmissionsResponse.Output/$defs/__schema0"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/forms.SubmissionsResponse.Output/$defs/__schema0"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "createdAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "formId": {
+            "type": "string"
+          },
+          "formVersion": {
+            "minimum": 1,
+            "multipleOf": 1,
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "payload": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/forms.SubmissionsResponse.Output/$defs/__schema0"
+            },
+            "propertyNames": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "formId",
+          "formVersion",
+          "payload",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "forms.UnauthorizedError.Output": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statusCode": {
+          "const": 401,
+          "type": "number"
+        }
+      },
+      "required": [
+        "statusCode",
+        "message",
+        "error"
+      ],
+      "type": "object"
+    }
+  },
+  "status": "diagnostic-only"
+}

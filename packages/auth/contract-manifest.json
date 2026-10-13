@@ -1,0 +1,664 @@
+{
+  "artifacts": {
+    "auth-review.json": "70006648a48d4aa38a59c789488156512f2bbc2aa96372e459c1965a516f8727",
+    "auth-review.yaml": "e2808a695dff5865ac1cc1990243b4f282e7fd5e53678285ed974ab8a0d0a883",
+    "inventory.json": "1373b49eaf6a9281ddb4a4d1cebbe68c17c5a51a778c1fd8ff76d09c83486cdd"
+  },
+  "dependencies": {
+    "@anarchitects/auth-contracts": {
+      "zod": "4.5.0"
+    }
+  },
+  "documentedOperationCount": 11,
+  "excludedOperations": [
+    {
+      "binding": "auth.protected",
+      "operationId": "beginRegistration",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "changePassword",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "finishRegistration",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "getLoggedInUserInfo",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "logout",
+      "reason": "unresolved-security"
+    },
+    {
+      "binding": "auth.protected",
+      "operationId": "updateEmail",
+      "reason": "unresolved-security"
+    }
+  ],
+  "formatVersion": 1,
+  "generator": {
+    "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
+    "tools/openapi/generate.mjs": "d48ad69bacdc214a6824afd3af3ec1d614dac8758ed035ffe6eb404d81f7ab0d",
+    "tools/openapi/model.mjs": "a6bf781a48579c750d92b440cf35eceed326ed4bcdd91ac69872bf58b20a8b08",
+    "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "operationCount": 17,
+  "packages": {
+    "@anarchitects/auth-contracts": "0.0.0"
+  },
+  "profile": {
+    "capabilities": [
+      "auth.jwt",
+      "auth.passkeys",
+      "auth.session"
+    ],
+    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "hostBindings": {},
+    "id": "auth-review",
+    "securityBindings": {},
+    "securitySchemes": {},
+    "status": "review-only"
+  },
+  "projectionProposal": {
+    "digest": "ada72dc4bc5892a2f51b3dae87fbcac2bb05f4e5346a96fa159337473fd3b427",
+    "id": "P07-legacy-input-projection",
+    "status": "proposed"
+  },
+  "projections": {
+    "auth.ActivateUserRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.token"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.token/in"
+      }
+    ],
+    "auth.ChangePasswordRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.currentPassword"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.currentPassword/in"
+      }
+    ],
+    "auth.ForgotPasswordRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.email"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.email/in"
+      }
+    ],
+    "auth.LoginRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.credential"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.credential/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/in"
+      }
+    ],
+    "auth.RegisterRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.email"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.email/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType/in"
+      }
+    ],
+    "auth.ResetPasswordRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.token"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.token/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/in"
+      }
+    ],
+    "auth.UpdateEmailRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.newEmail"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.newEmail/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.password/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.password/innerType/in"
+      }
+    ],
+    "auth.UserIdParams.node.70726f70657274792e757365724964.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": ""
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "in/in/options.0/options.1/options.1"
+      }
+    ],
+    "auth.VerifyEmailRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.token"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.token/in"
+      }
+    ],
+    "auth.jwt.JwtLogoutRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.accessToken/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.accessToken/innerType/in"
+      }
+    ],
+    "auth.jwt.JwtRefreshRequest.Input": [
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "catchall/lazy/options.1/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.refreshToken/in"
+      }
+    ],
+    "auth.passkeys.PasskeyAuthenticationFinishRequest.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.response/property.id/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type/in"
+      },
+      {
+        "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType/in"
+      },
+      {
+        "implementation": "9fa88652403646385e328b834b932ecd9d9052a910d43c48da6f23204136a68a",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType"
+      },
+      {
+        "implementation": "8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType/in/in"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.userHandle/innerType/in/in/in"
+      }
+    ],
+    "auth.passkeys.PasskeyRegistrationBeginRequest.Input": [
+      {
+        "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+        "kind": "input-pipeline",
+        "path": "property.authenticatorAttachment/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.authenticatorAttachment/innerType/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.authenticatorAttachment/innerType/in/in/options.0/options.1/options.1"
+      }
+    ],
+    "auth.passkeys.PasskeyRegistrationFinishRequest.Input": [
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.id/in"
+      },
+      {
+        "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+        "kind": "custom-value",
+        "path": "property.response/property.id/in/in/options.0/options.1/options.1"
+      },
+      {
+        "implementation": "a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.type/in"
+      },
+      {
+        "implementation": "ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.authenticatorAttachment/innerType/in"
+      },
+      {
+        "implementation": "25863f77b8136cd3be1ab2637962dc59eb6e3611343345761fc63a3abad3edea",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.publicKeyAlgorithm/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.publicKeyAlgorithm/innerType/in"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.transports/innerType/options.0/element"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.transports/innerType/options.0/element/in"
+      },
+      {
+        "implementation": "8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae",
+        "kind": "input-pipeline",
+        "path": "property.response/property.response/property.transports/innerType/options.1"
+      },
+      {
+        "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType"
+      },
+      {
+        "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+        "kind": "input-pipeline",
+        "path": "property.name/innerType/in"
+      }
+    ]
+  },
+  "releaseBlockers": [],
+  "schemaOrigins": {
+    "auth.ActivateUserRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ActivateUserRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.BadRequestError.Output": {
+      "domain": "auth",
+      "id": "auth.BadRequestError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ChangePasswordRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ChangePasswordRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ForbiddenError.Output": {
+      "domain": "auth",
+      "id": "auth.ForbiddenError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ForgotPasswordRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ForgotPasswordRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.InternalServerError.Output": {
+      "domain": "auth",
+      "id": "auth.InternalServerError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.LoggedInUserInfoResponse.Output": {
+      "domain": "auth",
+      "id": "auth.LoggedInUserInfoResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.LoginRequest.Input": {
+      "domain": "auth",
+      "id": "auth.LoginRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.LogoutRequest.Input": {
+      "domain": "auth",
+      "id": "auth.LogoutRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.RegisterRequest.Input": {
+      "domain": "auth",
+      "id": "auth.RegisterRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.ResetPasswordRequest.Input": {
+      "domain": "auth",
+      "id": "auth.ResetPasswordRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.SetCookieHeader.Output": {
+      "domain": "auth",
+      "id": "auth.SetCookieHeader",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.SuccessResponse.Output": {
+      "domain": "auth",
+      "id": "auth.SuccessResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.UnauthorizedError.Output": {
+      "domain": "auth",
+      "id": "auth.UnauthorizedError",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.UpdateEmailRequest.Input": {
+      "domain": "auth",
+      "id": "auth.UpdateEmailRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.UserIdParams.node.70726f70657274792e757365724964.Input": {
+      "domain": "auth",
+      "id": "auth.UserIdParams.node.70726f70657274792e757365724964",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.VerifyEmailRequest.Input": {
+      "domain": "auth",
+      "id": "auth.VerifyEmailRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.jwt.JwtLogoutRequest.Input": {
+      "domain": "auth",
+      "id": "auth.jwt.JwtLogoutRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.jwt.JwtRefreshRequest.Input": {
+      "domain": "auth",
+      "id": "auth.jwt.JwtRefreshRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.jwt.JwtTokensResponse.Output": {
+      "domain": "auth",
+      "id": "auth.jwt.JwtTokensResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyAuthenticationBeginRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyAuthenticationBeginRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyAuthenticationBeginResponse.Output": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyAuthenticationBeginResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyAuthenticationFinishRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyAuthenticationFinishRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyRegistrationBeginRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyRegistrationBeginRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyRegistrationBeginResponse.Output": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyRegistrationBeginResponse",
+      "io": "output",
+      "package": "@anarchitects/auth-contracts"
+    },
+    "auth.passkeys.PasskeyRegistrationFinishRequest.Input": {
+      "domain": "auth",
+      "id": "auth.passkeys.PasskeyRegistrationFinishRequest",
+      "io": "input",
+      "package": "@anarchitects/auth-contracts"
+    }
+  },
+  "source": {
+    "files": {
+      "packages/auth/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
+      "packages/auth/src/jwt.ts": "97712a20710eb6bb442ed6144e14c9c57abd6b6107e92d0416024cfb36c73e47",
+      "packages/auth/src/operations/index.ts": "0a733a3f8acffb651afefcde2da7d07c0225d3225658e91e24523e3cf89fa1b4",
+      "packages/auth/src/operations/jwt.ts": "41f9398763a1ed782efe4e3d38736a281fc3bc528b054d7ef89b4ce20240c53a",
+      "packages/auth/src/operations/passkeys.ts": "3ce9a169cb69e887ba673e348cdd31120424526ff21b180f63ea8959c6469172",
+      "packages/auth/src/operations/session.ts": "0604f319d2b261df994bcee8a874fb0c482bb5ee8423929df11a3551ccab58ae",
+      "packages/auth/src/operations/support.ts": "d45d55d5e3d67ccbb307ac35155a8efb6391b42194565fbbe1a832f3b2774321",
+      "packages/auth/src/passkeys.ts": "1d972eb7ef7b9d6e7b5e9793c11f72c0460210a4f40ec1e402721f0155e34f12",
+      "packages/auth/src/policy.ts": "6eb97f519875e67b7466adcb020bcb8a8010cada8bb4d140657779c9237a206b",
+      "packages/auth/src/schemas/index.ts": "9a6fcb6e3ba9a8645b561f2616bb91f81326d9f25136e7f4269fd75de1800c77",
+      "packages/auth/src/schemas/input.ts": "43ea6771aaf5a9570d7cb33aeed5426e447493c26f9736bbc8c9495efbd9038d",
+      "packages/auth/src/schemas/jwt.ts": "575b1a5fbdc5d39ecf9f2fe3f5e282c4a8a1004b502944981c6e4c81c387d875",
+      "packages/auth/src/schemas/passkeys.ts": "1653d75cb6c172bac5977c1a66c66ba0828e2959e3290b962d2220e97d4d8461",
+      "packages/auth/src/schemas/policy.ts": "c171d27d1fcc94b8d12bcdddfd1f41e156aa3591c676262dc14c29e57e8c8319",
+      "packages/auth/src/schemas/session.ts": "333b59f98cf3caa0fcea08375c1fa269d2e5d8b8d1dbac79646b7a09a31047e1",
+      "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
+    },
+    "revision": "sha256:367ad589a37351dba8202fab88187ffbd1874415bea2da88146c5710d73ad4b8"
+  },
+  "status": "review-only",
+  "supportedCapabilities": [],
+  "tools": {
+    "@apidevtools/swagger-parser": "13.1.0",
+    "yaml": "2.9.1",
+    "zod": "4.5.0"
+  },
+  "unresolvedHostBindings": [
+    "auth.jwt-plugin:JWT verification and invalidation service",
+    "auth.session-passkeys:WebAuthn origin/RP and verifier",
+    "auth.session-passkeys:resource authorization policy",
+    "auth.session-passkeys:session cookie transport",
+    "auth.session:resource authorization policy",
+    "auth.session:session cookie transport"
+  ]
+}

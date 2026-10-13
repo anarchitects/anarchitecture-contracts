@@ -51,3 +51,15 @@ integration, cryptographic passkey verification, policy evaluation parity and
 actual consumer adoption remain in the owning Bricks work; these schemas do not
 implement those services. Publication and independent conformance gates remain
 in #8. Package availability must not be represented as adoption.
+
+## Generated review artifacts
+
+Explicit file exports now include `./openapi/auth-review.json`,
+`./openapi/auth-review.yaml`, `./openapi/inventory.json` and `./manifest.json`.
+They are generated from these canonical schemas and operations and are verified
+in clean tarballs. Runtime imports do not load the files.
+
+The files are **review-only** and claim no supported deployment capabilities.
+Projection proposal P07 is not approved; protected routes remain in the inventory
+until host security bindings are resolved. Review `docs/openapi.md` and
+`docs/openapi-projection-proposal.md` in the source repository before using them.

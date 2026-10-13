@@ -1,0 +1,579 @@
+components:
+  schemas:
+    identity.BadRequestError.Output:
+      anyOf:
+        - additionalProperties: false
+          properties:
+            message:
+              type: string
+            statusCode:
+              const: 400
+              type: number
+          required:
+            - statusCode
+            - message
+          type: object
+        - additionalProperties: false
+          properties:
+            error:
+              type: string
+            message:
+              type: string
+            statusCode:
+              const: 400
+              type: number
+          required:
+            - statusCode
+            - message
+            - error
+          type: object
+    identity.CreateUserProfileRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/identity.CreateUserProfileRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/identity.CreateUserProfileRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/identity.CreateUserProfileRequest.Input/$defs/__schema0"
+      properties:
+        authUserId:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        avatarUrl:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        displayName:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        familyName:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        givenName:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        locale:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        timeZone:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+      required:
+        - authUserId
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.authUserId
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.authUserId/in
+        proposal: P07-legacy-input-projection
+        status: proposed
+    identity.ForbiddenError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 403
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    identity.InternalServerError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 500
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    identity.NotFoundError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 404
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    identity.ProfileId.Input:
+      anyOf:
+        - anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+        - items: false
+          maxItems: 1
+          minItems: 1
+          prefixItems:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+          type: array
+      x-contract-projection:
+        limitations:
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: ""
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: in
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: in/in
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: in/in/in/options.0/options.1/options.1
+        proposal: P07-legacy-input-projection
+        status: proposed
+    identity.UnauthorizedError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 401
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    identity.UpdateUserProfileRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/identity.UpdateUserProfileRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/identity.UpdateUserProfileRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/identity.UpdateUserProfileRequest.Input/$defs/__schema0"
+      properties:
+        avatarUrl:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        displayName:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        familyName:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        givenName:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        locale:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+        timeZone:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.displayName/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.displayName/innerType/in
+        proposal: P07-legacy-input-projection
+        status: proposed
+    identity.UserProfileResponse.Output:
+      additionalProperties: false
+      properties:
+        authUserId:
+          type: string
+        avatarUrl:
+          type:
+            - string
+            - "null"
+        createdAt:
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          type: string
+        displayName:
+          type:
+            - string
+            - "null"
+        familyName:
+          type:
+            - string
+            - "null"
+        givenName:
+          type:
+            - string
+            - "null"
+        id:
+          type: string
+        locale:
+          type:
+            - string
+            - "null"
+        timeZone:
+          type:
+            - string
+            - "null"
+        updatedAt:
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          type: string
+      required:
+        - id
+        - authUserId
+        - displayName
+        - givenName
+        - familyName
+        - avatarUrl
+        - locale
+        - timeZone
+        - createdAt
+        - updatedAt
+      type: object
+  securitySchemes: {}
+info:
+  description: Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.
+  title: REVIEW ONLY — Anarchitecture identity-review
+  version: 0.0.0
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+openapi: 3.1.1
+paths: {}
+tags:
+  - name: Identity
+x-contract-excluded-operations:
+  - binding: identity.protected
+    operationId: createUserProfile
+    reason: unresolved-security
+  - binding: identity.protected
+    operationId: getUserProfileByAuthUserId
+    reason: unresolved-security
+  - binding: identity.protected
+    operationId: getUserProfileById
+    reason: unresolved-security
+  - binding: identity.protected
+    operationId: updateUserProfile
+    reason: unresolved-security
+x-contract-profile: identity-review
+x-contract-status: review-only
+x-contract-versions:
+  "@anarchitects/identity-contracts": 0.0.0

@@ -37,3 +37,15 @@ acceptance, Unicode limits and packed consumers. See
 and limits. Request generation has explicit #7 gates for UTF-16 lengths, decoded
 numeric overflow and conditional webhook refinements. Publication/conformance
 remains #8; package existence does not establish runtime adoption.
+
+## Generated review artifacts
+
+Explicit file exports now include `./openapi/newsletter-review.json`,
+`./openapi/newsletter-review.yaml`, `./openapi/inventory.json` and `./manifest.json`.
+They are generated from these canonical schemas and operations and are verified
+in clean tarballs. Runtime imports do not load the files.
+
+The files are **review-only** and claim no supported deployment capabilities.
+Projection proposal P07 is not approved; protected routes remain in the inventory
+until host security bindings are resolved. Review `docs/openapi.md` and
+`docs/openapi-projection-proposal.md` in the source repository before using them.

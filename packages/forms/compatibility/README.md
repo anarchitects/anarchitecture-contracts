@@ -75,3 +75,11 @@ reviewed exception; no `{}` fallback or validation change is authorized. Resolve
 host authentication/authorization, actual provider/storage behavior and the
 D05/D08 security decisions are not proven by schema tests. Publication/provenance
 and independent conformance remain #8; package existence is not adoption.
+
+## Issue #7 generation status
+
+Generated JSON/YAML review artifacts, inventories and package manifests now exist.
+The [generation guide](../../../docs/openapi.md) and
+[proposed projection exception P07](../../../docs/openapi-projection-proposal.md)
+record the exact remaining conversion and profile gates. No parser changes or
+release approvals are introduced; earlier runtime and security limits still apply.

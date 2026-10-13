@@ -43,6 +43,20 @@ jobs:
       - name: Validate release plan
         run: yarn changeset:status
 
+      - name: Enforce package compatibility and release intent
+        env:
+          CONTRACTS_PR_BASE: ${{ github.event.pull_request.base.sha }}
+          CONTRACTS_PUSH_BASE: ${{ github.event.before }}
+        run: |
+          if [ -n "$CONTRACTS_PR_BASE" ]; then
+            contracts_base="$CONTRACTS_PR_BASE"
+          elif [ -n "$CONTRACTS_PUSH_BASE" ] && [ "$CONTRACTS_PUSH_BASE" != "0000000000000000000000000000000000000000" ]; then
+            contracts_base="$CONTRACTS_PUSH_BASE"
+          else
+            contracts_base="HEAD^"
+          fi
+          yarn openapi:compatibility "$contracts_base"
+
   packed-consumers:
     name: Packed consumers (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
