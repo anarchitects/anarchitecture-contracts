@@ -1,6 +1,6 @@
 # Package and release conventions
 
-## Foundation status
+## Current status
 
 The repository root is private and cannot be published. No public package exists
 yet. Changesets is configured for independently versioned, public npm packages;
@@ -10,7 +10,10 @@ tags. CI has read-only repository permissions and no publish job or credentials.
 This document defines the required release process. Executable publication,
 provenance and installed-consumer validation are delivered in
 [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8).
-Do not treat foundation CI as a substitute for those release gates.
+Do not treat current CI as a substitute for those release gates.
+[ADR-0002](../adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
+defines four independent domain packages, their module/authoring design and
+cross-domain dependency rules. Issue #4 adds no package or release entry.
 
 ## Changes and compatibility
 
@@ -32,6 +35,53 @@ Preserve the audited baseline unless a deliberate versioned change is reviewed.
 Pre-1.0 releases still require explicit breaking-change disclosure and migration;
 do not use `0.x` as permission for silent drift. Publish stable public contracts
 as `1.0.0` only once the initial compatibility and conformance gates pass.
+
+### Directional compatibility and independent versions
+
+For each affected operation, compare an existing client against the new contract
+and a new client against supported older implementations. Preserve previously
+accepted requests, their parsed meaning, response fields/types and security
+behavior. An expansion of accepted input can still break a security guarantee;
+an expanded response enum can break an exhaustive client. A nominally unchanged
+HTTP payload can also break imports, inferred input/output types or operationIds.
+
+| Change                                                                                                              | Default treatment; evidence can establish a narrower impact                                                          |
+| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Add a required request field, reject old input, change coercion/default/null handling                               | Breaking: major after 1.0, reviewed migration and implementation coordination                                        |
+| Remove/rename a response field, change status/error/header/security behavior or policy wire meaning                 | Breaking: major after 1.0; tests must include negative and security behavior                                         |
+| Rename a published operationId/schema ID/export, remove a module format or raise a supported compiler/runtime floor | Breaking package/tooling surface even if HTTP is unchanged                                                           |
+| Add an operation or optional field                                                                                  | Minor only with verified compatibility; capability absence remains explicit for old implementations                  |
+| Add missing metadata for an existing operation before its first canonical release                                   | First-release reconciliation, with provenance; do not claim the old generated spec was complete                      |
+| Correct documentation or generator output without changing supported semantics, IDs or public types                 | Patch with artifact and consumer evidence; a “bug fix” label alone is insufficient                                   |
+| Update Zod or a cross-domain dependency                                                                             | Assess every affected domain's parsing, types and generated artifacts; unchanged source does not prove compatibility |
+
+During prerelease `0.x` development, document breaks and use a new minor line
+(for example `0.2.0-next.0` after `0.1.x`); compatible corrections use patch and
+compatible additions use minor. Never disguise a break as an ordinary patch.
+Changesets prerelease mode and the non-`latest` dist-tag must be deliberate. At
+and after 1.0, breaking changes require a major release. A security-driven wire
+change still needs explicit disclosure and coordination; it is not a silent patch.
+
+Versions are per npm package, not per endpoint, capability subpath, repository
+commit or aggregate OpenAPI document. A passkey change versions Auth; a native
+action change versions Newsletter. The other domains do not bump unless their
+published code, types, dependencies, artifacts or compatibility commitments change.
+There are no fixed/linked Changesets groups and no runtime meta-package that
+forces all four domains to upgrade together.
+
+Cross-domain references require a reviewed acyclic dependency on an owning public
+wire export. Workspace ranges must become tested published SemVer ranges in the
+tarball; release dependencies before dependents. The generated manifest records
+exact resolved versions/digests. If a dependency changes incompatibly, its
+dependents must assess their own public surface and bump deliberately; neither
+the dependency's major number nor an automatic Changesets patch is sufficient
+evidence. See [package conventions](../packages/README.md#cross-domain-references).
+
+Package SemVer does not automatically add `/v2` paths or change HTTP headers.
+A breaking wire migration must separately define how old/new clients and host
+deployments coexist, which pins remain supported and how rollback works.
+Unresolved [baseline blockers](baseline-dispositions.md) prevent the affected
+stable capability claim; a new package version cannot bypass them.
 
 `yarn changeset:status` needs a committed `HEAD` and a fetched `origin/main` base. It
 inspects pending entries without changing files or publishing, and detects
@@ -65,7 +115,7 @@ enforcement and semantic compatibility diffs must be added with
 
 Actual publish commands and credential/trusted-publisher configuration must be
 implemented and validated in issue #8. There is no publish command in this
-foundation and no release is made as part of issue #2.
+workspace and no release is made as part of issues #2–#4.
 
 ## Adoption and rollback
 
