@@ -2,8 +2,9 @@
 
 [Accepted ADR-0002](../adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
 defines the package design for #4. These are selected names and boundaries, not
-published packages or reserved npm names. #5/#6 create packages with real schemas,
-operations and tests; do not publish empty placeholders.
+published packages or reserved npm names. Issue #5 implements [Auth](auth/README.md)
+and [Identity](identity/README.md), with real schemas, operations and tests.
+Forms/Newsletter follow in #6; do not publish empty placeholders.
 
 ## Ownership and public entry points
 
@@ -28,7 +29,7 @@ conformance runners are development tools, not dependencies of schema consumers.
 
 ## Layout and module artifacts
 
-Each implemented workspace uses this layout; this is a design, not scaffolding:
+Implemented workspaces follow this layout; generated artifacts follow in #7:
 
 ```text
 packages/<domain>/
@@ -65,7 +66,7 @@ both builds. Claim `sideEffects: false` only after checking the emitted output.
 Initial verification targets are Node 22 and 24 (ESM and CommonJS), TypeScript
 5.5 and the repository's selected current compiler (strict NodeNext and bundler
 resolution), and an ESM browser bundle with no Node shims. These are targets for
-issues #5/#6 and #8, not proven support today. Pin exact tool versions in implementation
+issues #5/#6 and #8; package compatibility records report observed evidence. Pin exact tool versions in implementation
 CI; publish only verified ranges and record failures as blockers or an explicit
 design amendment. Root Node 24 tooling does not impose a Node requirement on
 browser imports. An Angular-specific support claim additionally needs a consumer
@@ -88,7 +89,7 @@ build in its owning repository; these packages never require Angular.
   declaration. Updating it triggers parsing, type and artifact compatibility
   checks for each affected package. No framework dependency may be bundled in.
 - A repository-only `HttpOperationDefinition<TSchema>` authoring type lives under
-  `tools/contract-authoring/` when #5 introduces it. Operations use type-only
+  `tools/contract-authoring/`, introduced in #5. Operations use type-only
   imports and `satisfies`, preserving inferred literal method/path/status types.
   Published declarations must refer only to their own public types, Zod and
   explicitly declared public dependencies. Emit or inline required declaration

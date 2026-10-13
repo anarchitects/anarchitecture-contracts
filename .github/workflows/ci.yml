@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   foundations:
-    name: Workspace foundations
+    name: Workspace and contract checks
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -37,8 +37,33 @@ jobs:
       - name: Install locked dependencies
         run: yarn install --immutable
 
-      - name: Check foundations
+      - name: Check workspace and packages
         run: yarn check
 
       - name: Validate release plan
         run: yarn changeset:status
+
+  packed-consumers:
+    name: Packed consumers (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node: ['22.13.0', '24.21.0']
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn build
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - name: Verify clean installed artifacts
+        run: node tools/contract-authoring/packed-consumer.mjs

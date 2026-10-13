@@ -2,8 +2,10 @@
 
 ## Current status
 
-The repository root is private and cannot be published. No public package exists
-yet. Changesets is configured for independently versioned, public npm packages;
+The repository root is private and cannot be published. Auth and Identity now
+have unreleased workspaces at `0.0.0` and pending minor Changesets for `0.1.0`.
+No package is published or approved for deployment. Changesets is configured for
+independently versioned, public npm packages;
 there are no fixed or linked version groups, automatic commits or private-package
 tags. CI has read-only repository permissions and no publish job or credentials.
 
@@ -13,11 +15,13 @@ provenance and installed-consumer validation are delivered in
 Do not treat current CI as a substitute for those release gates.
 [ADR-0002](../adr/0002-domain-contract-authoring-and-publishing-boundaries.md)
 defines four independent domain packages, their module/authoring design and
-cross-domain dependency rules. Issue #4 adds no package or release entry.
+cross-domain dependency rules. Issue #5 adds the first two packages and an
+initial release entry. Its installed-consumer checks are an early subset of #8;
+request generation and resolved host profiles remain explicit release blockers.
 
 ## Changes and compatibility
 
-Once packages exist, include a `yarn changeset` entry for each public package
+Include a `yarn changeset` entry for each public package
 change. Document affected operations, wire behavior, compatibility reasoning and
 required migration steps. Foundation-only documentation/tooling changes need no
 package version bump.
@@ -115,7 +119,7 @@ enforcement and semantic compatibility diffs must be added with
 
 Actual publish commands and credential/trusted-publisher configuration must be
 implemented and validated in issue #8. There is no publish command in this
-workspace and no release is made as part of issues #2–#4.
+workspace and no release is made as part of issues #2–#5.
 
 ## Adoption and rollback
 

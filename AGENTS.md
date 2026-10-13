@@ -49,7 +49,7 @@ dependencies change; use `yarn install --immutable` in clean checkouts and CI.
 Run `yarn check` before handing off work and `yarn format` to fix formatting.
 Keep build tools and framework integrations out of contract runtime dependencies.
 
-This foundation has no runtime packages. Add meaningful package build, type,
-compatibility, packed-consumer and behavioral checks as those packages arrive;
+Auth and Identity now have runtime packages. Maintain meaningful package build,
+type, compatibility, packed-consumer and behavioral checks as packages evolve;
 do not add placeholder checks that claim conformance without exercising it.
 Keep each epic subissue in a separate PR and report validation gaps accurately.

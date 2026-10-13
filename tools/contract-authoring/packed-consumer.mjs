@@ -1,0 +1,205 @@
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import {
+  mkdtempSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+  readdirSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { build } from 'esbuild';
+
+const root = resolve('.');
+const directory = mkdtempSync(join(tmpdir(), 'contracts-packed-'));
+const run = (command, args, options = {}) =>
+  execFileSync(command, args, {
+    cwd: directory,
+    env: { ...process.env, npm_config_cache: join(directory, '.npm-cache') },
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+    ...options,
+  });
+const read = (file) => JSON.parse(readFileSync(file, 'utf8'));
+try {
+  const packs = [];
+  for (const path of [
+    'node_modules/zod',
+    'packages/auth',
+    'packages/identity',
+  ]) {
+    const [pack] = JSON.parse(
+      run('npm', [
+        'pack',
+        resolve(path),
+        '--ignore-scripts',
+        '--json',
+        '--pack-destination',
+        directory,
+      ]),
+    );
+    packs.push(join(directory, pack.filename));
+    if (path.startsWith('packages/')) {
+      for (const { path: name } of pack.files)
+        assert.match(
+          name,
+          /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$)/,
+          `${path}: unexpected packed file ${name}`,
+        );
+      for (const required of ['README.md', 'LICENSE', 'package.json'])
+        assert.ok(
+          pack.files.some(({ path: name }) => name === required),
+          `${path}: missing ${required}`,
+        );
+    }
+  }
+  writeFileSync(
+    join(directory, 'package.json'),
+    JSON.stringify({ private: true, type: 'module' }),
+  );
+  run('npm', [
+    'install',
+    '--offline',
+    '--ignore-scripts',
+    '--no-audit',
+    '--no-fund',
+    '--package-lock=false',
+    ...packs,
+  ]);
+  const runtime = `
+    import assert from 'node:assert/strict';
+    import { createRequire } from 'node:module';
+    import { readFileSync } from 'node:fs';
+    const require = createRequire(import.meta.url);
+    for (const domain of ['auth', 'identity']) {
+      const name = '@anarchitects/' + domain + '-contracts';
+      const pkg = JSON.parse(readFileSync(new URL('./node_modules/' + name + '/package.json', import.meta.url), 'utf8'));
+      for (const subpath of Object.keys(pkg.exports)) {
+        const specifier = subpath === '.' ? name : name + subpath.slice(1);
+        const esm = await import(specifier), cjs = require(specifier);
+        assert.deepEqual(Object.keys(esm).sort(), Object.keys(cjs).sort(), specifier);
+      }
+      const esm = await import(name), cjs = require(name);
+      const schemaName = domain === 'auth' ? 'LoginRequestSchema' : 'CreateUserProfileRequestSchema';
+      const input = domain === 'auth' ? { credential: 123456, password: 123456 } : { authUserId: 123, displayName: null };
+      assert.deepEqual(esm[schemaName].parse(input), cjs[schemaName].parse(input));
+      assert.throws(() => require(name + '/src/index'), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
+    }
+    console.log('Packed ESM/CommonJS exports and parsing passed on ' + process.version);
+  `;
+  writeFileSync(join(directory, 'runtime.mjs'), runtime);
+  console.log(run(process.execPath, ['runtime.mjs']).trim());
+  // CI's Node 22/24 matrix runs this same installed-artifact check. A second
+  // local Node binary can also be supplied without changing the test fixture.
+  if (process.env.CONTRACTS_NODE22_BIN)
+    console.log(run(process.env.CONTRACTS_NODE22_BIN, ['runtime.mjs']).trim());
+
+  for (const domain of ['auth', 'identity']) {
+    const base = join(
+      directory,
+      'node_modules',
+      '@anarchitects',
+      `${domain}-contracts`,
+    );
+    const pkg = read(join(base, 'package.json'));
+    assert.deepEqual(pkg.dependencies, { zod: '4.5.0' });
+    assert.equal(pkg.peerDependencies, undefined);
+    for (const format of ['esm', 'cjs'])
+      for (const file of readdirSync(join(base, 'dist', format))) {
+        const text = readFileSync(join(base, 'dist', format, file), 'utf8');
+        assert.doesNotMatch(
+          text,
+          /(?:from\s+|import\s*\(|require\s*\()\s*['"](?:node:|@nestjs|@angular|@nx|fastify|express|ajv|@sinclair|.*tools\/contract-authoring)/,
+          `${domain}/${file}`,
+        );
+      }
+  }
+  const installed = readdirSync(join(directory, 'node_modules'))
+    .filter((name) => !name.startsWith('.'))
+    .sort();
+  assert.deepEqual(installed, ['@anarchitects', 'zod']);
+
+  const types = `
+    import { LoginRequestSchema, login, type LoginRequestInput, type LoginRequest, type AuthOperation } from '@anarchitects/auth-contracts';
+    import { JwtTokensResponseSchema } from '@anarchitects/auth-contracts/jwt';
+    import { PolicyRuleSchema } from '@anarchitects/auth-contracts/policy';
+    import { PasskeyRegistrationFinishRequestSchema } from '@anarchitects/auth-contracts/passkeys';
+    import { CreateUserProfileRequestSchema, type CreateUserProfileRequestInput, type UserProfileResponse } from '@anarchitects/identity-contracts';
+    const raw: LoginRequestInput = { credential: 123456, password: ['password'] };
+    const parsed: LoginRequest = LoginRequestSchema.parse(raw);
+    const text: string = parsed.password;
+    const method: 'POST' = login.method;
+    const path: '/auth/login' = login.path;
+    const operation: AuthOperation = login;
+    const identity: CreateUserProfileRequestInput = { authUserId: 123, displayName: null };
+    const owner: string = CreateUserProfileRequestSchema.parse(identity).authUserId;
+    // @ts-expect-error parsed password is a string, never the raw number
+    const number: number = parsed.password;
+    // @ts-expect-error required nullable response fields cannot be omitted
+    const incomplete: UserProfileResponse = { id: 'p', authUserId: 'u' };
+    void [text, method, path, operation, owner, number, incomplete, JwtTokensResponseSchema, PolicyRuleSchema, PasskeyRegistrationFinishRequestSchema];
+  `;
+  writeFileSync(join(directory, 'consumer.mts'), types);
+  writeFileSync(
+    join(directory, 'consumer.cts'),
+    `import auth = require('@anarchitects/auth-contracts');\nimport identity = require('@anarchitects/identity-contracts');\nconst method: 'POST' = auth.login.method;\nconst value: string = identity.CreateUserProfileRequestSchema.parse({ authUserId: 123 }).authUserId;\nvoid [method, value];\n`,
+  );
+  for (const [resolution, files] of [
+    ['NodeNext', ['consumer.mts', 'consumer.cts']],
+    ['Bundler', ['consumer.mts']],
+  ]) {
+    writeFileSync(
+      join(directory, 'tsconfig.json'),
+      JSON.stringify({
+        compilerOptions: {
+          target: 'ES2022',
+          module: resolution === 'NodeNext' ? 'NodeNext' : 'ESNext',
+          moduleResolution: resolution,
+          lib: ['ES2022', 'DOM'],
+          strict: true,
+          noEmit: true,
+          skipLibCheck: false,
+        },
+        files,
+      }),
+    );
+    for (const compiler of ['typescript', 'typescript-5-5']) {
+      try {
+        run(process.execPath, [
+          join(root, 'node_modules', compiler, 'bin/tsc'),
+          '-p',
+          'tsconfig.json',
+        ]);
+      } catch (error) {
+        throw new Error(`${compiler}/${resolution}: ${error.stdout}`, {
+          cause: error,
+        });
+      }
+    }
+  }
+  writeFileSync(
+    join(directory, 'browser.mjs'),
+    `export { LoginRequestSchema, authOperations } from '@anarchitects/auth-contracts';\nexport { identityOperations } from '@anarchitects/identity-contracts';\n`,
+  );
+  const bundle = await build({
+    entryPoints: [join(directory, 'browser.mjs')],
+    bundle: true,
+    platform: 'browser',
+    format: 'esm',
+    target: 'es2022',
+    write: false,
+    metafile: true,
+  });
+  assert.ok(bundle.outputFiles[0].contents.length);
+  assert.ok(
+    !Object.keys(bundle.metafile.inputs).some((name) =>
+      /@nestjs|@angular|ajv|fastify|express/.test(name),
+    ),
+  );
+  console.log(
+    'Clean packed dependency boundary, TypeScript 5.5/6 NodeNext + bundler consumers, and browser bundle passed.',
+  );
+} finally {
+  rmSync(directory, { recursive: true, force: true });
+}
