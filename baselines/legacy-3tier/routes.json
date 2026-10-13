@@ -1,0 +1,2455 @@
+[
+  {
+    "handler": "AuthController.getLoggedInUserInfo",
+    "key": "GET /auth/me",
+    "method": "GET",
+    "operationId": "getLoggedInUserInfo",
+    "path": "/auth/me",
+    "schema": {
+      "response": {
+        "200": {
+          "properties": {
+            "rbac": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "conditions": {
+                    "patternProperties": {
+                      "^(.*)$": {}
+                    },
+                    "type": "object"
+                  },
+                  "fields": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "inverted": {
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "subject": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "subject"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "user": {}
+          },
+          "required": [
+            "user",
+            "rbac"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "FormsController.getFormDefinition",
+    "key": "GET /forms/{formId}",
+    "method": "GET",
+    "operationId": "getFormDefinition",
+    "path": "/forms/{formId}",
+    "schema": {
+      "params": {
+        "properties": {
+          "formId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "formId"
+        ],
+        "type": "object"
+      },
+      "querystring": {
+        "properties": {
+          "formVersion": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "config": {
+              "properties": {
+                "delivery": {
+                  "properties": {
+                    "adminEmail": {
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "autoReply": {
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "templateId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "enabled",
+                        "templateId",
+                        "subject"
+                      ],
+                      "type": "object"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "templateId": {
+                      "type": "string"
+                    },
+                    "webhooks": {
+                      "items": {
+                        "properties": {
+                          "secret": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "format": "uri",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "url"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "fields": {
+                  "items": {
+                    "properties": {
+                      "kind": {
+                        "anyOf": [
+                          {
+                            "const": "string",
+                            "type": "string"
+                          },
+                          {
+                            "const": "password",
+                            "type": "string"
+                          },
+                          {
+                            "const": "email",
+                            "type": "string"
+                          },
+                          {
+                            "const": "textarea",
+                            "type": "string"
+                          },
+                          {
+                            "const": "boolean",
+                            "type": "string"
+                          },
+                          {
+                            "const": "select",
+                            "type": "string"
+                          },
+                          {
+                            "const": "file",
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "maxLength": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "minLength": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "options": {
+                        "items": {
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "value",
+                            "label"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "pattern": {
+                        "type": "string"
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "ui": {
+                        "properties": {
+                          "help": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "placeholder": {
+                            "type": "string"
+                          },
+                          "rows": {
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "security": {
+                  "properties": {
+                    "captcha": {
+                      "anyOf": [
+                        {
+                          "const": "turnstile",
+                          "type": "string"
+                        },
+                        {
+                          "const": "hcaptcha",
+                          "type": "string"
+                        },
+                        {
+                          "const": "none",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "honeypot": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "captcha"
+                  ],
+                  "type": "object"
+                },
+                "validationRules": {
+                  "items": {
+                    "properties": {
+                      "kind": {
+                        "const": "matchFields",
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      },
+                      "sourceField": {
+                        "type": "string"
+                      },
+                      "targetField": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "sourceField",
+                      "targetField"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "version": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "version",
+                "fields"
+              ],
+              "type": "object"
+            },
+            "schema": {}
+          },
+          "required": [
+            "config",
+            "schema"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/forms/nest/src/presentation/controllers/forms.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "SubmissionsController.getSubmissions",
+    "key": "GET /forms/submissions",
+    "method": "GET",
+    "operationId": "getSubmissions",
+    "path": "/forms/submissions",
+    "schema": {
+      "querystring": {
+        "properties": {
+          "formId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "formVersion": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "items": {
+            "properties": {
+              "createdAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "formId": {
+                "type": "string"
+              },
+              "formVersion": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "id": {
+                "type": "string"
+              },
+              "payload": {
+                "patternProperties": {
+                  "^(.*)$": {}
+                },
+                "type": "object"
+              },
+              "updatedAt": {
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "formId",
+              "formVersion",
+              "payload",
+              "createdAt",
+              "updatedAt"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "source": "libs/forms/nest/src/presentation/controllers/submissions.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "SubmissionsController.getSubmission",
+    "key": "GET /forms/submissions/{submissionId}",
+    "method": "GET",
+    "operationId": "getSubmission",
+    "path": "/forms/submissions/{submissionId}",
+    "schema": {
+      "params": {
+        "properties": {
+          "submissionId": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "submissionId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "formId": {
+              "type": "string"
+            },
+            "formVersion": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "payload": {
+              "patternProperties": {
+                "^(.*)$": {}
+              },
+              "type": "object"
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "formId",
+            "formVersion",
+            "payload",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/forms/nest/src/presentation/controllers/submissions.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "UserProfilesController.getProfileById",
+    "key": "GET /identity/profiles/{profileId}",
+    "method": "GET",
+    "operationId": "getUserProfileById",
+    "path": "/identity/profiles/{profileId}",
+    "schema": {
+      "params": {
+        "properties": {
+          "profileId": {
+            "minLength": 1,
+            "pattern": "^\\S+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profileId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "authUserId": {
+              "type": "string"
+            },
+            "avatarUrl": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "displayName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "familyName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "givenName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string"
+            },
+            "locale": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timeZone": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "authUserId",
+            "displayName",
+            "givenName",
+            "familyName",
+            "avatarUrl",
+            "locale",
+            "timeZone",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/identity/nest/src/presentation/controllers/user-profiles.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "UserProfilesController.getProfileByAuthUserId",
+    "key": "GET /identity/profiles/by-auth-user/{authUserId}",
+    "method": "GET",
+    "operationId": "getUserProfileByAuthUserId",
+    "path": "/identity/profiles/by-auth-user/{authUserId}",
+    "schema": {
+      "params": {
+        "properties": {
+          "authUserId": {
+            "minLength": 1,
+            "pattern": "^\\S+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "authUserId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "authUserId": {
+              "type": "string"
+            },
+            "avatarUrl": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "displayName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "familyName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "givenName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string"
+            },
+            "locale": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timeZone": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "authUserId",
+            "displayName",
+            "givenName",
+            "familyName",
+            "avatarUrl",
+            "locale",
+            "timeZone",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/identity/nest/src/presentation/controllers/user-profiles.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.activateUser",
+    "key": "PATCH /auth/activate",
+    "method": "PATCH",
+    "operationId": "activateUser",
+    "path": "/auth/activate",
+    "schema": {
+      "body": {
+        "properties": {
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.changePassword",
+    "key": "PATCH /auth/change-password/{userId}",
+    "method": "PATCH",
+    "operationId": "changePassword",
+    "path": "/auth/change-password/{userId}",
+    "schema": {
+      "body": {
+        "properties": {
+          "confirmPassword": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "currentPassword": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "newPassword": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword",
+          "confirmPassword"
+        ],
+        "type": "object"
+      },
+      "params": {
+        "properties": {
+          "userId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.updateEmail",
+    "key": "PATCH /auth/update-email/{userId}",
+    "method": "PATCH",
+    "operationId": "updateEmail",
+    "path": "/auth/update-email/{userId}",
+    "schema": {
+      "body": {
+        "properties": {
+          "newEmail": {
+            "format": "email",
+            "type": "string"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "required": [
+          "newEmail"
+        ],
+        "type": "object"
+      },
+      "params": {
+        "properties": {
+          "userId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "UserProfilesController.updateProfile",
+    "key": "PATCH /identity/profiles/{profileId}",
+    "method": "PATCH",
+    "operationId": "updateUserProfile",
+    "path": "/identity/profiles/{profileId}",
+    "schema": {
+      "body": {
+        "properties": {
+          "avatarUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "displayName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "familyName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "givenName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "locale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "timeZone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "params": {
+        "properties": {
+          "profileId": {
+            "minLength": 1,
+            "pattern": "^\\S+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profileId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "authUserId": {
+              "type": "string"
+            },
+            "avatarUrl": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "displayName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "familyName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "givenName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string"
+            },
+            "locale": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timeZone": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "authUserId",
+            "displayName",
+            "givenName",
+            "familyName",
+            "avatarUrl",
+            "locale",
+            "timeZone",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/identity/nest/src/presentation/controllers/user-profiles.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.forgotPassword",
+    "key": "POST /auth/forgot-password",
+    "method": "POST",
+    "operationId": "forgotPassword",
+    "path": "/auth/forgot-password",
+    "schema": {
+      "body": {
+        "properties": {
+          "email": {
+            "format": "email",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "JwtAuthPluginController.login",
+    "key": "POST /auth/jwt/login",
+    "method": "POST",
+    "operationId": null,
+    "path": "/auth/jwt/login",
+    "schema": {
+      "body": {
+        "properties": {
+          "credential": {
+            "maxLength": 100,
+            "minLength": 2,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "required": [
+          "credential",
+          "password"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "accessToken": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "refreshToken": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "accessToken",
+            "refreshToken"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/infrastructure-engine/better-auth/plugins/jwt/jwt-auth-plugin.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "JwtAuthPluginController.logout",
+    "key": "POST /auth/jwt/logout",
+    "method": "POST",
+    "operationId": null,
+    "path": "/auth/jwt/logout",
+    "schema": {
+      "body": {
+        "properties": {
+          "accessToken": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "refreshToken": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/infrastructure-engine/better-auth/plugins/jwt/jwt-auth-plugin.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "JwtAuthPluginController.refresh",
+    "key": "POST /auth/jwt/refresh",
+    "method": "POST",
+    "operationId": null,
+    "path": "/auth/jwt/refresh",
+    "schema": {
+      "body": {
+        "properties": {
+          "refreshToken": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "accessToken": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "refreshToken": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "accessToken",
+            "refreshToken"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/infrastructure-engine/better-auth/plugins/jwt/jwt-auth-plugin.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.login",
+    "key": "POST /auth/login",
+    "method": "POST",
+    "operationId": "login",
+    "path": "/auth/login",
+    "schema": {
+      "body": {
+        "properties": {
+          "credential": {
+            "maxLength": 100,
+            "minLength": 2,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "required": [
+          "credential",
+          "password"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "rbac": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "conditions": {
+                    "patternProperties": {
+                      "^(.*)$": {}
+                    },
+                    "type": "object"
+                  },
+                  "fields": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "inverted": {
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "subject": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "subject"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "user": {}
+          },
+          "required": [
+            "user",
+            "rbac"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.logout",
+    "key": "POST /auth/logout",
+    "method": "POST",
+    "operationId": "logout",
+    "path": "/auth/logout",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "PasskeyAuthController.beginAuthentication",
+    "key": "POST /auth/passkeys/authentication/begin",
+    "method": "POST",
+    "operationId": "beginAuthentication",
+    "path": "/auth/passkeys/authentication/begin",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "additionalProperties": false,
+          "properties": {
+            "allowCredentials": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "transports": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "type": {
+                    "const": "public-key",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "type"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "challenge": {
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            },
+            "extensions": {
+              "patternProperties": {
+                "^(.*)$": {}
+              },
+              "type": "object"
+            },
+            "hints": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "rpId": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "timeout": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "userVerification": {
+              "anyOf": [
+                {
+                  "const": "required",
+                  "type": "string"
+                },
+                {
+                  "const": "preferred",
+                  "type": "string"
+                },
+                {
+                  "const": "discouraged",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "challenge"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/passkey-auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "PasskeyAuthController.finishAuthentication",
+    "key": "POST /auth/passkeys/authentication/finish",
+    "method": "POST",
+    "operationId": "finishAuthentication",
+    "path": "/auth/passkeys/authentication/finish",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "response": {
+            "additionalProperties": false,
+            "properties": {
+              "authenticatorAttachment": {
+                "anyOf": [
+                  {
+                    "const": "platform",
+                    "type": "string"
+                  },
+                  {
+                    "const": "cross-platform",
+                    "type": "string"
+                  }
+                ]
+              },
+              "clientExtensionResults": {
+                "patternProperties": {
+                  "^(.*)$": {}
+                },
+                "type": "object"
+              },
+              "id": {
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              "rawId": {
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              "response": {
+                "additionalProperties": false,
+                "properties": {
+                  "authenticatorData": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "clientDataJSON": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "signature": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "userHandle": {
+                    "anyOf": [
+                      {
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z0-9_-]+$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "clientDataJSON",
+                  "authenticatorData",
+                  "signature"
+                ],
+                "type": "object"
+              },
+              "type": {
+                "const": "public-key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "rawId",
+              "type",
+              "clientExtensionResults",
+              "response"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "response"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "rbac": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "conditions": {
+                    "patternProperties": {
+                      "^(.*)$": {}
+                    },
+                    "type": "object"
+                  },
+                  "fields": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "inverted": {
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "subject": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "subject"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "user": {}
+          },
+          "required": [
+            "user",
+            "rbac"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/passkey-auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "PasskeyAuthController.beginRegistration",
+    "key": "POST /auth/passkeys/registration/begin",
+    "method": "POST",
+    "operationId": "beginRegistration",
+    "path": "/auth/passkeys/registration/begin",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "authenticatorAttachment": {
+            "anyOf": [
+              {
+                "const": "platform",
+                "type": "string"
+              },
+              {
+                "const": "cross-platform",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "additionalProperties": false,
+          "properties": {
+            "attestation": {
+              "anyOf": [
+                {
+                  "const": "none",
+                  "type": "string"
+                },
+                {
+                  "const": "indirect",
+                  "type": "string"
+                },
+                {
+                  "const": "direct",
+                  "type": "string"
+                },
+                {
+                  "const": "enterprise",
+                  "type": "string"
+                }
+              ]
+            },
+            "attestationFormats": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "authenticatorSelection": {
+              "additionalProperties": false,
+              "properties": {
+                "authenticatorAttachment": {
+                  "anyOf": [
+                    {
+                      "const": "platform",
+                      "type": "string"
+                    },
+                    {
+                      "const": "cross-platform",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "requireResidentKey": {
+                  "type": "boolean"
+                },
+                "residentKey": {
+                  "anyOf": [
+                    {
+                      "const": "required",
+                      "type": "string"
+                    },
+                    {
+                      "const": "preferred",
+                      "type": "string"
+                    },
+                    {
+                      "const": "discouraged",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "userVerification": {
+                  "anyOf": [
+                    {
+                      "const": "required",
+                      "type": "string"
+                    },
+                    {
+                      "const": "preferred",
+                      "type": "string"
+                    },
+                    {
+                      "const": "discouraged",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "challenge": {
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            },
+            "excludeCredentials": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "transports": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "type": {
+                    "const": "public-key",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "type"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "extensions": {
+              "patternProperties": {
+                "^(.*)$": {}
+              },
+              "type": "object"
+            },
+            "hints": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "pubKeyCredParams": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "alg": {
+                    "type": "integer"
+                  },
+                  "type": {
+                    "const": "public-key",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "alg"
+                ],
+                "type": "object"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "rp": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "timeout": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "user": {
+              "additionalProperties": false,
+              "properties": {
+                "displayName": {
+                  "type": "string"
+                },
+                "id": {
+                  "maxLength": 86,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9_-]+$",
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "displayName"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "rp",
+            "user",
+            "challenge",
+            "pubKeyCredParams"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/passkey-auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "PasskeyAuthController.finishRegistration",
+    "key": "POST /auth/passkeys/registration/finish",
+    "method": "POST",
+    "operationId": "finishRegistration",
+    "path": "/auth/passkeys/registration/finish",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "response": {
+            "additionalProperties": false,
+            "properties": {
+              "authenticatorAttachment": {
+                "anyOf": [
+                  {
+                    "const": "platform",
+                    "type": "string"
+                  },
+                  {
+                    "const": "cross-platform",
+                    "type": "string"
+                  }
+                ]
+              },
+              "clientExtensionResults": {
+                "patternProperties": {
+                  "^(.*)$": {}
+                },
+                "type": "object"
+              },
+              "id": {
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              "rawId": {
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              "response": {
+                "additionalProperties": false,
+                "properties": {
+                  "attestationObject": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "authenticatorData": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "clientDataJSON": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "publicKey": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "type": "string"
+                  },
+                  "publicKeyAlgorithm": {
+                    "type": "integer"
+                  },
+                  "transports": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "clientDataJSON",
+                  "attestationObject"
+                ],
+                "type": "object"
+              },
+              "type": {
+                "const": "public-key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "rawId",
+              "type",
+              "clientExtensionResults",
+              "response"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "response"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/passkey-auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.registerUser",
+    "key": "POST /auth/register",
+    "method": "POST",
+    "operationId": "registerUser",
+    "path": "/auth/register",
+    "schema": {
+      "body": {
+        "properties": {
+          "confirmPassword": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "email": {
+            "format": "email",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 2,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "confirmPassword"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.resetPassword",
+    "key": "POST /auth/reset-password",
+    "method": "POST",
+    "operationId": "resetPassword",
+    "path": "/auth/reset-password",
+    "schema": {
+      "body": {
+        "properties": {
+          "confirmPassword": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "password",
+          "confirmPassword"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "AuthController.verifyEmail",
+    "key": "POST /auth/verify-email",
+    "method": "POST",
+    "operationId": "verifyEmail",
+    "path": "/auth/verify-email",
+    "schema": {
+      "body": {
+        "properties": {
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/auth/nest/src/presentation/controllers/auth.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "SubmissionsController.submitForm",
+    "key": "POST /forms/submit",
+    "method": "POST",
+    "operationId": "submitForm",
+    "path": "/forms/submit",
+    "schema": {
+      "body": {
+        "properties": {
+          "formId": {
+            "type": "string"
+          },
+          "formVersion": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "payload": {
+            "patternProperties": {
+              "^(.*)$": {}
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "formId",
+          "formVersion",
+          "payload"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "formId": {
+              "type": "string"
+            },
+            "formVersion": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "payload": {
+              "patternProperties": {
+                "^(.*)$": {}
+              },
+              "type": "object"
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "formId",
+            "formVersion",
+            "payload",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/forms/nest/src/presentation/controllers/submissions.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "UserProfilesController.createProfile",
+    "key": "POST /identity/profiles",
+    "method": "POST",
+    "operationId": "createUserProfile",
+    "path": "/identity/profiles",
+    "schema": {
+      "body": {
+        "properties": {
+          "authUserId": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "displayName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "familyName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "givenName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "locale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "timeZone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "authUserId"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "200": {
+          "properties": {
+            "authUserId": {
+              "type": "string"
+            },
+            "avatarUrl": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "createdAt": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "displayName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "familyName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "givenName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string"
+            },
+            "locale": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timeZone": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "updatedAt": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "authUserId",
+            "displayName",
+            "givenName",
+            "familyName",
+            "avatarUrl",
+            "locale",
+            "timeZone",
+            "createdAt",
+            "updatedAt"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/identity/nest/src/presentation/controllers/user-profiles.controller.ts",
+    "successStatus": 200
+  },
+  {
+    "handler": "NewsletterNativeController.confirm",
+    "key": "POST /newsletter/confirm",
+    "method": "POST",
+    "operationId": "confirmNewsletterSubscription",
+    "path": "/newsletter/confirm",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "maxLength": 128,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "202": {
+          "additionalProperties": false,
+          "properties": {
+            "accepted": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "accepted"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/newsletter/nest/src/presentation/newsletter-native.controller.ts",
+    "successStatus": 202
+  },
+  {
+    "handler": "NewsletterSubscriptionController.subscribe",
+    "key": "POST /newsletter/subscribe",
+    "method": "POST",
+    "operationId": "subscribeToNewsletter",
+    "path": "/newsletter/subscribe",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "consent": {
+            "const": true,
+            "type": "boolean"
+          },
+          "consentVersion": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 254,
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+(?![\\s\\S])",
+            "type": "string"
+          },
+          "source": {
+            "maxLength": 2048,
+            "type": "string"
+          },
+          "website": {
+            "maxLength": 2048,
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "consent",
+          "consentVersion"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "202": {
+          "additionalProperties": false,
+          "properties": {
+            "accepted": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "accepted"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/newsletter/nest/src/presentation/newsletter-subscription.controller.ts",
+    "successStatus": 202
+  },
+  {
+    "handler": "NewsletterNativeController.unsubscribe",
+    "key": "POST /newsletter/unsubscribe",
+    "method": "POST",
+    "operationId": "unsubscribeFromNewsletter",
+    "path": "/newsletter/unsubscribe",
+    "schema": {
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "maxLength": 128,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "response": {
+        "202": {
+          "additionalProperties": false,
+          "properties": {
+            "accepted": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "accepted"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/newsletter/nest/src/presentation/newsletter-native.controller.ts",
+    "successStatus": 202
+  },
+  {
+    "handler": "NewsletterWebhookController.receive",
+    "key": "POST /newsletter/webhook",
+    "method": "POST",
+    "operationId": "receiveNewsletterWebhook",
+    "path": "/newsletter/webhook",
+    "schema": {
+      "response": {
+        "200": {
+          "additionalProperties": false,
+          "properties": {
+            "duplicates": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "recorded": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "recorded",
+            "duplicates"
+          ],
+          "type": "object"
+        }
+      }
+    },
+    "source": "libs/newsletter/nest/src/presentation/newsletter-webhook.controller.ts",
+    "successStatus": 200
+  }
+]

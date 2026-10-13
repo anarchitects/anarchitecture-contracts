@@ -1,0 +1,83 @@
+{
+  "openapi": "3.1.0",
+  "title": "Anarchitecture Bricks API",
+  "version": "1.0.0",
+  "paths": {
+    "/auth/activate": {
+      "patch": "activateUser"
+    },
+    "/auth/change-password/{userId}": {
+      "patch": "changePassword"
+    },
+    "/auth/forgot-password": {
+      "post": "forgotPassword"
+    },
+    "/auth/login": {
+      "post": "login"
+    },
+    "/auth/logout": {
+      "post": "logout"
+    },
+    "/auth/me": {
+      "get": "getLoggedInUserInfo"
+    },
+    "/auth/passkeys/authentication/begin": {
+      "post": "beginAuthentication"
+    },
+    "/auth/passkeys/authentication/finish": {
+      "post": "finishAuthentication"
+    },
+    "/auth/passkeys/registration/begin": {
+      "post": "beginRegistration"
+    },
+    "/auth/passkeys/registration/finish": {
+      "post": "finishRegistration"
+    },
+    "/auth/register": {
+      "post": "registerUser"
+    },
+    "/auth/reset-password": {
+      "post": "resetPassword"
+    },
+    "/auth/update-email/{userId}": {
+      "patch": "updateEmail"
+    },
+    "/auth/verify-email": {
+      "post": "verifyEmail"
+    },
+    "/forms/{formId}": {
+      "get": "getFormDefinition"
+    },
+    "/forms/submissions": {
+      "get": "getSubmissions"
+    },
+    "/forms/submissions/{submissionId}": {
+      "get": "getSubmission"
+    },
+    "/forms/submit": {
+      "post": "submitForm"
+    },
+    "/identity/profiles": {
+      "post": "createUserProfile"
+    },
+    "/identity/profiles/{profileId}": {
+      "get": "getUserProfileById",
+      "patch": "updateUserProfile"
+    },
+    "/identity/profiles/by-auth-user/{authUserId}": {
+      "get": "getUserProfileByAuthUserId"
+    },
+    "/newsletter/confirm": {
+      "post": "confirmNewsletterSubscription"
+    },
+    "/newsletter/subscribe": {
+      "post": "subscribeToNewsletter"
+    },
+    "/newsletter/unsubscribe": {
+      "post": "unsubscribeFromNewsletter"
+    },
+    "/newsletter/webhook": {
+      "post": "receiveNewsletterWebhook"
+    }
+  }
+}
