@@ -1,0 +1,5090 @@
+[
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "confirmPassword": "password",
+            "email": "reader@example.test",
+            "password": "password"
+          },
+          "name": "register"
+        },
+        {
+          "data": [
+            "user-1",
+            "user"
+          ],
+          "name": "ensureRole"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-empty-optional-name",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/name must NOT have fewer than 2 characters",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "reader@example.test",
+          "name": "",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-missing-password",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body must have required property 'password'",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "email": "reader@example.test"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-short-password",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/password must NOT have fewer than 6 characters",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "reader@example.test",
+          "password": "short"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-mismatch",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Passwords do not match",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "different",
+          "email": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-malformed-email",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/email must match format \"email\"",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "bad",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-null-name",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/name must NOT have fewer than 2 characters",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "reader@example.test",
+          "name": null,
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-register-unknown-property",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "confirmPassword": "password",
+            "email": "reader@example.test",
+            "extra": "preserved",
+            "password": "password"
+          },
+          "name": "register"
+        },
+        {
+          "data": [
+            "user-1",
+            "user"
+          ],
+          "name": "ensureRole"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "reader@example.test",
+          "extra": "preserved",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "existingUser": true
+    },
+    "host": "core",
+    "id": "auth-register-existing",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "User already exists",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "email": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/register"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-login",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": "incoming=fixture",
+            "dto": {
+              "credential": "reader@example.test",
+              "password": "password"
+            }
+          },
+          "name": "login"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "rbac": [],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "password"
+        },
+        "headers": {
+          "cookie": "incoming=fixture"
+        },
+        "method": "POST",
+        "path": "/auth/login"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "engineReject": true
+    },
+    "host": "core",
+    "id": "auth-login-engine-denial",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {
+              "credential": "reader@example.test",
+              "password": "password"
+            }
+          },
+          "name": "login"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "Invalid credentials",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/login"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "policyRules": [
+        {
+          "action": "read",
+          "conditions": {
+            "authUserId": "user-1"
+          },
+          "fields": [
+            "displayName"
+          ],
+          "inverted": false,
+          "subject": "Profile"
+        },
+        {
+          "action": "read",
+          "conditions": {
+            "private": true
+          },
+          "fields": [
+            "email"
+          ],
+          "inverted": true,
+          "reason": "private fixture fields",
+          "subject": "Profile"
+        }
+      ]
+    },
+    "host": "core",
+    "id": "auth-login-policy-wire-order",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {
+              "credential": "reader@example.test",
+              "password": "password"
+            }
+          },
+          "name": "login"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "rbac": [
+              {
+                "action": "read",
+                "conditions": {
+                  "authUserId": "user-1"
+                },
+                "fields": [
+                  "displayName"
+                ],
+                "inverted": false,
+                "subject": "Profile"
+              },
+              {
+                "action": "read",
+                "conditions": {
+                  "private": true
+                },
+                "fields": [
+                  "email"
+                ],
+                "inverted": true,
+                "reason": "private fixture fields",
+                "subject": "Profile"
+              }
+            ],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [
+                {
+                  "id": "role-1",
+                  "name": "fixture",
+                  "permissions": [
+                    {
+                      "action": "read",
+                      "conditions": {
+                        "authUserId": "user-1"
+                      },
+                      "fields": [
+                        "displayName"
+                      ],
+                      "inverted": false,
+                      "subject": "Profile"
+                    },
+                    {
+                      "action": "read",
+                      "conditions": {
+                        "private": true
+                      },
+                      "fields": [
+                        "email"
+                      ],
+                      "inverted": true,
+                      "reason": "private fixture fields",
+                      "subject": "Profile"
+                    }
+                  ]
+                }
+              ],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/login"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-login-number-coercion",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {
+              "credential": "123456",
+              "password": "123456"
+            }
+          },
+          "name": "login"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "rbac": [],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": 123456,
+          "password": 123456
+        },
+        "method": "POST",
+        "path": "/auth/login"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-login-short-password",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/password must NOT have fewer than 6 characters",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "short"
+        },
+        "method": "POST",
+        "path": "/auth/login"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-logout",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": "better-auth.session=baseline",
+            "dto": {}
+          },
+          "name": "logout"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=; Max-Age=0; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {},
+        "headers": {
+          "cookie": "better-auth.session=baseline"
+        },
+        "method": "POST",
+        "path": "/auth/logout"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-logout-strips-unknown",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {}
+          },
+          "name": "logout"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=; Max-Age=0; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "refreshToken": "not-used"
+        },
+        "method": "POST",
+        "path": "/auth/logout"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-activate",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "verifyEmail"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "PATCH",
+        "path": "/auth/activate"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-forgot-password",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "email": "reader@example.test"
+          },
+          "name": "requestPasswordReset"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "email": "reader@example.test"
+        },
+        "method": "POST",
+        "path": "/auth/forgot-password"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-reset-password",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "confirmPassword": "password",
+            "password": "password",
+            "token": "fixture-token"
+          },
+          "name": "resetPassword"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "password": "password",
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/auth/reset-password"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-reset-mismatch",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Passwords do not match",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "different",
+          "password": "password",
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/auth/reset-password"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "engineReject": true
+    },
+    "host": "core",
+    "id": "auth-reset-invalid-token",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "confirmPassword": "password",
+            "password": "password",
+            "token": "fixture-token"
+          },
+          "name": "resetPassword"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid token",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "password",
+          "password": "password",
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/auth/reset-password"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-verify-email",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "verifyEmail"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/auth/verify-email"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "engineReject": true
+    },
+    "host": "core",
+    "id": "auth-verify-invalid-token",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "verifyEmail"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid token",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/auth/verify-email"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-change-password",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "passwordHash": "fixture-hash:newpassword",
+            "userId": "user-1"
+          },
+          "name": "upsertCredentialAccount"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "newpassword",
+          "currentPassword": "password",
+          "newPassword": "newpassword"
+        },
+        "method": "PATCH",
+        "path": "/auth/change-password/user-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-change-wrong-password",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid current password",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "confirmPassword": "newpassword",
+          "currentPassword": "incorrect",
+          "newPassword": "newpassword"
+        },
+        "method": "PATCH",
+        "path": "/auth/change-password/user-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-update-email",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "email": "updated@example.test",
+            "emailVerified": true,
+            "id": "user-1",
+            "image": null,
+            "name": "Reader",
+            "roles": [],
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "name": "updateUser"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "newEmail": "updated@example.test",
+          "password": "password"
+        },
+        "method": "PATCH",
+        "path": "/auth/update-email/user-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-me",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "rbac": [],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "headers": {
+          "cookie": "better-auth.session=baseline"
+        },
+        "method": "GET",
+        "path": "/auth/me"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-me-no-session-unguarded",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "No active auth session",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/auth/me"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "guarded",
+    "id": "auth-me-no-session-guarded",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "User not authenticated",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/auth/me"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "guarded",
+    "id": "auth-guard-valid-session",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "rbac": [],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "headers": {
+          "cookie": "better-auth.session=baseline"
+        },
+        "method": "GET",
+        "path": "/auth/me"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "guarded",
+    "id": "auth-guard-invalid-session",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "User not authenticated",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "headers": {
+          "cookie": "better-auth.session=invalid"
+        },
+        "method": "GET",
+        "path": "/auth/me"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "guarded",
+    "id": "auth-guard-public-login",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {
+              "credential": "reader@example.test",
+              "password": "password"
+            }
+          },
+          "name": "login"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "rbac": [],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/login"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "guarded",
+    "id": "passkey-guard-registration",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "User not authenticated",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/auth/passkeys/registration/begin"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "guarded",
+    "id": "passkey-guard-public-authentication",
+    "observed": {
+      "events": [
+        {
+          "data": {},
+          "name": "beginPasskeyAuthentication"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "challenge": "Y2hhbGxlbmdl",
+            "rpId": "example.test",
+            "userVerification": "required"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/auth/passkeys/authentication/begin"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-registration-begin",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {}
+          },
+          "name": "beginPasskeyRegistration"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "challenge": "Y2hhbGxlbmdl",
+            "pubKeyCredParams": [
+              {
+                "alg": -7,
+                "type": "public-key"
+              }
+            ],
+            "rp": {
+              "id": "example.test",
+              "name": "Fixture"
+            },
+            "user": {
+              "displayName": "Reader",
+              "id": "dXNlcg",
+              "name": "reader@example.test"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/auth/passkeys/registration/begin"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-registration-strips-user-id",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "cookie": null,
+            "dto": {}
+          },
+          "name": "beginPasskeyRegistration"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "challenge": "Y2hhbGxlbmdl",
+            "pubKeyCredParams": [
+              {
+                "alg": -7,
+                "type": "public-key"
+              }
+            ],
+            "rp": {
+              "id": "example.test",
+              "name": "Fixture"
+            },
+            "user": {
+              "displayName": "Reader",
+              "id": "dXNlcg",
+              "name": "reader@example.test"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "userId": "attacker"
+        },
+        "method": "POST",
+        "path": "/auth/passkeys/registration/begin"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-registration-invalid-attachment",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/authenticatorAttachment must be equal to constant, body/authenticatorAttachment must be equal to constant, body/authenticatorAttachment must match a schema in anyOf",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "authenticatorAttachment": "unknown"
+        },
+        "method": "POST",
+        "path": "/auth/passkeys/registration/begin"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-registration-finish",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "name": "Fixture key",
+            "response": {
+              "clientExtensionResults": {},
+              "id": "Y3JlZA",
+              "rawId": "Y3JlZA",
+              "response": {
+                "attestationObject": "YXR0ZXN0",
+                "clientDataJSON": "Y2xpZW50"
+              },
+              "type": "public-key"
+            }
+          },
+          "name": "finishPasskeyRegistration"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "name": "Fixture key",
+          "response": {
+            "clientExtensionResults": {},
+            "id": "Y3JlZA",
+            "rawId": "Y3JlZA",
+            "response": {
+              "attestationObject": "YXR0ZXN0",
+              "clientDataJSON": "Y2xpZW50"
+            },
+            "type": "public-key"
+          }
+        },
+        "method": "POST",
+        "path": "/auth/passkeys/registration/finish"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-registration-missing-response",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body must have required property 'response'",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/auth/passkeys/registration/finish"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-authentication-begin",
+    "observed": {
+      "events": [
+        {
+          "data": {},
+          "name": "beginPasskeyAuthentication"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "challenge": "Y2hhbGxlbmdl",
+            "rpId": "example.test",
+            "userVerification": "required"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/auth/passkeys/authentication/begin"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-authentication-finish-null-handle",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "response": {
+              "clientExtensionResults": {},
+              "id": "Y3JlZA",
+              "rawId": "Y3JlZA",
+              "response": {
+                "authenticatorData": "YXV0aA",
+                "clientDataJSON": "Y2xpZW50",
+                "signature": "c2ln",
+                "userHandle": null
+              },
+              "type": "public-key"
+            }
+          },
+          "name": "finishPasskeyAuthentication"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "rbac": [],
+            "user": {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "email": "reader@example.test",
+              "emailVerified": true,
+              "id": "user-1",
+              "image": null,
+              "name": "Reader",
+              "roles": [],
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "set-cookie": [
+              "better-auth.session=baseline; Path=/; HttpOnly; SameSite=Lax",
+              "baseline.challenge=fixture; Path=/; HttpOnly"
+            ]
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "response": {
+            "clientExtensionResults": {},
+            "id": "Y3JlZA",
+            "rawId": "Y3JlZA",
+            "response": {
+              "authenticatorData": "YXV0aA",
+              "clientDataJSON": "Y2xpZW50",
+              "signature": "c2ln",
+              "userHandle": null
+            },
+            "type": "public-key"
+          }
+        },
+        "method": "POST",
+        "path": "/auth/passkeys/authentication/finish"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "engineReject": true
+    },
+    "host": "core",
+    "id": "passkey-authentication-verifier-rejects",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "response": {
+              "clientExtensionResults": {},
+              "id": "Y3JlZA",
+              "rawId": "Y3JlZA",
+              "response": {
+                "authenticatorData": "YXV0aA",
+                "clientDataJSON": "Y2xpZW50",
+                "signature": "c2ln",
+                "userHandle": null
+              },
+              "type": "public-key"
+            }
+          },
+          "name": "finishPasskeyAuthentication"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "Fixture verifier rejected assertion",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "body": {
+          "response": {
+            "clientExtensionResults": {},
+            "id": "Y3JlZA",
+            "rawId": "Y3JlZA",
+            "response": {
+              "authenticatorData": "YXV0aA",
+              "clientDataJSON": "Y2xpZW50",
+              "signature": "c2ln",
+              "userHandle": null
+            },
+            "type": "public-key"
+          }
+        },
+        "method": "POST",
+        "path": "/auth/passkeys/authentication/finish"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "passkey-authentication-invalid-base64url",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/response/id must match pattern \"^[A-Za-z0-9_-]+$\"",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "response": {
+            "clientExtensionResults": {},
+            "id": "padded=",
+            "rawId": "Y3JlZA",
+            "response": {
+              "authenticatorData": "YXV0aA",
+              "clientDataJSON": "Y2xpZW50",
+              "signature": "c2ln",
+              "userHandle": null
+            },
+            "type": "public-key"
+          }
+        },
+        "method": "POST",
+        "path": "/auth/passkeys/authentication/finish"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "jwt-login",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJyb2xlcyI6W119.Cb0XkWgPD7rt428jX43qLn9719uaT3O-DjnQ6gG3RiU",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJyb2xlcyI6W119.Cb0XkWgPD7rt428jX43qLn9719uaT3O-DjnQ6gG3RiU"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "password"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/login"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "jwt-invalid-password",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid credentials",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "credential": "reader@example.test",
+          "password": "incorrect"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/login"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "jwt-refresh-invalid-token",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid refresh token",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "refreshToken": "invalid"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/refresh"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "jwt-logout-invalid-token",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid refresh token",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "refreshToken": "invalid"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/logout"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "jwt-refresh",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJyb2xlcyI6W119.Cb0XkWgPD7rt428jX43qLn9719uaT3O-DjnQ6gG3RiU",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJyb2xlcyI6W119.Cb0XkWgPD7rt428jX43qLn9719uaT3O-DjnQ6gG3RiU"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJleHAiOjQxMDI0NDQ4MDB9.bXW4IgB21X_BHSyXqitIRJfwqPmL3807edoLMTMy91M"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/refresh"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "jwt-logout",
+    "observed": {
+      "events": [
+        {
+          "data": [
+            [
+              "fixture-hash:fixture-access-token",
+              "fixture-hash:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJleHAiOjQxMDI0NDQ4MDB9.bXW4IgB21X_BHSyXqitIRJfwqPmL3807edoLMTMy91M"
+            ],
+            "user-1",
+            "2100-01-01T00:00:00.000Z"
+          ],
+          "name": "invalidateTokens"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "success": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "accessToken": "fixture-access-token",
+          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJleHAiOjQxMDI0NDQ4MDB9.bXW4IgB21X_BHSyXqitIRJfwqPmL3807edoLMTMy91M"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/logout"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "invalidatedToken": true
+    },
+    "host": "core",
+    "id": "jwt-refresh-invalidated",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Refresh token has been invalidated",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJleHAiOjQxMDI0NDQ4MDB9.bXW4IgB21X_BHSyXqitIRJfwqPmL3807edoLMTMy91M"
+        },
+        "method": "POST",
+        "path": "/auth/jwt/refresh"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "auth-obsolete-refresh-route",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Cannot POST /auth/refresh-tokens/user-1",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "body": {
+          "refreshToken": "invalid"
+        },
+        "method": "POST",
+        "path": "/auth/refresh-tokens/user-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-definition-default-version",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "config": {
+              "fields": [
+                {
+                  "kind": "email",
+                  "name": "email",
+                  "required": true,
+                  "ui": {
+                    "label": "Email"
+                  }
+                }
+              ],
+              "id": "contact",
+              "version": 1
+            },
+            "schema": {
+              "additionalProperties": false,
+              "properties": {
+                "email": {
+                  "format": "email",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ],
+              "type": "object"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/contact"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-definition-query-coercion",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 2
+          },
+          "name": "getFormConfig"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "config": {
+              "fields": [
+                {
+                  "kind": "email",
+                  "name": "email",
+                  "required": true,
+                  "ui": {
+                    "label": "Email"
+                  }
+                }
+              ],
+              "id": "contact",
+              "version": 2
+            },
+            "schema": {
+              "additionalProperties": false,
+              "properties": {
+                "email": {
+                  "format": "email",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ],
+              "type": "object"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/contact?formVersion=2"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "formDelivery": true
+    },
+    "host": "core",
+    "id": "forms-definition-delivery-secret",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "config": {
+              "delivery": {
+                "webhooks": [
+                  {
+                    "secret": "public-fixture-webhook-secret",
+                    "url": "https://example.test/hook"
+                  }
+                ]
+              },
+              "fields": [
+                {
+                  "kind": "email",
+                  "name": "email",
+                  "required": true,
+                  "ui": {
+                    "label": "Email"
+                  }
+                }
+              ],
+              "id": "contact",
+              "version": 1
+            },
+            "schema": {
+              "additionalProperties": false,
+              "properties": {
+                "email": {
+                  "format": "email",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ],
+              "type": "object"
+            }
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/contact"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-definition-invalid-version",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "querystring/formVersion must be >= 1",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/contact?formVersion=0"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-definition-missing",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "missing",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Form config not found",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/missing"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-list-filters",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "formId": "contact",
+            "formVersion": 2
+          },
+          "name": "getSubmissions"
+        }
+      ],
+      "responses": [
+        {
+          "body": [
+            {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "formId": "contact",
+              "formVersion": 1,
+              "id": "01900000-0000-7000-8000-000000000001",
+              "payload": {
+                "email": "reader@example.test"
+              },
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          ],
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/submissions?formId=contact&formVersion=2"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-list-unknown-query",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "limit": "10",
+            "offset": "2"
+          },
+          "name": "getSubmissions"
+        }
+      ],
+      "responses": [
+        {
+          "body": [
+            {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "formId": "contact",
+              "formVersion": 1,
+              "id": "01900000-0000-7000-8000-000000000001",
+              "payload": {
+                "email": "reader@example.test"
+              },
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          ],
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/submissions?limit=10&offset=2"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-detail",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "formId": "contact",
+            "formVersion": 1,
+            "id": "01900000-0000-7000-8000-000000000001",
+            "payload": {
+              "email": "reader@example.test"
+            },
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/submissions/01900000-0000-7000-8000-000000000001"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-detail-missing",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Submission 01900000-0000-7000-8000-000000000002 not found",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/submissions/01900000-0000-7000-8000-000000000002"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-detail-invalid-uuid",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "params/submissionId must match format \"uuid\"",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/forms/submissions/invalid"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        },
+        {
+          "data": {
+            "formId": "contact",
+            "formVersion": 1,
+            "payload": {
+              "email": "reader@example.test"
+            }
+          },
+          "name": "createSubmission"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "formId": "contact",
+            "formVersion": 1,
+            "id": "01900000-0000-7000-8000-000000000001",
+            "payload": {
+              "email": "reader@example.test"
+            },
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "formVersion": 1,
+          "payload": {
+            "email": "reader@example.test"
+          }
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-no-version",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body must have required property 'formVersion'",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "payload": {}
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-string-version",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 2
+          },
+          "name": "getFormConfig"
+        },
+        {
+          "data": {
+            "formId": "contact",
+            "formVersion": 2,
+            "payload": {
+              "email": "reader@example.test"
+            }
+          },
+          "name": "createSubmission"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "formId": "contact",
+            "formVersion": 2,
+            "id": "01900000-0000-7000-8000-000000000001",
+            "payload": {
+              "email": "reader@example.test"
+            },
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "formVersion": "2",
+          "payload": {
+            "email": "reader@example.test"
+          }
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-missing-required-dynamic-field",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        },
+        {
+          "data": {
+            "formId": "contact",
+            "formVersion": 1,
+            "payload": {}
+          },
+          "name": "createSubmission"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "formId": "contact",
+            "formVersion": 1,
+            "id": "01900000-0000-7000-8000-000000000001",
+            "payload": {},
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "formVersion": 1,
+          "payload": {}
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-invalid-dynamic-email",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        },
+        {
+          "data": {
+            "formId": "contact",
+            "formVersion": 1,
+            "payload": {
+              "email": "invalid"
+            }
+          },
+          "name": "createSubmission"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "formId": "contact",
+            "formVersion": 1,
+            "id": "01900000-0000-7000-8000-000000000001",
+            "payload": {
+              "email": "invalid"
+            },
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "formVersion": 1,
+          "payload": {
+            "email": "invalid"
+          }
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-unknown-payload-property",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "contact",
+            "version": 1
+          },
+          "name": "getFormConfig"
+        },
+        {
+          "data": {
+            "formId": "contact",
+            "formVersion": 1,
+            "payload": {
+              "email": "reader@example.test",
+              "extra": "preserved"
+            }
+          },
+          "name": "createSubmission"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "formId": "contact",
+            "formVersion": 1,
+            "id": "01900000-0000-7000-8000-000000000001",
+            "payload": {
+              "email": "reader@example.test",
+              "extra": "preserved"
+            },
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "formVersion": 1,
+          "payload": {
+            "email": "reader@example.test",
+            "extra": "preserved"
+          }
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-null-payload",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/payload must be object",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "formId": "contact",
+          "formVersion": 1,
+          "payload": null
+        },
+        "method": "POST",
+        "path": "/forms/submit"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "forms-submit-malformed-json",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/forms/submit",
+        "rawBody": "{"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-create",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "authUserId": "new-user"
+          },
+          "name": "saveProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "new-user",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": "new-user"
+        },
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "responseExtra": true
+    },
+    "host": "core",
+    "id": "identity-response-drops-extra",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "authUserId": "new-user"
+          },
+          "name": "saveProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "new-user",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": "new-user"
+        },
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-create-nullable",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "authUserId": "new-user",
+            "displayName": "",
+            "locale": ""
+          },
+          "name": "saveProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "new-user",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": "",
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": "",
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": "new-user",
+          "displayName": null,
+          "locale": null
+        },
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-create-number-coercion",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "authUserId": "123",
+            "displayName": "456"
+          },
+          "name": "saveProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "123",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": "456",
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": 123,
+          "displayName": 456
+        },
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-create-extra-fields",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "authUserId": "new-user"
+          },
+          "name": "saveProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "new-user",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": "new-user",
+          "extra": "dropped-by-mapper"
+        },
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-create-duplicate",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "User profile already exists for auth user #user-1",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": "user-1"
+        },
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-create-missing-owner",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body must have required property 'authUserId'",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/identity/profiles"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-get-by-id",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "user-1",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/identity/profiles/profile-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-get-by-auth-user",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "user-1",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/identity/profiles/by-auth-user/user-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-get-missing",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "User profile with id #missing not found",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/identity/profiles/missing"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-invalid-param",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "params/profileId must match pattern \"^\\S+$\"",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/identity/profiles/%20"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-patch-null",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "displayName": "",
+            "id": "profile-1"
+          },
+          "name": "updateProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "user-1",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": "",
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "displayName": null
+        },
+        "method": "PATCH",
+        "path": "/identity/profiles/profile-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-patch-empty",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "profile-1"
+          },
+          "name": "updateProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "user-1",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "PATCH",
+        "path": "/identity/profiles/profile-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-patch-owner-ignored",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "id": "profile-1"
+          },
+          "name": "updateProfile"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "authUserId": "user-1",
+            "avatarUrl": null,
+            "createdAt": "2026-01-01T00:00:00.000Z",
+            "displayName": null,
+            "familyName": null,
+            "givenName": null,
+            "id": "profile-1",
+            "locale": null,
+            "timeZone": null,
+            "updatedAt": "2026-01-01T00:00:00.000Z"
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "body": {
+          "authUserId": "attacker"
+        },
+        "method": "PATCH",
+        "path": "/identity/profiles/profile-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-patch-invalid-shape",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "body/displayName must be string, body/displayName must be null, body/displayName must match a schema in anyOf",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "displayName": {}
+        },
+        "method": "PATCH",
+        "path": "/identity/profiles/profile-1"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "core",
+    "id": "identity-patch-missing",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "User profile with id #missing not found",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "PATCH",
+        "path": "/identity/profiles/missing"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-subscribe",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "consentText": "Public fixture consent text.",
+            "consentVersion": "v1",
+            "email": "reader@example.test",
+            "kind": "granted",
+            "recordedAt": "<clock>"
+          },
+          "name": "appendGrant"
+        },
+        {
+          "data": {
+            "email": "reader@example.test"
+          },
+          "name": "subscribe"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-unknown-property",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test",
+          "extra": true
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-consent-string-not-coerced",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": "true",
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-consent-false",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": false,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-stale-consent",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "old",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-email-whitespace",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": " reader@example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-null-source",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test",
+          "source": null
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-honeypot-bypasses-invalid-body",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "website": "bot"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "rateLimited": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-honeypot-bypasses-limiter",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "website": "bot"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "rateLimited": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-rate-limit",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "message": "Too many newsletter requests.",
+            "statusCode": 429
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8",
+            "retry-after": "2"
+          },
+          "status": 429
+        }
+      ]
+    },
+    "statuses": [
+      429
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "limiterUnavailable": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-limiter-unavailable",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "missingClientKey": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-missing-client-key",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "storageUnavailable": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-storage-failure",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "subscriberUnavailable": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-provider-failure-keeps-grant",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "consentText": "Public fixture consent text.",
+            "consentVersion": "v1",
+            "email": "reader@example.test",
+            "kind": "granted",
+            "recordedAt": "<clock>"
+          },
+          "name": "appendGrant"
+        },
+        {
+          "data": {
+            "email": "reader@example.test"
+          },
+          "name": "subscribe"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "body": {
+          "consent": true,
+          "consentVersion": "v1",
+          "email": "Reader@Example.test"
+        },
+        "method": "POST",
+        "path": "/newsletter/subscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-webhook-valid",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "dedupeKey": "v1:d2ec29c35f2dd7d5ba373759a44303dfe46021f82f68c4bf17b354a403e80194",
+            "email": "reader@example.test",
+            "eventSource": "mailerlite:42",
+            "kind": "withdrawn",
+            "recordedAt": "<clock>"
+          },
+          "name": "appendWithdrawalOnce"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "duplicates": 0,
+            "recorded": 1
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-webhook-missing-signature",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "Invalid newsletter webhook signature.",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-webhook-changed-signed-bytes",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Unauthorized",
+            "message": "Invalid newsletter webhook signature.",
+            "statusCode": 401
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 401
+        }
+      ]
+    },
+    "statuses": [
+      401
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "tampered"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-webhook-invalid-payload",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter webhook.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-webhook-wrong-account",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter webhook.",
+            "statusCode": 400
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"43\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "noRawBody": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-webhook-no-raw-body",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter webhook raw body is unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "storageUnavailable": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-webhook-storage-failure",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "newsletter",
+    "id": "newsletter-webhook-size-limit",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Payload Too Large",
+            "message": "Newsletter webhook is too large.",
+            "statusCode": 413
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 413
+        }
+      ]
+    },
+    "statuses": [
+      413
+    ],
+    "steps": [
+      {
+        "body": {
+          "ignored": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        },
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "webhookDisabled": true
+    },
+    "host": "newsletter",
+    "id": "newsletter-webhook-disabled",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Cannot POST /newsletter/webhook",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "body": {},
+        "method": "POST",
+        "path": "/newsletter/webhook"
+      }
+    ]
+  },
+  {
+    "host": "newsletter",
+    "id": "newsletter-webhook-duplicate",
+    "observed": {
+      "events": [
+        {
+          "data": {
+            "dedupeKey": "v1:d2ec29c35f2dd7d5ba373759a44303dfe46021f82f68c4bf17b354a403e80194",
+            "email": "reader@example.test",
+            "eventSource": "mailerlite:42",
+            "kind": "withdrawn",
+            "recordedAt": "<clock>"
+          },
+          "name": "appendWithdrawalOnce"
+        },
+        {
+          "data": {
+            "dedupeKey": "v1:d2ec29c35f2dd7d5ba373759a44303dfe46021f82f68c4bf17b354a403e80194",
+            "email": "reader@example.test",
+            "eventSource": "mailerlite:42",
+            "kind": "withdrawn",
+            "recordedAt": "<clock>"
+          },
+          "name": "appendWithdrawalOnce"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "duplicates": 0,
+            "recorded": 1
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "duplicates": 1,
+            "recorded": 0
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 200
+        }
+      ]
+    },
+    "statuses": [
+      200,
+      200
+    ],
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "valid"
+      },
+      {
+        "method": "POST",
+        "path": "/newsletter/webhook",
+        "rawBody": "{ \"event\": \"subscriber.unsubscribed\", \"account_id\": \"42\", \"subscriber\": { \"id\": \"7\", \"email\": \"Reader@Example.test\", \"unsubscribed_at\": \"2026-01-01 00:00:00\" } }",
+        "signature": "valid"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-confirm",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "confirm"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/confirm"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-confirm-empty-token",
+    "observed": {
+      "events": [
+        {
+          "data": "",
+          "name": "confirm"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": ""
+        },
+        "method": "POST",
+        "path": "/newsletter/confirm"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-confirm-wrong-type",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": 12
+        },
+        "method": "POST",
+        "path": "/newsletter/confirm"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-confirm-unknown-field",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "email": "private@example.test",
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/confirm"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "actionsUnavailable": true
+    },
+    "host": "native",
+    "id": "newsletter-confirm-failure",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "confirm"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/confirm"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "nativeDisabled": true
+    },
+    "host": "native",
+    "id": "newsletter-confirm-disabled",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Cannot POST /newsletter/confirm",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/confirm"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-confirm-get-not-supported",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Cannot GET /newsletter/confirm?token=fixture-token",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/newsletter/confirm?token=fixture-token"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-unsubscribe",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "unsubscribe"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/unsubscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-unsubscribe-empty-token",
+    "observed": {
+      "events": [
+        {
+          "data": "",
+          "name": "unsubscribe"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "accepted": true
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 202
+        }
+      ]
+    },
+    "statuses": [
+      202
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": ""
+        },
+        "method": "POST",
+        "path": "/newsletter/unsubscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-unsubscribe-wrong-type",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": 12
+        },
+        "method": "POST",
+        "path": "/newsletter/unsubscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-unsubscribe-unknown-field",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Bad Request",
+            "message": "Invalid newsletter request.",
+            "statusCode": 400
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 400
+        }
+      ]
+    },
+    "statuses": [
+      400
+    ],
+    "steps": [
+      {
+        "body": {
+          "email": "private@example.test",
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/unsubscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "actionsUnavailable": true
+    },
+    "host": "native",
+    "id": "newsletter-unsubscribe-failure",
+    "observed": {
+      "events": [
+        {
+          "data": "fixture-token",
+          "name": "unsubscribe"
+        }
+      ],
+      "responses": [
+        {
+          "body": {
+            "error": "Service Unavailable",
+            "message": "Newsletter processing is temporarily unavailable.",
+            "statusCode": 503
+          },
+          "headers": {
+            "cache-control": "no-store",
+            "content-type": "application/json; charset=utf-8",
+            "referrer-policy": "no-referrer"
+          },
+          "status": 503
+        }
+      ]
+    },
+    "statuses": [
+      503
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/unsubscribe"
+      }
+    ]
+  },
+  {
+    "controls": {
+      "nativeDisabled": true
+    },
+    "host": "native",
+    "id": "newsletter-unsubscribe-disabled",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Cannot POST /newsletter/unsubscribe",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "body": {
+          "token": "fixture-token"
+        },
+        "method": "POST",
+        "path": "/newsletter/unsubscribe"
+      }
+    ]
+  },
+  {
+    "controls": {},
+    "host": "native",
+    "id": "newsletter-unsubscribe-get-not-supported",
+    "observed": {
+      "events": [],
+      "responses": [
+        {
+          "body": {
+            "error": "Not Found",
+            "message": "Cannot GET /newsletter/unsubscribe?token=fixture-token",
+            "statusCode": 404
+          },
+          "headers": {
+            "content-type": "application/json; charset=utf-8"
+          },
+          "status": 404
+        }
+      ]
+    },
+    "statuses": [
+      404
+    ],
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/newsletter/unsubscribe?token=fixture-token"
+      }
+    ]
+  }
+]

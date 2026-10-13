@@ -15,7 +15,9 @@
     "lint:md": "markdownlint-cli2",
     "changeset": "changeset",
     "changeset:status": "changeset status",
-    "check": "yarn format:check && yarn lint:md"
+    "baseline:check": "node --test tools/legacy-baseline/baseline.test.mjs",
+    "baseline:verify": "node tools/legacy-baseline/capture.mjs verify",
+    "check": "yarn format:check && yarn lint:md && yarn baseline:check"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.8",
