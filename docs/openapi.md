@@ -233,15 +233,19 @@ renaming, changed schema constraints in either direction, responses, headers,
 security, capabilities and semantics are conservatively breaking. Canonical
 source changes are also conservatively breaking until reviewed because a changed
 parser or inferred type can leave OpenAPI unchanged. Added operations/schema IDs
-or additive exports require minor; compatible prose/artifact changes require patch.
+or additive exports require minor after 1.0 and patch before 1.0; compatible
+prose/artifact changes require patch.
 This classifier intentionally permits false positives rather than pretending to
 prove arbitrary schema-language inclusion or behavioral equivalence.
 
 Breaking changes require major after 1.0, a new minor line before 1.0, and an
 explicit approved migration record at `tools/openapi/migrations/<domain>.json`.
-The record binds `package`, exact `baseRevision`, `findingsDigest`, `status`,
+The file accepts one record or an array of records, so PR-base and cumulative
+last-release reviews can coexist. Each record binds `package`, exact `baseRevision`, `findingsDigest`, `status`,
 `owner`, `decision`, `consumerMigration` and `rollback`. CI checks that the record
-matches the findings; maintainers still review approval provenance. A bump alone
+matches the findings; exactly one record must match the package, revision and
+findings digest. Missing, ambiguous, draft or incomplete matches fail closed.
+Maintainers still review approval provenance. A bump alone
 never authorizes a security or wire change. The #7 records cover generator corrections and additive Forms migration targets;
 they do not authorize an unimplemented runtime wire or security change.
 

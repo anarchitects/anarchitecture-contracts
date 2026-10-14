@@ -43,11 +43,11 @@ change. Document affected operations, wire behavior, compatibility reasoning and
 required migration steps. Foundation-only documentation/tooling changes need no
 package version bump.
 
-| Bump  | Rule                                                                                                                                                          |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Patch | Compatible correction with no break to supported wire behavior or package exports. Fixing an implementation discrepancy is not automatically wire-compatible. |
-| Minor | Backward-compatible capability addition, verified against existing consumers. An added field or enum value is not automatically compatible.                   |
-| Major | Breaking wire or package API change, with an explicit reviewed migration and downstream coordination.                                                         |
+| Bump at/after 1.0 | Rule                                                                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Patch             | Compatible correction with no break to supported wire behavior or package exports. Fixing an implementation discrepancy is not automatically wire-compatible. |
+| Minor             | Backward-compatible capability addition, verified against existing consumers. An added field or enum value is not automatically compatible.                   |
+| Major             | Breaking wire or package API change, with an explicit reviewed migration and downstream coordination.                                                         |
 
 Request constraints, required fields, response shapes, status codes, errors,
 authentication, authorization, headers, cookies, operation IDs and exported types
@@ -71,14 +71,14 @@ HTTP payload can also break imports, inferred input/output types or operationIds
 | Add a required request field, reject old input, change coercion/default/null handling                               | Breaking: major after 1.0, reviewed migration and implementation coordination                                        |
 | Remove/rename a response field, change status/error/header/security behavior or policy wire meaning                 | Breaking: major after 1.0; tests must include negative and security behavior                                         |
 | Rename a published operationId/schema ID/export, remove a module format or raise a supported compiler/runtime floor | Breaking package/tooling surface even if HTTP is unchanged                                                           |
-| Add an operation or optional field                                                                                  | Minor only with verified compatibility; capability absence remains explicit for old implementations                  |
+| Add an operation or optional field                                                                                  | Minor after 1.0, patch before 1.0, only with verified compatibility; capability absence remains explicit             |
 | Add missing metadata for an existing operation before its first canonical release                                   | First-release reconciliation, with provenance; do not claim the old generated spec was complete                      |
 | Correct documentation or generator output without changing supported semantics, IDs or public types                 | Patch with artifact and consumer evidence; a “bug fix” label alone is insufficient                                   |
 | Update Zod or a cross-domain dependency                                                                             | Assess every affected domain's parsing, types and generated artifacts; unchanged source does not prove compatibility |
 
-During prerelease `0.x` development, document breaks and use a new minor line
+During `0.x` development, document breaks and use a new minor line
 (for example `0.2.0-next.0` after `0.1.x`); compatible corrections use patch and
-compatible additions use minor. Never disguise a break as an ordinary patch.
+compatible additions also use patch. Never disguise a break as an ordinary patch.
 Nx Release prerelease mode and the non-`latest` dist-tag must be deliberate. At
 and after 1.0, breaking changes require a major release. A security-driven wire
 change still needs explicit disclosure and coordination; it is not a silent patch.
@@ -113,10 +113,16 @@ commit and the PR title used for squash merges. Unknown types fail. The complete
 Nx type mapping is explicit, including `init`, `docs` and tooling types with
 `semverBump: none`. Breaking notation on `init` is rejected.
 
-`adjustSemverBumpsForZeroMajorVersion: false` preserves compatible additions as
-minor bumps; Nx breaking commits propose a major even before 1.0. Contract policy
-requires at least a new minor line before 1.0, so that conservative Nx major is
-sufficient. Explicit specifiers are resolved by Nx and checked against its
+`adjustSemverBumpsForZeroMajorVersion: true` explicitly follows the Nx 23 default,
+as used by Bricks 3-tier, Community and Plugins. Before 1.0, compatible `feat`
+and `fix` commits produce patch releases; `!` or `BREAKING CHANGE` produces a
+minor release. At and after 1.0, features produce minor and breaks produce major.
+The compatibility gate uses the same minima and still requires exact reviewed
+migration evidence for breaking findings, including changes to published contract
+artifacts or their pinned review obligations. A conservative finding is not proof
+of a runtime wire break; disclose its actual surface instead of inventing one.
+Neither ADR-0004 nor Meta ADR-0013 requires the previous `false` override.
+Explicit specifiers are resolved by Nx and checked against its
 Conventional Commit preview; they cannot change the derived major/minor/patch
 version. There is no second bump calculator.
 
@@ -125,7 +131,10 @@ exact base and validates Nx's actual proposed version. Unreleased development
 remains at `0.0.0`; the explicit first-release operation selects `0.0.1`.
 Baseline/migration checks still run for unreleased work. At release time the
 cumulative delta is also compared against the last package tag, and any breaking
-migration record must match that release baseline and findings.
+migration record must match that release baseline and findings. When the PR base
+and last release differ, store their separately approved records together in the
+per-domain migration array. Neither approval substitutes for the other; the gate
+requires exactly one matching record for each comparison.
 
 ```sh
 yarn nx show projects

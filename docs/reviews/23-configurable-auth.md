@@ -66,20 +66,20 @@ audited password coercer in projection metadata; existing locations are retained
 and no new limitation kind or function is introduced.
 
 After [explicit human P07 approval](23-p07-approval.md) on 2026-10-14, generation
-and byte verification pass for all 31 artifacts. `yarn check --output-style=static`
-passes formatting, Markdown lint, baseline checks, all package builds/types/tests,
-21 contract-authoring tests, 27 OpenAPI tests, 17 release-unit tests and packed
-consumers. The remaining failure is the release smoke phase requiring a matching
-reviewed compatibility migration. The original P07 failures are resolved; this
-still is not a green release candidate.
+and byte verification pass for all 31 artifacts. The regenerated inventories for
+all four domains are identical to the PR base outside `x-contract-projection`
+metadata. Runtime sources changed only for Auth. The conservative checker still
+treats changed projection reviews and manifest review digests as potentially
+breaking and requires a minor release for all four packages.
 
-The regenerated inventories for all four domains are identical to the PR base
-outside `x-contract-projection` metadata. Runtime sources changed only for Auth.
-The conservative checker nevertheless treats changed projection reviews and
-manifest review digests as potentially breaking. It requires a minor release for
-all four packages. Nx currently derives Auth `0.1.0` and Forms/Identity/Newsletter
-`0.0.2`; those three patch versions do not satisfy that conservative gate. This
-P07 update does not change version intent or silently approve migrations.
+The user subsequently [approved both migration baselines and all four minor
+version intents](23-migration-approval.md). Both exact records are now active per
+package. The compatibility gate supports single-record files and arrays with
+exactly one matching approved record; it retains the same classifier and bump
+requirements for breaking findings. The requested zero-major alignment uses
+`true`: compatible features now require patch before 1.0. Nx derives version
+intent from the repository-wide commit with explicit artifact-impact disclosure,
+not manual manifest changes.
 
 The [exact regenerated findings](23-compatibility.draft.json) and
 [migration drafts](23-migrations.draft.json) are prepared against both the PR base
@@ -93,8 +93,9 @@ The [exact regenerated findings](23-compatibility.draft.json) and
 | Identity   | `0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35` |
 | Newsletter | `30e6f53dba839e5c01b03bb32a524b789d69daf8c667ed5a73856786a8f7edec` |
 
-P07 approval does not authorize these separate migration records. No active
-migration record, release rule, classifier or package version is changed.
+The separate migration approval activates exactly these findings and baselines.
+It does not authorize merge, publication or host-conformance claims. Historical
+draft files remain unchanged as approval evidence.
 
 ## Required review and release sequence
 
@@ -104,17 +105,14 @@ migration record, release rule, classifier or package version is changed.
    additionally generate and review candidates for their complete configuration.
    Package OpenAPI files were regenerated from canonical sources after approval;
    none were manually edited or generated under synthetic approval.
-2. Review the exact regenerated compatibility findings and migration drafts for
-   the PR base and each last-release tag. Resolve the conservative minor-version
-   requirement for all four domains explicitly. The existing active migration
-   format accepts one exact base per package: apply PR-base records for PR CI,
-   then the separately reviewed last-release records during release preparation.
-   Do not reuse a stale base or findings digest.
-3. Run the full `yarn check`, installed-package and compatibility gates. A
-   `feat(auth-contracts)` release intent derives `0.1.0` after `0.0.1` in Nx's
-   preview. Shared generator changes also refresh other
-   domains' artifact identities; assess any resulting published-artifact bumps
-   independently. Do not force another domain's version or overwrite `0.0.1`.
+2. Both exact migration baselines and `0.1.0` intent for all four packages were
+   separately approved. Their active records coexist in per-package arrays;
+   PR checks and cumulative release smoke each select their exact approval.
+   A new base or changed findings still requires a matching reviewed record.
+3. Run the full `yarn check`, installed-package and compatibility gates against
+   the actual Nx-derived versions. Breaking notation discloses the reviewed
+   artifact/provenance impact; with `true`, Nx derives the approved minor line.
+   Preserve immutable `0.0.1` releases and leave version materialization to CI.
 4. After human acceptance and merge, run the signed CI release and trusted publish
    workflows under ADR-0004/Meta ADR-0013. Record the actual new version, immutable
    tag/commit, registry integrity and clean-install evidence.

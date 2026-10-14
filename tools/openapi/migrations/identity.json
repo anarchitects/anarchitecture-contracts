@@ -1,10 +1,32 @@
-{
-  "baseRevision": "0ab1566859bbb971416a5168dbb0ef54745f5c8f",
-  "consumerMigration": "ADR-0005 introduces manifest format 2 and explicit canonical exports before first distribution. Consumers must distinguish contractPublication, implementationConformance and deploymentCompliance. Existing diagnostic exports and canonical wire/schema/operation semantics are unchanged. Protected paths stay excluded without bindings; the inventory and known limitations remain normative. Empty supportedCapabilities conveys no implementation claim. D05/D08 remain host-conformance blockers. First distribution remains 0.0.1 under ADR-0004.",
-  "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/20",
-  "findingsDigest": "6e37ca0c7b6916b5e154353d3fe626d5e30f62f9feb978bf07b5ae55fa7ec2b8",
-  "owner": "Contracts architecture maintainers",
-  "package": "@anarchitects/identity-contracts",
-  "rollback": "Before first publication, revert the canonical artifact/gate change together and regenerate prior review artifacts. After distribution, fix forward with compatibility review and preserve immutable versions and existing exports. Never restore unsafe Forms behavior, waive P07, weaken host evidence or introduce another versioner.",
-  "status": "approved"
-}
+[
+  {
+    "baseRevision": "0ab1566859bbb971416a5168dbb0ef54745f5c8f",
+    "consumerMigration": "ADR-0005 introduces manifest format 2 and explicit canonical exports before first distribution. Consumers must distinguish contractPublication, implementationConformance and deploymentCompliance. Existing diagnostic exports and canonical wire/schema/operation semantics are unchanged. Protected paths stay excluded without bindings; the inventory and known limitations remain normative. Empty supportedCapabilities conveys no implementation claim. D05/D08 remain host-conformance blockers. First distribution remains 0.0.1 under ADR-0004.",
+    "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/20",
+    "findingsDigest": "6e37ca0c7b6916b5e154353d3fe626d5e30f62f9feb978bf07b5ae55fa7ec2b8",
+    "owner": "Contracts architecture maintainers",
+    "package": "@anarchitects/identity-contracts",
+    "rollback": "Before first publication, revert the canonical artifact/gate change together and regenerate prior review artifacts. After distribution, fix forward with compatibility review and preserve immutable versions and existing exports. Never restore unsafe Forms behavior, waive P07, weaken host evidence or introduce another versioner.",
+    "status": "approved"
+  },
+  {
+    "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+    "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+    "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+    "findingsDigest": "0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35",
+    "owner": "Johan Vrolix \u2014 explicit approval recorded in docs/reviews/23-migration-approval.md",
+    "package": "@anarchitects/identity-contracts",
+    "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+    "status": "approved"
+  },
+  {
+    "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+    "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+    "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+    "findingsDigest": "0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35",
+    "owner": "Johan Vrolix \u2014 explicit approval recorded in docs/reviews/23-migration-approval.md",
+    "package": "@anarchitects/identity-contracts",
+    "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+    "status": "approved"
+  }
+]
