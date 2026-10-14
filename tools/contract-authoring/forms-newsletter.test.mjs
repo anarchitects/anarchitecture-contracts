@@ -167,7 +167,7 @@ test('the eight extracted routes complete the 29-operation inventory without ren
   }
 });
 
-test('frozen Forms/Newsletter requests, serialized responses and required headers retain observed behavior', () => {
+test('frozen Forms/Newsletter evidence retains legacy response validation with an explicit D08 migration boundary', () => {
   let count = 0;
   for (const item of fixtures)
     for (const [index, step] of item.steps.entries()) {
@@ -231,8 +231,23 @@ test('frozen Forms/Newsletter requests, serialized responses and required header
       const observed = item.observed.responses[index];
       const response = operation.responses[observed.status];
       assert.ok(response, `${item.id}: missing response ${observed.status}`);
+      // Frozen D08 responses remain evidence, not the normative public response.
+      const responseSchema =
+        operation.operationId === 'getFormDefinition' && observed.status === 200
+          ? forms.FormDefinitionEnvelopeResponseSchema
+          : response.body.content['application/json'];
+      if (
+        operation.operationId === 'getFormDefinition' &&
+        observed.status === 200
+      )
+        assert.equal(
+          response.body.content['application/json'].safeParse(observed.body)
+            .success,
+          !Object.hasOwn(observed.body.config, 'delivery'),
+          item.id,
+        );
       assert.deepEqual(
-        response.body.content['application/json'].parse(observed.body),
+        responseSchema.parse(observed.body),
         observed.body,
         item.id,
       );

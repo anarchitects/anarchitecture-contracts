@@ -1,9 +1,10 @@
 # @anarchitects/forms-contracts
 
 Zod-first HTTP schemas, inferred types and operation definitions for the existing
-Forms definition, submission and read surface. This package is unreleased at
-`0.0.0`, pending the explicit first Nx release at `0.0.1`. Both stable capabilities
-remain blocked by the recorded D05/D08 security dispositions.
+Forms definition, submission and read surface. The published `0.1.0` artifacts
+remain immutable. The D08 correction targets the next breaking minor release,
+`0.2.0`, through Nx Conventional Commits. Both host capabilities retain the
+D05/D08 evidence gates; package publication alone establishes no host support.
 
 The root, `./schemas` and `./operations` provide ESM and CommonJS exports with
 format-specific declarations. Zod 4.5.0 is the only runtime dependency. No Auth,
@@ -17,9 +18,11 @@ an omitted query version. No pagination or dynamic field validation is added.
 
 Responses validate the serialized config/schema envelope and unpaginated
 submission array. They do not serialize Dates, project fields, generate dynamic
-schemas, send mail or evaluate form rules. Delivery config remains visible in the
-audited response, including webhook secrets; preserving this evidence is not
-approval to expose those values in a deployment.
+schemas, send mail or evaluate form rules. `getFormDefinition` uses the existing
+`PublicFormDefinitionEnvelopeResponseSchema` and rejects all delivery configuration.
+Legacy `FormDefinitionResponseSchema` and `FormDefinitionEnvelopeResponseSchema`
+remain exported for migration comparisons only, never as the normative public
+response or an approved administrative secret-read API.
 
 `formsOperations` retains four historical operationIds. `formsProfiles` requires
 unresolved host protection; `formsReleaseBlockers` records D05 (dynamic validation
@@ -47,15 +50,18 @@ remain in the inventory with normative security obligations and stay excluded fr
 OpenAPI paths until host bindings resolve. P07 reviews remain scoped and pinned;
 OpenAPI-only validation cannot replace canonical Zod parsing.
 
-First distribution is exactly `0.0.1`; pre-release development uses non-bumping
-`init(forms-contracts)` commits, and later versions use Nx Conventional Commits.
+Forms has already been distributed: package changes use normal Nx Conventional
+Commits with the exact `forms-contracts` project scope. The security-driven wire
+change uses breaking notation and requires a pre-1.0 minor release.
 Hosts consume exact published versions and independently prove positive/negative
 HTTP behavior, security, headers and cookies before claiming support. See
 `docs/openapi.md`, `docs/releases.md` and ADR-0005 in the source repository.
 
-The additive `PublicFormDefinitionResponseSchema` and
-`PublicFormDefinitionEnvelopeResponseSchema` are D08 migration targets without
-delivery configuration. `FormDeliveryStatusSchema` permits a configured indicator
-only. The legacy route is still frozen and blocked. See
-`docs/forms-security-migration.md` for D05 validation, D08 redaction and rollout
-requirements owned by Bricks #489.
+`PublicFormDefinitionResponseSchema` and its envelope are the normative D08
+response. `FormDeliveryStatusSchema` permits a configured indicator only.
+Protected profiles require public projection, secret-free serialization and
+restricted secret configuration/rotation evidence in addition to authentication
+and resource authorization. D05 dynamic validation remains a separate host
+requirement. See `docs/forms-security-migration.md` and Contracts #25.
+Bricks #490 must pin the published version and verify actual HTTP before claiming
+full Forms conformance.

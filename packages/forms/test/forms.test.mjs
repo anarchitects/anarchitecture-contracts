@@ -6,6 +6,11 @@ import {
   FormDeliveryEmailSchema,
   FormDeliveryUriSchema,
   FormDefinitionResponseSchema,
+  FormDefinitionEnvelopeResponseSchema,
+  PublicFormDefinitionEnvelopeResponseSchema,
+  getFormDefinition,
+  formsProfiles,
+  formsReleaseBlockers,
   SubmissionResponseSchema,
 } from '@anarchitects/forms-contracts';
 
@@ -96,5 +101,69 @@ test('response validation requires public field shapes and never performs projec
     SubmissionResponseSchema.safeParse({ ...submission, formVersion: '1' })
       .success,
     false,
+  );
+});
+
+test('D08 canonical response reuses the public envelope and rejects legacy delivery instead of redacting it', () => {
+  const schema =
+    getFormDefinition.responses[200].body.content['application/json'];
+  assert.equal(schema, PublicFormDefinitionEnvelopeResponseSchema);
+  const safe = {
+    config: {
+      id: 'contact',
+      version: 1,
+      fields: [],
+      security: { captcha: 'none' },
+    },
+    schema: { type: 'object', properties: {} },
+  };
+  assert.deepEqual(schema.parse(safe), safe);
+  for (const delivery of [
+    {},
+    {
+      webhooks: [
+        { url: 'https://example.test/hook', secret: 'test-only-secret' },
+      ],
+    },
+  ]) {
+    const legacy = { ...safe, config: { ...safe.config, delivery } };
+    assert.equal(
+      FormDefinitionEnvelopeResponseSchema.safeParse(legacy).success,
+      true,
+    );
+    assert.equal(schema.safeParse(legacy).success, false);
+    assert.deepEqual(
+      legacy.config.delivery,
+      delivery,
+      'validation must not mutate/redact the wire evidence',
+    );
+  }
+});
+
+test('D08 keeps protected access, explicit secret-management bindings and separate D05/D08 host gates', () => {
+  assert.deepEqual(getFormDefinition.security, {
+    kind: 'profile',
+    binding: 'forms.protected',
+  });
+  assert.ok(
+    formsProfiles.protected.requiredBindings.includes(
+      'public definition projection and secret-free serialization',
+    ),
+  );
+  assert.ok(
+    formsProfiles.protected.requiredBindings.includes(
+      'restricted delivery configuration and historical secret rotation',
+    ),
+  );
+  assert.deepEqual(
+    formsReleaseBlockers.map(({ id, capability, status }) => ({
+      id,
+      capability,
+      status,
+    })),
+    [
+      { id: 'D05', capability: 'forms.submissions', status: 'blocked' },
+      { id: 'D08', capability: 'forms.definitions', status: 'blocked' },
+    ],
   );
 });

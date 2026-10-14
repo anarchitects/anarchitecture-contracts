@@ -317,7 +317,7 @@ test('proposal has executable counterexamples: projection is never represented a
   }
 });
 
-test('generated output schemas validate every matching frozen HTTP response and header', () => {
+test('generated output schemas validate frozen responses and identify the intentional D08 break', () => {
   const validate = validator();
   let count = 0,
     headers = 0;
@@ -346,7 +346,11 @@ test('generated output schemas validate every matching frozen HTTP response and 
         );
         assert.equal(
           check(response.body),
-          true,
+          !(
+            operation.definition.operationId === 'getFormDefinition' &&
+            response.status === 200 &&
+            Object.hasOwn(response.body.config, 'delivery')
+          ),
           `${fixture.id}: ${JSON.stringify(check.errors)}`,
         );
         count++;
@@ -731,4 +735,54 @@ test('frozen baseline comparison rejects route/ID/status drift and retains expli
     () => compareLegacy(changed, baseline, document, [result.inventory]),
     /operationId/,
   );
+});
+
+test('D08 generated operation uses only the safe response and classifies its legacy replacement as breaking', () => {
+  const operation = result.inventory.operations.find(
+    ({ definition }) => definition.operationId === 'getFormDefinition',
+  );
+  const responseRef =
+    operation.definition.responses[200].content['application/json'].schema.$ref;
+  assert.equal(
+    responseRef,
+    '#/components/schemas/forms.PublicFormDefinitionEnvelopeResponse.Output',
+  );
+  const check = validator()(responseRef);
+  const safe = {
+    config: { id: 'contact', version: 1, fields: [] },
+    schema: {},
+  };
+  assert.equal(check(safe), true);
+  for (const delivery of [
+    {},
+    { webhooks: [{ url: 'https://example.test/hook', secret: 'test-only' }] },
+  ])
+    assert.equal(
+      check({ ...safe, config: { ...safe.config, delivery } }),
+      false,
+    );
+  assert.equal(
+    result.document.paths['/forms/{formId}'],
+    undefined,
+    'public DTO does not mean anonymous access',
+  );
+  const before = {
+    inventory: structuredClone(result.inventory),
+    manifest: result.manifest,
+  };
+  before.inventory.operations.find(
+    ({ definition }) => definition.operationId === 'getFormDefinition',
+  ).definition.responses[200].content['application/json'].schema.$ref =
+    '#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output';
+  const findings = diffContracts(before, {
+    inventory: result.inventory,
+    manifest: result.manifest,
+  });
+  assert.ok(
+    findings.some(
+      ({ surface, impact }) =>
+        surface === 'getFormDefinition' && impact === 'breaking',
+    ),
+  );
+  assert.equal(requiredBump('0.1.0', findings), 'minor');
 });

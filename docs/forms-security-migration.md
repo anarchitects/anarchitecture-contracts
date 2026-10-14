@@ -1,6 +1,6 @@
 # Forms D05/D08 migration requirements
 
-Status: security direction accepted; implementation and host evidence outstanding.
+Status: security direction accepted; canonical D08 correction tracked in [#25](https://github.com/anarchitects/anarchitecture-contracts/issues/25). Bricks #489 is merged; exact-version host/deployment conformance remains a separate gate.
 The [Contracts #7 decision](https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328)
 and [Bricks #489 decision](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489#issuecomment-6146772001)
 require remediation. Neither constrained legacy acceptance nor continued public
@@ -27,10 +27,12 @@ add migration-specific fixtures instead of rewriting their observations.
 
 ## D08: definitions
 
-The additive `PublicFormDefinitionResponseSchema` omits all delivery configuration.
+The existing `PublicFormDefinitionResponseSchema` omits all delivery configuration.
 `PublicFormDefinitionEnvelopeResponseSchema` composes that public config with the
-dynamic schema. These are migration targets; the frozen operation still refers
-to its legacy response and cannot be released as a supported definition capability.
+dynamic schema and is now the normative `getFormDefinition` success response.
+The immutable 0.1.0 operation and frozen baseline retain the legacy response;
+the legacy exports remain solely for migration compatibility. This source
+correction targets Forms 0.2.0 and does not establish host support.
 Strict public validation rejects a leaked delivery field. It is not a redactor:
 the host must build the public DTO before serialization and keep secrets out of
 the dynamic schema, errors and logs as well.
@@ -49,18 +51,23 @@ prove DTO rejection and release gating only.
 
 ## Versioning, rollout and rollback
 
-This change adds target DTO exports and accepted requirements; it does not switch
-an existing route's wire behavior. Conservative compatibility findings and the
-pre-1.0 minor release intent are recorded with the #7 artifact migration. The
-actual D05 acceptance change and D08 response removal require a separate,
-reviewed pre-1.0 minor line (major after 1.0), exact implementation/contract versions
-and matching migration records when #489 integrates them.
+The #25 D08 operation correction removes delivery fields from the canonical
+success response: a security-driven breaking wire-contract change requiring
+Forms 0.2.0 (minor before 1.0, major afterward). Existing clients reading delivery
+must migrate to the safe public envelope; new clients must reject older hosts
+that still leak configuration. Legacy schema exports remain available but cannot
+restore the normative unsafe response. D05 changes no request schema here:
+exact-version dynamic validation before side effects remains a separate
+implementation requirement. Nx derives versions; pinned migration records and
+human review gate release. Published 0.1.0 is never modified.
 
 Roll out by updating consumers to handle the existing 400 envelope and consume
 the public target, exercising a candidate host against both migration fixtures
 and retained baseline evidence, then reviewing immutable configuration/HTTP reports.
-Only then switch canonical route metadata in that versioned migration and remove
-the corresponding blocker. Host-conformance Gate B consumes that approved evidence. Under ADR-0005,
+The canonical route correction can publish independently under ADR-0005.
+Bricks must then pin the actual published version and verify HTTP behavior before
+claiming full conformance. Remove a host blocker only with separately reviewed
+evidence; Gate B consumes that approved evidence. Under ADR-0005,
 canonical contract publication can precede remediation while disclosing these
 limitations; it never establishes Forms support.
 

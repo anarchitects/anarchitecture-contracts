@@ -115,6 +115,17 @@ try {
           assert.equal(configured.config.login.password.minLength, 3);
         }
       }
+      if (domain === 'forms') {
+        for (const entry of [esm, cjs]) {
+          const response = entry.getFormDefinition.responses[200].body.content['application/json'];
+          assert.equal(response, entry.PublicFormDefinitionEnvelopeResponseSchema);
+          const safe = { config: { id: 'contact', version: 1, fields: [] }, schema: {} };
+          assert.deepEqual(response.parse(safe), safe);
+          const leaked = { ...safe, config: { ...safe.config, delivery: { webhooks: [{ url: 'https://example.test/hook', secret: 'test-only' }] } } };
+          assert.equal(entry.FormDefinitionEnvelopeResponseSchema.safeParse(leaked).success, true);
+          assert.equal(response.safeParse(leaked).success, false);
+        }
+      }
       const [schemaName, input] = {
         auth: ['LoginRequestSchema', { credential: 123456, password: 123456 }],
         identity: ['CreateUserProfileRequestSchema', { authUserId: 123, displayName: null }],

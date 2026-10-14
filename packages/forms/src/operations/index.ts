@@ -10,7 +10,7 @@ import {
   SubmissionsQuerySchema,
   SubmissionIdParamsSchema,
   SubmissionRequestSchema,
-  FormDefinitionEnvelopeResponseSchema,
+  PublicFormDefinitionEnvelopeResponseSchema,
   SubmissionResponseSchema,
   SubmissionsResponseSchema,
   BadRequestErrorSchema,
@@ -117,7 +117,7 @@ export const getFormDefinition = {
   tags: ['Forms'],
   summary: 'Read a form definition',
   description:
-    'Return the config and its dynamic schema. Delivery-secret exposure blocks stable capability approval (D08).',
+    'Return the public config and its dynamic schema without delivery configuration. D08 host evidence remains required before claiming definition capability conformance.',
   parameters: [
     path('formId', FormIdParamsSchema.shape.formId),
     query(
@@ -129,9 +129,9 @@ export const getFormDefinition = {
   requestBody: { kind: 'none' },
   responses: {
     '200': response(
-      FormDefinitionEnvelopeResponseSchema,
+      PublicFormDefinitionEnvelopeResponseSchema,
       'success',
-      'Config and dynamically derived schema.',
+      'Public config and dynamically derived schema; delivery configuration is forbidden.',
     ),
     ...errors,
   },
@@ -155,7 +155,7 @@ export const getFormDefinition = {
       id: 'forms.delivery-exposure',
       phase: 'response',
       description:
-        'D08 remains unresolved: the legacy config includes delivery metadata and webhook secrets. Preserve evidence but block stable definitions until architecture/security maintainers approve access scope or a separately versioned redaction.',
+        'D08: serialize PublicFormDefinitionEnvelopeResponseSchema. Never return delivery configuration, webhook credentials or secret-bearing URLs. Build the public DTO before serialization; do not treat schema validation as redaction. Keep secrets out of dynamic schemas, errors and logs. Host access policy, resource scope and historical secret rotation require independent evidence.',
       fixtures: ['forms-definition-delivery-secret'],
     },
   ],
@@ -170,7 +170,9 @@ export const getFormDefinition = {
       'forms-definition-missing',
     ],
     discrepancies: ['D03', 'D04', 'D06', 'D08'],
-    migrations: [],
+    migrations: [
+      'https://github.com/anarchitects/anarchitecture-contracts/issues/25',
+    ],
   },
   deprecated: false,
 } as const satisfies HttpOperationDefinition<z.ZodType>;
@@ -352,6 +354,8 @@ export const formsProfiles = Object.freeze({
     requiredBindings: [
       'authentication transport',
       'resource authorization policy',
+      'public definition projection and secret-free serialization',
+      'restricted delivery configuration and historical secret rotation',
     ],
     unresolved: true,
   },

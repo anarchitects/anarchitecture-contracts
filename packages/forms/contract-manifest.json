@@ -1,11 +1,11 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "forms-canonical.json": "615da2698db3deeb9c7291cf4263a7d4c6ef87224033078a65d4b21db249253a",
-    "forms-canonical.yaml": "9b4a63d60c55ae5f191eb323e6264274af91ecb295e7f22405a9b1f3a7faf608",
-    "forms-review.json": "4be15d4fac7f214dbee5602d534628c0fa6d28ea9203fc4926271bf7b1c336d3",
-    "forms-review.yaml": "921d01789f0c6ede03ff8752ae00bd6cf6de10e6cc4edd1180c1a75daeac1d2e",
-    "inventory.json": "e531bf8ccf3fad44d693d1d44cea131ed0d7a93fcbe645a1c6572ecf1cf9a52c"
+    "forms-canonical.json": "adb48f6c37a113dc0326c35776dec23489922571607c270c5ff2a7ffbbd2314e",
+    "forms-canonical.yaml": "7715c09354afe6b90ccf504918956d6876e7103498960380ab14412fda754db3",
+    "forms-review.json": "36a6f52d51ca9024260cc3c2f6928e1babcd066fe47c5db5ee7bcc324cb7f5e9",
+    "forms-review.yaml": "1a49e1abe91dc84dd83a39f091f842dc7d64fe1bf7cf09a5f819b33862a6f257",
+    "inventory.json": "be5edb700186a4aaa91ed7e6b87b5b7640f2ca5b30e2f5d4ccc45741943f7997"
   },
   "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
@@ -163,7 +163,7 @@
     ]
   },
   "projectionProposal": {
-    "digest": "15efd442745207df84e6f69156ec9bad251e0c9a00949e7b5bfc99c51fbce5d3",
+    "digest": "4d07b2bbab95465392f026b45baf7c8f23cefb5fbda9f8b8c60a7b478a1e3a43",
     "id": "P07",
     "status": "reviewed-register"
   },
@@ -184,7 +184,7 @@
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
       "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+      "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
     },
     "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input": {
       "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -202,7 +202,7 @@
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
       "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+      "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
     },
     "getSubmission.forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.input": {
       "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -220,7 +220,7 @@
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
       "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+      "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
     },
     "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.input": {
       "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -238,7 +238,7 @@
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
       "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+      "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
     },
     "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.input": {
       "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -256,7 +256,7 @@
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
       "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+      "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
     },
     "submitForm.forms.SubmissionRequest.input": {
       "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -274,7 +274,7 @@
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
       "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-      "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+      "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
     }
   },
   "projections": {
@@ -455,12 +455,6 @@
       "io": "output",
       "package": "@anarchitects/forms-contracts"
     },
-    "forms.FormDefinitionEnvelopeResponse.Output": {
-      "domain": "forms",
-      "id": "forms.FormDefinitionEnvelopeResponse",
-      "io": "output",
-      "package": "@anarchitects/forms-contracts"
-    },
     "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
       "domain": "forms",
       "id": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e",
@@ -482,6 +476,12 @@
     "forms.NotFoundError.Output": {
       "domain": "forms",
       "id": "forms.NotFoundError",
+      "io": "output",
+      "package": "@anarchitects/forms-contracts"
+    },
+    "forms.PublicFormDefinitionEnvelopeResponse.Output": {
+      "domain": "forms",
+      "id": "forms.PublicFormDefinitionEnvelopeResponse",
       "io": "output",
       "package": "@anarchitects/forms-contracts"
     },
@@ -531,7 +531,7 @@
   "source": {
     "files": {
       "packages/forms/src/index.ts": "8172e59bc73aac065dcb65f5ab8e379b6205541b65fb0b1ecaf5416465bb62f4",
-      "packages/forms/src/operations/index.ts": "643e9663c1487fa66a25e0564e3ab0373f1083910757a4feb7247abe2bccc808",
+      "packages/forms/src/operations/index.ts": "2b1beb8e9138a060a8480625c12795c2c96c8cd9d2ad9b72c394765817bb1b8d",
       "packages/forms/src/schemas/errors.ts": "9c80b329924ae7476545bc47b5f4a46619bf67ad68cd202d7a1d11f47ef493bd",
       "packages/forms/src/schemas/formats.ts": "00856f6486e0d2f7c26344e0ca71fdd6289ff49d0173eac50d63aba80ca99fc4",
       "packages/forms/src/schemas/forms.ts": "1b1015a0ce92b4f3f11a5caa9a336475d2edb8b5691a8afb3283843f64be2d8a",
@@ -539,7 +539,7 @@
       "packages/forms/src/schemas/input.ts": "72f47b889fd67539cb909aaa816351d23c809cc46ee00a1334b09af2a34139da",
       "tools/contract-authoring/operation-definition.ts": "734118a91d8da92e134265c3f7a7cab3d50ca28e83f15b4e8b3b781385e45afc"
     },
-    "revision": "sha256:5d7115a67ff258ddba39b995e190cf5bb7728213384bb7a063b64eae7952f04a"
+    "revision": "sha256:dc01f6cf185ccdb8cc43ec627a9bf44bf440e851da70448a961adc81ec64b43f"
   },
   "status": "canonical",
   "supportedCapabilities": [],
@@ -550,6 +550,8 @@
   },
   "unresolvedHostBindings": [
     "forms.protected:authentication transport",
-    "forms.protected:resource authorization policy"
+    "forms.protected:public definition projection and secret-free serialization",
+    "forms.protected:resource authorization policy",
+    "forms.protected:restricted delivery configuration and historical secret rotation"
   ]
 }

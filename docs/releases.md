@@ -121,8 +121,11 @@ as used by Bricks 3-tier, Community and Plugins. Before 1.0, compatible `feat`
 and `fix` commits produce patch releases; `!` or `BREAKING CHANGE` produces a
 minor release. At and after 1.0, features produce minor and breaks produce major.
 The compatibility gate uses the same minima and still requires exact reviewed
-migration evidence for breaking findings, including changes to published contract
-artifacts or their pinned review obligations. A conservative finding is not proof
+migration evidence for breaking findings, including changed normative contract
+artifacts or package-local pinned review obligations. A shared P07 digest-only
+refresh with unchanged local reviews is patch provenance when the distributed
+manifest changes; it does not force unrelated breaking releases. Exact P07
+approval and artifact integrity gates remain independent and mandatory. A conservative finding is not proof
 of a runtime wire break; disclose its actual surface instead of inventing one.
 Neither ADR-0004 nor Meta ADR-0013 requires the previous `false` override.
 Explicit specifiers are resolved by Nx and checked against its

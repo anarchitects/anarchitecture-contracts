@@ -6643,7 +6643,323 @@
         ],
         "type": "object"
       },
-      "forms.FormDefinitionEnvelopeResponse.Output": {
+      "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
+              "kind": "input-pipeline",
+              "path": "innerType"
+            },
+            {
+              "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
+              "kind": "custom-refinement",
+              "path": "innerType"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "innerType/in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/in/in/options.0/options.1/options.1"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "innerType/out/options.1"
+            }
+          ],
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
+              ],
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
+              "id": "getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
+        }
+      },
+      "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": {
+        "allOf": [
+          {
+            "if": {
+              "type": "string"
+            },
+            "then": {
+              "type": "string"
+            }
+          },
+          {
+            "if": {
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "type": "string"
+                }
+              ],
+              "type": "array"
+            },
+            "then": {
+              "prefixItems": [
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "anyOf": [
+          {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$schema": "https://json-schema.org/draft/2020-12/schema",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "x-contract-fidelity": {
+          "constraint": "string-coercion-preimage",
+          "exactBranches": [
+            "string",
+            "singleton-string",
+            "boolean",
+            "null"
+          ],
+          "remaining": "Numeric stringification remains a scoped projection exception."
+        },
+        "x-contract-projection": {
+          "limitations": [
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": ""
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "in"
+            },
+            {
+              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
+              "kind": "custom-value",
+              "path": "in/in/options.0/options.1/options.1"
+            }
+          ],
+          "reviews": [
+            {
+              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+              "evidence": [
+                "tools/openapi/openapi.test.mjs",
+                "tools/openapi/fidelity.test.mjs",
+                "tools/openapi/profiles.test.mjs",
+                "tools/contract-authoring/compatibility.test.mjs",
+                "tools/contract-authoring/forms-newsletter.test.mjs",
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
+              ],
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
+              "id": "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input",
+              "kind": "bounded-exception",
+              "owner": "Contracts architecture and affected domain maintainers",
+              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
+              "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
+            }
+          ],
+          "runtimeValidationRequired": true,
+          "status": "reviewed-exception",
+          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
+        }
+      },
+      "forms.InternalServerError.Output": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "statusCode": {
+                "const": 500,
+                "type": "number"
+              }
+            },
+            "required": [
+              "statusCode",
+              "message"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "statusCode": {
+                "const": 500,
+                "type": "number"
+              }
+            },
+            "required": [
+              "statusCode",
+              "message",
+              "error"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "forms.NotFoundError.Output": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "const": 404,
+            "type": "number"
+          }
+        },
+        "required": [
+          "statusCode",
+          "message",
+          "error"
+        ],
+        "type": "object"
+      },
+      "forms.PublicFormDefinitionEnvelopeResponse.Output": {
         "$defs": {
           "__schema0": {
             "anyOf": [
@@ -6661,13 +6977,13 @@
               },
               {
                 "items": {
-                  "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+                  "$ref": "#/components/schemas/forms.PublicFormDefinitionEnvelopeResponse.Output/$defs/__schema0"
                 },
                 "type": "array"
               },
               {
                 "additionalProperties": {
-                  "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+                  "$ref": "#/components/schemas/forms.PublicFormDefinitionEnvelopeResponse.Output/$defs/__schema0"
                 },
                 "propertyNames": {
                   "type": "string"
@@ -6682,61 +6998,6 @@
           "config": {
             "additionalProperties": false,
             "properties": {
-              "delivery": {
-                "additionalProperties": false,
-                "properties": {
-                  "adminEmail": {
-                    "pattern": "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$",
-                    "type": "string"
-                  },
-                  "autoReply": {
-                    "additionalProperties": false,
-                    "properties": {
-                      "enabled": {
-                        "type": "boolean"
-                      },
-                      "subject": {
-                        "type": "string"
-                      },
-                      "templateId": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "enabled",
-                      "templateId",
-                      "subject"
-                    ],
-                    "type": "object"
-                  },
-                  "subject": {
-                    "type": "string"
-                  },
-                  "templateId": {
-                    "type": "string"
-                  },
-                  "webhooks": {
-                    "items": {
-                      "additionalProperties": false,
-                      "properties": {
-                        "secret": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "pattern": "^(?:[A-Za-z][A-Za-z0-9+\\-.]*:)(?:\\/?\\/(?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*@)?(?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*)(?::\\d*)?(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*|\\/(?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?|(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:\\/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)(?:\\?(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*)?(?:#(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*)?$",
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "url"
-                      ],
-                      "type": "object"
-                    },
-                    "type": "array"
-                  }
-                },
-                "type": "object"
-              },
               "fields": {
                 "items": {
                   "additionalProperties": false,
@@ -6884,328 +7145,12 @@
             "type": "object"
           },
           "schema": {
-            "$ref": "#/components/schemas/forms.FormDefinitionEnvelopeResponse.Output/$defs/__schema0"
+            "$ref": "#/components/schemas/forms.PublicFormDefinitionEnvelopeResponse.Output/$defs/__schema0"
           }
         },
         "required": [
           "config",
           "schema"
-        ],
-        "type": "object"
-      },
-      "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input": {
-        "anyOf": [
-          {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "anyOf": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "number"
-                  }
-                ]
-              },
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          {
-            "items": false,
-            "maxItems": 1,
-            "minItems": 1,
-            "prefixItems": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "anyOf": [
-                      {
-                        "type": "number"
-                      },
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "type": "number"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "boolean"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            ],
-            "type": "array"
-          }
-        ],
-        "x-contract-projection": {
-          "limitations": [
-            {
-              "implementation": "dfb17c2f4fe8112f5b3b7a422602f25449a2c53672c18f6a65a9270bc0091f7c",
-              "kind": "input-pipeline",
-              "path": "innerType"
-            },
-            {
-              "implementation": "5c62af70319e3d7793b39795cdf5c0a7d0c2863034496473bfa8e94b4650c8f2",
-              "kind": "custom-refinement",
-              "path": "innerType"
-            },
-            {
-              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
-              "kind": "input-pipeline",
-              "path": "innerType/in"
-            },
-            {
-              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
-              "kind": "custom-value",
-              "path": "innerType/in/in/options.0/options.1/options.1"
-            },
-            {
-              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
-              "kind": "custom-value",
-              "path": "innerType/out/options.1"
-            }
-          ],
-          "reviews": [
-            {
-              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
-              "evidence": [
-                "tools/openapi/openapi.test.mjs",
-                "tools/openapi/fidelity.test.mjs",
-                "tools/openapi/profiles.test.mjs",
-                "tools/contract-authoring/compatibility.test.mjs",
-                "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md",
-                "docs/reviews/23-p07-approval.md"
-              ],
-              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
-              "id": "getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input",
-              "kind": "bounded-exception",
-              "owner": "Contracts architecture and affected domain maintainers",
-              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
-            }
-          ],
-          "runtimeValidationRequired": true,
-          "status": "reviewed-exception",
-          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
-        }
-      },
-      "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input": {
-        "allOf": [
-          {
-            "if": {
-              "type": "string"
-            },
-            "then": {
-              "type": "string"
-            }
-          },
-          {
-            "if": {
-              "maxItems": 1,
-              "minItems": 1,
-              "prefixItems": [
-                {
-                  "type": "string"
-                }
-              ],
-              "type": "array"
-            },
-            "then": {
-              "prefixItems": [
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        ],
-        "anyOf": [
-          {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "anyOf": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "number"
-                  }
-                ]
-              },
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          {
-            "items": false,
-            "maxItems": 1,
-            "minItems": 1,
-            "prefixItems": [
-              {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "anyOf": [
-                      {
-                        "type": "number"
-                      },
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "type": "number"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "boolean"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            ],
-            "type": "array"
-          }
-        ],
-        "x-contract-fidelity": {
-          "constraint": "string-coercion-preimage",
-          "exactBranches": [
-            "string",
-            "singleton-string",
-            "boolean",
-            "null"
-          ],
-          "remaining": "Numeric stringification remains a scoped projection exception."
-        },
-        "x-contract-projection": {
-          "limitations": [
-            {
-              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
-              "kind": "input-pipeline",
-              "path": ""
-            },
-            {
-              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
-              "kind": "input-pipeline",
-              "path": "in"
-            },
-            {
-              "implementation": "70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231",
-              "kind": "custom-value",
-              "path": "in/in/options.0/options.1/options.1"
-            }
-          ],
-          "reviews": [
-            {
-              "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
-              "evidence": [
-                "tools/openapi/openapi.test.mjs",
-                "tools/openapi/fidelity.test.mjs",
-                "tools/openapi/profiles.test.mjs",
-                "tools/contract-authoring/compatibility.test.mjs",
-                "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md",
-                "docs/reviews/23-p07-approval.md"
-              ],
-              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
-              "id": "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input",
-              "kind": "bounded-exception",
-              "owner": "Contracts architecture and affected domain maintainers",
-              "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
-            }
-          ],
-          "runtimeValidationRequired": true,
-          "status": "reviewed-exception",
-          "warning": "OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation."
-        }
-      },
-      "forms.InternalServerError.Output": {
-        "anyOf": [
-          {
-            "additionalProperties": false,
-            "properties": {
-              "message": {
-                "type": "string"
-              },
-              "statusCode": {
-                "const": 500,
-                "type": "number"
-              }
-            },
-            "required": [
-              "statusCode",
-              "message"
-            ],
-            "type": "object"
-          },
-          {
-            "additionalProperties": false,
-            "properties": {
-              "error": {
-                "type": "string"
-              },
-              "message": {
-                "type": "string"
-              },
-              "statusCode": {
-                "const": 500,
-                "type": "number"
-              }
-            },
-            "required": [
-              "statusCode",
-              "message",
-              "error"
-            ],
-            "type": "object"
-          }
-        ]
-      },
-      "forms.NotFoundError.Output": {
-        "additionalProperties": false,
-        "properties": {
-          "error": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "statusCode": {
-            "const": 404,
-            "type": "number"
-          }
-        },
-        "required": [
-          "statusCode",
-          "message",
-          "error"
         ],
         "type": "object"
       },
@@ -7362,7 +7307,7 @@
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+              "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
             }
           ],
           "runtimeValidationRequired": true,
@@ -7646,7 +7591,7 @@
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+              "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
             }
           ],
           "runtimeValidationRequired": true,
@@ -7876,7 +7821,7 @@
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+              "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
             }
           ],
           "runtimeValidationRequired": true,
@@ -7988,7 +7933,7 @@
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "9ed96ea0554afa2fb8c53b00e6ed165599429c23da94b891a4d408a22077ff40"
+              "sourceDigest": "73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d"
             }
           ],
           "runtimeValidationRequired": true,
@@ -55441,7 +55386,7 @@
   "info": {
     "description": "Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.",
     "title": "CANONICAL — Anarchitecture aggregate-canonical",
-    "version": "sha256:d6974c481560c40401a32e2c51674f4609469cf9f9f5744f05b1ffd3263ca4f9"
+    "version": "sha256:f4330d4616ff24491e37c6d306cb56cd5edc07d05b18c700a7437d82caa70b45"
   },
   "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
   "openapi": "3.1.1",

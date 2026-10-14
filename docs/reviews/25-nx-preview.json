@@ -1,0 +1,25 @@
+{
+  "mode": "dry-run",
+  "projectsVersionData": {
+    "auth-contracts": {
+      "currentVersion": "0.1.0",
+      "dependentProjects": [],
+      "newVersion": "0.1.1"
+    },
+    "forms-contracts": {
+      "currentVersion": "0.1.0",
+      "dependentProjects": [],
+      "newVersion": "0.2.0"
+    },
+    "identity-contracts": {
+      "currentVersion": "0.1.0",
+      "dependentProjects": [],
+      "newVersion": "0.1.1"
+    },
+    "newsletter-contracts": {
+      "currentVersion": "0.1.0",
+      "dependentProjects": [],
+      "newVersion": "0.1.1"
+    }
+  }
+}

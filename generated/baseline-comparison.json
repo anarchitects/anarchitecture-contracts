@@ -29,7 +29,7 @@
       "baselineOpenApiDigest": "dc39e00480780e0782818a21b7edaac5dfde33baabd30e1aeb00fbb2c26d475f",
       "baselineOperationId": "getFormDefinition",
       "baselineSchemaDigest": "65053d63cbb3a68e05f0877deefd68392f6e18771c2554ea84c5303b0d890b1d",
-      "canonicalDefinitionDigest": "d3b11c266e8583a278f5760de2bee4951bf28bdc7796f93c24ae95eae7098fb4",
+      "canonicalDefinitionDigest": "36f3f57863f6c784f281abf3e857ac9fef8f7e095a541f8fe43e4647c3cde3a3",
       "discrepancies": [
         "D03",
         "D04",
