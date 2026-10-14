@@ -1,4 +1,29 @@
-# Forms extraction record — issue #6
+# Forms compatibility record
+
+## D08 canonical correction — issue #25
+
+The next Forms release targets **0.2.0**. `getFormDefinition` now reuses
+`PublicFormDefinitionEnvelopeResponseSchema`; its success response forbids every
+delivery field. This is a security-driven breaking wire change from published
+0.1.0, not a schema-only documentation correction. Method, path, operationId,
+query coercion, default version, errors and protected security binding remain.
+Legacy response exports are retained solely for migration comparisons. Frozen
+responses are still tested with those legacy schemas; leaked delivery must fail
+the new canonical operation and generated response schema.
+
+Protected profiles also name public projection/secret-free serialization and
+restricted configuration/historical rotation requirements. No anonymous fallback,
+host approval or deployment support is introduced. D05 request acceptance is
+unchanged; server-side validation of the exact definition/version before side
+effects remains a separate implementation requirement.
+
+Consumers must stop reading delivery through the public endpoint. Bricks #489
+has merged; #490 must pin the new published version and verify real HTTP behavior.
+Rollback disables the capability or uses a verified secure host; never restore
+secret exposure or dynamic validation bypass. See
+[the migration requirements](../../../docs/forms-security-migration.md).
+
+## Historical extraction — issue #6
 
 ## Scope and review
 
