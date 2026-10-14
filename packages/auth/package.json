@@ -1,6 +1,6 @@
 {
   "name": "@anarchitects/auth-contracts",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Canonical Auth public HTTP wire schemas and operations",
   "license": "MIT",
   "type": "module",
