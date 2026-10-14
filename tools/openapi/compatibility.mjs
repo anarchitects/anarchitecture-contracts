@@ -1,7 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import semver from 'semver';
-import { readReleasePlans } from '../release/plans.mjs';
 import { digest, json, invariant, readJson } from './common.mjs';
 
 export function compareLegacy(models, baseline, legacyDocument, inventories) {
@@ -147,18 +146,17 @@ export function requiredBump(version, findings) {
   return findings.length ? 'patch' : null;
 }
 
-export function validateReleasePlan({
+export function validateReleaseVersion({
   name,
   version,
   nextVersion,
   findings,
-  plan,
+  unreleased = false,
   migration,
   baseRevision,
 }) {
   const bump = requiredBump(version, findings);
   if (!bump) return;
-  const rank = { patch: 1, minor: 2, major: 3 };
   const versioned =
     semver.valid(nextVersion) &&
     semver.gt(nextVersion, version) &&
@@ -166,10 +164,17 @@ export function validateReleasePlan({
       `${semver.major(nextVersion)}.${semver.minor(nextVersion)}.${semver.patch(nextVersion)}`,
       semver.inc(version, bump),
     );
-  invariant(
-    versioned || rank[plan[name]] >= rank[bump],
-    `${name} requires a ${bump} release entry`,
-  );
+  if (unreleased) {
+    invariant(
+      ['0.0.0', '0.0.1'].includes(nextVersion),
+      `${name}: initial development/release must use 0.0.0/0.0.1`,
+    );
+  } else {
+    invariant(
+      versioned,
+      `${name} requires a ${bump} release; Nx proposed ${nextVersion ?? 'no bump'}`,
+    );
+  }
   if (findings.some((finding) => finding.impact === 'breaking')) {
     invariant(
       migration?.status === 'approved' &&
@@ -205,15 +210,16 @@ export function gitFile(ref, file) {
     throw error;
   }
 }
-export function releaseReports(models, baseRef) {
+export function releaseReports(
+  models,
+  baseRef,
+  { versions = {}, unreleased = [] } = {},
+) {
   const revision = execFileSync(
     'git',
     ['rev-parse', '--verify', `${baseRef}^{commit}`],
     { encoding: 'utf8' },
   ).trim();
-  const plan = readReleasePlans({
-    previous: (path) => gitFile(revision, path),
-  });
   const reports = [];
   for (const model of models) {
     const basePackageText = gitFile(
@@ -326,9 +332,13 @@ export function releaseReports(models, baseRef) {
     const review = {
       name: model.package.name,
       version: previousPackage.version,
-      nextVersion: model.package.version,
+      nextVersion:
+        versions[model.package.name] ??
+        (unreleased.includes(model.package.name)
+          ? model.package.version
+          : previousPackage.version),
       findings,
-      plan,
+      unreleased: unreleased.includes(model.package.name),
       baseRevision: revision,
       migration: existsSync(migrationPath) ? readJson(migrationPath) : null,
     };
@@ -342,9 +352,11 @@ export function releaseReports(models, baseRef) {
   return reports;
 }
 
-export function checkReleasePlans(models, baseRef) {
-  return releaseReports(models, baseRef).map(({ review, ...report }) => {
-    validateReleasePlan(review);
-    return report;
-  });
+export function checkReleaseVersions(models, baseRef, options) {
+  return releaseReports(models, baseRef, options).map(
+    ({ review, ...report }) => {
+      validateReleaseVersion(review);
+      return report;
+    },
+  );
 }

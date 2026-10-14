@@ -9,7 +9,7 @@ Closes #
 
 - [ ] Read all Meta and local ADRs and relevant guides; record applicable decisions or conflicts below.
 - [ ] Keep public contracts independent of Nest, Angular, Nx and implementation repositories.
-- [ ] For package changes, include an Nx version plan and explain wire/API compatibility and consumer impact; otherwise state why no release entry is needed.
+- [ ] For package changes, use lifecycle-appropriate Conventional Commits with exact Nx scopes and explain wire/API compatibility and consumer impact; preserve migration evidence for breaks.
 
 ## Validation
 

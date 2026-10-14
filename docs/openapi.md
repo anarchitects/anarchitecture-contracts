@@ -18,17 +18,20 @@ silently declared public. Forms D05/D08 remain stable capability blockers.
 yarn openapi:generate                # build, generate and lint review artifacts
 yarn openapi:check                   # fail on byte drift; never rewrite files
 yarn test:openapi                    # snapshots, mutation and compatibility tests
-yarn openapi:compatibility origin/main # package-aware PR release-plan gate
+yarn openapi:compatibility origin/main # package-aware PR release-version gate
 yarn check                          # full workspace, contract and package checks
 ```
 
 CI runs generation verification and tests through `yarn check`, then compares the
-PR against its exact base SHA. Pushes compare against the previous commit. New or
-changed Nx version plans must cover every affected package; an unrelated pending entry
-cannot satisfy a PR's release intent. A versioned release commit can satisfy the
-bump directly. #8 replaces the Changesets input adapter with Nx version plans while retaining
-the compatibility classifier and migration checks as independent gates. Mechanical
-plan migration cannot count as new release intent against a pre-cutover base.
+PR against its exact base SHA. Pushes compare against the previous commit.
+The repository's Nx adapter obtains actual proposed versions from Nx Release's
+public dry-run API. Independent compatibility functions consume these versions
+without importing Nx. Insufficient bumps fail; changing a manifest manually is
+not release intent. Explicit initial release uses `0.0.1`, while unreleased
+`init` development remains at `0.0.0`. Neither exemption waives baseline checks
+or matching migration approval for breaks. Release preparation also checks the
+cumulative delta against the last package tag. Publication validates the signed,
+tagged version against that same baseline.
 
 Do not edit generated files. Regenerate after source, package version, dependency
 or generator changes, inspect the diff, then run checks. The loader rejects stale

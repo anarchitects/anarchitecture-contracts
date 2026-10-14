@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       projects:
-        description: Optional comma-separated Nx projects; empty releases all pending plans
+        description: Optional comma-separated Nx projects; empty selects all eligible packages
         required: false
         type: string
       specifier:
-        description: Optional SemVer specifier when no pending version plans exist
+        description: Optional Nx SemVer keyword or exact version; empty uses Conventional Commits
         required: false
         type: string
       first_release:
@@ -86,6 +86,7 @@ jobs:
       - name: Release through Nx (never publishes npm)
         run: yarn nx run contract-checks:release
         env:
+          RELEASE_CHECK_HISTORY: 'true'
           RELEASE_PROJECTS: ${{ inputs.projects }}
           RELEASE_SPECIFIER: ${{ inputs.specifier }}
           RELEASE_FIRST: ${{ inputs.first_release }}

@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import YAML from 'yaml';
-import { releaseOptions, runRelease } from './release.mjs';
-import { readReleasePlans, releaseProjects } from './plans.mjs';
+import { releaseOptions } from './release.mjs';
+import { releaseProjects } from './projects.mjs';
 
 test('release input is an explicit project list and SemVer, never shell syntax or Nx globs', () => {
   assert.deepEqual(releaseOptions({}).projects, Object.keys(releaseProjects));
@@ -29,30 +29,30 @@ test('release input is an explicit project list and SemVer, never shell syntax o
   ]) {
     assert.throws(() => releaseOptions({ specifier }));
   }
-  assert.equal(
-    releaseOptions({ specifier: '1.0.0-next.1' }).specifier,
+  for (const specifier of [
+    'patch',
+    'minor',
+    'major',
+    'prepatch',
+    'preminor',
+    'premajor',
+    'prerelease',
     '1.0.0-next.1',
-  );
+  ])
+    assert.equal(releaseOptions({ specifier }).specifier, specifier);
+  assert.equal(releaseOptions({}).specifier, undefined);
 });
 
-test('reviewed version plans cannot be overridden by a workflow specifier', async () => {
-  const pending = Object.keys(releaseProjects).filter(
-    (p) => readReleasePlans()[releaseProjects[p]],
-  );
-  if (pending.length)
-    await assert.rejects(
-      runRelease({
-        projects: pending,
-        specifier: 'patch',
-        dryRun: true,
-        firstRelease: true,
-      }),
-      /Pending Nx version plans/,
+test('first release permits only the exact 0.0.1 specifier or the automatic initial default', () => {
+  for (const specifier of ['', '0.0.1'])
+    assert.doesNotThrow(() =>
+      releaseOptions({ 'first-release': true, specifier }),
     );
-  assert.deepEqual(
-    readReleasePlans({ directory: 'no-such-version-plans-directory' }),
-    {},
-  );
+  for (const specifier of ['patch', 'minor', '0.1.0', '0.0.1-beta.0'])
+    assert.throws(
+      () => releaseOptions({ 'first-release': true, specifier }),
+      /exactly 0.0.1/,
+    );
 });
 
 const workflow = YAML.parse(

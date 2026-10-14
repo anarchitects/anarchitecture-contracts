@@ -8,7 +8,7 @@ import {
 import { join } from 'node:path';
 import { loadDomains } from './model.mjs';
 import { generate, reviewProfile } from './generate.mjs';
-import { compareLegacy, checkReleasePlans } from './compatibility.mjs';
+import { compareLegacy } from './compatibility.mjs';
 import { json, readJson, invariant } from './common.mjs';
 
 const [command = 'check', ...args] = process.argv.slice(2);
@@ -39,7 +39,8 @@ if (command === 'release' || command === 'verify-profile') {
   writeFileSync(join(args[1], 'manifest.json'), json(result.manifest));
 } else if (command === 'compatibility') {
   invariant(args.length === 1, 'Usage: compatibility <base-git-ref>');
-  console.log(json(checkReleasePlans(models, args[0])));
+  const { checkCompatibility } = await import('../release/compatibility.mjs');
+  console.log(json(await checkCompatibility(models, args[0])));
 } else {
   invariant(
     ['check', 'write'].includes(command) && args.length === 0,

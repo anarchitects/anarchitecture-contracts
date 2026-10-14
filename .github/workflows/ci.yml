@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
   push:
     branches: [main]
   workflow_dispatch:
@@ -46,6 +47,8 @@ jobs:
 
       - name: Enforce package compatibility and release intent
         env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CONTRACTS_PR_TITLE: ${{ github.event.pull_request.title }}
           CONTRACTS_PR_BASE: ${{ github.event.pull_request.base.sha }}
           CONTRACTS_PUSH_BASE: ${{ github.event.before }}
         run: |
@@ -56,6 +59,7 @@ jobs:
           else
             contracts_base="HEAD^"
           fi
+          yarn nx run contract-checks:commits -- "$contracts_base"
           yarn nx affected -t typecheck,build,test --base="$contracts_base" --head=HEAD
           yarn nx run contract-checks:compatibility -- "$contracts_base"
 

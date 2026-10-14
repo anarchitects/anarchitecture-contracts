@@ -12,7 +12,7 @@ import { validateRegistry, lintDocument } from './validate.mjs';
 import {
   diffContracts,
   requiredBump,
-  validateReleasePlan,
+  validateReleaseVersion,
   compareLegacy,
 } from './compatibility.mjs';
 import { readJson, json, digest } from './common.mjs';
@@ -549,12 +549,11 @@ test('compatibility gates classify changes conservatively in both directions and
     assert.equal(requiredBump('0.1.0', findings), 'minor');
     assert.throws(
       () =>
-        validateReleasePlan({
+        validateReleaseVersion({
           name: 'test',
           version: '0.1.0',
-          nextVersion: '0.1.0',
+          nextVersion: '0.2.0',
           findings,
-          plan: { test: 'minor' },
         }),
       /reviewed migration/,
     );
@@ -568,23 +567,21 @@ test('compatibility gates classify changes conservatively in both directions and
       consumerMigration: 'test',
       rollback: 'test',
     };
-    validateReleasePlan({
+    validateReleaseVersion({
       name: 'test',
       version: '0.1.0',
-      nextVersion: '0.1.0',
+      nextVersion: '0.2.0',
       findings,
-      plan: { test: 'minor' },
       baseRevision: 'base',
       migration,
     });
     assert.throws(
       () =>
-        validateReleasePlan({
+        validateReleaseVersion({
           name: 'test',
           version: '1.2.3',
           nextVersion: '1.2.3',
           findings,
-          plan: { test: 'minor' },
           baseRevision: 'base',
           migration,
         }),
@@ -593,12 +590,11 @@ test('compatibility gates classify changes conservatively in both directions and
   }
   assert.throws(
     () =>
-      validateReleasePlan({
+      validateReleaseVersion({
         name: 'test',
         version: '0.0.0',
         nextVersion: '0.0.0',
         findings: [{ impact: 'minor' }],
-        plan: {},
       }),
     /minor release/,
   );

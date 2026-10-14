@@ -63,7 +63,7 @@ conformance and publication remain #8; approved host profiles remain a release g
 
 Nx 23.3.0 and `@nx/js` provide per-package builds and inferred typechecks.
 Use `yarn nx show projects`, `yarn nx graph` and `yarn nx run auth-contracts:build`
-to inspect or run the graph. `yarn release:plan` records per-project release intent;
+to inspect or run the graph. `yarn commits:check <base-ref>` validates Conventional Commits and Nx scopes;
 `yarn release:dry-run` previews the initial independent releases without publication.
 Root scripts delegate to Nx targets. Manual release and tag-based publication use
 the [Community-style workflows](docs/releases.md#workflow-operation), with current
@@ -77,7 +77,7 @@ and the remaining #8 gates. No Nx Cloud account is needed.
 | ------------------------------- | ------------------------------------------------------------ |
 | `adr/`                          | Local architecture decisions                                 |
 | `packages/`                     | Four independent contract workspaces and domain conventions  |
-| `.nx/version-plans/`            | Package-level version and changelog configuration            |
+| `docs/release-history/`         | Archived release rationale; never an executable bump input   |
 | `docs/releases.md`              | Publication conventions, compatibility and adoption gates    |
 | `docs/schema-authoring.md`      | Zod schema, inferred type and normalization conventions      |
 | `docs/operation-definitions.md` | HTTP metadata, security profiles and generation requirements |
@@ -110,6 +110,6 @@ See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
 
 [ADR-0003](adr/0003-nx-workspace-and-release-governance.md) establishes Nx/`@nx/js`
 for repository tooling and Nx Release as the sole versioning authority. The
-workspace migration and version-plan transfer are implemented; signed release,
+workspace migration and Conventional Commit versioning are implemented; signed release,
 trusted npm publication and independent conformance delivery remain under #8.
 Released contracts and conformance tools must remain usable without Nx.

@@ -61,15 +61,14 @@
     "projectsRelationship": "independent",
     "releaseTag": {
       "pattern": "{projectName}@{version}",
-      "requireSemver": true
+      "requireSemver": true,
+      "strictPreid": false
     },
-    "versionPlans": true,
     "version": {
-      "currentVersionResolver": "git-tag",
-      "specifierSource": "version-plans",
       "updateDependents": "auto",
       "preserveLocalDependencyProtocols": false,
-      "adjustSemverBumpsForZeroMajorVersion": false
+      "adjustSemverBumpsForZeroMajorVersion": false,
+      "conventionalCommits": true
     },
     "changelog": {
       "workspaceChangelog": false,
@@ -80,7 +79,52 @@
     "git": {
       "commit": false,
       "tag": false,
-      "push": false
+      "push": false,
+      "commitMessage": "chore: release packages"
+    },
+    "conventionalCommits": {
+      "useCommitScope": true,
+      "types": {
+        "init": {
+          "semverBump": "none"
+        },
+        "feat": {
+          "semverBump": "minor"
+        },
+        "fix": {
+          "semverBump": "patch"
+        },
+        "perf": {
+          "semverBump": "patch"
+        },
+        "refactor": {
+          "semverBump": "patch"
+        },
+        "revert": {
+          "semverBump": "patch"
+        },
+        "docs": {
+          "semverBump": "none"
+        },
+        "chore": {
+          "semverBump": "none"
+        },
+        "style": {
+          "semverBump": "none"
+        },
+        "test": {
+          "semverBump": "none"
+        },
+        "e2e": {
+          "semverBump": "none"
+        },
+        "build": {
+          "semverBump": "none"
+        },
+        "ci": {
+          "semverBump": "none"
+        }
+      }
     }
   },
   "tui": {

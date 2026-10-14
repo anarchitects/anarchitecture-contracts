@@ -2,8 +2,8 @@
 
 ## Scope and provenance
 
-`@anarchitects/newsletter-contracts` is an unreleased `0.0.0` workspace with a
-pending initial minor Nx version plan for `0.1.0`. Reviewed all 15 Meta ADRs at
+`@anarchitects/newsletter-contracts` is an unreleased `0.0.0` workspace with an
+initial release fixed at `0.0.1` by ADR-0004. Reviewed all 15 Meta ADRs at
 `e2f34553c6e2492d0ab6f80ac795de44fc592a70`, both local ADRs at Contracts
 `3155a388d4d3482a650bf48b43a9c51933c63aa2`, and the relevant authoring/release
 and baseline guides. Applicable accepted decisions and proposal boundaries are

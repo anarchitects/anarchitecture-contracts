@@ -2,8 +2,8 @@
 
 ## Scope and review
 
-`@anarchitects/forms-contracts` is an unreleased `0.0.0` workspace with an initial
-minor Nx version plan targeting `0.1.0`. This extraction preserves transport behavior;
+`@anarchitects/forms-contracts` is an unreleased `0.0.0` workspace with its
+initial release fixed at `0.0.1` by ADR-0004. This extraction preserves transport behavior;
 it does not approve stable Forms support, fix the implementation or change pins.
 
 Reviewed all 15 Meta ADRs at `e2f34553c6e2492d0ab6f80ac795de44fc592a70` (upstream

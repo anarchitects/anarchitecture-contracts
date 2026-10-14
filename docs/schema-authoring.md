@@ -136,4 +136,4 @@ values, success/error serialization, unknown-key behavior, omitted/null/default
 cases, format boundaries and security/host profile. Record unproven behavior as a
 gap. Schema tests and packed type tests belong in #5/#6; generated artifact checks
 and independent conformance gates follow in #7/#8. Any intentional wire change
-needs the decision and version plan required by [release rules](releases.md).
+needs the decision and release intent required by [release rules](releases.md).

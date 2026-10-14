@@ -1,6 +1,7 @@
 # ADR-0003: Nx Workspace and Release Governance for Canonical Contracts
 
 - **Status:** Accepted
+- **Partial supersession:** [ADR-0004](0004-package-initial-release-and-nx-versioning.md) replaces ongoing version plans with Conventional Commits and fixes first distribution at `0.0.1`. Historical transfer equivalence is evidence, not current bump policy.
 - **Date:** 2026-10-13
 - **Owners:** Architecture maintainers
 - **Scope:** Contracts repository tooling, independent JS packages, versioning, release and npm publication
@@ -60,8 +61,10 @@ The existing workflows remain the **actual implemented state** until migration P
 ## Implementation status — issue #8 preparation
 
 The [migration record](../docs/nx-migration.md) documents the implemented Nx
-workspace and transfer of all pending Changesets to Nx version plans. Nx Release
-is now the only configured versioning authority. This supersedes the transitional
+workspace and historical transfer of pending Changesets to Nx version plans.
+ADR-0004 now replaces those plans with Nx Conventional Commits. Pending rationale
+is archived; the old initial `0.1.0` target is superseded by `0.0.1`. Nx Release
+remains the only configured versioning authority. This supersedes the transitional
 implementation references above; those paragraphs record the state when this ADR
 was accepted. Community-style manual release and immutable-tag publish workflows now use Nx
 targets. The release target uses the public Nx API to regenerate version-bearing
