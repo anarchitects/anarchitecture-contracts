@@ -6,7 +6,11 @@ import { releaseProjects } from './projects.mjs';
 import { assertPublishable } from './publication-gate.mjs';
 import { gitFile, releaseReports } from '../openapi/compatibility.mjs';
 import { loadDomains } from '../openapi/model.mjs';
-import { assertInitialVersion, distributionHistory } from './history.mjs';
+import {
+  assertInitialVersion,
+  distributionHistory,
+  localHistory,
+} from './history.mjs';
 
 test('large historical inventories are compared rather than silently treated as new', async () => {
   const path = 'packages/newsletter/openapi/inventory.json';
@@ -142,5 +146,80 @@ test('history lookup fails closed on outages and missing tags, with only explici
         ]),
     }),
     /Fetch missing/,
+  );
+});
+
+test('verified npm staging placeholders do not become releases or waive real distribution tags', async () => {
+  const placeholders = JSON.parse(
+    readFileSync('tools/release/npm-staging-placeholders.json', 'utf8'),
+  );
+  const response = (body) => ({
+    status: 200,
+    ok: true,
+    json: async () => body,
+  });
+  const metadata = (name) => ({
+    name,
+    version: placeholders[name].version,
+    stub: true,
+    dist: {
+      fileCount: 2,
+      integrity: placeholders[name].integrity,
+      tarball: placeholders[name].tarball,
+    },
+  });
+  const lookup = (change = (value) => value, extraVersions = {}) =>
+    distributionHistory({
+      fetcher: async (url) => {
+        if (url.includes('api.github.com')) return response([]);
+        const name = decodeURIComponent(url.split('/').at(-1));
+        return response({
+          name,
+          versions: { '0.0.0-stage': change(metadata(name)), ...extraVersions },
+        });
+      },
+    });
+  assert.deepEqual(
+    await lookup(),
+    localHistory(),
+    'placeholders are not added to release history',
+  );
+  for (const change of [
+    (value) => ({ ...value, stub: false }),
+    (value) => ({ ...value, stub: undefined }),
+    (value) => ({ ...value, name: '@unrelated/package' }),
+    (value) => ({ ...value, version: '0.0.0-other' }),
+    (value) => ({ ...value, dist: undefined }),
+    (value) => ({ ...value, dist: { ...value.dist, fileCount: 3 } }),
+    (value) => ({
+      ...value,
+      dist: { ...value.dist, integrity: 'sha512-unverified' },
+    }),
+    (value) => ({
+      ...value,
+      dist: { ...value.dist, tarball: 'https://example.invalid/package.tgz' },
+    }),
+  ]) {
+    await assert.rejects(lookup(change), /Missing local tag/);
+  }
+  for (const version of ['0.0.0-other', '99.99.99-stage', '99.99.99']) {
+    await assert.rejects(
+      lookup(undefined, { [version]: { stub: true } }),
+      /Missing local tag/,
+    );
+  }
+  await assert.rejects(
+    distributionHistory({
+      fetcher: async () =>
+        response([
+          {
+            tag_name: 'auth-contracts@0.0.0-stage',
+            published_at: 'now',
+            draft: false,
+          },
+        ]),
+    }),
+    /Fetch missing release tag/,
+    'npm placeholders never exempt GitHub releases',
   );
 });

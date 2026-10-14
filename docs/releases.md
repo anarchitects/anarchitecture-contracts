@@ -3,9 +3,12 @@
 ## Current status
 
 The private root and verification tooling are excluded from release. The four
-contract packages have signed `0.0.1` tags from the 2026-10-14 release run; that
-run created no GitHub Releases and did not publish to npm. Existing tags are
-release history and must not be recreated or moved. Nx 23.3.0 / `@nx/js` orchestrate
+contract packages have signed `0.0.1` tags from the 2026-10-14 release run.
+That run initially created no GitHub Releases. npm publication was completed
+manually, and the missing GitHub Releases were subsequently recovered on the
+existing tags with explicit user authorization; see [the recovery evidence](reviews/23-npm-staging-history.md).
+Existing tags are release history and must not be recreated or moved.
+Nx 23.3.0 / `@nx/js` orchestrate
 builds and checks, and **Nx Release is the only configured versioning authority**.
 [ADR-0004](../adr/0004-package-initial-release-and-nx-versioning.md) makes
 Conventional Commits the bump authority. Initial development uses non-bumping
@@ -144,6 +147,13 @@ yarn release:dry-run --first-release      # explicit initial 0.0.1 preview
 yarn test:release
 yarn openapi:compatibility origin/main
 ```
+
+The remote history check recognizes only the four inspected, integrity-pinned
+npm `0.0.0-stage` holding packages recorded in
+[the staging audit](reviews/23-npm-staging-history.md). npm creates these automatically
+when staging a new package. They are not contract releases or a replacement for
+`0.0.1`, and no fictitious Git tags are created for them. Unknown placeholders and
+all genuine distributed versions still require history reconciliation.
 
 Local dry runs use fetched Git tags and do not query remote distribution history.
 The manual release workflow (including its dry run), CI commit checks and

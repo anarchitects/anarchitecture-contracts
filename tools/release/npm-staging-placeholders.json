@@ -1,0 +1,26 @@
+{
+  "@anarchitects/auth-contracts": {
+    "version": "0.0.0-stage",
+    "integrity": "sha512-e0SsqFV1ATdCmE1uO4hg4K38SvG6GDhUtfGwU5voOFsJtdBb4fD/DYvwivNaFprBOUymZHTtNyAiY3rLFzpHfA==",
+    "tarball": "https://registry.npmjs.org/@anarchitects/auth-contracts/-/auth-contracts-0.0.0-stage.tgz",
+    "publishedAt": "2026-10-14T10:33:14.590Z"
+  },
+  "@anarchitects/forms-contracts": {
+    "version": "0.0.0-stage",
+    "integrity": "sha512-3L0nbcDlS8YSPIIU7eekQfYGCJhrnGMktFlDS2fD9eaAjVI+j8+UKi3B7AHWlxMlW3xRn7cv0LBCtoCNosGpzA==",
+    "tarball": "https://registry.npmjs.org/@anarchitects/forms-contracts/-/forms-contracts-0.0.0-stage.tgz",
+    "publishedAt": "2026-10-14T10:33:25.306Z"
+  },
+  "@anarchitects/identity-contracts": {
+    "version": "0.0.0-stage",
+    "integrity": "sha512-bdTpVxYqEAW5yn1IOj41UpnAchrCK963Na1R2OmZyc94vWW7Bve1ZW8XuqNHg0mADk+pg9JslqsrTumOt67Exw==",
+    "tarball": "https://registry.npmjs.org/@anarchitects/identity-contracts/-/identity-contracts-0.0.0-stage.tgz",
+    "publishedAt": "2026-10-14T10:33:37.006Z"
+  },
+  "@anarchitects/newsletter-contracts": {
+    "version": "0.0.0-stage",
+    "integrity": "sha512-CUY8EAYFss55AO2RnteZUQkN2vNZjnbf8Kjn7TX3RSyGN413CKpD5zXXt7ZIgcjT7uItCOhMmC6IOkkfveGT/A==",
+    "tarball": "https://registry.npmjs.org/@anarchitects/newsletter-contracts/-/newsletter-contracts-0.0.0-stage.tgz",
+    "publishedAt": "2026-10-14T10:34:19.567Z"
+  }
+}
