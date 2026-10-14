@@ -241,12 +241,27 @@ behavioral and package tests, deterministic OpenAPI, OpenAPI/security tests and
 packed consumers, including prerequisite builds/typechecks. Formatting and
 Markdown lint remain CI/release-preflight checks; prose style does not block
 immutable artifact replay. It then runs
-compatibility against the previous package tag (the release commit's parent for
-a first release), and `<project>:publication-check`. The tag, package and manifest
+compatibility only for the selected package against its latest reachable package
+version before the release commit (the parent for a first release), and
+`<project>:publication-check`. This uses the signed tag's materialized version,
+not a new Nx bump preview. An unrelated package's migration cannot be checked
+against the selected package's baseline. Exact migration approval is still
+required for every breaking finding in the selected package. The tag, package and manifest
 versions must agree. Only then does it invoke scoped `nx release publish` with
 OIDC/provenance. Concurrency serializes replay of the same tag; Nx detects an
 already-published version rather than overwriting it. Manual replay does not
 create tags or approve an unpublished GitHub Release.
+
+The compatibility step calls the existing checker from the immutable checkout
+directly. Its selection logic lives in the workflow so a manual replay from
+reviewed `main` can also validate older tags without replacing their tools or
+package bytes. For the failed `auth-contracts@0.1.1` publication, Auth's previous
+tag resolves to `b422b54`, whereas Forms' migration is approved against its own
+`0.1.0` tag at `313ffcb`. Applying Auth's baseline to all packages incorrectly
+rejects that Forms approval. After this workflow correction is merged, replay
+Publish from `main` with the existing tag; do not move tags or add migration
+approvals for unrelated baselines. Publication remains a separately authorized
+operation.
 
 ### Recover tags pushed without GitHub Releases
 

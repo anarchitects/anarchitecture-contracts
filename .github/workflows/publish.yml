@@ -75,9 +75,30 @@ jobs:
       - name: Verify release compatibility
         env:
           RELEASE_PROJECT: ${{ steps.release.outputs.project }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
         run: |
-          base=$(git describe --tags --match "$RELEASE_PROJECT@*" --abbrev=0 HEAD^ 2>/dev/null || git rev-parse HEAD^)
-          yarn nx run contract-checks:compatibility -- "$base"
+          yarn node --input-type=module <<'NODE'
+          import { checkReleaseVersions } from './tools/openapi/compatibility.mjs';
+          import { invariant, json, readJson, sourceFiles } from './tools/openapi/common.mjs';
+          import { assertInitialVersion, localHistory } from './tools/release/history.mjs';
+          import { releaseProjects } from './tools/release/projects.mjs';
+
+          const project = process.env.RELEASE_PROJECT;
+          const version = process.env.RELEASE_VERSION;
+          invariant(Object.hasOwn(releaseProjects, project), 'Ineligible release project');
+          const domain = project.replace(/-contracts$/, '');
+          const pkg = readJson(`packages/${domain}/package.json`);
+          invariant(pkg.name === releaseProjects[project] && pkg.version === version, 'Release tag must match package name and version');
+          const history = localHistory('HEAD^');
+          assertInitialVersion(project, version, history);
+          const previous = history[project][0];
+          const base = previous ? `${project}@${previous}` : 'HEAD^';
+          console.log(json(checkReleaseVersions(
+            [{ domain, package: pkg, sourceFiles: sourceFiles(domain) }],
+            base,
+            { versions: { [pkg.name]: version }, unreleased: previous ? [] : [pkg.name] },
+          )));
+          NODE
       - name: Enforce publication gate and tagged package version
         env:
           GITHUB_TOKEN: ${{ github.token }}
