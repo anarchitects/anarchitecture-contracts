@@ -41,9 +41,10 @@ and semantic definitions are unchanged; existing differential coverage remains.
 ## Review and release gates
 
 The six Forms P07 entries have unchanged scopes, limitations, faithful conversion
-records and generator pins. Their source digest must be reviewed for the updated
-operation metadata; candidates are in [25-p07.draft.json](25-p07.draft.json).
-Draft records are not approvals. No generator gate may be bypassed.
+records and generator pins. The exact source digest is now approved in the
+maintainer record below; [25-p07.draft.json](25-p07.draft.json) preserves the
+approved review input. Only the six corresponding active register entries were
+re-pinned. No generator gate was bypassed.
 
 PR base and latest Forms 0.1.0 tag both resolve to
 `313ffcb1116c86e747f406f8f896f69fabbf1f11`; one exact comparison baseline suffices.
@@ -76,3 +77,71 @@ Node 24.21.0, Yarn 4.18.1, macOS arm64:
   generated OpenAPI/manifests and exact compatibility findings cannot yet be
   finalized. The PR stays draft pending the explicitly requested source-pin review.
 - No release, publication, npm deprecation or host approval was executed.
+
+## Explicit maintainer P07 approval — 2026-10-14
+
+Johan Vrolix explicitly approved option 1 in the task conversation:
+
+> I explicitly approve re-pinning the six existing Forms P07 review records to source digest:
+> 73653e350f0cebeab8cd4ff5d45b7a6addfe36f5a5129433991d59bd1f64278d
+
+Approval applies exclusively to the six candidates in `25-p07.draft.json`.
+The maintainer confirmed unchanged exception scopes, limitations, generator
+hashes and validation semantics, and requested promoting these records to reviewed,
+regeneration, complete validation and disclosure of collateral package changes.
+The draft is retained as the exact approval input; the active P07 register now
+contains the reviewed pins. Existing review owners/decisions and evidence remain
+unchanged; this document records the specific source-pin approval.
+
+This approval does not authorize PR #26 merge, Forms 0.2.0 publication,
+deprecation of previous versions or host conformance. Exact compatibility migration
+records and their package impact remain separately reviewable. No other P07 entry
+or generator pin is approved or changed by this action.
+
+## Regeneration and collateral impact after approval
+
+The active register changes exactly six `sourceDigest` fields, all in Forms.
+Every other field, domain entry and generator pin is unchanged. The complete
+register digest changes from
+`15efd442745207df84e6f69156ec9bad251e0c9a00949e7b5bfc99c51fbce5d3` to
+`4d07b2bbab95465392f026b45baf7c8f23cefb5fbda9f8b8c60a7b478a1e3a43`.
+
+| Package    | Regenerated impact                                                                                              | Nx preview | Current gate minimum             |
+| ---------- | --------------------------------------------------------------------------------------------------------------- | ---------- | -------------------------------- |
+| Forms      | Public definition response, protected-profile obligations, source/review metadata and derived OpenAPI/inventory | 0.2.0      | 0.2.0 + exact migration approval |
+| Auth       | Only `contract-manifest.json` → `projectionProposal.digest`                                                     | 0.1.1      | 0.2.0 + exact migration approval |
+| Identity   | Only `contract-manifest.json` → `projectionProposal.digest`                                                     | 0.1.1      | 0.2.0 + exact migration approval |
+| Newsletter | Only `contract-manifest.json` → `projectionProposal.digest`                                                     | 0.1.1      | 0.2.0 + exact migration approval |
+
+The other three packages have byte-identical schemas, runtime sources, operations,
+OpenAPI JSON/YAML, inventories, own projection reviews and generator identity.
+Their reported breaking impact is the conservative comparator's treatment of the
+shared review-register digest, not a runtime wire break. No independent package
+version or release is materialized by regeneration. Do not silently change the
+classifier or insert breaking commit intent for unrelated packages to hide this.
+
+[25-migrations.draft.json](25-migrations.draft.json) contains the exact pending
+records. There are five: all four packages versus PR base `313ffcb`, plus Auth
+versus its last release `b422b54`. Forms/Identity/Newsletter 0.1.0 tags already
+coincide with `313ffcb`. These distinct checks protect PR-local and cumulative
+release changes; Auth has identical findings in both comparisons. Draft records
+are not active approvals. The maintainer's current approval is limited to P07.
+
+## Validation after approval
+
+- `yarn openapi:generate`: passed; all canonical and diagnostic artifacts generated
+  from sources, with no hand-edited OpenAPI or manifest statuses.
+- `contract-checks:verify` dependencies passed: deterministic OpenAPI verification,
+  all 30 OpenAPI/profile/fidelity tests, 21 shared contract tests, package tests,
+  baseline, types/builds, Markdown/format checks and clean packed consumers.
+- Packed consumers passed ESM/CommonJS on Node 24.21.0, TypeScript 5.5/6 with
+  NodeNext/bundler resolution, and browser bundling.
+- All 18 release unit tests passed. `yarn check` nevertheless fails its release
+  smoke dry run: Auth requires minor while Nx proposes 0.1.1. The separate
+  `yarn openapi:compatibility origin/main` reports the same gate. Full green
+  validation and final release eligibility are not claimed.
+- An initial overlapping invocation transiently removed a declaration during
+  rebuilding. The full suite was rerun without concurrent Nx commands; that
+  transient failure did not recur. The remaining failure is the version gate.
+- P07, D05/D08 host blockers, unverified implementation/deployment status and empty
+  supported capabilities remain enforced. No merge, publish or deprecation ran.
