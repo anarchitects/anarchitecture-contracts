@@ -2,10 +2,10 @@
   "artifactKind": "canonical-contract",
   "artifacts": {
     "inventory.json": "11d95d56b2f55e2169c71cfe423726af0238e2351f4f1f9b86f536d8f0039825",
-    "newsletter-canonical.json": "8c1d7881b3641412463689823da084b5a65db47aca5aaf21c9702e02d8dc44ca",
-    "newsletter-canonical.yaml": "af582cad662904d0956788e457aae0e938f713cfc8c151df012ee81dc1076bff",
-    "newsletter-review.json": "2db87c5c1fe44c1d779ab7ad2d1a9006e247199164ad16fcf6d638693b847c05",
-    "newsletter-review.yaml": "f2d3f41d23a07748de397cd492e67f9765e2b8dc9b7ba8d140de056539457698"
+    "newsletter-canonical.json": "6a90785dc66e45ae5dfad920363ab8dfe9ec29b387f33d17f815be5b9696934d",
+    "newsletter-canonical.yaml": "d13c2dfbc8cf8b7426dbeac22978b6bf927d9cbdd7e347c4bbcd88f9fc375177",
+    "newsletter-review.json": "f04bc2e38124fe01b10df102d5e1c0ffca7ff3a5a06cf9f0b604505f7a3d49a5",
+    "newsletter-review.yaml": "7bc937d981b281ddeb0d34d2df92286d23a95d622bc3e99a068f8234ed6951da"
   },
   "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
@@ -116,7 +116,7 @@
   },
   "operationCount": 4,
   "packages": {
-    "@anarchitects/newsletter-contracts": "0.0.1"
+    "@anarchitects/newsletter-contracts": "0.1.0"
   },
   "profile": {
     "capabilities": [

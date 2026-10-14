@@ -22915,7 +22915,7 @@ components:
 info:
   description: Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.
   title: CANONICAL — Anarchitecture newsletter-canonical
-  version: 0.0.1
+  version: 0.1.0
 jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
 openapi: 3.1.1
 paths:
@@ -23379,4 +23379,4 @@ x-contract-security-obligations:
     kind: public
 x-contract-status: canonical
 x-contract-versions:
-  "@anarchitects/newsletter-contracts": 0.0.1
+  "@anarchitects/newsletter-contracts": 0.1.0

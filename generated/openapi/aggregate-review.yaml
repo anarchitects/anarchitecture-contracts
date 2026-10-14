@@ -28086,7 +28086,7 @@ components:
 info:
   description: Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.
   title: REVIEW-ONLY — Anarchitecture aggregate-review
-  version: sha256:7eb4fdc12e137f7499fb9c77a9f42f25073fdf984a877716fc59edcd004433bb
+  version: sha256:d6974c481560c40401a32e2c51674f4609469cf9f9f5744f05b1ffd3263ca4f9
 jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
 openapi: 3.1.1
 paths:
@@ -29443,6 +29443,6 @@ x-contract-profile: aggregate-review
 x-contract-status: review-only
 x-contract-versions:
   "@anarchitects/auth-contracts": 0.1.0
-  "@anarchitects/forms-contracts": 0.0.1
-  "@anarchitects/identity-contracts": 0.0.1
-  "@anarchitects/newsletter-contracts": 0.0.1
+  "@anarchitects/forms-contracts": 0.1.0
+  "@anarchitects/identity-contracts": 0.1.0
+  "@anarchitects/newsletter-contracts": 0.1.0

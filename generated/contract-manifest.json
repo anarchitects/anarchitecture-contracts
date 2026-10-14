@@ -1,10 +1,10 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "aggregate-canonical.json": "b8eee71221046f8945b2c05981eca074d8ac156ad31cd493242042c4ec9065c0",
-    "aggregate-canonical.yaml": "0aba579694efdd48297b19fa1661c66a69eddf5e3a034f06f7a38f64f738d58e",
-    "aggregate-review.json": "df7362736c23e417aea6e4b53e39de239ead2c62ae10d51304c46bf027991438",
-    "aggregate-review.yaml": "86a463bef63d3f93003c801738bea40589561b9cb3d5ea44eb1a020d3530207d",
+    "aggregate-canonical.json": "d4a514e5328e8f85766075a249e7d110468c7e926174ff07cd80cee1fcde5862",
+    "aggregate-canonical.yaml": "ae94e57f03193d5a531edda89f56bbb603be4eadda71b93cce7e135fb5f31b35",
+    "aggregate-review.json": "c879bf3546aa44bafc8b3639e37d6033d18ce16b9228e95a8d9a4d8b8b228dc1",
+    "aggregate-review.yaml": "40c076c3a7cdc8169fb4a2dfcfe493a1a0b1d2923782208a52dba5258adc018a",
     "inventory.json": "317dd50343e0a9ecb5b9c1f667ba8e2e686d686df52d6a6ab57baae987617441"
   },
   "blockerScope": "implementation-and-deployment",
@@ -364,9 +364,9 @@
   "operationCount": 29,
   "packages": {
     "@anarchitects/auth-contracts": "0.1.0",
-    "@anarchitects/forms-contracts": "0.0.1",
-    "@anarchitects/identity-contracts": "0.0.1",
-    "@anarchitects/newsletter-contracts": "0.0.1"
+    "@anarchitects/forms-contracts": "0.1.0",
+    "@anarchitects/identity-contracts": "0.1.0",
+    "@anarchitects/newsletter-contracts": "0.1.0"
   },
   "profile": {
     "capabilities": [
