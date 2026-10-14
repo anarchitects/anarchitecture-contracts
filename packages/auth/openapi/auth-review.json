@@ -6498,7 +6498,7 @@
   "info": {
     "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
     "title": "REVIEW-ONLY — Anarchitecture auth-review",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
   "openapi": "3.1.1",
@@ -7799,6 +7799,6 @@
   "x-contract-profile": "auth-review",
   "x-contract-status": "review-only",
   "x-contract-versions": {
-    "@anarchitects/auth-contracts": "0.0.0"
+    "@anarchitects/auth-contracts": "0.0.1"
   }
 }

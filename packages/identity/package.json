@@ -1,6 +1,6 @@
 {
   "name": "@anarchitects/identity-contracts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Canonical Identity public HTTP wire schemas and operations",
   "license": "MIT",
   "type": "module",

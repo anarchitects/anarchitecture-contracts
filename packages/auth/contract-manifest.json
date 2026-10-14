@@ -1,10 +1,10 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "auth-canonical.json": "205b9e79814340d9a6576048b249053d7c822b713c8be4d5cc4082613462d2bd",
-    "auth-canonical.yaml": "c0db5004be38ac3cdc9f61f84ded5dfce42ec33250659d8d20c9e8c3304621f6",
-    "auth-review.json": "480ea27fdb7f7f6d7a65b65d8b7ed1376ba1627b43ed6b7c20e8ffa4faef01af",
-    "auth-review.yaml": "deb90e608cb7c5b7ee763cafeac1677ab9e755ba000800439258df49124d6db3",
+    "auth-canonical.json": "adab90a8f4c056c95672e00e52cb83c0a10d75c403881956351280c48467670a",
+    "auth-canonical.yaml": "bee83978642733a98796d3bb367f902880fef27f93bcc63c0eecb18af20483bc",
+    "auth-review.json": "3bcebbd88cc32d28282d4e71a5f668a2d3c185177fa5715158b1ecb3c067b0b2",
+    "auth-review.yaml": "f217bd3c5388768f5af03252f7fcc0badd8f74e3a026565967a6977fd972f71d",
     "inventory.json": "30aecc7f228590c3a52deee377edfba784c449e8a9bef4201ac81b3f370c9d85"
   },
   "blockerScope": "implementation-and-deployment",
@@ -140,7 +140,7 @@
   },
   "operationCount": 17,
   "packages": {
-    "@anarchitects/auth-contracts": "0.0.0"
+    "@anarchitects/auth-contracts": "0.0.1"
   },
   "profile": {
     "capabilities": [
