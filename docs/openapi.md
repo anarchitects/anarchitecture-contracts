@@ -238,6 +238,17 @@ prose/artifact changes require patch.
 This classifier intentionally permits false positives rather than pretending to
 prove arbitrary schema-language inclusion or behavioral equivalence.
 
+The shared P07 register digest is repository-wide provenance. A digest-only change
+with a valid reviewed register identity/status and byte-identical package-local
+reviews is a patch change to the distributed manifest, not a new exception or
+breaking contract. An unchanged package manifest produces no finding. Changes to
+local P07 review scope, source/generator pins or exception meaning remain strict;
+register identity/status, normative schemas/operations/security and host approval
+changes still require breaking review. Generated artifact bytes without a semantic
+delta require patch. Generation and publication independently verify approval,
+source/generator pins and exact artifact integrity; a patch classification grants
+no permission to use stale reviews or unreviewed projections.
+
 Breaking changes require major after 1.0, a new minor line before 1.0, and an
 explicit approved migration record at `tools/openapi/migrations/<domain>.json`.
 The file accepts one record or an array of records, so PR-base and cumulative

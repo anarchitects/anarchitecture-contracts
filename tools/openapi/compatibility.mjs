@@ -129,7 +129,6 @@ export function diffContracts(before, after) {
     'releaseBlockers',
     'capabilityBlockers',
     'projectionReviews',
-    'projectionProposal',
     'provenance',
     'supportedCapabilities',
     'status',
@@ -142,6 +141,47 @@ export function diffContracts(before, after) {
         key,
         'Profile, capability or security obligations changed',
       );
+  if (
+    json(before.manifest.projectionProposal) !==
+    json(after.manifest.projectionProposal)
+  ) {
+    const priorRegister = before.manifest.projectionProposal;
+    const nextRegister = after.manifest.projectionProposal;
+    // This digest covers the repository-wide register, including other domains.
+    // A digest-only refresh is packaged provenance, not a new local exception.
+    // Never ignore the local reviews (source/generator pins included), register
+    // identity/status, or any schema/security difference checked above. Actual
+    // approval and byte integrity remain enforced by generation/publication.
+    const digestOnly =
+      [priorRegister, nextRegister].every(
+        (register) =>
+          register?.id === 'P07' &&
+          register.status === 'reviewed-register' &&
+          /^[a-f0-9]{64}$/.test(register.digest),
+      ) &&
+      json({ ...priorRegister, digest: null }) ===
+        json({ ...nextRegister, digest: null }) &&
+      Object.keys(before.manifest.projectionReviews ?? {}).length > 0 &&
+      json(before.manifest.projectionReviews) ===
+        json(after.manifest.projectionReviews);
+    add(
+      digestOnly ? 'patch' : 'breaking',
+      'projectionProposal',
+      digestOnly
+        ? 'Distributed manifest provenance changed; package-local P07 reviews are unchanged'
+        : 'Projection register identity, approval state or package-local review obligations changed',
+    );
+  }
+  if (
+    json(before.manifest.artifacts) !== json(after.manifest.artifacts) ||
+    json(before.manifest.generator) !== json(after.manifest.generator) ||
+    json(before.manifest.tools) !== json(after.manifest.tools)
+  )
+    add(
+      'patch',
+      'generated-artifacts',
+      'Generated artifacts or pinned generator changed',
+    );
   return findings;
 }
 
@@ -270,19 +310,6 @@ export function releaseReports(
                 'First generated artifacts and explicit exports; projection and profile review gates remain',
             },
           ];
-    if (oldManifest) {
-      const previous = JSON.parse(oldManifest);
-      if (
-        json(previous.artifacts) !== json(after.manifest.artifacts) ||
-        json(previous.generator) !== json(after.manifest.generator) ||
-        json(previous.tools) !== json(after.manifest.tools)
-      )
-        findings.push({
-          impact: 'patch',
-          surface: 'generated-artifacts',
-          detail: 'Generated artifacts or pinned generator changed',
-        });
-    }
     for (const file of ['README.md', 'LICENSE']) {
       const path = `packages/${model.domain}/${file}`;
       if (gitFile(revision, path) !== readFileSync(path, 'utf8'))

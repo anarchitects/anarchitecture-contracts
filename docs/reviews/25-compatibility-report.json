@@ -1,0 +1,281 @@
+{
+  "classifierSha256": "ca7c6e03ed5f9b703f8fc42437d25cedf51114295124a111464518b9da19bb53",
+  "previousClassifierRevision": "a768383",
+  "reports": [
+    {
+      "after": {
+        "findings": [
+          {
+            "detail": "Distributed manifest provenance changed; package-local P07 reviews are unchanged",
+            "impact": "patch",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "d04efa4169fc7ee03a1d8f918bfe3b5c36fe0241cc7fd7716579854df38463bc",
+        "requiredBump": "patch"
+      },
+      "baseRevision": "313ffcb1116c86e747f406f8f896f69fabbf1f11",
+      "before": {
+        "findings": [
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "863f15e8be931489be1fffe5b7fbfe34673f9efa166465218d5fa1b0acaec0bf",
+        "requiredBump": "minor"
+      },
+      "comparisons": ["PR base"],
+      "package": "@anarchitects/auth-contracts"
+    },
+    {
+      "after": {
+        "findings": [
+          {
+            "detail": "Distributed manifest provenance changed; package-local P07 reviews are unchanged",
+            "impact": "patch",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "d04efa4169fc7ee03a1d8f918bfe3b5c36fe0241cc7fd7716579854df38463bc",
+        "requiredBump": "patch"
+      },
+      "baseRevision": "b422b547501d0db7291e759f8f941c5b646f7e37",
+      "before": {
+        "findings": [
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "863f15e8be931489be1fffe5b7fbfe34673f9efa166465218d5fa1b0acaec0bf",
+        "requiredBump": "minor"
+      },
+      "comparisons": ["published 0.1.0"],
+      "package": "@anarchitects/auth-contracts"
+    },
+    {
+      "after": {
+        "findings": [
+          {
+            "detail": "Request/response, route, tags, status, headers, security, availability or semantics changed; assess both directions",
+            "impact": "breaking",
+            "surface": "getFormDefinition"
+          },
+          {
+            "detail": "Schema ID removed",
+            "impact": "breaking",
+            "surface": "forms.FormDefinitionEnvelopeResponse.Output"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionRequest.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+          },
+          {
+            "detail": "Schema ID added",
+            "impact": "minor",
+            "surface": "forms.PublicFormDefinitionEnvelopeResponse.Output"
+          },
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionReviews"
+          },
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "unresolvedHostBindings"
+          },
+          {
+            "detail": "Projection register identity, approval state or package-local review obligations changed",
+            "impact": "breaking",
+            "surface": "projectionProposal"
+          },
+          {
+            "detail": "Generated artifacts or pinned generator changed",
+            "impact": "patch",
+            "surface": "generated-artifacts"
+          },
+          {
+            "detail": "Published package documentation changed",
+            "impact": "patch",
+            "surface": "README.md"
+          },
+          {
+            "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+            "impact": "breaking",
+            "surface": "packages/forms/src/operations/index.ts"
+          }
+        ],
+        "findingsDigest": "131d54a093a4285f6f3f5dc5fb28f4eaec86bd26c1232800272d0473480c5bc1",
+        "requiredBump": "minor"
+      },
+      "baseRevision": "313ffcb1116c86e747f406f8f896f69fabbf1f11",
+      "before": {
+        "findings": [
+          {
+            "detail": "Request/response, route, tags, status, headers, security, availability or semantics changed; assess both directions",
+            "impact": "breaking",
+            "surface": "getFormDefinition"
+          },
+          {
+            "detail": "Schema ID removed",
+            "impact": "breaking",
+            "surface": "forms.FormDefinitionEnvelopeResponse.Output"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionRequest.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input"
+          },
+          {
+            "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+            "impact": "breaking",
+            "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+          },
+          {
+            "detail": "Schema ID added",
+            "impact": "minor",
+            "surface": "forms.PublicFormDefinitionEnvelopeResponse.Output"
+          },
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionReviews"
+          },
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionProposal"
+          },
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "unresolvedHostBindings"
+          },
+          {
+            "detail": "Generated artifacts or pinned generator changed",
+            "impact": "patch",
+            "surface": "generated-artifacts"
+          },
+          {
+            "detail": "Published package documentation changed",
+            "impact": "patch",
+            "surface": "README.md"
+          },
+          {
+            "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+            "impact": "breaking",
+            "surface": "packages/forms/src/operations/index.ts"
+          }
+        ],
+        "findingsDigest": "2ec8c505bddeb6016a0ed3883161ae1afdeb212e58f06f1a40ae04f6ad685b0c",
+        "requiredBump": "minor"
+      },
+      "comparisons": ["published 0.1.0", "PR base"],
+      "package": "@anarchitects/forms-contracts"
+    },
+    {
+      "after": {
+        "findings": [
+          {
+            "detail": "Distributed manifest provenance changed; package-local P07 reviews are unchanged",
+            "impact": "patch",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "d04efa4169fc7ee03a1d8f918bfe3b5c36fe0241cc7fd7716579854df38463bc",
+        "requiredBump": "patch"
+      },
+      "baseRevision": "313ffcb1116c86e747f406f8f896f69fabbf1f11",
+      "before": {
+        "findings": [
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "863f15e8be931489be1fffe5b7fbfe34673f9efa166465218d5fa1b0acaec0bf",
+        "requiredBump": "minor"
+      },
+      "comparisons": ["published 0.1.0", "PR base"],
+      "package": "@anarchitects/identity-contracts"
+    },
+    {
+      "after": {
+        "findings": [
+          {
+            "detail": "Distributed manifest provenance changed; package-local P07 reviews are unchanged",
+            "impact": "patch",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "d04efa4169fc7ee03a1d8f918bfe3b5c36fe0241cc7fd7716579854df38463bc",
+        "requiredBump": "patch"
+      },
+      "baseRevision": "313ffcb1116c86e747f406f8f896f69fabbf1f11",
+      "before": {
+        "findings": [
+          {
+            "detail": "Profile, capability or security obligations changed",
+            "impact": "breaking",
+            "surface": "projectionProposal"
+          }
+        ],
+        "findingsDigest": "863f15e8be931489be1fffe5b7fbfe34673f9efa166465218d5fa1b0acaec0bf",
+        "requiredBump": "minor"
+      },
+      "comparisons": ["published 0.1.0", "PR base"],
+      "package": "@anarchitects/newsletter-contracts"
+    }
+  ]
+}
