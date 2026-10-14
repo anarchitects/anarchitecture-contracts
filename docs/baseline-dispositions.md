@@ -7,9 +7,10 @@ and refers to D01–D11 in the immutable
 It does not edit the baseline or claim that any runtime defect is fixed.
 
 “Preserve” directs a compatible extraction. “Document” fills an artifact gap
-without changing the wire. “Blocked” means the affected stable capability cannot
-be published or claimed adopted until its owning issue records an explicit
-decision and evidence. Other domains can progress independently. No row authorizes
+without changing the wire. Under [ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md),
+“Blocked” means the affected implementation/deployment capability cannot be claimed
+conformant until its owning issue records an explicit decision and evidence.
+Canonical packages may publish the definitions and limitations independently. Other domains can progress independently. No row authorizes
 an implementation/provider replacement or a silent breaking fix.
 
 | Finding                                  | #4 disposition                                                                                                                 | Delivery owner                                  | Evidence / release condition                                                                                                                                              |
@@ -27,9 +28,10 @@ an implementation/provider replacement or a silent breaking fix.
 | D11: null-to-empty-string mutation       | Preserve this explicit request normalization for the legacy-compatible profile; keep omitted fields and response null distinct | #5 Identity                                     | Compare raw input, mapper-facing values and serialized output. Restoring literal null writes would be a deliberate semantic change requiring review/versioning.           |
 
 The Forms blockers apply to the affected capabilities, not to writing extraction
-code and tests. A prerelease may carry quarantined work with explicit unsupported
+code and tests. A canonical package may carry compatibility evidence with explicit unsupported
 capability status, but must not bypass the security decision or advertise stable
-conformance. The owning extraction PR must link any implementation follow-up it
+conformance. First official distribution remains exactly `0.0.1`, never an
+initial prerelease. The owning extraction PR must link any implementation follow-up it
 opens and identify maintainers responsible for the release decision.
 
 ## Compatibility record required in #5/#6
@@ -77,5 +79,5 @@ semantics. Issue #7 implements scoped conversion reviews and profile resolution/
 gates; actual deployment evidence belongs to the implementing capability; successful schema conversion alone does not establish equivalence.
 
 The [Forms migration requirements](forms-security-migration.md) record the accepted
-D05/D08 targets and rollout constraints. Both remain capability release blockers.
+D05/D08 targets and rollout constraints. Both remain implementation/deployment capability blockers.
 A tested #7 mechanism can close independently of #489 remediation and #8 packaging.

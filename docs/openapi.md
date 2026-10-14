@@ -5,17 +5,19 @@ four canonical Zod catalogs and operation registries. Legacy TypeBox and upstrea
 OpenAPI are comparison evidence only. The generator imports no Bricks runtime,
 boots no server, and never reads the baseline while producing schemas or paths.
 
-**Current artifacts are review-only.** The
-[scoped projection register](openapi-projection-proposal.md) implements the accepted
-decision; real host security/behavior bindings remain unresolved. All 29 operations appear
-in diagnostic inventories; only the 14 explicitly public operations appear in
-the default OpenAPI paths. Protected operations are excluded with reasons, never
-silently declared public. Forms D05/D08 remain stable capability blockers.
+[ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md)
+separates canonical publication from host support. Default generation produces
+**canonical contract artifacts**, with retained diagnostic review JSON/YAML.
+All 29 operations appear in the canonical inventory. Only the 14 explicitly public
+operations appear in canonical OpenAPI paths; the 15 protected operations remain
+excluded with explicit security obligations, never silently declared public.
+Canonical OpenAPI is not a complete deployment/client-generation profile.
+Forms D05/D08 remain host-conformance blockers, not package-publication blockers.
 
 ## Commands and CI
 
 ```sh
-yarn openapi:generate                # build, generate and lint review artifacts
+yarn openapi:generate                # build, generate and lint canonical artifacts
 yarn openapi:check                   # fail on byte drift; never rewrite files
 yarn test:openapi                    # snapshots, mutation and compatibility tests
 yarn openapi:compatibility origin/main # package-aware PR release-version gate
@@ -39,10 +41,12 @@ builds using a canonical source-byte inventory recorded by `yarn build`.
 
 ## Artifacts and identity
 
-Each package explicitly exports `./openapi/<domain>-review.json`, its YAML sibling,
+Each package explicitly exports `./openapi/<domain>-canonical.json` and its YAML
+sibling, the retained diagnostic `./openapi/<domain>-review.json`/YAML exports,
 `./openapi/inventory.json` and `./manifest.json`. These files are packed and checked
 from clean installed consumers; importing the runtime package does not load them.
-Their review status is part of the artifact, not permission to publish or deploy.
+Canonical publication validates these artifacts without asserting host support.
+The diagnostic review exports remain explicitly review-only and nondeployable.
 
 The aggregate lives under [generated/](../generated/contract-manifest.json).
 Its build identity is a digest, not a shared SemVer version. Manifests record
@@ -65,6 +69,43 @@ catalog-derived node ID. Recursive local references are relocated beneath the
 component; remote resolution, unknown references, undeclared cross-domain
 dependencies, duplicate IDs and ambiguous routes fail. Zod conversion is pinned
 to 4.5.0; updating it requires re-auditing the isolated graph inspection.
+
+## Manifest format 2 and independent gates
+
+| Field                              | Canonical package    | Approved host artifact | Synthetic host artifact |
+| ---------------------------------- | -------------------- | ---------------------- | ----------------------- |
+| `artifactKind`                     | `canonical-contract` | `host-resolved`        | `host-test`             |
+| `status`                           | `canonical`          | `resolved`             | `test-only`             |
+| `contractPublication.status`       | `validated`          | `not-applicable`       | `not-applicable`        |
+| `implementationConformance.status` | `unverified`         | `verified`             | `unverified`            |
+| `deploymentCompliance.status`      | `unverified`         | `verified`             | `unverified`            |
+| `supportedCapabilities`            | Empty                | Evidence-backed subset | Empty                   |
+
+`validated` covers source/operation/projection and artifact validity, not a claim
+that a registry publication has happened. Gate A also requires build/type/behavior,
+packed consumers, compatibility/migration and release integrity/provenance checks.
+It regenerates package artifacts and compares exact bytes; editing a manifest
+status or its hashes cannot grant eligibility.
+
+Canonical `hostConformanceBlockers`, `capabilityBlockers`, `releaseBlockers` and
+`unresolvedHostBindings` remain disclosed. `blockerScope` identifies them as
+implementation/deployment restrictions. Retained legacy blocker fields are for
+consumer continuity, not a canonical publication veto. Forms legacy response
+schemas remain migration evidence; the normative D08 obligation requires the safe
+public DTO before a host can claim support. P07 projections are unchanged.
+
+Consumers must recognize format 2 and artifact kind before interpreting statuses.
+The canonical inventory retains every operation, schema view and security/behavior
+obligation. `x-contract-security-obligations` exposes normative security in the
+OpenAPI document; `x-contract-deployment-ready: false` and explicit exclusions
+prevent treating it as a host profile. No placeholder auth transport is invented.
+
+`artifacts.mjs` composes canonical metadata around the unchanged, P07-pinned
+projection engine. Its bytes are also included in generator identity. Existing
+source/generator approval pins stay enforced without reissuing or broadening reviews.
+Default `write` and `check` modes always prepare/verify canonical package bytes,
+including after Nx changes package versions. Host output goes to a separate directory
+and is never copied over packaged manifests.
 
 ## Profiles and release mode
 
@@ -109,7 +150,7 @@ yarn openapi:release approved-profile.json /tmp/new-contract-artifacts
 node tools/openapi/cli.mjs verify-profile synthetic-profile.json /tmp/new-test-artifacts
 ```
 
-Release requires `status: approved`, `evidence.kind: host-runtime`, resolved
+Host-resolved generation requires `status: approved`, `evidence.kind: host-runtime`, resolved
 bindings, no selected capability blockers, and faithful conversion or exact scoped
 P07 reviews. `verify-profile` exercises the same structural, evidence and projection
 gates with `status: test-fixture` and `evidence.kind: synthetic`. Its artifacts are
@@ -119,7 +160,9 @@ Merely relabeling a synthetic profile approved cannot release it. The executable
 protocol test data only; it cannot produce host-runtime reports.
 
 Both commands generate and validate everything before writing a new directory;
-a failed gate leaves no output. Neither publishes nor deploys. Forms D05/D08 block
+a failed gate leaves no output. Neither publishes nor deploys. Live host generation requires versions at least
+`0.0.1`; maintainers must verify the exact referenced packages were distributed.
+Offline generation validates attestations, not registry existence or report truth. Forms D05/D08 block
 the selected capability in both modes. Diagnostic generation can retain all legacy
 operations in inventories, including their limitations and unresolved bindings.
 

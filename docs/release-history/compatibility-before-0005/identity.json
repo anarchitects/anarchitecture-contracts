@@ -1,0 +1,10 @@
+{
+  "baseRevision": "401d8e4fc76f0d80e5219a490389b46c9ec437de",
+  "consumerMigration": "Adopt the source/generator-pinned P07 register and strict profile protocol. Keep canonical Zod parsing mandatory; OpenAPI-only consumers must regenerate and account for tightened faithful constraints and explicit exceptions. Existing canonical route acceptance is unchanged. Real host adoption requires separately reviewed immutable runtime evidence. Synthetic fixtures and review artifacts are not supported deployments.",
+  "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+  "findingsDigest": "695b4e4adbe7c7d02c36f1895d08466b75963561c03a167245ee16fd1d2d6e44",
+  "owner": "Contracts architecture and affected domain maintainers",
+  "package": "@anarchitects/identity-contracts",
+  "rollback": "Restore the prior review-only generator/artifacts if needed, retaining canonical parsing and all host/security blockers. Do not weaken host requirements, restore dynamic-validation bypass or expose secrets. Preserve already-consumed additive exports; disable an affected capability if a secure rollback is unavailable.",
+  "status": "approved"
+}

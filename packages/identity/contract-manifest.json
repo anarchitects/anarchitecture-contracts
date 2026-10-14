@@ -1,9 +1,13 @@
 {
+  "artifactKind": "canonical-contract",
   "artifacts": {
+    "identity-canonical.json": "07fa020eef46da17ab31b54fa4202d99fad974617ca9699aefbff6cb20d4d04a",
+    "identity-canonical.yaml": "ba10b108e3dfd57dbfddb462d6c35b2994df9808bb8b744665545e42d8ae43de",
     "identity-review.json": "9d8c455734b694307e14260c2f18e77bda196270bcffdc49bf957313e7d53030",
     "identity-review.yaml": "96aa7d3aa0e2886c01e5ff496ff0cb536dde031f9321ab7534255fadcc8bcc2f",
-    "inventory.json": "cdc7c4b2c9a0e5b2f15fd2c35743c673a09ded514efdf584cb9b6663606dc498"
+    "inventory.json": "4ddd30f3cb1198dff4df66c3012687cce51a5927f88269b6fab747bb9f016fb0"
   },
+  "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
     {
       "capability": "identity.profiles",
@@ -17,10 +21,17 @@
       "status": "host-evidence-required"
     }
   ],
+  "contractPublication": {
+    "scope": "canonical-source-and-artifacts",
+    "status": "validated"
+  },
   "dependencies": {
     "@anarchitects/identity-contracts": {
       "zod": "4.5.0"
     }
+  },
+  "deploymentCompliance": {
+    "status": "unverified"
   },
   "documentedOperationCount": 0,
   "excludedOperations": [
@@ -45,8 +56,9 @@
       "reason": "unresolved-security"
     }
   ],
-  "formatVersion": 1,
+  "formatVersion": 2,
   "generator": {
+    "tools/openapi/artifacts.mjs": "a36a453ef9bc9ee073478bf502d0d4eb193a3c290006c0b77e5c4086fb1b8413",
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
     "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
     "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
@@ -54,6 +66,23 @@
     "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
     "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "hostConformanceBlockers": [
+    {
+      "capability": "identity.profiles",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    }
+  ],
+  "implementationConformance": {
+    "status": "unverified",
+    "supportedCapabilities": []
   },
   "operationCount": 4,
   "packages": {
@@ -63,12 +92,12 @@
     "capabilities": [
       "identity.profiles"
     ],
-    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "description": "Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.",
     "hostBindings": {},
-    "id": "identity-review",
+    "id": "identity-canonical",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only",
+    "status": "canonical",
     "variants": [
       "identity.protected"
     ]
@@ -290,7 +319,7 @@
     },
     "revision": "sha256:9d7d50e3098f5d7400d660b387fe24e4c7dc38262aea5e37b035e079509e8f98"
   },
-  "status": "review-only",
+  "status": "canonical",
   "supportedCapabilities": [],
   "tools": {
     "@apidevtools/swagger-parser": "13.1.0",

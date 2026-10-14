@@ -1,4 +1,5 @@
 {
+  "artifactKind": "canonical-contract",
   "operations": [
     {
       "availability": {
@@ -791,7 +792,7 @@
       }
     }
   ],
-  "profile": "newsletter-review",
+  "profile": "newsletter-canonical",
   "schemas": {
     "newsletter.BadRequestError.Output": {
       "anyOf": [
@@ -46241,5 +46242,5 @@
       "type": "object"
     }
   },
-  "status": "diagnostic-only"
+  "status": "canonical"
 }

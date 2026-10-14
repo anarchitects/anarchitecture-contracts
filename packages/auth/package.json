@@ -84,7 +84,9 @@
     "./openapi/auth-review.json": "./openapi/auth-review.json",
     "./openapi/auth-review.yaml": "./openapi/auth-review.yaml",
     "./openapi/inventory.json": "./openapi/inventory.json",
-    "./manifest.json": "./contract-manifest.json"
+    "./manifest.json": "./contract-manifest.json",
+    "./openapi/auth-canonical.json": "./openapi/auth-canonical.json",
+    "./openapi/auth-canonical.yaml": "./openapi/auth-canonical.yaml"
   },
   "dependencies": {
     "zod": "4.5.0"

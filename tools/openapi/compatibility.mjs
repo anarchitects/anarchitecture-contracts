@@ -118,6 +118,13 @@ export function diffContracts(before, after) {
   for (const name of Object.keys(b))
     if (!Object.hasOwn(a, name)) add('minor', name, 'Schema ID added');
   for (const key of [
+    'formatVersion',
+    'artifactKind',
+    'contractPublication',
+    'implementationConformance',
+    'deploymentCompliance',
+    'hostConformanceBlockers',
+    'blockerScope',
     'profile',
     'releaseBlockers',
     'capabilityBlockers',

@@ -1,9 +1,13 @@
 {
+  "artifactKind": "canonical-contract",
   "artifacts": {
+    "aggregate-canonical.json": "09d43a7e0c441a563768630a8d31ece16bc352d73f34cb8704837c18e53b2f7c",
+    "aggregate-canonical.yaml": "f92225d349faa27584abfd6bb15d4ae381da2ac6693a5e54a516411f3a134726",
     "aggregate-review.json": "fb21aa137cf046aa9375a530d51a0ba7e589dba94838e33af33290ad590faa0f",
     "aggregate-review.yaml": "06d8aa960c31998769fee305a50a0c31ff67d8d67a4a91313a33c35eddcac56a",
-    "inventory.json": "ccfbab29ecce927443cc7de39c3b5608930be265b4aac1fefcadd72c0436faea"
+    "inventory.json": "b296828852e3d2495df5bf8a9e3ef72011dadb2f606a3890154322bbdb67b772"
   },
+  "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
     {
       "capability": "auth.jwt",
@@ -123,6 +127,10 @@
       "status": "blocked"
     }
   ],
+  "contractPublication": {
+    "scope": "canonical-source-and-artifacts",
+    "status": "validated"
+  },
   "dependencies": {
     "@anarchitects/auth-contracts": {
       "zod": "4.5.0"
@@ -136,6 +144,9 @@
     "@anarchitects/newsletter-contracts": {
       "zod": "4.5.0"
     }
+  },
+  "deploymentCompliance": {
+    "status": "unverified"
   },
   "documentedOperationCount": 14,
   "excludedOperations": [
@@ -215,8 +226,9 @@
       "reason": "unresolved-security"
     }
   ],
-  "formatVersion": 1,
+  "formatVersion": 2,
   "generator": {
+    "tools/openapi/artifacts.mjs": "a36a453ef9bc9ee073478bf502d0d4eb193a3c290006c0b77e5c4086fb1b8413",
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
     "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
     "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
@@ -224,6 +236,129 @@
     "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
     "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "hostConformanceBlockers": [
+    {
+      "capability": "auth.jwt",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "auth.passkeys",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "auth.session",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.definitions",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.submissions",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "identity.profiles",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.native",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.subscription",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.webhook",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.submissions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "id": "D05",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Require server-side validation against the exact form definition/version before persistence or delivery; malformed fields return the existing 400 envelope. Bricks #489 must supply negative HTTP and no-side-effect evidence. See docs/forms-security-migration.md.",
+      "status": "blocked"
+    },
+    {
+      "capability": "forms.definitions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "id": "D08",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Require PublicFormDefinitionEnvelopeResponseSchema at the public boundary; no delivery configuration or secrets. Bricks #489 must prove redaction, access policy, rotation and serialized output. See docs/forms-security-migration.md.",
+      "status": "blocked"
+    }
+  ],
+  "implementationConformance": {
+    "status": "unverified",
+    "supportedCapabilities": []
   },
   "operationCount": 29,
   "packages": {
@@ -244,12 +379,12 @@
       "newsletter.subscription",
       "newsletter.webhook"
     ],
-    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "description": "Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.",
     "hostBindings": {},
-    "id": "aggregate-review",
+    "id": "aggregate-canonical",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only",
+    "status": "canonical",
     "variants": [
       "auth.jwt-plugin",
       "auth.session",
@@ -1869,7 +2004,7 @@
     },
     "revision": "sha256:e2f4aa7784ffb24be0ab7c77dc23b61efe1ebab39ce4a5cd94a4599fd1a94821"
   },
-  "status": "review-only",
+  "status": "canonical",
   "supportedCapabilities": [],
   "tools": {
     "@apidevtools/swagger-parser": "13.1.0",

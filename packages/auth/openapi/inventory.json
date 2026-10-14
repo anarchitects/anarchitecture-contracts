@@ -1,4 +1,5 @@
 {
+  "artifactKind": "canonical-contract",
   "operations": [
     {
       "availability": {
@@ -2325,7 +2326,7 @@
       }
     }
   ],
-  "profile": "auth-review",
+  "profile": "auth-canonical",
   "schemas": {
     "auth.ActivateUserRequest.Input": {
       "$defs": {
@@ -8819,5 +8820,5 @@
       }
     }
   },
-  "status": "diagnostic-only"
+  "status": "canonical"
 }

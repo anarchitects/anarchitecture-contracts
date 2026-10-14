@@ -1,9 +1,13 @@
 {
+  "artifactKind": "canonical-contract",
   "artifacts": {
+    "auth-canonical.json": "205b9e79814340d9a6576048b249053d7c822b713c8be4d5cc4082613462d2bd",
+    "auth-canonical.yaml": "c0db5004be38ac3cdc9f61f84ded5dfce42ec33250659d8d20c9e8c3304621f6",
     "auth-review.json": "480ea27fdb7f7f6d7a65b65d8b7ed1376ba1627b43ed6b7c20e8ffa4faef01af",
     "auth-review.yaml": "deb90e608cb7c5b7ee763cafeac1677ab9e755ba000800439258df49124d6db3",
-    "inventory.json": "9102d300c4078b0dfac4e69f19be4e187d493ee925a9e06abda1ed31dc4da86f"
+    "inventory.json": "30aecc7f228590c3a52deee377edfba784c449e8a9bef4201ac81b3f370c9d85"
   },
+  "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
     {
       "capability": "auth.jwt",
@@ -39,10 +43,17 @@
       "status": "host-evidence-required"
     }
   ],
+  "contractPublication": {
+    "scope": "canonical-source-and-artifacts",
+    "status": "validated"
+  },
   "dependencies": {
     "@anarchitects/auth-contracts": {
       "zod": "4.5.0"
     }
+  },
+  "deploymentCompliance": {
+    "status": "unverified"
   },
   "documentedOperationCount": 11,
   "excludedOperations": [
@@ -77,8 +88,9 @@
       "reason": "unresolved-security"
     }
   ],
-  "formatVersion": 1,
+  "formatVersion": 2,
   "generator": {
+    "tools/openapi/artifacts.mjs": "a36a453ef9bc9ee073478bf502d0d4eb193a3c290006c0b77e5c4086fb1b8413",
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
     "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
     "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
@@ -86,6 +98,45 @@
     "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
     "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "hostConformanceBlockers": [
+    {
+      "capability": "auth.jwt",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "auth.passkeys",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "auth.session",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    }
+  ],
+  "implementationConformance": {
+    "status": "unverified",
+    "supportedCapabilities": []
   },
   "operationCount": 17,
   "packages": {
@@ -97,12 +148,12 @@
       "auth.passkeys",
       "auth.session"
     ],
-    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "description": "Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.",
     "hostBindings": {},
-    "id": "auth-review",
+    "id": "auth-canonical",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only",
+    "status": "canonical",
     "variants": [
       "auth.jwt-plugin",
       "auth.session",
@@ -964,7 +1015,7 @@
     },
     "revision": "sha256:367ad589a37351dba8202fab88187ffbd1874415bea2da88146c5710d73ad4b8"
   },
-  "status": "review-only",
+  "status": "canonical",
   "supportedCapabilities": [],
   "tools": {
     "@apidevtools/swagger-parser": "13.1.0",

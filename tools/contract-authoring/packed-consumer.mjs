@@ -86,7 +86,11 @@ try {
           if (subpath.endsWith('.json')) {
             const artifact = JSON.parse(content);
             if (subpath === './manifest.json') {
-              assert.equal(artifact.status, 'review-only');
+              assert.equal(artifact.status, 'canonical');
+              assert.equal(artifact.formatVersion, 2);
+              assert.equal(artifact.artifactKind, 'canonical-contract');
+              assert.equal(artifact.implementationConformance.status, 'unverified');
+              assert.equal(artifact.deploymentCompliance.status, 'unverified');
               assert.deepEqual(artifact.supportedCapabilities, []);
               assert.equal(artifact.packages[name], pkg.version);
               const { createHash } = await import('node:crypto');

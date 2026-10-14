@@ -9,6 +9,8 @@
 - **Supersedes in part:** [ADR-0001](0001-contract-workspace-and-release-foundations.md) (no Nx for repository builds; Changesets as long-term release authority) and [ADR-0002](0002-domain-contract-authoring-and-publishing-boundaries.md) (Changesets-specific versioning mechanism)
 - **Governing:** [Meta ADR-0012 — Canonical Public API Contract Ownership](https://github.com/anarchitects/anarchitecture-meta/blob/main/adr/0012-canonical-public-api-contract-ownership.md)
 
+- Publication refinement: [ADR-0005](0005-independent-contract-publication-and-implementation-conformance.md) separates canonical publication from implementation conformance and deployment compliance. Host evidence gates host claims, not canonical package distribution. ADR-0004 remains the release/version authority.
+
 ## Context
 
 Contracts was bootstrapped in #2 as a minimal private Yarn 4 workspace with Changesets and no Nx requirement. ADR-0001 deliberately scoped this choice to the **foundation**; ADR-0002 subsequently established four independently released Zod-first packages and applied the then-current Changesets workflow. Existing package authoring, build, type, test and clean packed-consumer checks must not be discarded.

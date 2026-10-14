@@ -15,18 +15,24 @@ The Community-style `release.yml` and `publish.yml` workflows now prepare signed
 independent releases and publish from immutable tagged commits. They are pipeline
 implementation, not completed publication evidence for [issue #8](https://github.com/anarchitects/anarchitecture-contracts/issues/8).
 
-Generated OpenAPI remains review-only. Real host security/behavior profiles and
-Forms D05/D08 remain explicit blockers; no npm publication or downstream adoption
-is approved. The existing publication gate runs before a live release and again
-before npm publication. Scoped Nx publishing skips target dependencies, so the
-publish workflow invokes this gate explicitly. The publisher itself is the standard
-`@nx/js:release-publish` executor; local ad hoc publication is unsupported.
+[ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md)
+separates **contract validity**, **implementation conformance** and **deployment
+compliance**. Gate A publishes valid canonical contracts with no host evidence or
+supported-capability claim. Gate B remains strict for host-resolved profiles,
+security/runtime evidence and approved deployment claims. Forms D05/D08 block
+those affected host claims, not independent package distribution.
 
-Issue #7 supplies [deterministic generation and compatibility gates](openapi.md).
-The accepted [scoped P07 register](openapi-projection-proposal.md) stays unchanged;
-synthetic verification cannot authorize release. Package-aware checks still
-require new release intent for every affected package and matching migration
-evidence for breaks.
+The publication integrity gate regenerates canonical artifacts from current Zod
+and operation sources, enforces P07, matches exact bytes/versions/exports and
+rejects host-support claims in package manifests. Nx schedules build/type/schema,
+behavior and packed-consumer checks; compatibility uses actual Nx-proposed versions
+and pinned migration review. Scoped publishing skips target dependencies, so the
+publish workflow explicitly invokes verification, compatibility and publication
+checks before the standard `@nx/js:release-publish` executor.
+
+Synthetic verification grants no host approval and cannot substitute for canonical
+package validation. Historical review-only and host-test artifacts are not
+canonical publication candidates. See [manifest states and generation](openapi.md).
 
 ## Changes and compatibility
 
@@ -46,7 +52,7 @@ authentication, authorization, headers, cookies, operation IDs and exported type
 are all compatibility surfaces. Assess both request and response directions.
 Preserve the audited baseline unless a deliberate versioned change is reviewed.
 Pre-1.0 releases still require explicit breaking-change disclosure and migration;
-do not use `0.x` as permission for silent drift. First distribution must be `0.0.1`, with all compatibility and conformance gates
+do not use `0.x` as permission for silent drift. First distribution must be `0.0.1`, with all contract compatibility and publication gates
 satisfied. A later promotion to `1.0.0` requires deliberate release review.
 
 ### Directional compatibility and independent versions
@@ -224,6 +230,28 @@ but cannot replace their semantics. The CI Node 22 packed-consumer invocation
 intentionally remains direct Node to exercise the independently usable tooling
 without running the Node 24 Nx workspace under Node 22.
 
+### Canonical artifact preparation
+
+1. Review selected package changes and compatibility; before first distribution use
+   `init(<exact-nx-project-name>)`, afterward normal Conventional Commits.
+2. Run `yarn check` and `yarn openapi:compatibility origin/main`. Canonical generation
+   needs no host profile; do not manually copy or edit manifests.
+3. Preview with `yarn release:dry-run --projects auth-contracts --first-release`.
+   Nx supplies exactly `0.0.1`; the helper verifies existing canonical bytes and
+   generates the proposed version's artifacts in memory without writing or publishing.
+4. A separately authorized live workflow applies Nx's proposed versions, generates
+   canonical artifacts for them, verifies reproducibility/consumers/compatibility,
+   and checks Gate A again before signed commit/tag and GitHub Release creation.
+5. Publish checks the verified immutable release revision and exact tag/package/
+   manifest version, then uses npm trusted publishing/provenance. Rebuilding never
+   switches artifacts back to review-only mode.
+6. Bricks consumes the published version and proves actual HTTP behavior; hosts then
+   provide approved profiles. Publication itself creates no support/deployment claim.
+
+Select only ready packages; no fixed release group forces other domains to release.
+The full repository CI remains a shared regression check. Individual publication
+eligibility depends on that package's canonical artifacts, not another host's progress.
+
 ### Signing setup with the GitHub CLI
 
 Run these commands yourself in a local terminal. Use a dedicated release key
@@ -306,8 +334,9 @@ gh workflow run release.yml --repo "$CONTRACTS_REPO" --ref main \
 ```
 
 The dry run skips key import and tests Nx release planning, not the signing secrets.
-A live release still requires approved publishable host profiles and unchanged
-branch protections. Setting secrets does not remove the current publication blockers.
+A live release requires verified canonical package artifacts and unchanged branch
+protections. Host profiles are not a publication prerequisite. Signing credentials
+and npm trust still need independent live verification.
 
 References: [GitHub key generation](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key),
 [GitHub public-key registration](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account),
@@ -337,13 +366,14 @@ References: [GitHub key generation](https://docs.github.com/en/authentication/ma
    artifact pin with integrity evidence. Verify actual HTTP behavior against
    that same version before marking a capability supported.
 
-The sequence above remains gated. The rest of #8 must implement and verify:
+External release delivery and downstream adoption still require:
 
 - Live verification of signed release automation and immutable-tag trusted
   publishing with the approved credentials and unchanged branch protections.
 - An independently consumable conformance CLI/fixtures with actual positive,
   negative and security-sensitive HTTP checks. Current offline fixture checks
-  do not establish deployed host conformance.
+  do not establish deployed host conformance. This is a downstream support gate,
+  not a prerequisite for canonical package publication.
 - Reviewed first real publication, registry integrity/provenance and clean-install
   evidence, followed by immutable consumption instructions for 3-Tier #485 and
   DDD #23. Synthetic profiles and a green build cannot supply this evidence.
@@ -380,7 +410,7 @@ or silently change a shared contract inside an implementation repository.
 
 [ADR-0003](../adr/0003-nx-workspace-and-release-governance.md) supersedes the
 historical Changesets/no-Nx choices. This branch implements the workspace, single release authority and the split
-release/publish workflows. #8 remains open until signed CI delivery,
-independent conformance packaging, trusted publication and clean downstream
-consumer evidence exist. Contract runtimes and the standalone CLI must remain
+release/publish workflows. #8 is historically closed, but closure did not supply live publication evidence.
+Issue #20 corrects its coupled publication gate; live delivery and downstream
+conformance evidence remain separately required. Contract runtimes and the standalone CLI must remain
 usable without Nx.

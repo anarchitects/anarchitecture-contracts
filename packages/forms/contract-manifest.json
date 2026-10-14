@@ -1,9 +1,13 @@
 {
+  "artifactKind": "canonical-contract",
   "artifacts": {
+    "forms-canonical.json": "c7636b8bd15e9d4b8530bd91147b3ec9f83760afd3660b6d11952312d95d74ed",
+    "forms-canonical.yaml": "a5758b309b8d3e171e18e95e9ca12b8bf8a9b54abe99ed1735b32e7761bb7b34",
     "forms-review.json": "d869cdf941f7772cfbda34145b45f0ebd94a64c1278c7dd853a74d340604acc6",
     "forms-review.yaml": "e6417681cbe5b698c05abe21abc4feecfeecb9e985ec3ff92ecd37c11215d568",
-    "inventory.json": "7594faec436fa9ea5a9b7efbca68e608b2990645aa67e46bbcde024aedb1a243"
+    "inventory.json": "108edfa2bf2527acdd81e3090211b41a34e94db69f051a6267054d7203c23c64"
   },
+  "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
     {
       "capability": "forms.definitions",
@@ -46,10 +50,17 @@
       "status": "blocked"
     }
   ],
+  "contractPublication": {
+    "scope": "canonical-source-and-artifacts",
+    "status": "validated"
+  },
   "dependencies": {
     "@anarchitects/forms-contracts": {
       "zod": "4.5.0"
     }
+  },
+  "deploymentCompliance": {
+    "status": "unverified"
   },
   "documentedOperationCount": 0,
   "excludedOperations": [
@@ -74,8 +85,9 @@
       "reason": "unresolved-security"
     }
   ],
-  "formatVersion": 1,
+  "formatVersion": 2,
   "generator": {
+    "tools/openapi/artifacts.mjs": "a36a453ef9bc9ee073478bf502d0d4eb193a3c290006c0b77e5c4086fb1b8413",
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
     "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
     "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
@@ -83,6 +95,52 @@
     "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
     "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "hostConformanceBlockers": [
+    {
+      "capability": "forms.definitions",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.submissions",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "forms.submissions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "id": "D05",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Require server-side validation against the exact form definition/version before persistence or delivery; malformed fields return the existing 400 envelope. Bricks #489 must supply negative HTTP and no-side-effect evidence. See docs/forms-security-migration.md.",
+      "status": "blocked"
+    },
+    {
+      "capability": "forms.definitions",
+      "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
+      "id": "D08",
+      "implementation": "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+      "owner": "Contracts architecture maintainers and Bricks Forms/security maintainers",
+      "requirement": "Require PublicFormDefinitionEnvelopeResponseSchema at the public boundary; no delivery configuration or secrets. Bricks #489 must prove redaction, access policy, rotation and serialized output. See docs/forms-security-migration.md.",
+      "status": "blocked"
+    }
+  ],
+  "implementationConformance": {
+    "status": "unverified",
+    "supportedCapabilities": []
   },
   "operationCount": 4,
   "packages": {
@@ -93,12 +151,12 @@
       "forms.definitions",
       "forms.submissions"
     ],
-    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "description": "Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.",
     "hostBindings": {},
-    "id": "forms-review",
+    "id": "forms-canonical",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only",
+    "status": "canonical",
     "variants": [
       "forms.protected"
     ]
@@ -476,7 +534,7 @@
     },
     "revision": "sha256:5d7115a67ff258ddba39b995e190cf5bb7728213384bb7a063b64eae7952f04a"
   },
-  "status": "review-only",
+  "status": "canonical",
   "supportedCapabilities": [],
   "tools": {
     "@apidevtools/swagger-parser": "13.1.0",

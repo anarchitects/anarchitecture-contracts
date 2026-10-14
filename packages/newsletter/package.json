@@ -74,7 +74,9 @@
     "./openapi/newsletter-review.json": "./openapi/newsletter-review.json",
     "./openapi/newsletter-review.yaml": "./openapi/newsletter-review.yaml",
     "./openapi/inventory.json": "./openapi/inventory.json",
-    "./manifest.json": "./contract-manifest.json"
+    "./manifest.json": "./contract-manifest.json",
+    "./openapi/newsletter-canonical.json": "./openapi/newsletter-canonical.json",
+    "./openapi/newsletter-canonical.yaml": "./openapi/newsletter-canonical.yaml"
   },
   "dependencies": {
     "zod": "4.5.0"
