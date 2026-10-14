@@ -28,5 +28,15 @@
     "package": "@anarchitects/forms-contracts",
     "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
     "status": "approved"
+  },
+  {
+    "baseRevision": "313ffcb1116c86e747f406f8f896f69fabbf1f11",
+    "consumerMigration": "Security-driven breaking D08 correction: getFormDefinition now requires the existing safe public envelope and rejects delivery configuration. Consumers must stop reading delivery from the public endpoint, pin the next published Forms version and verify actual HTTP. Legacy schema exports remain migration evidence; protected profiles now explicitly require safe projection and restricted configuration/rotation. D05 dynamic validation remains separate. Retain unverified host/deployment status and D05/D08 blockers.",
+    "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/26",
+    "findingsDigest": "131d54a093a4285f6f3f5dc5fb28f4eaec86bd26c1232800272d0473480c5bc1",
+    "owner": "Johan Vrolix — explicit approval recorded in docs/reviews/25-forms-public-definition.md",
+    "package": "@anarchitects/forms-contracts",
+    "rollback": "Preserve immutable 0.1.0. Fix forward in a reviewed version; use only a verified secure host or disable the affected capability. Never restore delivery-secret exposure, D05 validation bypass, or weaken P07/host gates.",
+    "status": "approved"
   }
 ]
