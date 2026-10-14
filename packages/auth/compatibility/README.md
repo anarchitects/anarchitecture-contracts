@@ -3,7 +3,7 @@
 ## Scope and provenance
 
 `@anarchitects/auth-contracts` is an unreleased `0.0.0` workspace with a pending
-minor Nx version plan for the initial `0.1.0` line. This change authors schemas and
+initial release fixed at `0.0.1` by ADR-0004. This change authors schemas and
 operations; it makes no intentional wire migration or adoption claim.
 
 Reviewed all 15 Meta ADRs at `e2f34553c6e2492d0ab6f80ac795de44fc592a70`
