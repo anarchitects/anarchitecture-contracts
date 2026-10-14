@@ -9,6 +9,8 @@ baselines/legacy-3tier/*.yaml
 generated/
 packages/*/openapi/
 packages/*/contract-manifest.json
+# Nx owns generated release notes, including their Markdown layout.
+packages/*/CHANGELOG.md
 
 .nx/cache/
 .nx/workspace-data/

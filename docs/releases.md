@@ -3,7 +3,9 @@
 ## Current status
 
 The private root and verification tooling are excluded from release. The four
-contract packages remain unreleased at `0.0.0`. Nx 23.3.0 / `@nx/js` now orchestrate
+contract packages have signed `0.0.1` tags from the 2026-10-14 release run; that
+run created no GitHub Releases and did not publish to npm. Existing tags are
+release history and must not be recreated or moved. Nx 23.3.0 / `@nx/js` orchestrate
 builds and checks, and **Nx Release is the only configured versioning authority**.
 [ADR-0004](../adr/0004-package-initial-release-and-nx-versioning.md) makes
 Conventional Commits the bump authority. Initial development uses non-bumping
@@ -194,16 +196,75 @@ The helper delegates generation, validation and compatibility to Nx targets;
 Nx still controls bumps, changelogs, signed commits/tags,
 atomic push and GitHub Releases. There is no domain release runner.
 
+The helper uses a public Nx `ReleaseClient` override enabling
+`changelog.projectChangelogs.createRelease: "github"` and the required Git push
+configuration. A `createRelease: "github"` changelog argument does not enable a
+provider: that argument only disables creation when `false`. Generic Nx commands
+retain the inert defaults in `nx.json`; the guarded release helper explicitly
+controls signed Git actions. It passes version data to the configured changelog
+client but rebuilds the release graph so the version client's disabled remote
+release settings cannot leak into it. Dry runs preview GitHub Releases without
+writes. See [Nx's public API](https://nx.dev/docs/guides/nx-release/programmatic-api)
+and [GitHub Release configuration](https://nx.dev/docs/kb/automate-github-releases).
+
+Nx owns package `CHANGELOG.md` bytes. Only `packages/*/CHANGELOG.md` is excluded
+from Prettier and Markdown lint; authored documentation remains checked. This
+preserves existing release records and handles subsequent Nx-generated entries.
+
 **Publish** runs on `release.published`, or manually with an existing published
 release tag. It validates the tag/project, requires GitHub-verified tag and commit
 signatures, checks out the resolved commit SHA and requires ancestry on `main`.
-It runs `contract-checks:verify` (the existing full artifact/consumer suite),
+It runs every functional target from `contract-checks:verify`: baseline,
+behavioral and package tests, deterministic OpenAPI, OpenAPI/security tests and
+packed consumers, including prerequisite builds/typechecks. Formatting and
+Markdown lint remain CI/release-preflight checks; prose style does not block
+immutable artifact replay. It then runs
 compatibility against the previous package tag (the release commit's parent for
 a first release), and `<project>:publication-check`. The tag, package and manifest
 versions must agree. Only then does it invoke scoped `nx release publish` with
 OIDC/provenance. Concurrency serializes replay of the same tag; Nx detects an
 already-published version rather than overwriting it. Manual replay does not
 create tags or approve an unpublished GitHub Release.
+
+### Recover tags pushed without GitHub Releases
+
+The 2026-10-14 run pushed `auth-contracts@0.0.1`, `forms-contracts@0.0.1`,
+`identity-contracts@0.0.1` and `newsletter-contracts@0.0.1` at
+`1f8240b62b5533b136610ea44ebf16fe6b7efae4`. The original release commit also exposed
+a test fixture that assumed unrelated packages stayed at `0.0.0`, and prose
+checks incompatible with Nx's generated notes. These are tooling defects, not
+permission to alter tagged artifacts or to skip contract validation.
+
+After the correction is reviewed and merged, recovery is a separately authorized
+publication operation:
+
+1. Verify the existing annotated tag and release commit signatures, main ancestry,
+   package/manifest versions and canonical artifact integrity. Retain the original
+   tag and commit. Do not rerun first-release versioning or bump to `0.0.2` as a
+   workaround for the missing `0.0.1` distribution.
+2. Create each missing GitHub Release using its existing tag and its committed
+   package changelog. Review the release notes and npm trust/environment setup
+   first: publishing a GitHub Release can trigger npm publication.
+3. The old tag contains the old Publish workflow. Its automatic run may fail the
+   historical prose checks. Use **Publish → Run workflow → main**, supplying the
+   existing published tag, to run the corrected workflow. It still resolves the
+   signed tag to its immutable commit and runs the full functional contract suite
+   from that commit; it does not substitute packages or tools from current main.
+   The release-test fixture is exercised by CI, not by the publication suite.
+4. Confirm registry version/integrity/provenance and a downstream clean install
+   before recording publication as complete. Replay one package at a time.
+
+For example, after authorization and GitHub Release publication:
+
+```sh
+gh workflow run publish.yml --repo anarchitects/anarchitecture-contracts \
+  --ref main -f tag=auth-contracts@0.0.1
+```
+
+This command publishes; it is not a diagnostic dry run. The documented recovery
+does not claim it has been executed. See GitHub's
+[event references](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#release)
+and [workflow ref selection](https://cli.github.com/manual/gh_workflow_run).
 
 Required setup before the first live run:
 
