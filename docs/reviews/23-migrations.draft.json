@@ -1,0 +1,96 @@
+{
+  "note": "Prepared for a separate human compatibility review. P07 approval does not activate these records. The current gate requires a new minor line for every affected package; version intent remains to be reviewed. PR-base and last-release approvals have distinct exact base revisions.",
+  "reviews": [
+    {
+      "base": "3f5969da055c0799e49e1a9079f135816496c35b",
+      "migrations": [
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "consumerMigration": "Add the canonical configurable Auth factory while preserving default named schemas and existing wire behavior. Hosts select complete configurations and derive compatibility adapters; differently configured hosts must not use the default OpenAPI as their deployment description. No authentication/authorization semantics change. Exact-version downstream adoption and HTTP conformance remain in Bricks #488.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "c8f2d62dabd556913908685b93cf9d24bdb248bf023345e2a39cacee9d2e6992",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/auth-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        },
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "d10dfa5b962cf1e331f1cebfaecff53eff6e80e2f17d14878417b7101fc3381e",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/forms-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        },
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/identity-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        },
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "30e6f53dba839e5c01b03bb32a524b789d69daf8c667ed5a73856786a8f7edec",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/newsletter-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "base": "auth-contracts@0.0.1",
+      "migrations": [
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "consumerMigration": "Add the canonical configurable Auth factory while preserving default named schemas and existing wire behavior. Hosts select complete configurations and derive compatibility adapters; differently configured hosts must not use the default OpenAPI as their deployment description. No authentication/authorization semantics change. Exact-version downstream adoption and HTTP conformance remain in Bricks #488.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "c8f2d62dabd556913908685b93cf9d24bdb248bf023345e2a39cacee9d2e6992",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/auth-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        },
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "d10dfa5b962cf1e331f1cebfaecff53eff6e80e2f17d14878417b7101fc3381e",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/forms-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        },
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/identity-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        },
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "consumerMigration": "Only generated projection-review provenance and artifact digests change; canonical runtime sources, operations and wire constraints are unchanged. Consumers retain the existing parsing and HTTP behavior. No host-conformance claim is added.",
+          "decision": "https://github.com/anarchitects/anarchitecture-contracts/pull/24",
+          "findingsDigest": "30e6f53dba839e5c01b03bb32a524b789d69daf8c667ed5a73856786a8f7edec",
+          "owner": "Contracts architecture maintainers — approval pending",
+          "package": "@anarchitects/newsletter-contracts",
+          "rollback": "Retain immutable 0.0.1 for existing consumers; Bricks retains its current compatible factory until the new version is verified. Fix forward in a new reviewed version after distribution. Never rewrite existing releases, weaken P07 or remove host capability blockers.",
+          "status": "draft"
+        }
+      ]
+    }
+  ],
+  "status": "draft"
+}

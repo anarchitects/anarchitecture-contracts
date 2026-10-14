@@ -596,7 +596,7 @@ test('compatibility gates classify changes conservatively in both directions and
         nextVersion: '0.0.0',
         findings: [{ impact: 'minor' }],
       }),
-    /minor release/,
+    /patch release/,
   );
   const added = structuredClone(before);
   added.inventory.operations.push({
@@ -607,6 +607,113 @@ test('compatibility gates classify changes conservatively in both directions and
     },
   });
   assert.equal(requiredBump('1.0.0', diffContracts(before, added)), 'minor');
+});
+
+test('compatibility minima follow zero-major Nx semantics without waiving breaking review', () => {
+  for (const [version, impact, bump, nextVersion] of [
+    ['0.0.1', 'minor', 'patch', '0.0.2'],
+    ['0.2.3', 'minor', 'patch', '0.2.4'],
+    ['0.2.3', 'patch', 'patch', '0.2.4'],
+    ['1.2.3', 'minor', 'minor', '1.3.0'],
+    ['1.2.3', 'patch', 'patch', '1.2.4'],
+  ]) {
+    const findings = [{ impact }];
+    assert.equal(requiredBump(version, findings), bump);
+    validateReleaseVersion({ name: 'test', version, findings, nextVersion });
+    assert.throws(
+      () =>
+        validateReleaseVersion({
+          name: 'test',
+          version,
+          findings,
+          nextVersion: version,
+        }),
+      /requires a .* release/,
+    );
+  }
+  const findings = [{ impact: 'breaking' }];
+  assert.equal(requiredBump('0.2.3', findings), 'minor');
+  assert.equal(requiredBump('1.2.3', findings), 'major');
+  assert.throws(
+    () =>
+      validateReleaseVersion({
+        name: 'test',
+        version: '0.2.3',
+        findings,
+        nextVersion: '0.2.4',
+      }),
+    /minor release/,
+  );
+  assert.throws(
+    () =>
+      validateReleaseVersion({
+        name: 'test',
+        version: '0.2.3',
+        findings,
+        nextVersion: '0.3.0',
+      }),
+    /reviewed migration/,
+  );
+});
+
+test('migration approvals match one exact baseline and findings in legacy or multi-record files', () => {
+  const findings = [
+    { impact: 'breaking', reason: 'projection provenance changed' },
+  ];
+  const review = {
+    package: 'test',
+    status: 'approved',
+    baseRevision: 'pr-base',
+    findingsDigest: digest(json(findings)),
+    owner: 'maintainer',
+    decision: 'review',
+    consumerMigration: 'retain existing wire behavior',
+    rollback: 'preserve immutable releases',
+  };
+  const releaseReview = { ...review, baseRevision: 'release-base' };
+  const validate = (migration, overrides = {}) =>
+    validateReleaseVersion({
+      name: 'test',
+      version: '0.0.1',
+      nextVersion: '0.1.0',
+      findings,
+      baseRevision: 'pr-base',
+      migration,
+      ...overrides,
+    });
+  validate(review);
+  validate([review, releaseReview]);
+  validate([review, releaseReview], { baseRevision: 'release-base' });
+  for (const migration of [
+    null,
+    [],
+    [releaseReview],
+    [review, { ...review }],
+    [review, { ...review, status: 'draft' }],
+    ...Object.entries({
+      package: 'another-package',
+      baseRevision: 'stale-base',
+      findingsDigest: 'stale-findings',
+      status: 'draft',
+      owner: '',
+      decision: '',
+      consumerMigration: '',
+      rollback: '',
+    }).map(([key, value]) => [releaseReview, { ...review, [key]: value }]),
+  ]) {
+    assert.throws(() => validate(migration), /reviewed migration/);
+  }
+  assert.throws(
+    () =>
+      validate([review, releaseReview], {
+        findings: [...findings, { impact: 'breaking', reason: 'new change' }],
+      }),
+    /reviewed migration/,
+  );
+  assert.throws(
+    () => validate([review, releaseReview], { nextVersion: '0.0.2' }),
+    /minor release/,
+  );
 });
 
 test('frozen baseline comparison rejects route/ID/status drift and retains explicit discrepancy evidence', () => {

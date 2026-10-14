@@ -175,6 +175,52 @@ prevents closing #7 once its mechanisms and tests are complete.
 
 ## Compatibility policy
 
+### Configured Auth requests
+
+`createAuthContracts(config)` is the only authoring source for configured session
+request schemas and operation bodies. A resolved host profile may include the
+complete `authConfig` object. The generator replaces Auth session schemas using
+that factory; JWT keeps its default login constraints. Without `authConfig`,
+generation uses default schemas. The default package document must not be presented
+as an exact description of a host with different validation rules.
+
+Configured output includes `x-contract-auth-config` and the complete configuration
+in its manifest profile. A virtual `configuration:auth` source hash binds P07
+entries and host evidence to the exact configuration, including shaping metadata.
+Changing configuration invalidates those reviews and evidence. The factory's
+server validation does not implement Angular's `emptyStringPolicy` shaping.
+
+After building, prepare **draft** projection records for a specific configuration:
+
+```sh
+node tools/openapi/review-candidates.mjs auth-config.json > /tmp/auth-projections.draft.json
+```
+
+Maintainers must review the exact source, generator, configuration and projection
+limitations under P07. Drafts are not approvals. After that review, generate a
+diagnostic variant into a new directory:
+
+```sh
+node tools/openapi/cli.mjs configured-review auth-config.json reviewed-projections.json /tmp/auth-configured-review
+```
+
+This mode is `review-only`: protected operations remain excluded from paths and
+remain visible in inventory. It cannot establish host support. For a resolved
+host, put the same configuration in the approved profile and supply its reviewed
+register as the optional third argument:
+
+```sh
+yarn openapi:release approved-profile.json /tmp/auth-host reviewed-projections.json
+```
+
+All existing security, runtime-evidence and publication gates still apply.
+`verify-profile` accepts the same optional register for synthetic test-only
+evidence. No command rewrites the accepted register or package artifacts with
+configured host output. An omitted register uses the default checked-in register,
+which fails closed when its exact source/configuration/generator pins do not match.
+
+### Change classification
+
 [baseline-comparison.json](../generated/baseline-comparison.json) checks all 29
 routes, operation IDs, success statuses and tags against #3 and records discrepancy
 and fixture evidence. D01 fills the three JWT documentation gaps; D02's obsolete
@@ -187,15 +233,19 @@ renaming, changed schema constraints in either direction, responses, headers,
 security, capabilities and semantics are conservatively breaking. Canonical
 source changes are also conservatively breaking until reviewed because a changed
 parser or inferred type can leave OpenAPI unchanged. Added operations/schema IDs
-or additive exports require minor; compatible prose/artifact changes require patch.
+or additive exports require minor after 1.0 and patch before 1.0; compatible
+prose/artifact changes require patch.
 This classifier intentionally permits false positives rather than pretending to
 prove arbitrary schema-language inclusion or behavioral equivalence.
 
 Breaking changes require major after 1.0, a new minor line before 1.0, and an
 explicit approved migration record at `tools/openapi/migrations/<domain>.json`.
-The record binds `package`, exact `baseRevision`, `findingsDigest`, `status`,
+The file accepts one record or an array of records, so PR-base and cumulative
+last-release reviews can coexist. Each record binds `package`, exact `baseRevision`, `findingsDigest`, `status`,
 `owner`, `decision`, `consumerMigration` and `rollback`. CI checks that the record
-matches the findings; maintainers still review approval provenance. A bump alone
+matches the findings; exactly one record must match the package, revision and
+findings digest. Missing, ambiguous, draft or incomplete matches fail closed.
+Maintainers still review approval provenance. A bump alone
 never authorizes a security or wire change. The #7 records cover generator corrections and additive Forms migration targets;
 they do not authorize an unimplemented runtime wire or security change.
 

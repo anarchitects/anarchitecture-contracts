@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { AuthContractConfigSchema } from '@anarchitects/auth-contracts';
 import { digest, json, invariant } from './common.mjs';
 import { validateRequirements } from './validate.mjs';
 
@@ -29,6 +30,7 @@ const scheme = z.union([
   }),
 ]);
 export const ResolvedProfileSchema = z.strictObject({
+  authConfig: AuthContractConfigSchema.optional(),
   id: z.string().regex(/^[\w.-]+$/),
   description: text,
   status: z.enum(['approved', 'test-fixture']),

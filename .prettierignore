@@ -15,3 +15,4 @@ packages/*/CHANGELOG.md
 .nx/cache/
 .nx/workspace-data/
 .nx/typecheck/
+tools/contract-authoring/fixtures/auth-profile/*.ts

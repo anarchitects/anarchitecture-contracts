@@ -2,46 +2,25 @@ import { z } from 'zod';
 import { decodedJson, stringInput, wireString } from './input.js';
 import { PolicyRuleArraySchema } from './policy.js';
 
-// Match the audited full email grammar, including one-character domain suffixes.
-// Do not substitute Zod's convenience email validator without a semantic review.
-const localAtom = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+";
-const domainLabel = '[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?';
-const email = z
-  .string()
-  .regex(
-    new RegExp(
-      `^${localAtom}(?:\\.${localAtom})*@(?:${domainLabel}\\.)+${domainLabel}$`,
-    ),
-  );
+import {
+  createAuthRequestSchemas,
+  authEmail as email,
+} from './configurable.js';
+import { DefaultAuthContractConfig } from './config.js';
+
+const defaults = createAuthRequestSchemas(DefaultAuthContractConfig);
 const password = stringInput(wireString(6));
 const token = stringInput(wireString(1));
 const open = <T extends z.ZodRawShape>(shape: T) =>
   z.object(shape).catchall(decodedJson);
-
-export const RegisterRequestSchema = open({
-  email: stringInput(email),
-  password,
-  confirmPassword: password,
-  name: stringInput(wireString(2, 100)).optional(),
-});
-export const LoginRequestSchema = open({
-  credential: stringInput(wireString(2, 100)),
-  password,
-});
-export const LogoutRequestSchema = z.object({}); // Deliberately strips extra keys.
+export const RegisterRequestSchema = defaults.registerRequestSchema;
+export const LoginRequestSchema = defaults.loginRequestSchema;
+export const LogoutRequestSchema = defaults.logoutRequestSchema;
 export const ActivateUserRequestSchema = open({ token });
-export const ForgotPasswordRequestSchema = open({ email: stringInput(email) });
-export const ResetPasswordRequestSchema = open({
-  token,
-  password,
-  confirmPassword: password,
-});
-export const VerifyEmailRequestSchema = open({ token });
-export const ChangePasswordRequestSchema = open({
-  currentPassword: password,
-  newPassword: password,
-  confirmPassword: password,
-});
+export const ForgotPasswordRequestSchema = defaults.forgotPasswordRequestSchema;
+export const ResetPasswordRequestSchema = defaults.resetPasswordRequestSchema;
+export const VerifyEmailRequestSchema = defaults.verifyEmailRequestSchema;
+export const ChangePasswordRequestSchema = defaults.changePasswordRequestSchema;
 export const UpdateEmailRequestSchema = open({
   newEmail: stringInput(email),
   password: password.optional(),

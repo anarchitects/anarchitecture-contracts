@@ -6,6 +6,16 @@ version-plan creation and consumption have been removed. The historical record
 below describes the previous implementation, not the active release procedure.
 Use the [release runbook](releases.md) for current commands.
 
+## Zero-major alignment (#23)
+
+PR #24 explicitly sets `adjustSemverBumpsForZeroMajorVersion: true`, aligning
+with the Nx 23 default used by Bricks 3-tier, Community and Plugins. Compatible
+features and fixes produce patch releases before 1.0; declared breaks produce a
+minor. The compatibility gate follows those minima and retains exact migration
+approval for breaking findings. Neither ADR-0004 nor Meta ADR-0013 prescribed the
+previous `false` override. The historical Changesets-equivalence discussion below
+explains why that override once existed; it is not current release policy.
+
 ## Independent publication correction (#20)
 
 [ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md)

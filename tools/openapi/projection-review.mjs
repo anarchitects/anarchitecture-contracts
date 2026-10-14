@@ -13,6 +13,7 @@ export function generatorFiles() {
       'fidelity.mjs',
       'projection-review.mjs',
       'profiles.mjs',
+      'auth-configuration.mjs',
     ].map((file) => [
       `tools/openapi/${file}`,
       digest(readFileSync(`tools/openapi/${file}`)),

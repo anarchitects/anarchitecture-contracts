@@ -67,7 +67,7 @@
     "version": {
       "updateDependents": "auto",
       "preserveLocalDependencyProtocols": false,
-      "adjustSemverBumpsForZeroMajorVersion": false,
+      "adjustSemverBumpsForZeroMajorVersion": true,
       "conventionalCommits": true
     },
     "changelog": {

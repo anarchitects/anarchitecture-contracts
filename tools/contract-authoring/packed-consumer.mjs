@@ -106,6 +106,15 @@ try {
         assert.deepEqual(Object.keys(esm).sort(), Object.keys(cjs).sort(), specifier);
       }
       const esm = await import(name), cjs = require(name);
+      if (domain === 'auth') {
+        const config = structuredClone(esm.DefaultAuthContractConfig);
+        config.login.password.minLength = 3;
+        for (const entry of [esm, cjs]) {
+          const configured = entry.createAuthContracts(config);
+          assert.equal(configured.loginRequestSchema.parse({ credential: 'reader', password: 1234 }).password, '1234');
+          assert.equal(configured.config.login.password.minLength, 3);
+        }
+      }
       const [schemaName, input] = {
         auth: ['LoginRequestSchema', { credential: 123456, password: 123456 }],
         identity: ['CreateUserProfileRequestSchema', { authUserId: 123, displayName: null }],
@@ -151,6 +160,14 @@ try {
 
   const types = `
     import { LoginRequestSchema, login, type LoginRequestInput, type LoginRequest, type AuthOperation } from '@anarchitects/auth-contracts';
+    import { createAuthContracts, DefaultAuthContractConfig, type AuthContractConfig } from '@anarchitects/auth-contracts';
+    const configured = createAuthContracts({ ...DefaultAuthContractConfig, login: { ...DefaultAuthContractConfig.login, password: { required: false, emptyStringPolicy: 'strip' } } });
+    const optionalPassword: string | undefined = configured.loginRequestSchema.parse({ credential: 'reader' }).password;
+    // @ts-expect-error optional configuration cannot promise a required password
+    const requiredPassword: string = configured.loginRequestSchema.parse({ credential: 'reader' }).password;
+    const completeConfig: AuthContractConfig = DefaultAuthContractConfig;
+    const defaultPassword: string = createAuthContracts().loginRequestSchema.parse({ credential: 'reader', password: '123456' }).password;
+    void [optionalPassword, requiredPassword, completeConfig, defaultPassword];
     import { JwtTokensResponseSchema } from '@anarchitects/auth-contracts/jwt';
     import { PolicyRuleSchema } from '@anarchitects/auth-contracts/policy';
     import { PasskeyRegistrationFinishRequestSchema } from '@anarchitects/auth-contracts/passkeys';

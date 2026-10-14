@@ -8,6 +8,7 @@ import {
 import { join } from 'node:path';
 import { loadDomains } from './model.mjs';
 import { canonicalArtifacts, hostArtifacts } from './artifacts.mjs';
+import { generate, reviewProfile } from './generate.mjs';
 import { compareLegacy } from './compatibility.mjs';
 import { json, readJson, invariant } from './common.mjs';
 
@@ -15,14 +16,35 @@ const [command = 'check', ...args] = process.argv.slice(2);
 const models = await loadDomains();
 const proposal = readJson('tools/openapi/projection-proposal.json');
 const expected = new Map();
-if (command === 'release' || command === 'verify-profile') {
+if (command === 'configured-review') {
   invariant(
-    args.length === 2,
-    'Usage: release <approved-profile.json> <output-directory>',
+    args.length === 3,
+    'Usage: configured-review <auth-config.json> <reviewed-projections.json> <output-directory>',
+  );
+  const auth = models.filter((model) => model.domain === 'auth');
+  const result = await generate(auth, {
+    profile: {
+      ...reviewProfile(auth),
+      id: 'auth-configured-review',
+      authConfig: readJson(args[0]),
+    },
+    proposal: readJson(args[1]),
+    review: true,
+  });
+  invariant(!existsSync(args[2]), 'Configured output directory must not exist');
+  mkdirSync(args[2], { recursive: true });
+  writeFileSync(join(args[2], 'auth-configured-review.json'), result.jsonText);
+  writeFileSync(join(args[2], 'auth-configured-review.yaml'), result.yamlText);
+  writeFileSync(join(args[2], 'inventory.json'), result.inventoryText);
+  writeFileSync(join(args[2], 'manifest.json'), json(result.manifest));
+} else if (command === 'release' || command === 'verify-profile') {
+  invariant(
+    args.length === 2 || args.length === 3,
+    'Usage: release|verify-profile <profile.json> <output-directory> [reviewed-projections.json]',
   );
   const result = await hostArtifacts(models, {
     profile: readJson(args[0]),
-    proposal,
+    proposal: args[2] ? readJson(args[2]) : proposal,
     verification: command === 'verify-profile',
   });
   invariant(!existsSync(args[1]), 'Release output directory must not exist');

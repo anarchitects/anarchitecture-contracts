@@ -149,7 +149,8 @@ export function requiredBump(version, findings) {
   invariant(semver.valid(version), `Invalid package version: ${version}`);
   if (findings.some((finding) => finding.impact === 'breaking'))
     return semver.major(version) === 0 ? 'minor' : 'major';
-  if (findings.some((finding) => finding.impact === 'minor')) return 'minor';
+  if (findings.some((finding) => finding.impact === 'minor'))
+    return semver.major(version) === 0 ? 'patch' : 'minor';
   return findings.length ? 'patch' : null;
 }
 
@@ -183,15 +184,24 @@ export function validateReleaseVersion({
     );
   }
   if (findings.some((finding) => finding.impact === 'breaking')) {
+    // A PR base and the last release can require distinct, explicitly reviewed
+    // records. Preserve single-record files and require one exact match; never
+    // let another baseline, stale findings or duplicate records grant approval.
+    const findingsDigest = digest(json(findings));
+    const matches = (Array.isArray(migration) ? migration : [migration]).filter(
+      (record) =>
+        record?.package === name &&
+        record.baseRevision === baseRevision &&
+        record.findingsDigest === findingsDigest,
+    );
+    const [review] = matches;
     invariant(
-      migration?.status === 'approved' &&
-        migration.package === name &&
-        migration.baseRevision === baseRevision &&
-        migration.findingsDigest === digest(json(findings)) &&
-        migration.decision &&
-        migration.owner &&
-        migration.consumerMigration &&
-        migration.rollback,
+      matches.length === 1 &&
+        review.status === 'approved' &&
+        review.decision &&
+        review.owner &&
+        review.consumerMigration &&
+        review.rollback,
       `${name}: breaking changes require a matching reviewed migration, including pre-1.0`,
     );
   }

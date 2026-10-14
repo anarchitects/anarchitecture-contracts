@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import semver from 'semver';
-import { invariant } from '../openapi/common.mjs';
+import { invariant, readJson } from '../openapi/common.mjs';
 import { releaseProjects } from './projects.mjs';
 
 export const git = (...args) =>
@@ -39,6 +39,26 @@ async function requestJson(
     `Distribution history unavailable: ${url} (${response.status})`,
   );
   return response.json();
+}
+
+// npm creates a public holding package when a new package is staged. These
+// exact artifacts were downloaded, integrity-checked and inspected; they contain
+// no contract implementation. See docs/reviews/23-npm-staging-history.md.
+// Never exempt arbitrary prereleases or trust the version suffix alone.
+function isVerifiedStagingPlaceholder(name, version, metadata) {
+  const expected = readJson('tools/release/npm-staging-placeholders.json')[
+    name
+  ];
+  return (
+    expected &&
+    version === expected.version &&
+    metadata?.name === name &&
+    metadata.version === version &&
+    metadata.stub === true &&
+    metadata.dist?.fileCount === 2 &&
+    metadata.dist.integrity === expected.integrity &&
+    metadata.dist.tarball === expected.tarball
+  );
 }
 
 // Fail closed on authorization/network errors. Only npm's explicit 404 means absent.
@@ -84,11 +104,12 @@ export async function distributionHistory({ fetcher = fetch } = {}) {
           typeof data.versions === 'object',
         `Invalid npm history for ${name}`,
       );
-      for (const version of Object.keys(data.versions)) {
+      for (const [version, metadata] of Object.entries(data.versions)) {
         invariant(
           semver.valid(version) === version,
           `Invalid npm version for ${name}`,
         );
+        if (isVerifiedStagingPlaceholder(name, version, metadata)) continue;
         invariant(
           history[project].includes(version),
           `Missing local tag for distributed ${name}@${version}; reconcile history before releasing`,

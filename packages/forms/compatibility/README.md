@@ -86,3 +86,15 @@ record faithful constraints, remaining exceptions and strict profile/evidence ga
 Synthetic verification is test-only; actual host evidence and capability blockers
 remain outstanding. Existing legacy parsers and frozen HTTP observations are
 preserved. #7 can complete independently of host remediation and #8 publication.
+
+## Issue #23 reviewed release delta
+
+The [issue #23 migration approval](../../../docs/reviews/23-migration-approval.md)
+covers both the PR baseline and the immutable `0.0.1` release baseline. The
+approved next release intent is `0.1.0`, derived through Nx Conventional Commits;
+this note does not materialize or publish a version.
+
+This package changes generated projection-review provenance and artifact digests,
+without changing canonical runtime sources, operations or wire constraints. The
+conservative compatibility gate requires the approved minor release for that
+metadata delta; host-conformance obligations remain unchanged.

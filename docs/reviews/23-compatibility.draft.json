@@ -1,0 +1,526 @@
+{
+  "note": "Exact findings after explicitly approved P07 regeneration. P07 approval does not approve these separate compatibility migrations or version intents.",
+  "reports": [
+    {
+      "base": "3f5969da055c0799e49e1a9079f135816496c35b",
+      "reports": [
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ActivateUserRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ChangePasswordRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ForgotPasswordRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.LoginRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.RegisterRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ResetPasswordRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.UpdateEmailRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.UserIdParams.node.70726f70657274792e757365724964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.VerifyEmailRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.jwt.JwtLogoutRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.jwt.JwtRefreshRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.passkeys.PasskeyAuthenticationFinishRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.passkeys.PasskeyRegistrationBeginRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.passkeys.PasskeyRegistrationFinishRequest.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            },
+            {
+              "detail": "Published package documentation changed",
+              "impact": "patch",
+              "surface": "README.md"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/contracts.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/index.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/config.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/configurable.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/session.ts"
+            }
+          ],
+          "findingsDigest": "c8f2d62dabd556913908685b93cf9d24bdb248bf023345e2a39cacee9d2e6992",
+          "gate": "@anarchitects/auth-contracts: breaking changes require a matching reviewed migration, including pre-1.0",
+          "nxProposedVersion": "0.1.0",
+          "package": "@anarchitects/auth-contracts",
+          "requiredBump": "minor"
+        },
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            }
+          ],
+          "findingsDigest": "d10dfa5b962cf1e331f1cebfaecff53eff6e80e2f17d14878417b7101fc3381e",
+          "gate": "@anarchitects/forms-contracts requires a minor release; Nx proposed 0.0.2",
+          "nxProposedVersion": "0.0.2",
+          "package": "@anarchitects/forms-contracts",
+          "requiredBump": "minor"
+        },
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "identity.CreateUserProfileRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "identity.ProfileId.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "identity.UpdateUserProfileRequest.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            }
+          ],
+          "findingsDigest": "0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35",
+          "gate": "@anarchitects/identity-contracts requires a minor release; Nx proposed 0.0.2",
+          "nxProposedVersion": "0.0.2",
+          "package": "@anarchitects/identity-contracts",
+          "requiredBump": "minor"
+        },
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "newsletter.NewsletterSubscribeRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "newsletter.NewsletterWebhookPayload.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            }
+          ],
+          "findingsDigest": "30e6f53dba839e5c01b03bb32a524b789d69daf8c667ed5a73856786a8f7edec",
+          "gate": "@anarchitects/newsletter-contracts requires a minor release; Nx proposed 0.0.2",
+          "nxProposedVersion": "0.0.2",
+          "package": "@anarchitects/newsletter-contracts",
+          "requiredBump": "minor"
+        }
+      ]
+    },
+    {
+      "base": "auth-contracts@0.0.1",
+      "reports": [
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ActivateUserRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ChangePasswordRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ForgotPasswordRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.LoginRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.RegisterRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.ResetPasswordRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.UpdateEmailRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.UserIdParams.node.70726f70657274792e757365724964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.VerifyEmailRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.jwt.JwtLogoutRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.jwt.JwtRefreshRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.passkeys.PasskeyAuthenticationFinishRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.passkeys.PasskeyRegistrationBeginRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "auth.passkeys.PasskeyRegistrationFinishRequest.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            },
+            {
+              "detail": "Published package documentation changed",
+              "impact": "patch",
+              "surface": "README.md"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/contracts.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/index.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/config.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/configurable.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/session.ts"
+            }
+          ],
+          "findingsDigest": "c8f2d62dabd556913908685b93cf9d24bdb248bf023345e2a39cacee9d2e6992",
+          "gate": "@anarchitects/auth-contracts: breaking changes require a matching reviewed migration, including pre-1.0",
+          "nxProposedVersion": "0.1.0",
+          "package": "@anarchitects/auth-contracts",
+          "requiredBump": "minor"
+        },
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.FormIdParams.node.70726f70657274792e666f726d4964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            }
+          ],
+          "findingsDigest": "d10dfa5b962cf1e331f1cebfaecff53eff6e80e2f17d14878417b7101fc3381e",
+          "gate": "@anarchitects/forms-contracts requires a minor release; Nx proposed 0.0.2",
+          "nxProposedVersion": "0.0.2",
+          "package": "@anarchitects/forms-contracts",
+          "requiredBump": "minor"
+        },
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "identity.CreateUserProfileRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "identity.ProfileId.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "identity.UpdateUserProfileRequest.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            }
+          ],
+          "findingsDigest": "0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35",
+          "gate": "@anarchitects/identity-contracts requires a minor release; Nx proposed 0.0.2",
+          "nxProposedVersion": "0.0.2",
+          "package": "@anarchitects/identity-contracts",
+          "requiredBump": "minor"
+        },
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "findings": [
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "newsletter.NewsletterSubscribeRequest.Input"
+            },
+            {
+              "detail": "Schema constraints or projection changed; acceptance in both directions needs review",
+              "impact": "breaking",
+              "surface": "newsletter.NewsletterWebhookPayload.Input"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionReviews"
+            },
+            {
+              "detail": "Profile, capability or security obligations changed",
+              "impact": "breaking",
+              "surface": "projectionProposal"
+            },
+            {
+              "detail": "Generated artifacts or pinned generator changed",
+              "impact": "patch",
+              "surface": "generated-artifacts"
+            }
+          ],
+          "findingsDigest": "30e6f53dba839e5c01b03bb32a524b789d69daf8c667ed5a73856786a8f7edec",
+          "gate": "@anarchitects/newsletter-contracts requires a minor release; Nx proposed 0.0.2",
+          "nxProposedVersion": "0.0.2",
+          "package": "@anarchitects/newsletter-contracts",
+          "requiredBump": "minor"
+        }
+      ]
+    }
+  ],
+  "status": "draft"
+}

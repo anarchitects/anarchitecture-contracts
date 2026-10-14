@@ -278,15 +278,54 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
     commit('fix(auth-contracts): correction on released zero-major');
     assert.equal(preview('auth-contracts').newVersion, '0.0.2');
     commit('feat(auth-contracts): addition on zero-major');
-    assert.equal(preview('auth-contracts').newVersion, '0.1.0');
+    const additionVersion = preview('auth-contracts').newVersion;
+    assert.equal(additionVersion, '0.0.2');
+    validateReleaseVersion({
+      name: 'auth-contracts',
+      version: '0.0.1',
+      nextVersion: additionVersion,
+      findings: [{ impact: 'minor' }],
+    });
+    assert.throws(() => request('auth-contracts', '0.1.0'), /must preserve/);
+    assert.throws(
+      () =>
+        validateReleaseVersion({
+          name: 'auth-contracts',
+          version: '0.0.1',
+          nextVersion: additionVersion,
+          findings,
+          migration,
+          baseRevision: 'base',
+        }),
+      /minor release/,
+    );
     commit(
       'fix(auth-contracts): breaking footer\n\nBREAKING CHANGE: response changed',
     );
-    assert.equal(preview('auth-contracts').newVersion, '1.0.0');
+    const breakingVersion = preview('auth-contracts').newVersion;
+    assert.equal(breakingVersion, '0.1.0');
+    validateReleaseVersion({
+      name: 'auth-contracts',
+      version: '0.0.1',
+      nextVersion: breakingVersion,
+      findings,
+      migration,
+      baseRevision: 'base',
+    });
+    // Start a fresh release baseline so the header assertion cannot pass merely
+    // because the earlier footer already declared a break.
+    write('packages/auth/package.json', {
+      name: 'auth-contracts',
+      version: '0.1.0',
+    });
+    commit('chore: fixture next zero-major line');
+    git('tag', 'auth-contracts@0.1.0');
+    commit('feat(auth-contracts)!: reviewed zero-major break');
+    assert.equal(preview('auth-contracts').newVersion, '0.2.0');
     assert.equal(
       JSON.parse(readFileSync(join(directory, 'packages/auth/package.json')))
         .version,
-      '0.0.1',
+      '0.1.0',
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });
