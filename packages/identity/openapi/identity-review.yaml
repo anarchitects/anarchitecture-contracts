@@ -962,7 +962,7 @@ components:
 info:
   description: Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.
   title: REVIEW-ONLY — Anarchitecture identity-review
-  version: 0.1.0
+  version: 0.1.1
 jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
 openapi: 3.1.1
 paths: {}
@@ -984,4 +984,4 @@ x-contract-excluded-operations:
 x-contract-profile: identity-review
 x-contract-status: review-only
 x-contract-versions:
-  "@anarchitects/identity-contracts": 0.1.0
+  "@anarchitects/identity-contracts": 0.1.1

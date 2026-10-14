@@ -1,10 +1,10 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "forms-canonical.json": "adb48f6c37a113dc0326c35776dec23489922571607c270c5ff2a7ffbbd2314e",
-    "forms-canonical.yaml": "7715c09354afe6b90ccf504918956d6876e7103498960380ab14412fda754db3",
-    "forms-review.json": "36a6f52d51ca9024260cc3c2f6928e1babcd066fe47c5db5ee7bcc324cb7f5e9",
-    "forms-review.yaml": "1a49e1abe91dc84dd83a39f091f842dc7d64fe1bf7cf09a5f819b33862a6f257",
+    "forms-canonical.json": "042bb8197d27514a4def0fcfc801234271961325d8e321f400b4a619d6a21fca",
+    "forms-canonical.yaml": "983a14a676ca00dc254b6b413dca87f8b874ee5fb96371c10f76727fef861002",
+    "forms-review.json": "ec806ce85334f8bf6d59bb5a5bf364ee4a96910bdc88ef62f1bd6fb84dac518e",
+    "forms-review.yaml": "72634198ea1d49a460ef90df6e03e459fa1286baf2993963a8f4f016dece68f5",
     "inventory.json": "be5edb700186a4aaa91ed7e6b87b5b7640f2ca5b30e2f5d4ccc45741943f7997"
   },
   "blockerScope": "implementation-and-deployment",
@@ -145,7 +145,7 @@
   },
   "operationCount": 4,
   "packages": {
-    "@anarchitects/forms-contracts": "0.1.0"
+    "@anarchitects/forms-contracts": "0.2.0"
   },
   "profile": {
     "capabilities": [

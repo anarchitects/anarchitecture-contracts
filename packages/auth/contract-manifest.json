@@ -1,10 +1,10 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "auth-canonical.json": "3c7f48d66c872500167a3fbc8672bbc425e4a2efcb0d385e226c7fec8e030923",
-    "auth-canonical.yaml": "8804c881a6c5b722e1bae7caf34d7aaf05a7e447bd48a2bb8e575a561ab77499",
-    "auth-review.json": "34ce7acd61447f07eefed9a7fc8606765c41d59c1c3bac4774919c7e5af146d6",
-    "auth-review.yaml": "1c6c192e167b480c48719be966cc3bfc4b5c9ba7edb422339151d58833a8fbc1",
+    "auth-canonical.json": "7f9409c2cf019b48fa4b38b7d4e338ec3cf70cc026b5e603605fc0b57a88f7f7",
+    "auth-canonical.yaml": "a4736ec04ab43c33f20ab41ab5a5908e04e1b88d1ee7b037ec4a2dc213404ea2",
+    "auth-review.json": "f1787e3fe15c39cd9429b00f3600c5e8e59df7b50e7363cd97549377b8b06d48",
+    "auth-review.yaml": "2344a0407c2084d69f0f8c00321ebee24026e0ae2eb766619ecaacbe77cd5f3a",
     "inventory.json": "c095b29d31a8b54e42b2cdc91ec8788718755fbd67e0c20bdce2e0be174ba961"
   },
   "blockerScope": "implementation-and-deployment",
@@ -141,7 +141,7 @@
   },
   "operationCount": 17,
   "packages": {
-    "@anarchitects/auth-contracts": "0.1.0"
+    "@anarchitects/auth-contracts": "0.1.1"
   },
   "profile": {
     "capabilities": [

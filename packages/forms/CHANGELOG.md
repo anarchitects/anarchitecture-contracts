@@ -1,3 +1,58 @@
+## 0.2.0 (2026-10-14)
+
+### 🩹 Fixes
+
+- ⚠️  **forms-contracts:** use safe definitions and classify scoped provenance ([#26](https://github.com/anarchitects/anarchitecture-contracts/pull/26))
+
+### ⚠️  Breaking Changes
+
+- **forms-contracts:** use safe definitions and classify scoped provenance  ([#26](https://github.com/anarchitects/anarchitecture-contracts/pull/26))
+  getFormDefinition rejects delivery configuration. Retain legacy schema exports for migration evidence and require protected host redaction and rotation evidence. P07 source-pin review and generated artifacts remain pending in the draft PR for #25.
+  * fix(forms-contracts)!: regenerate the reviewed D08 artifacts
+  Record the explicit approval of the six existing Forms P07 source pins. Preserve all other entry fields and regenerate from canonical sources. Disclose the collateral shared-register digest in Auth, Identity and Newsletter manifests; migration approvals and the resulting version-intent conflict remain pending in PR #26.
+  * fix(contract-checks): distinguish shared P07 provenance from contract breaks
+  Keep package-local reviews, schema/security changes, exact P07 pins and artifact integrity strict. Classify digest-only distributed manifest changes as patch; unchanged artifacts require no bump. Compare all packages against their published revisions, retain the Forms D08 minor requirement and leave its exact migration record pending review.
+  * chore(contract-checks): record approved Forms migration"
+  M	docs/forms-security-migration.md
+  M	docs/openapi.md
+  M	docs/releases.md
+  A	docs/reviews/25-compatibility-report.json
+  A	docs/reviews/25-forms-public-definition.md
+  A	docs/reviews/25-migrations.draft.json
+  A	docs/reviews/25-nx-preview.json
+  A	docs/reviews/25-p07.draft.json
+  M	generated/baseline-comparison.json
+  M	generated/contract-manifest.json
+  M	generated/openapi/aggregate-canonical.json
+  M	generated/openapi/aggregate-canonical.yaml
+  M	generated/openapi/aggregate-review.json
+  M	generated/openapi/aggregate-review.yaml
+  M	generated/openapi/inventory.json
+  M	packages/auth/contract-manifest.json
+  M	packages/forms/README.md
+  M	packages/forms/compatibility/README.md
+  M	packages/forms/contract-manifest.json
+  M	packages/forms/openapi/forms-canonical.json
+  M	packages/forms/openapi/forms-canonical.yaml
+  M	packages/forms/openapi/forms-review.json
+  M	packages/forms/openapi/forms-review.yaml
+  M	packages/forms/openapi/inventory.json
+  M	packages/forms/src/operations/index.ts
+  M	packages/forms/test/forms.test.mjs
+  M	packages/identity/contract-manifest.json
+  M	packages/newsletter/contract-manifest.json
+  M	tools/contract-authoring/forms-newsletter.test.mjs
+  M	tools/contract-authoring/packed-consumer.mjs
+  M	tools/openapi/compatibility.mjs
+  A	tools/openapi/compatibility.test.mjs
+  M	tools/openapi/migrations/forms.json
+  M	tools/openapi/openapi.test.mjs
+  M	tools/openapi/projection-proposal.json
+
+### ❤️ Thank You
+
+- Johan Vrolix @vrxj81
+
 ## 0.1.0 (2026-10-14)
 
 ### 🚀 Features

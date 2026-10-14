@@ -1,10 +1,10 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "identity-canonical.json": "c952b44f079e4d08965ef6bc9ffb0e6cb8a6b22ab04ea5516fe6598bf2449133",
-    "identity-canonical.yaml": "ae0373530d8e2e2f116d4d9cbf8238ddc8d402da27502a13bd4963b8361ede53",
-    "identity-review.json": "bd69d7db41a70126edc3523c3eda677c8d26924a5394a98782f22a2d2fc43b97",
-    "identity-review.yaml": "53b6e18e72995b0805a17e4ffeef414530756c11f764a82f8508df807981f751",
+    "identity-canonical.json": "1ded18afbeccc9c4a85273e9f61a66eea5216c10258e56b984a6c85384688686",
+    "identity-canonical.yaml": "0daf889c6e108cb1c749b187338d3627d494c82be2743ccebc8e0226b7921fb7",
+    "identity-review.json": "8ee87deb8860a8e364ff19b57e3eca1986a796e112ecdcdec1d53e006906fa06",
+    "identity-review.yaml": "60ecf6995a11486a6f11a45895ccb6574096547a81f6d929c2d7ca5c65c4e3b1",
     "inventory.json": "72fa027a3bb8ef1e413883d5d665f0526c90e53b2ef1e995595303d5afe211ba"
   },
   "blockerScope": "implementation-and-deployment",
@@ -87,7 +87,7 @@
   },
   "operationCount": 4,
   "packages": {
-    "@anarchitects/identity-contracts": "0.1.0"
+    "@anarchitects/identity-contracts": "0.1.1"
   },
   "profile": {
     "capabilities": [
