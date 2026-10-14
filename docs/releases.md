@@ -108,8 +108,9 @@ Nx type mapping is explicit, including `init`, `docs` and tooling types with
 `adjustSemverBumpsForZeroMajorVersion: false` preserves compatible additions as
 minor bumps; Nx breaking commits propose a major even before 1.0. Contract policy
 requires at least a new minor line before 1.0, so that conservative Nx major is
-sufficient. No hand-written second version calculator or workflow specifier
-can override Nx's result.
+sufficient. Explicit specifiers are resolved by Nx and checked against its
+Conventional Commit preview; they cannot change the derived major/minor/patch
+version. There is no second bump calculator.
 
 `yarn openapi:compatibility <base-ref>` compares package surfaces against the
 exact base and validates Nx's actual proposed version. Unreleased development
@@ -143,9 +144,35 @@ released projects only. An explicit `first_release` selection must contain only
 unreleased packages and always produces `0.0.1`. Release packages in different
 lifecycle states in separate operations. Official prerelease distribution before
 `0.0.1` is forbidden; subsequent prereleases retain the existing `next` dist-tag
-handling. The optional `preid` input (for example `next`) lets Nx derive a
-prerelease from Conventional Commits for already released packages. It cannot
-be combined with first release. There is no manual version-specifier input.
+handling. The optional `specifier` accepts standard Nx keywords (`patch`, `minor`,
+`major`, `prepatch`, `preminor`, `premajor`, `prerelease`) or an exact SemVer.
+Leave it empty to use Conventional Commits. For first release, leave it empty or
+enter exactly `0.0.1`; a keyword or prerelease is rejected.
+
+For released packages, Nx previews both the conventional version and the explicit
+specifier. Their numeric major/minor/patch versions must agree for every selected
+project. A specifier cannot force an unrelated bump or create a release when
+commits do not warrant one. It can select a prerelease of the derived version;
+use an exact version for a label such as `beta`. The separate `preid` input is
+not exposed. Examples for a package at `1.2.3` with a `feat` commit:
+
+| Specifier          | Result                                              |
+| ------------------ | --------------------------------------------------- |
+| Empty or `minor`   | `1.3.0`                                             |
+| `1.3.0-beta.0`     | `1.3.0-beta.0`                                      |
+| `preminor`         | `1.3.0-0` (Nx's default numeric prerelease)         |
+| `patch` or `2.0.0` | Rejected: differs from Nx's derived numeric version |
+
+An existing prerelease may be promoted to its exact final version even without
+new commits: `1.3.0-beta.1` with specifier `1.3.0` becomes `1.3.0`. With relevant
+new commits, `prerelease` advances the prerelease counter. Nx's
+`releaseTag.strictPreid: false` includes prerelease tags when resolving the latest
+package version, without requiring a separate identifier. Downgrades, repeats,
+and unrelated numeric versions are rejected. Contract compatibility and pinned
+migration checks still apply to the actual selected version. If Nx's prerelease
+continuation does not cover a new contract break, the gate stops the release;
+a manual specifier cannot bypass it. Select projects separately when one
+specifier cannot satisfy their independent versions.
 
 Keep `dry_run` enabled to preview versions, changelogs and signing/tag actions
 without writes or signing credentials. Package manifests and generated artifacts

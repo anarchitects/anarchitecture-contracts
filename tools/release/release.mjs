@@ -9,7 +9,7 @@ import {
   distributionHistory,
   assertInitialVersion,
 } from './history.mjs';
-import { previewVersions } from './versions.mjs';
+import { previewVersions, validateSpecifier } from './versions.mjs';
 import { checkCompatibility } from './compatibility.mjs';
 import { loadDomains } from '../openapi/model.mjs';
 import { assertPublishable } from './publication-gate.mjs';
@@ -26,20 +26,9 @@ export function releaseOptions(values) {
     new Set(projects).size === projects.length,
     'Duplicate release project',
   );
-  invariant(
-    !values.specifier,
-    'Version overrides are disabled; Conventional Commits control released packages',
-  );
-  invariant(
-    !values.preid || /^[A-Za-z][A-Za-z0-9-]*$/.test(values.preid),
-    'Invalid prerelease identifier',
-  );
-  invariant(
-    !values['first-release'] || !values.preid,
-    'Initial prerelease distribution is forbidden',
-  );
+  validateSpecifier(values.specifier, values['first-release']);
   return {
-    preid: values.preid || undefined,
+    specifier: values.specifier || undefined,
     projects,
     firstRelease: values['first-release'] ?? false,
     dryRun: values['dry-run'] ?? false,
@@ -53,7 +42,6 @@ const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 // Required sequencing only: Nx owns all version, changelog and tag logic.
 // The CLI cannot pass independent versionData across an artifact regeneration.
 export async function runRelease(options) {
-  invariant(!options.specifier, 'Version overrides are disabled');
   const history =
     options.dryRun && process.env.RELEASE_CHECK_HISTORY !== 'true'
       ? localHistory()
@@ -159,7 +147,6 @@ if (
   const { values } = parseArgs({
     options: {
       projects: { type: 'string', default: process.env.RELEASE_PROJECTS || '' },
-      preid: { type: 'string', default: process.env.RELEASE_PREID || '' },
       specifier: {
         type: 'string',
         default: process.env.RELEASE_SPECIFIER || '',

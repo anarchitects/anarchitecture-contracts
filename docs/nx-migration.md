@@ -55,6 +55,20 @@ compatibility against the migration base (no wire/package-surface findings).
 All five archived plans match their original bytes. Live signed release and npm
 publication remain unexercised; Node 22 consumers are verified separately in CI.
 
+## Explicit specifier follow-up
+
+Rechecked the unchanged local and Meta ADR revisions above. The workflow exposes
+Nx's optional `specifier` instead of `preid`. Empty input uses Conventional
+Commits; explicit input is resolved by Nx and must preserve its derived numeric
+version. First distribution remains exactly `0.0.1`. An existing prerelease may
+be promoted to its final version without new commits. Contract compatibility,
+migration evidence and publication gates still apply.
+
+`releaseTag.strictPreid: false` lets Nx resolve the latest package tag, including
+prereleases, without a separate identifier. Real Nx/Git fixtures cover keywords,
+exact prereleases, continuation, promotion, insufficient/excessive versions and
+first-release restrictions.
+
 ## Historical #8 migration record (superseded release input)
 
 This is the first implementation increment of [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8).

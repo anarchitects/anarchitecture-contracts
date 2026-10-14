@@ -7,8 +7,8 @@ on:
         description: Optional comma-separated Nx projects; empty selects all eligible packages
         required: false
         type: string
-      preid:
-        description: Optional prerelease identifier for already released packages (for example next)
+      specifier:
+        description: Optional Nx SemVer keyword or exact version; empty uses Conventional Commits
         required: false
         type: string
       first_release:
@@ -88,7 +88,7 @@ jobs:
         env:
           RELEASE_CHECK_HISTORY: 'true'
           RELEASE_PROJECTS: ${{ inputs.projects }}
-          RELEASE_PREID: ${{ inputs.preid }}
+          RELEASE_SPECIFIER: ${{ inputs.specifier }}
           RELEASE_FIRST: ${{ inputs.first_release }}
           RELEASE_DRY_RUN: ${{ inputs.dry_run }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || github.token }}

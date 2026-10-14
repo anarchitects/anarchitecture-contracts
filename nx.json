@@ -61,7 +61,8 @@
     "projectsRelationship": "independent",
     "releaseTag": {
       "pattern": "{projectName}@{version}",
-      "requireSemver": true
+      "requireSemver": true,
+      "strictPreid": false
     },
     "version": {
       "updateDependents": "auto",

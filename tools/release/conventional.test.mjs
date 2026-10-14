@@ -15,6 +15,7 @@ import { createProjectGraphAsync } from '@nx/devkit';
 import { validateCommit, validateReleaseCommit } from './commits.mjs';
 import { releaseProjects } from './projects.mjs';
 import { validateReleaseVersion } from '../openapi/compatibility.mjs';
+import { validateRequestedVersions } from './versions.mjs';
 import { digest, json } from '../openapi/common.mjs';
 
 const config = JSON.parse(readFileSync('nx.json', 'utf8'));
@@ -101,12 +102,20 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
       typeof body === 'string' ? body : JSON.stringify(body),
     );
   const commit = (message, project = 'auth-contracts') => {
-    write(`packages/${project}/index.js`, `// ${message}\n`);
+    write(
+      `packages/${project.replace(/-contracts$/, '')}/index.js`,
+      `// ${message}\n`,
+    );
     git('add', '.');
     git('commit', '-m', message);
   };
   const preview = (project, firstRelease = false, preid) => {
     const script = `import { releaseVersion } from 'nx/release'; const r = await releaseVersion({ projects: [${JSON.stringify(project)}], firstRelease: ${firstRelease}, preid: ${JSON.stringify(preid)}, dryRun: true, gitCommit: false, gitTag: false, stageChanges: false }); console.log('RESULT=' + JSON.stringify(r.projectsVersionData));`;
+    const output = run(process.execPath, ['--input-type=module', '-e', script]);
+    return JSON.parse(output.split('RESULT=')[1])[project];
+  };
+  const request = (project, specifier, firstRelease = false) => {
+    const script = `import { previewVersions } from ${JSON.stringify(new URL('./versions.mjs', import.meta.url).href)}; const r = await previewVersions({ projects: [${JSON.stringify(project)}], firstRelease: ${firstRelease}, specifier: ${JSON.stringify(specifier)} }); console.log('RESULT=' + JSON.stringify(r.projectsVersionData));`;
     const output = run(process.execPath, ['--input-type=module', '-e', script]);
     return JSON.parse(output.split('RESULT=')[1])[project];
   };
@@ -130,13 +139,21 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
       },
     });
     for (const project of ['auth-contracts', 'forms-contracts']) {
-      mkdirSync(join(directory, 'packages', project), { recursive: true });
-      write(`packages/${project}/package.json`, {
+      mkdirSync(
+        join(directory, 'packages', project.replace(/-contracts$/, '')),
+        { recursive: true },
+      );
+      write(`packages/${project.replace(/-contracts$/, '')}/package.json`, {
         name: project,
         version: project === 'auth-contracts' ? '1.2.3' : '0.0.0',
       });
-      write(`packages/${project}/project.json`, { name: project });
-      write(`packages/${project}/index.js`, '// seed\n');
+      write(`packages/${project.replace(/-contracts$/, '')}/project.json`, {
+        name: project,
+      });
+      write(
+        `packages/${project.replace(/-contracts$/, '')}/index.js`,
+        '// seed\n',
+      );
     }
     git('init', '-b', 'main');
     git('config', 'user.name', 'Release fixture');
@@ -146,6 +163,12 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
     git('tag', 'auth-contracts@1.2.3');
     commit('init(forms-contracts): initialize', 'forms-contracts');
     assert.equal(preview('forms-contracts', true).newVersion, null);
+    assert.equal(request('forms-contracts', '0.0.1', true).newVersion, '0.0.1');
+    assert.throws(() => request('forms-contracts', '0.0.1'), /--first-release/);
+    assert.throws(
+      () => request('auth-contracts', 'patch'),
+      /no Conventional Commit bump/,
+    );
     assert.equal(preview('auth-contracts').newVersion, null);
     for (const type of [
       'docs',
@@ -161,6 +184,8 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
     }
     commit('fix(auth-contracts): correction');
     assert.equal(preview('auth-contracts').newVersion, '1.2.4');
+    assert.equal(request('auth-contracts', 'patch').newVersion, '1.2.4');
+    assert.throws(() => request('auth-contracts', 'minor'), /must preserve/);
     const findings = [{ impact: 'breaking', surface: 'response' }];
     const migration = {
       status: 'approved',
@@ -187,6 +212,12 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
     commit('feat(auth-contracts): addition');
     assert.equal(preview('auth-contracts').newVersion, '1.3.0');
     assert.equal(
+      request('auth-contracts', '1.3.0-beta.0').newVersion,
+      '1.3.0-beta.0',
+    );
+    assert.equal(request('auth-contracts', 'preminor').newVersion, '1.3.0-0');
+    assert.throws(() => request('auth-contracts', 'patch'), /must preserve/);
+    assert.equal(
       preview('auth-contracts', false, 'next').newVersion,
       '1.3.0-next.0',
     );
@@ -211,15 +242,39 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
         }),
       /reviewed migration/,
     );
+    write('packages/auth/package.json', {
+      name: 'auth-contracts',
+      version: '1.3.0-beta.0',
+    });
+    commit('chore: fixture prerelease');
+    git('tag', 'auth-contracts@1.3.0-beta.0');
+    assert.equal(request('auth-contracts', '1.3.0').newVersion, '1.3.0');
+    assert.equal(request('auth-contracts', 'patch').newVersion, '1.3.0');
+    assert.throws(
+      () => request('auth-contracts', 'prerelease'),
+      /no Conventional Commit bump/,
+    );
+    assert.throws(() => request('auth-contracts', '1.4.0'), /only promotion/);
+    commit('fix(auth-contracts): prerelease correction');
+    assert.equal(
+      request('auth-contracts', 'prerelease').newVersion,
+      '1.3.0-beta.1',
+    );
+    assert.equal(request('auth-contracts', '1.3.0').newVersion, '1.3.0');
+    assert.throws(
+      () => request('auth-contracts', '1.3.0-alpha.0'),
+      /must advance/,
+    );
+
     // Begin an already-released 0.0.x line: init must not stand in for fixes.
-    write('packages/auth-contracts/package.json', {
+    write('packages/auth/package.json', {
       name: 'auth-contracts',
       version: '0.0.1',
     });
     commit('chore: fixture zero-major line');
     git('tag', 'auth-contracts@0.0.1');
     // Remove the unrelated fixture's larger tag, never any real repository tag.
-    git('tag', '-d', 'auth-contracts@1.2.3');
+    git('tag', '-d', 'auth-contracts@1.2.3', 'auth-contracts@1.3.0-beta.0');
     commit('fix(auth-contracts): correction on released zero-major');
     assert.equal(preview('auth-contracts').newVersion, '0.0.2');
     commit('feat(auth-contracts): addition on zero-major');
@@ -229,9 +284,8 @@ test('real Nx dry runs derive scoped bumps, ignore init/non-bumping types and ex
     );
     assert.equal(preview('auth-contracts').newVersion, '1.0.0');
     assert.equal(
-      JSON.parse(
-        readFileSync(join(directory, 'packages/auth-contracts/package.json')),
-      ).version,
+      JSON.parse(readFileSync(join(directory, 'packages/auth/package.json')))
+        .version,
       '0.0.1',
     );
   } finally {
@@ -305,5 +359,33 @@ test('tagged release commits cannot conceal runtime edits or dependency changes'
         },
       }),
     /only change manifest/,
+  );
+});
+
+test('one explicit specifier must respect every selected independent project', () => {
+  const data = (versions) => ({
+    projectsVersionData: Object.fromEntries(
+      Object.entries(versions).map(([p, next]) => [
+        p,
+        { currentVersion: '1.0.0', newVersion: next },
+      ]),
+    ),
+  });
+  const conventional = data({ auth: '1.1.0', forms: '1.0.1' });
+  validateRequestedVersions(
+    conventional,
+    data({ auth: '1.1.0-beta.0', forms: '1.0.1-beta.0' }),
+  );
+  assert.throws(
+    () =>
+      validateRequestedVersions(
+        conventional,
+        data({ auth: '1.1.0', forms: '1.1.0' }),
+      ),
+    /forms.*must preserve/,
+  );
+  assert.throws(
+    () => validateRequestedVersions(conventional, data({ auth: '1.1.0' })),
+    /selected release projects/,
   );
 });

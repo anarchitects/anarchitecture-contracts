@@ -29,19 +29,30 @@ test('release input is an explicit project list and SemVer, never shell syntax o
   ]) {
     assert.throws(() => releaseOptions({ specifier }));
   }
-  assert.throws(
-    () => releaseOptions({ specifier: '1.0.0-next.1' }),
-    /overrides/,
-  );
+  for (const specifier of [
+    'patch',
+    'minor',
+    'major',
+    'prepatch',
+    'preminor',
+    'premajor',
+    'prerelease',
+    '1.0.0-next.1',
+  ])
+    assert.equal(releaseOptions({ specifier }).specifier, specifier);
+  assert.equal(releaseOptions({}).specifier, undefined);
 });
 
-test('first-release prereleases and arbitrary prerelease identifiers are rejected', () => {
-  assert.throws(
-    () => releaseOptions({ 'first-release': true, preid: 'next' }),
-    /Initial prerelease/,
-  );
-  assert.throws(() => releaseOptions({ preid: '--bad' }), /Invalid prerelease/);
-  assert.equal(releaseOptions({ preid: 'next' }).preid, 'next');
+test('first release permits only the exact 0.0.1 specifier or the automatic initial default', () => {
+  for (const specifier of ['', '0.0.1'])
+    assert.doesNotThrow(() =>
+      releaseOptions({ 'first-release': true, specifier }),
+    );
+  for (const specifier of ['patch', 'minor', '0.1.0', '0.0.1-beta.0'])
+    assert.throws(
+      () => releaseOptions({ 'first-release': true, specifier }),
+      /exactly 0.0.1/,
+    );
 });
 
 const workflow = YAML.parse(
