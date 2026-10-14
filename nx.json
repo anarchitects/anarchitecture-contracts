@@ -6,7 +6,9 @@
   "plugins": [
     {
       "plugin": "@nx/js/typescript",
-      "include": ["packages/*/tsconfig.json"],
+      "include": [
+        "packages/*/tsconfig.json"
+      ],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
@@ -36,13 +38,23 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["typecheck", "^build"],
-      "inputs": ["default", "^default"],
-      "outputs": ["{projectRoot}/dist"]
+      "dependsOn": [
+        "typecheck",
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^default"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
     },
     "test": {
       "cache": true,
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "inputs": [
         "default",
         "^default",
@@ -129,5 +141,6 @@
   },
   "tui": {
     "enabled": false
-  }
+  },
+  "nxCloudId": "6acfe23113507cf991b34584"
 }
