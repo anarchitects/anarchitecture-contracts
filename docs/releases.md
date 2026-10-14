@@ -5,9 +5,11 @@
 The private root and verification tooling are excluded from release. The four
 contract packages remain unreleased at `0.0.0`. Nx 23.3.0 / `@nx/js` now orchestrate
 builds and checks, and **Nx Release is the only configured versioning authority**.
-Pending Changesets were transferred to `.nx/version-plans/`, preserving their
-minor intent (`0.1.0`) and complete rationale. See the [migration record](nx-migration.md).
-Changesets dependencies, scripts, configuration and CI validation are removed.
+[ADR-0004](../adr/0004-package-initial-release-and-nx-versioning.md) makes
+Conventional Commits the bump authority. Initial development uses non-bumping
+`init(<exact-nx-project-name>)`; explicit first distribution is exactly `0.0.1`.
+Historical Changesets and version-plan rationale is retained in the
+[migration record](nx-migration.md), not consumed by release tooling.
 
 The Community-style `release.yml` and `publish.yml` workflows now prepare signed
 independent releases and publish from immutable tagged commits. They are pipeline
@@ -28,7 +30,7 @@ evidence for breaks.
 
 ## Changes and compatibility
 
-Include a `yarn release:plan` entry for each public package
+Use lifecycle-appropriate Conventional Commits for each public package
 change. Document affected operations, wire behavior, compatibility reasoning and
 required migration steps. Foundation-only documentation/tooling changes need no
 package version bump.
@@ -44,8 +46,8 @@ authentication, authorization, headers, cookies, operation IDs and exported type
 are all compatibility surfaces. Assess both request and response directions.
 Preserve the audited baseline unless a deliberate versioned change is reviewed.
 Pre-1.0 releases still require explicit breaking-change disclosure and migration;
-do not use `0.x` as permission for silent drift. Publish stable public contracts
-as `1.0.0` only once the initial compatibility and conformance gates pass.
+do not use `0.x` as permission for silent drift. First distribution must be `0.0.1`, with all compatibility and conformance gates
+satisfied. A later promotion to `1.0.0` requires deliberate release review.
 
 ### Directional compatibility and independent versions
 
@@ -94,44 +96,60 @@ deployments coexist, which pins remain supported and how rollback works.
 Unresolved [baseline blockers](baseline-dispositions.md) prevent the affected
 stable capability claim; a new package version cannot bypass them.
 
-Version plans use **Nx project names**, for example `auth-contracts: minor`,
-with consumer-facing release notes below YAML frontmatter. Use conventional
-`feat`/`fix`/breaking-change descriptions to inform review; the explicit reviewed
-plan controls the bump. Nx must not independently infer a second bump from
-commit messages. `adjustSemverBumpsForZeroMajorVersion: false` preserves the
-reviewed minor/major meaning; Nx's default would turn the pending minors into
-patches. Compatibility policy above still requires a new minor for a pre-1.0 break.
+All scoped commits must name an exact project in `yarn nx show projects`, such as
+`auth-contracts`, not `auth`, an npm scope or a release group. Repository-wide
+commits may be unscoped. Before release, package development uses `init`; after
+any distribution, including `0.0.x`, it uses normal Conventional Commits. Split
+commits spanning released and unreleased packages. CI validates every non-merge
+commit and the PR title used for squash merges. Unknown types fail. The complete
+Nx type mapping is explicit, including `init`, `docs` and tooling types with
+`semverBump: none`. Breaking notation on `init` is rejected.
 
-`yarn openapi:compatibility <base-ref>` compares each package against its exact
-Git base and validates new/changed version plans. Unchanged pending plans cannot
-cover new changes. Mechanically renamed Changesets are also excluded as new PR
-intent when comparing with a pre-cutover base. A versioned release commit can
-satisfy the bump directly; breaking changes still require the pinned migration
-record. Plan parsing rejects unknown projects, duplicate keys and invalid bumps.
+`adjustSemverBumpsForZeroMajorVersion: false` preserves compatible additions as
+minor bumps; Nx breaking commits propose a major even before 1.0. Contract policy
+requires at least a new minor line before 1.0, so that conservative Nx major is
+sufficient. No hand-written second version calculator or workflow specifier
+can override Nx's result.
+
+`yarn openapi:compatibility <base-ref>` compares package surfaces against the
+exact base and validates Nx's actual proposed version. Unreleased development
+remains at `0.0.0`; the explicit first-release operation selects `0.0.1`.
+Baseline/migration checks still run for unreleased work. At release time the
+cumulative delta is also compared against the last package tag, and any breaking
+migration record must match that release baseline and findings.
 
 ```sh
 yarn nx show projects
-yarn nx graph
-yarn release:plan                         # author reviewed release intent
-yarn release:dry-run                      # initial release preview, no publication
-yarn test:release                         # migration and real Nx dry-run assertions
-yarn openapi:compatibility origin/main    # independent semantic/intent gate
+yarn commits:check origin/main
+yarn release:dry-run                      # ordinary preview; init does not bump
+yarn release:dry-run --first-release      # explicit initial 0.0.1 preview
+yarn test:release
+yarn openapi:compatibility origin/main
 ```
 
-`release:dry-run` explicitly uses `--first-release` for this unreleased workspace.
-Remove that flag after the first release; normal releases resolve the previous
-version from project-scoped tags. Package versions and generated manifests must
-always be updated together before release; the dry run intentionally writes neither.
-Prereleases publish under `next`; stable releases use `latest`.
+Local dry runs use fetched Git tags and do not query remote distribution history.
+The manual release workflow (including its dry run), CI commit checks and
+publication query GitHub Releases and the public npm registry. Network and
+authorization failures stop validation; an explicit npm 404 means no package.
+Missing tags for known distributions require history reconciliation, never a
+fresh initial release. Fetch full tags before local checks. No distributions
+existed at this migration, so there is no grandfathered version exception here.
 
 ## Workflow operation
 
-Use **Release (Manual)** on `main`. Leave `projects` empty to release all pending
-plans, or supply comma-separated eligible Nx project names. Shared version plans
-must be released together, as enforced by Nx. Set `first_release` for selected
-packages still at `0.0.0`. Keep `dry_run` enabled to preview versions, changelogs,
-and signing/tag actions without writes or credentials. A specifier is optional
-and cannot override pending reviewed plans; update the plan in a PR instead.
+Use **Release (Manual)** on `main`. Select comma-separated eligible Nx projects;
+an empty selection considers all four. Ordinary releases consider already
+released projects only. An explicit `first_release` selection must contain only
+unreleased packages and always produces `0.0.1`. Release packages in different
+lifecycle states in separate operations. Official prerelease distribution before
+`0.0.1` is forbidden; subsequent prereleases retain the existing `next` dist-tag
+handling. The optional `preid` input (for example `next`) lets Nx derive a
+prerelease from Conventional Commits for already released packages. It cannot
+be combined with first release. There is no manual version-specifier input.
+
+Keep `dry_run` enabled to preview versions, changelogs and signing/tag actions
+without writes or signing credentials. Package manifests and generated artifacts
+must agree before any live release is committed.
 
 For a live run, disable `dry_run`. The workflow runs `nx run contract-checks:check`,
 then `nx run contract-checks:release`. The release target uses Nx's public
@@ -140,7 +158,7 @@ is the one required orchestration exception to direct Nx Release CLI calls:
 independent `versionData` must survive artifact regeneration between versioning
 and the signed commit/tag. Nx's changelog CLI only accepts one version string.
 The helper delegates generation, validation and compatibility to Nx targets;
-Nx still controls bumps, plan consumption, changelogs, signed commits/tags,
+Nx still controls bumps, changelogs, signed commits/tags,
 atomic push and GitHub Releases. There is no domain release runner.
 
 **Publish** runs on `release.published`, or manually with an existing published
@@ -327,7 +345,7 @@ or silently change a shared contract inside an implementation repository.
 ## Tool references
 
 - [Yarn workspaces and published workspace ranges](https://yarnpkg.com/features/workspaces)
-- [Nx version plans](https://nx.dev/docs/guides/nx-release/file-based-versioning-version-plans)
+- [Nx Conventional Commits](https://nx.dev/docs/guides/nx-release/automatically-version-with-conventional-commits)
 - [Nx independent releases](https://nx.dev/docs/guides/nx-release/release-projects-independently)
 - [Meta ADR-0012](https://github.com/anarchitects/anarchitecture-meta/blob/main/adr/0012-canonical-public-api-contract-ownership.md)
 

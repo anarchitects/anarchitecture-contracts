@@ -1,7 +1,8 @@
+import { assertInitialVersion, distributionHistory } from './history.mjs';
 import { pathToFileURL } from 'node:url';
 import semver from 'semver';
 import { invariant, readJson } from '../openapi/common.mjs';
-import { releaseProjects } from './plans.mjs';
+import { releaseProjects } from './projects.mjs';
 
 export function assertPublishable(project) {
   invariant(
@@ -34,5 +35,10 @@ if (
   process.argv[1] &&
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
-  assertPublishable(process.argv[2]);
+  const project = process.argv[2];
+  assertPublishable(project);
+  const history = await distributionHistory();
+  assertInitialVersion(project, process.env.RELEASE_VERSION, history, {
+    publishing: true,
+  });
 }

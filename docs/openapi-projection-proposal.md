@@ -71,7 +71,7 @@ baseline or canonical legacy parser is changed to make conversion pass.
 Reassess entries whenever canonical source, generator, pinned Zod, validation
 consumers or profile behavior changes, and before publication. A newly proven
 faithful conversion replaces the relevant exception; a wire-language change needs
-its own reviewed migration and version plan.
+its own reviewed migration and release intent.
 
 ## Security and completion boundary
 
@@ -94,4 +94,5 @@ All 15 Meta ADRs were reviewed at
 ADRs at `401d8e4` (unchanged since the prior review). Accepted ownership, platform
 independence and compatibility requirements apply; proposed governance remains
 contextual. ADR-0003 assigns the Nx Release cutover to #8. The Changesets input
-adapter has since been replaced by Nx version plans in the [migration preparation](nx-migration.md).
+adapter is now replaced by Nx Conventional Commit version previews under
+[ADR-0004](../adr/0004-package-initial-release-and-nx-versioning.md).

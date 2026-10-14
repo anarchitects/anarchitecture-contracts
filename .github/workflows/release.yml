@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       projects:
-        description: Optional comma-separated Nx projects; empty releases all pending plans
+        description: Optional comma-separated Nx projects; empty selects all eligible packages
         required: false
         type: string
-      specifier:
-        description: Optional SemVer specifier when no pending version plans exist
+      preid:
+        description: Optional prerelease identifier for already released packages (for example next)
         required: false
         type: string
       first_release:
@@ -86,8 +86,9 @@ jobs:
       - name: Release through Nx (never publishes npm)
         run: yarn nx run contract-checks:release
         env:
+          RELEASE_CHECK_HISTORY: 'true'
           RELEASE_PROJECTS: ${{ inputs.projects }}
-          RELEASE_SPECIFIER: ${{ inputs.specifier }}
+          RELEASE_PREID: ${{ inputs.preid }}
           RELEASE_FIRST: ${{ inputs.first_release }}
           RELEASE_DRY_RUN: ${{ inputs.dry_run }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || github.token }}

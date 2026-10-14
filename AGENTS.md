@@ -68,13 +68,24 @@ publication; preserve outstanding capability blockers in manifests.
 
 ## Nx Release migration in progress
 
-[Accepted ADR-0003](adr/0003-nx-workspace-and-release-governance.md) supersedes the
-initial no-Nx workspace and Changesets release authority. Nx 23.3.0 / `@nx/js` now
-orchestrate builds and inferred typechecks. Nx Release version plans in
-`.nx/version-plans/` are the sole release intent; use `yarn release:plan` for public
-package changes. The [migration record](docs/nx-migration.md) preserves all pending
-Changesets rationale and bump equivalence. Never reintroduce a second versioner.
-Run `yarn test:release` and package compatibility checks when release tooling changes.
+[ADR-0003](adr/0003-nx-workspace-and-release-governance.md) requires Nx tooling;
+[accepted ADR-0004](adr/0004-package-initial-release-and-nx-versioning.md) makes
+Nx Conventional Commits the sole ongoing version-bump authority. Do not create
+or consume version plans. Preserve the historical rationale in
+[the migration record](docs/nx-migration.md); never reintroduce a second versioner.
+
+Before first distribution, use `init(<exact-nx-project-name>): ...` for package
+work; initialization never bumps. Explicit first release is exactly `0.0.1`.
+After distribution (including `0.0.x`), use normal Conventional Commits; never
+use `init` to hide released changes. Split commits touching different lifecycle
+states. All scopes must exist in the active Nx project graph; repository-wide
+work may be unscoped. Every allowed type must have an explicit Nx bump mapping.
+Validate commit ranges and PR squash titles with `yarn commits:check <base-ref>`.
+
+Run `yarn test:release` and package compatibility checks when release tooling
+changes. Contract-impact gates must validate the actual Nx-derived version and
+retain pinned migration approval for breaks. First-release and publication
+checks must inspect distribution history, not only the local manifest version.
 
 Issue #8 is not complete: live signed release verification, standalone conformance,
 trusted publication and downstream clean-install evidence remain required.

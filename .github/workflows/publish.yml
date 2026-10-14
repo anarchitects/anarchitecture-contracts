@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Published release tag, for example auth-contracts@0.1.0
+        description: Published release tag, for example auth-contracts@0.0.1
         required: true
         type: string
 
@@ -75,6 +75,7 @@ jobs:
           yarn nx run contract-checks:compatibility -- "$base"
       - name: Enforce publication gate and tagged package version
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ steps.release.outputs.version }}
           RELEASE_PROJECT: ${{ steps.release.outputs.project }}
         run: yarn nx run "$RELEASE_PROJECT:publication-check"

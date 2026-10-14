@@ -144,7 +144,8 @@ package tests; shared differential suites run through `contract-checks:test`.
 suites, so Nx schedules their real checks once when several packages request them.
 The shared suites deliberately verify the complete four-package graph.
 
-Nx Release uses independent versions and `.nx/version-plans/`. Only the four
+Nx Release uses independent versions derived from Conventional Commits. Initial
+distribution is exactly `0.0.1`; `init(<project>)` development never bumps. Only the four
 explicit domain projects are eligible. The private `contract-checks` project
 is never published. Nx/`@nx/js` are development-only and never enter package
 manifests or tarballs. See the [runbook](../docs/releases.md) and

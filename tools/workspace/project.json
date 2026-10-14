@@ -88,6 +88,10 @@
     "check": {
       "dependsOn": ["verify", "release-test"],
       "cache": false
+    },
+    "commits": {
+      "command": "node tools/release/commits.mjs",
+      "cache": false
     }
   }
 }

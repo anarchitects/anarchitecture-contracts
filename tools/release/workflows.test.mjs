@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import YAML from 'yaml';
-import { releaseOptions, runRelease } from './release.mjs';
-import { readReleasePlans, releaseProjects } from './plans.mjs';
+import { releaseOptions } from './release.mjs';
+import { releaseProjects } from './projects.mjs';
 
 test('release input is an explicit project list and SemVer, never shell syntax or Nx globs', () => {
   assert.deepEqual(releaseOptions({}).projects, Object.keys(releaseProjects));
@@ -29,30 +29,19 @@ test('release input is an explicit project list and SemVer, never shell syntax o
   ]) {
     assert.throws(() => releaseOptions({ specifier }));
   }
-  assert.equal(
-    releaseOptions({ specifier: '1.0.0-next.1' }).specifier,
-    '1.0.0-next.1',
+  assert.throws(
+    () => releaseOptions({ specifier: '1.0.0-next.1' }),
+    /overrides/,
   );
 });
 
-test('reviewed version plans cannot be overridden by a workflow specifier', async () => {
-  const pending = Object.keys(releaseProjects).filter(
-    (p) => readReleasePlans()[releaseProjects[p]],
+test('first-release prereleases and arbitrary prerelease identifiers are rejected', () => {
+  assert.throws(
+    () => releaseOptions({ 'first-release': true, preid: 'next' }),
+    /Initial prerelease/,
   );
-  if (pending.length)
-    await assert.rejects(
-      runRelease({
-        projects: pending,
-        specifier: 'patch',
-        dryRun: true,
-        firstRelease: true,
-      }),
-      /Pending Nx version plans/,
-    );
-  assert.deepEqual(
-    readReleasePlans({ directory: 'no-such-version-plans-directory' }),
-    {},
-  );
+  assert.throws(() => releaseOptions({ preid: '--bad' }), /Invalid prerelease/);
+  assert.equal(releaseOptions({ preid: 'next' }).preid, 'next');
 });
 
 const workflow = YAML.parse(

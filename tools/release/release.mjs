@@ -1,10 +1,17 @@
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
-import semver from 'semver';
 import { releaseVersion, releaseChangelog } from 'nx/release';
-import { invariant, readJson } from '../openapi/common.mjs';
-import { readReleasePlans, releaseProjects } from './plans.mjs';
+import { invariant } from '../openapi/common.mjs';
+import { releaseProjects } from './projects.mjs';
+import {
+  localHistory,
+  distributionHistory,
+  assertInitialVersion,
+} from './history.mjs';
+import { previewVersions } from './versions.mjs';
+import { checkCompatibility } from './compatibility.mjs';
+import { loadDomains } from '../openapi/model.mjs';
 import { assertPublishable } from './publication-gate.mjs';
 
 export function releaseOptions(values) {
@@ -19,24 +26,21 @@ export function releaseOptions(values) {
     new Set(projects).size === projects.length,
     'Duplicate release project',
   );
-  const specifier = values.specifier || undefined;
   invariant(
-    !specifier ||
-      [
-        'patch',
-        'minor',
-        'major',
-        'prepatch',
-        'preminor',
-        'premajor',
-        'prerelease',
-      ].includes(specifier) ||
-      semver.valid(specifier) === specifier,
-    'Invalid release specifier',
+    !values.specifier,
+    'Version overrides are disabled; Conventional Commits control released packages',
+  );
+  invariant(
+    !values.preid || /^[A-Za-z][A-Za-z0-9-]*$/.test(values.preid),
+    'Invalid prerelease identifier',
+  );
+  invariant(
+    !values['first-release'] || !values.preid,
+    'Initial prerelease distribution is forbidden',
   );
   return {
+    preid: values.preid || undefined,
     projects,
-    specifier,
     firstRelease: values['first-release'] ?? false,
     dryRun: values['dry-run'] ?? false,
   };
@@ -46,24 +50,35 @@ const run = (command, args) =>
   execFileSync(command, args, { stdio: 'inherit' });
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 
-// Required sequencing only: Nx owns all version, plan, changelog and tag logic.
+// Required sequencing only: Nx owns all version, changelog and tag logic.
 // The CLI cannot pass independent versionData across an artifact regeneration.
 export async function runRelease(options) {
-  const plans = readReleasePlans();
-  invariant(
-    !options.specifier ||
-      !options.projects.some((p) => plans[releaseProjects[p]]),
-    'Pending Nx version plans control the bump; edit the reviewed plan instead of overriding it',
+  invariant(!options.specifier, 'Version overrides are disabled');
+  const history =
+    options.dryRun && process.env.RELEASE_CHECK_HISTORY !== 'true'
+      ? localHistory()
+      : await distributionHistory();
+  const preview = await previewVersions({ ...options, history });
+  const versions = Object.fromEntries(
+    Object.entries(preview.projectsVersionData).map(([p, v]) => [
+      releaseProjects[p],
+      v.newVersion ?? v.currentVersion,
+    ]),
   );
-  for (const project of options.projects) {
-    const version = readJson(
-      `packages/${project.replace(/-contracts$/, '')}/package.json`,
-    ).version;
-    invariant(
-      options.firstRelease === (version === '0.0.0'),
-      `${project}: first-release must match the unreleased 0.0.0 state`,
+  if (!Object.values(preview.projectsVersionData).some((v) => v.newVersion)) {
+    console.log(
+      'No released package changes. First distribution requires explicit --first-release and is fixed at 0.0.1.',
     );
+    return preview;
   }
+  await checkCompatibility(
+    (await loadDomains()).filter((model) =>
+      Object.hasOwn(preview.projectsVersionData, `${model.domain}-contracts`),
+    ),
+    'HEAD',
+    { versions, history },
+    { cumulative: true },
+  );
   if (!options.dryRun) {
     invariant(
       process.env.GITHUB_ACTIONS === 'true' &&
@@ -83,21 +98,39 @@ export async function runRelease(options) {
         git('config', 'tag.gpgsign') === 'true',
       'Configure the approved release signing key; unsigned releases are disabled',
     );
-    options.projects.forEach(assertPublishable);
+    Object.entries(preview.projectsVersionData)
+      .filter(([, data]) => data.newVersion)
+      .forEach(([project]) => assertPublishable(project));
   }
   const result = await releaseVersion({
     ...options,
+    projects: Object.keys(preview.projectsVersionData),
+    ...(options.firstRelease ? { specifier: '0.0.1' } : {}),
     gitCommit: false,
     gitTag: false,
     stageChanges: !options.dryRun,
-    deleteVersionPlans: false,
   });
+  for (const [project, data] of Object.entries(result.projectsVersionData)) {
+    invariant(
+      data.newVersion === preview.projectsVersionData[project]?.newVersion,
+      `${project}: version changed after preview`,
+    );
+    if (data.newVersion)
+      assertInitialVersion(project, data.newVersion, history);
+  }
   if (!Object.values(result.projectsVersionData).some((v) => v.newVersion))
     return result;
   if (!options.dryRun) {
     run('yarn', ['nx', 'run', 'contract-checks:generate']);
     run('yarn', ['nx', 'run', 'contract-checks:verify']);
-    run('yarn', ['nx', 'run', 'contract-checks:compatibility', '--', 'HEAD']);
+    await checkCompatibility(
+      (await loadDomains()).filter((model) =>
+        Object.hasOwn(preview.projectsVersionData, `${model.domain}-contracts`),
+      ),
+      'HEAD',
+      { versions, history },
+      { cumulative: true },
+    );
     Object.entries(result.projectsVersionData)
       .filter(([, v]) => v.newVersion)
       .forEach(([project]) => assertPublishable(project));
@@ -105,6 +138,7 @@ export async function runRelease(options) {
   }
   await releaseChangelog({
     ...options,
+    projects: Object.keys(result.projectsVersionData),
     versionData: result.projectsVersionData,
     releaseGraph: result.releaseGraph,
     gitCommit: true,
@@ -125,6 +159,7 @@ if (
   const { values } = parseArgs({
     options: {
       projects: { type: 'string', default: process.env.RELEASE_PROJECTS || '' },
+      preid: { type: 'string', default: process.env.RELEASE_PREID || '' },
       specifier: {
         type: 'string',
         default: process.env.RELEASE_SPECIFIER || '',

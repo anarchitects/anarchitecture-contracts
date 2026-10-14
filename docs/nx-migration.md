@@ -1,4 +1,61 @@
-# Issue #8: Nx workspace and release-planning migration
+# Nx Conventional Commit release migration
+
+Accepted [ADR-0004](../adr/0004-package-initial-release-and-nx-versioning.md)
+implements Meta ADR-0013. Conventional Commits now control Nx version bumps;
+version-plan creation and consumption have been removed. The historical record
+below describes the previous implementation, not the active release procedure.
+Use the [release runbook](releases.md) for current commands.
+
+## Architecture review and inventory
+
+Reviewed all four local ADRs at Contracts `3de3645ba90a5d659d01bd824d8a19d612f895db`
+and all sixteen Meta ADRs at `a66c525132cab0e59d12d55a92bb0d1830953f8e`.
+Both revisions matched upstream `main` on 2026-10-14. Reviewed package/release
+conventions, OpenAPI compatibility guidance and the Meta neutral-package guide.
+The cooperative-enrichment and governance hierarchy/Archi/workspace proposals
+remain contextual. ADR-0004 explicitly supersedes the old version-plan authority
+and first `0.1.0` target; other accepted ownership and compatibility rules stand.
+
+The Nx graph contains Auth, Forms, Identity and Newsletter contract projects plus
+the private `contract-checks` project. All four manifests remain `0.0.0`. Git tags,
+GitHub Releases and all four public npm registry names had no distributions at
+migration time. No released versions or history were rewritten. Bricks domain
+alignment does not apply to these independently versioned contracts.
+
+## Pending intent disposition
+
+All five former version-plan files are preserved byte-for-byte in
+[the release-history archive](release-history/README.md). The original four-entry
+Changesets ledger remains immutable. Its `expectedFirstVersion: 0.1.0` records
+past equivalence, not an executable expectation. ADR-0004 changes the first
+release target to `0.0.1`; the initial features, compatibility rationale and
+publication limitations remain part of the initial release's review evidence.
+Existing historical `feat` commits are not rewritten and cannot inflate the
+explicit initial release version. Subsequent releases derive bumps from commits
+since each independent package tag.
+
+## Enforcement and validation
+
+- Nx's public dry-run API supplies actual proposed versions to the independent
+  contract compatibility checker. Manual manifest changes are not bump intent.
+- `init` is explicitly non-bumping; every allowed type is mapped. Commit scopes
+  come from the active Nx graph, with lifecycle validation and PR-title checks.
+- First distribution is explicitly `0.0.1`, including GitHub Releases. Remote
+  history failures stop CI release/publication validation. Initial prereleases
+  and restarting an already distributed package's lifecycle are rejected.
+- Real isolated Nx/Git fixtures exercise initialization, patch/minor/breaking
+  commits, zero-major releases and mixed lifecycle policy. Contract tests reject
+  insufficient bumps even with approved migration evidence.
+- Release automation, signing, immutable tags, packed consumers, P07 reviews,
+  host blockers and Forms D05/D08 remain in force. Dry runs are not publication.
+
+Local verification passed on Node 24.21.0 / Yarn 4.18.1: immutable installation,
+formatting, the full 22-task `yarn check` graph, `yarn test:release`, and package
+compatibility against the migration base (no wire/package-surface findings).
+All five archived plans match their original bytes. Live signed release and npm
+publication remain unexercised; Node 22 consumers are verified separately in CI.
+
+## Historical #8 migration record (superseded release input)
 
 This is the first implementation increment of [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8).
 It makes the four contract packages Nx projects and transfers release intent to
@@ -7,7 +64,7 @@ downstream adoption. Community-style release/publish workflows now use Nx target
 Nx publisher. Live credential/signing verification and standalone HTTP conformance
 remain required by the [release runbook](releases.md).
 
-## Architecture review
+### Architecture review
 
 Reviewed all three local ADRs at starting Contracts revision
 `8e920d0a6ff546e49e4a9000b8b6ac69e145ffb9`, including the partial supersessions
@@ -29,7 +86,7 @@ baseline dispositions, OpenAPI generation guidance and Meta's neutral-package
 boundary guide. Canonical schemas, operation definitions, frozen baselines,
 generated artifacts and source/generator-pinned P07 approvals stay unchanged.
 
-## Workspace
+### Workspace
 
 Node 24, Yarn 4.18.1 and immutable installs remain required. Nx and `@nx/js` are
 pinned to 23.3.0 as root development dependencies. A version-scoped Yarn package
@@ -64,7 +121,7 @@ the package-aware compatibility/release-plan gate. Local daemon/plugin isolation
 can be disabled with `NX_DAEMON=false NX_ISOLATE_PLUGINS=false` in restricted
 environments; this does not change contract checks or require a remote cache.
 
-## Changesets transfer
+### Changesets transfer
 
 The immutable [migration ledger](../tools/release/changesets-migration.json)
 records each original path, exact body, SHA-256 and destination. Only package
@@ -102,7 +159,7 @@ exact migration records for breaks. It excludes unchanged plans and recognizes
 mechanical transfers from a pre-cutover base, so old intent cannot silently cover
 new package changes.
 
-## Local validation
+### Local validation
 
 Validated on Node 24.21.0 and Yarn 4.18.1:
 
@@ -122,7 +179,7 @@ was available for this increment. The initial PR CI passed on GitHub, including 
 release and actual npm publication have not been exercised. These are validation gaps, not successes
 inferred from local builds.
 
-## Remaining acceptance gates
+### Remaining acceptance gates
 
 The repository migration is not the completed release migration. #8 still needs
 an approved signing/trusted-publishing setup, live workflow verification, independent HTTP runner
@@ -136,7 +193,7 @@ immutable ledger and Git history retain release intent. After publication, keep
 the last verified immutable consumer pin and fix forward. Never overwrite a
 released artifact or revive two independent release authorities.
 
-## Community-style workflows and Nx commands
+### Community-style workflows and Nx commands
 
 Rechecked ADR-0003 and the unchanged Meta revision above for this follow-up.
 The release/publish split follows Community's small workflow model. Root scripts

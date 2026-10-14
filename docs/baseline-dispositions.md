@@ -46,7 +46,7 @@ For each operation/capability, record:
 
 The default for unclassified behavior is to investigate and retain the previous
 claim/pin; it is not permission to silently relax validation or infer a missing
-authorization rule. Use [release conventions](releases.md) for the version plan.
+authorization rule. Use [release conventions](releases.md) for the release intent.
 
 ## Scope completion by epic issue
 

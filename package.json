@@ -25,12 +25,13 @@
     "openapi:release": "nx run contract-checks:profile-release",
     "test:openapi": "nx run contract-checks:openapi-test",
     "typecheck": "nx run-many -t typecheck",
-    "release:plan": "nx release plan",
-    "release:dry-run": "nx run contract-checks:release --dry-run --first-release",
-    "test:release": "nx run contract-checks:release-test"
+    "release:dry-run": "nx run contract-checks:release --dry-run",
+    "test:release": "nx run contract-checks:release-test",
+    "commits:check": "nx run contract-checks:commits"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "13.1.0",
+    "@nx/devkit": "23.3.0",
     "@nx/js": "23.3.0",
     "@sinclair/typebox": "0.34.41",
     "@types/semver": "^7",

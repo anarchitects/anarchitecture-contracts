@@ -2334,6 +2334,7 @@ __metadata:
   resolution: "anarchitecture-contracts@workspace:."
   dependencies:
     "@apidevtools/swagger-parser": "npm:13.1.0"
+    "@nx/devkit": "npm:23.3.0"
     "@nx/js": "npm:23.3.0"
     "@sinclair/typebox": "npm:0.34.41"
     "@types/semver": "npm:^7"
