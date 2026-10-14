@@ -1,11 +1,11 @@
 {
   "artifactKind": "canonical-contract",
   "artifacts": {
-    "forms-canonical.json": "e5d6d9458aadf7eb40a80730f6194abddd9c1ffad2cfc3dab62f027ca33153c4",
-    "forms-canonical.yaml": "799a79d28325b12280820800880a3b4b1ce6e4faf4d309862fcfb4a9bd4c160f",
-    "forms-review.json": "75e15ff0fcc29f6b39132e64300d301a00a730227b03d845331874725bf49f8b",
-    "forms-review.yaml": "165b3d51b0ba0914d3cda8f3f583fefd686e45831113fcf61b740d4dc0f9b736",
-    "inventory.json": "108edfa2bf2527acdd81e3090211b41a34e94db69f051a6267054d7203c23c64"
+    "forms-canonical.json": "697b8eb0b54d0bdb43f41d722336410f3b2bbd0e7231acd0b94087c8b8358eee",
+    "forms-canonical.yaml": "3df10b30b7a036ace537a087fdb6f565ec8d417f68ad641bdb6027e4df27a976",
+    "forms-review.json": "e0cf44ab09494d3272064f04e82652a41e6a94abf00700ac47644c0d2600fdcd",
+    "forms-review.yaml": "fd2105ab5fd92870ac8d4310c217f334e4ff6da7f62b8b121810510832677c04",
+    "inventory.json": "e531bf8ccf3fad44d693d1d44cea131ed0d7a93fcbe645a1c6572ecf1cf9a52c"
   },
   "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
@@ -88,12 +88,13 @@
   "formatVersion": 2,
   "generator": {
     "tools/openapi/artifacts.mjs": "a36a453ef9bc9ee073478bf502d0d4eb193a3c290006c0b77e5c4086fb1b8413",
+    "tools/openapi/auth-configuration.mjs": "aec52c116f51746db30a07881a70290f6e50f9949c26b0432297d45646a43bb8",
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
     "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
-    "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
+    "tools/openapi/generate.mjs": "2838874916fe6964dade05e51f0b85a4c09a481110746f70ec4d4a2e6967222d",
     "tools/openapi/model.mjs": "96f7c0c7ab3379ba10bdad962e0c2aa954eede028a8e47c643cfab3b3a300421",
-    "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
-    "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
+    "tools/openapi/profiles.mjs": "18a79e8278b0e2e4945ea8ed6fa422747c827627111b7389479ffb30ce267d99",
+    "tools/openapi/projection-review.mjs": "e16b37a735c5b1383b18e9de233a0a0dedc0cde962a3161d3632e4d411568260",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
   },
   "hostConformanceBlockers": [
@@ -162,7 +163,7 @@
     ]
   },
   "projectionProposal": {
-    "digest": "34003efb9978e9e6853b95a0d426e60dfd11525ac90d6674be8ed3d6f3644db5",
+    "digest": "15efd442745207df84e6f69156ec9bad251e0c9a00949e7b5bfc99c51fbce5d3",
     "id": "P07",
     "status": "reviewed-register"
   },
@@ -175,9 +176,10 @@
         "tools/openapi/profiles.test.mjs",
         "tools/contract-authoring/compatibility.test.mjs",
         "tools/contract-authoring/forms-newsletter.test.mjs",
-        "docs/openapi-projection-proposal.md"
+        "docs/openapi-projection-proposal.md",
+        "docs/reviews/23-p07-approval.md"
       ],
-      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
       "id": "getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input",
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
@@ -192,9 +194,10 @@
         "tools/openapi/profiles.test.mjs",
         "tools/contract-authoring/compatibility.test.mjs",
         "tools/contract-authoring/forms-newsletter.test.mjs",
-        "docs/openapi-projection-proposal.md"
+        "docs/openapi-projection-proposal.md",
+        "docs/reviews/23-p07-approval.md"
       ],
-      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
       "id": "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input",
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
@@ -209,9 +212,10 @@
         "tools/openapi/profiles.test.mjs",
         "tools/contract-authoring/compatibility.test.mjs",
         "tools/contract-authoring/forms-newsletter.test.mjs",
-        "docs/openapi-projection-proposal.md"
+        "docs/openapi-projection-proposal.md",
+        "docs/reviews/23-p07-approval.md"
       ],
-      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
       "id": "getSubmission.forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.input",
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
@@ -226,9 +230,10 @@
         "tools/openapi/profiles.test.mjs",
         "tools/contract-authoring/compatibility.test.mjs",
         "tools/contract-authoring/forms-newsletter.test.mjs",
-        "docs/openapi-projection-proposal.md"
+        "docs/openapi-projection-proposal.md",
+        "docs/reviews/23-p07-approval.md"
       ],
-      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
       "id": "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.input",
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
@@ -243,9 +248,10 @@
         "tools/openapi/profiles.test.mjs",
         "tools/contract-authoring/compatibility.test.mjs",
         "tools/contract-authoring/forms-newsletter.test.mjs",
-        "docs/openapi-projection-proposal.md"
+        "docs/openapi-projection-proposal.md",
+        "docs/reviews/23-p07-approval.md"
       ],
-      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
       "id": "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.input",
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",
@@ -260,9 +266,10 @@
         "tools/openapi/profiles.test.mjs",
         "tools/contract-authoring/compatibility.test.mjs",
         "tools/contract-authoring/forms-newsletter.test.mjs",
-        "docs/openapi-projection-proposal.md"
+        "docs/openapi-projection-proposal.md",
+        "docs/reviews/23-p07-approval.md"
       ],
-      "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+      "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
       "id": "submitForm.forms.SubmissionRequest.input",
       "kind": "bounded-exception",
       "owner": "Contracts architecture and affected domain maintainers",

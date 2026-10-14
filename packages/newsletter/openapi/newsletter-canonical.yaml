@@ -9624,7 +9624,8 @@ components:
               - tools/contract-authoring/compatibility.test.mjs
               - tools/contract-authoring/forms-newsletter.test.mjs
               - docs/openapi-projection-proposal.md
-            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+              - docs/reviews/23-p07-approval.md
+            generatorDigest: d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85
             id: subscribeToNewsletter.newsletter.NewsletterSubscribeRequest.input
             kind: bounded-exception
             owner: Contracts architecture and affected domain maintainers
@@ -22807,7 +22808,8 @@ components:
               - tools/contract-authoring/compatibility.test.mjs
               - tools/contract-authoring/forms-newsletter.test.mjs
               - docs/openapi-projection-proposal.md
-            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+              - docs/reviews/23-p07-approval.md
+            generatorDigest: d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85
             id: receiveNewsletterWebhook.newsletter.NewsletterWebhookPayload.input
             kind: bounded-exception
             owner: Contracts architecture and affected domain maintainers

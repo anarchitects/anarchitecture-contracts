@@ -54,7 +54,8 @@ waive that review. No npm deprecation of `0.0.1` is proposed.
 
 Clean packed consumers verify ESM/CommonJS, TypeScript 5.5.4/6.0.3 in NodeNext and
 bundler modes, optional/required field inference and browser bundling. Runtime
-checks ran on Node 24.21.0; Node 22 remains a CI verification obligation.
+checks ran locally on Node 24.21.0. Installed-package CI checks passed on both
+Node 22.13.0 and 24.21.0 in run 38559390759.
 Configured OpenAPI protocol tests prove deterministic JSON/YAML, separate JWT
 constraints, exact configuration identity and rejection of stale projections or
 host evidence. Their in-memory approval fixtures are test-only and are never
@@ -64,31 +65,54 @@ Separate configurable field nodes disclose additional occurrences of the same
 audited password coercer in projection metadata; existing locations are retained
 and no new limitation kind or function is introduced.
 
-Validation on 2026-10-14 (`yarn check --output-style=static`): formatting, Markdown
-lint, baseline checks, all package builds/types/tests, 21 contract-authoring tests
-and packed consumers pass. The three new OpenAPI tests pass. The full
-command fails at `openapi`, `openapi-test` (nine failures) and `release-test`
-(two failures), all on unchanged P07 approvals rejecting the new Auth source
-bytes. This is a draft awaiting review, not a green release candidate. The release
-smoke phase is not reached after its prerequisite tests fail.
+After [explicit human P07 approval](23-p07-approval.md) on 2026-10-14, generation
+and byte verification pass for all 31 artifacts. `yarn check --output-style=static`
+passes formatting, Markdown lint, baseline checks, all package builds/types/tests,
+21 contract-authoring tests, 27 OpenAPI tests, 17 release-unit tests and packed
+consumers. The remaining failure is the release smoke phase requiring a matching
+reviewed compatibility migration. The original P07 failures are resolved; this
+still is not a green release candidate.
+
+The regenerated inventories for all four domains are identical to the PR base
+outside `x-contract-projection` metadata. Runtime sources changed only for Auth.
+The conservative checker nevertheless treats changed projection reviews and
+manifest review digests as potentially breaking. It requires a minor release for
+all four packages. Nx currently derives Auth `0.1.0` and Forms/Identity/Newsletter
+`0.0.2`; those three patch versions do not satisfy that conservative gate. This
+P07 update does not change version intent or silently approve migrations.
+
+The [exact regenerated findings](23-compatibility.draft.json) and
+[migration drafts](23-migrations.draft.json) are prepared against both the PR base
+`3f5969da055c0799e49e1a9079f135816496c35b` and the immutable release commit
+`1f8240b62b5533b136610ea44ebf16fe6b7efae4`. Their findings digests are:
+
+| Package    | Findings SHA-256                                                   |
+| ---------- | ------------------------------------------------------------------ |
+| Auth       | `c8f2d62dabd556913908685b93cf9d24bdb248bf023345e2a39cacee9d2e6992` |
+| Forms      | `d10dfa5b962cf1e331f1cebfaecff53eff6e80e2f17d14878417b7101fc3381e` |
+| Identity   | `0aadd277d82a0983b9c53f6fd499bb08344c45b873edc2143bcc82c330a19e35` |
+| Newsletter | `30e6f53dba839e5c01b03bb32a524b789d69daf8c667ed5a73856786a8f7edec` |
+
+P07 approval does not authorize these separate migration records. No active
+migration record, release rule, classifier or package version is changed.
 
 ## Required review and release sequence
 
-1. Review the exact default-source/generator [P07 draft candidates](23-projections.draft.json).
-   The 31 entries cover all four domains because generator identity is shared;
-   only Auth canonical source changed. Configured hosts
+1. The exact default-source/generator [P07 candidates](23-projections.draft.json)
+   were explicitly approved and applied. The 31 entries cover all four domains
+   because generator identity is shared; only Auth canonical source changed. Configured hosts
    additionally generate and review candidates for their complete configuration.
-   The accepted register remains unchanged; its old pins correctly reject this
-   branch. No package OpenAPI files have been manually edited or regenerated under
-   synthetic approval.
-2. Renew scoped approvals only after human review, regenerate canonical artifacts,
-   and review the resulting exact compatibility findings against both the PR base
-   and `auth-contracts@0.0.1`. The [preliminary findings](23-compatibility.draft.json)
-   are source-only drafts until artifacts can be regenerated. Prepare matching migration approvals; if these bases
-   differ, reassess the cumulative release findings rather than reusing a stale pin.
+   Package OpenAPI files were regenerated from canonical sources after approval;
+   none were manually edited or generated under synthetic approval.
+2. Review the exact regenerated compatibility findings and migration drafts for
+   the PR base and each last-release tag. Resolve the conservative minor-version
+   requirement for all four domains explicitly. The existing active migration
+   format accepts one exact base per package: apply PR-base records for PR CI,
+   then the separately reviewed last-release records during release preparation.
+   Do not reuse a stale base or findings digest.
 3. Run the full `yarn check`, installed-package and compatibility gates. A
-   `feat(auth-contracts)` release intent targets `0.1.0` after `0.0.1`, subject to
-   Nx's actual preview and review. Shared generator changes also refresh other
+   `feat(auth-contracts)` release intent derives `0.1.0` after `0.0.1` in Nx's
+   preview. Shared generator changes also refresh other
    domains' artifact identities; assess any resulting published-artifact bumps
    independently. Do not force another domain's version or overwrite `0.0.1`.
 4. After human acceptance and merge, run the signed CI release and trusted publish

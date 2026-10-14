@@ -190,14 +190,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "activateUser.auth.ActivateUserRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -673,6 +676,26 @@
               "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
               "kind": "input-pipeline",
               "path": "property.currentPassword/in"
+            },
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": "property.newPassword"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "property.newPassword/in"
+            },
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": "property.confirmPassword"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "property.confirmPassword/in"
             }
           ],
           "reviews": [
@@ -684,14 +707,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "changePassword.auth.ChangePasswordRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -917,14 +943,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "forgotPassword.auth.ForgotPasswordRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -1393,14 +1422,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "login.auth.LoginRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             },
             {
               "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -1410,14 +1442,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "loginWithJwt.auth.LoginRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -1980,6 +2015,16 @@
             {
               "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
               "kind": "input-pipeline",
+              "path": "property.confirmPassword"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "property.confirmPassword/in"
+            },
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
               "path": "property.name/innerType"
             },
             {
@@ -1997,14 +2042,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "registerUser.auth.RegisterRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -2440,6 +2488,16 @@
               "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
               "kind": "input-pipeline",
               "path": "property.password/in"
+            },
+            {
+              "implementation": "30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e",
+              "kind": "input-pipeline",
+              "path": "property.confirmPassword"
+            },
+            {
+              "implementation": "b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464",
+              "kind": "input-pipeline",
+              "path": "property.confirmPassword/in"
             }
           ],
           "reviews": [
@@ -2451,14 +2509,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "resetPassword.auth.ResetPasswordRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -2828,14 +2889,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "updateEmail.auth.UpdateEmailRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -2968,14 +3032,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "changePassword.auth.UserIdParams.node.70726f70657274792e757365724964.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             },
             {
               "decision": "https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328",
@@ -2985,14 +3052,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "updateEmail.auth.UserIdParams.node.70726f70657274792e757365724964.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -3189,14 +3259,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "verifyEmail.auth.VerifyEmailRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -3514,14 +3587,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "logoutWithJwt.auth.jwt.JwtLogoutRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -3718,14 +3794,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "refreshJwtTokens.auth.jwt.JwtRefreshRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -4782,14 +4861,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "finishAuthentication.auth.passkeys.PasskeyAuthenticationFinishRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -4888,14 +4970,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "beginRegistration.auth.passkeys.PasskeyRegistrationBeginRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -6477,14 +6562,17 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "tools/contract-authoring/auth-profiles.test.mjs",
+                "tools/openapi/auth-configuration.test.mjs",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "finishRegistration.auth.passkeys.PasskeyRegistrationFinishRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
               "rationale": "Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.",
-              "sourceDigest": "fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763"
+              "sourceDigest": "ab3f513ad284ab77166e793d0885bde5643f615cde49adc4e6da519df9aa1704"
             }
           ],
           "runtimeValidationRequired": true,
@@ -6901,9 +6989,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getFormDefinition.forms.FormDefinitionQuery.node.70726f70657274792e666f726d56657273696f6e.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -7041,9 +7130,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getFormDefinition.forms.FormIdParams.node.70726f70657274792e666f726d4964.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -7264,9 +7354,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getSubmission.forms.SubmissionIdParams.node.70726f70657274792e7375626d697373696f6e4964.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -7547,9 +7638,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "submitForm.forms.SubmissionRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -7776,9 +7868,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d4964.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -7887,9 +7980,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getSubmissions.forms.SubmissionsQuery.node.70726f70657274792e666f726d56657273696f6e.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -8816,9 +8910,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "createUserProfile.identity.CreateUserProfileRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -9063,9 +9158,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getUserProfileByAuthUserId.identity.ProfileId.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -9080,9 +9176,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "getUserProfileById.identity.ProfileId.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -9097,9 +9194,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "updateUserProfile.identity.ProfileId.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -9802,9 +9900,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "updateUserProfile.identity.UpdateUserProfileRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -29070,9 +29169,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "subscribeToNewsletter.newsletter.NewsletterSubscribeRequest.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -55190,9 +55290,10 @@
                 "tools/openapi/profiles.test.mjs",
                 "tools/contract-authoring/compatibility.test.mjs",
                 "tools/contract-authoring/forms-newsletter.test.mjs",
-                "docs/openapi-projection-proposal.md"
+                "docs/openapi-projection-proposal.md",
+                "docs/reviews/23-p07-approval.md"
               ],
-              "generatorDigest": "e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a",
+              "generatorDigest": "d35a8142ef81d24a9f89ad461e61101c6345c990b18f0cae5393763ba9659e85",
               "id": "receiveNewsletterWebhook.newsletter.NewsletterWebhookPayload.input",
               "kind": "bounded-exception",
               "owner": "Contracts architecture and affected domain maintainers",
@@ -55340,7 +55441,7 @@
   "info": {
     "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
     "title": "REVIEW-ONLY — Anarchitecture aggregate-review",
-    "version": "sha256:91bc00e3e8934a1a3a0d82fe1ff356ff5f737e8a9943a2db6c0f41a5a6c8c2d6"
+    "version": "sha256:94e712bb2159bb9d1483194ea2c59223011aef752a010b00549d4740ac2261b5"
   },
   "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
   "openapi": "3.1.1",
