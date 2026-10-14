@@ -1,7 +1,8 @@
 // Produce review candidates, never approvals. No generation command updates the
 // accepted register automatically after a source or generator change.
 import { loadDomains, schemaIndex, gaps, fidelity } from './model.mjs';
-import { digest, json } from './common.mjs';
+import { digest, json, readJson, invariant } from './common.mjs';
+import { configureAuthModels } from './auth-configuration.mjs';
 import { decision, generatorDigest } from './projection-review.mjs';
 
 export function candidates(models) {
@@ -42,6 +43,12 @@ export function candidates(models) {
             'tools/contract-authoring/compatibility.test.mjs',
             'tools/contract-authoring/forms-newsletter.test.mjs',
             'docs/openapi-projection-proposal.md',
+            ...(model.domain === 'auth'
+              ? [
+                  'tools/contract-authoring/auth-profiles.test.mjs',
+                  'tools/openapi/auth-configuration.test.mjs',
+                ]
+              : []),
           ],
         });
       };
@@ -66,5 +73,13 @@ export function candidates(models) {
     ),
   };
 }
-if (process.argv[1]?.endsWith('/review-candidates.mjs'))
-  console.log(json(candidates(await loadDomains())));
+if (process.argv[1]?.endsWith('/review-candidates.mjs')) {
+  invariant(
+    process.argv.length <= 3,
+    'Usage: review-candidates.mjs [auth-config.json]',
+  );
+  const config = process.argv[2] ? readJson(process.argv[2]) : undefined;
+  console.log(
+    json(candidates(configureAuthModels(await loadDomains(), config))),
+  );
+}

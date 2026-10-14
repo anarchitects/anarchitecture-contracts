@@ -1,0 +1,92 @@
+{
+  "note": "Preliminary source findings only; regenerate and review again after P07 approval and artifact generation. This is not a migration approval or Nx version preview.",
+  "reports": [
+    {
+      "base": "3f5969da055c0799e49e1a9079f135816496c35b",
+      "reports": [
+        {
+          "baseRevision": "3f5969da055c0799e49e1a9079f135816496c35b",
+          "findings": [
+            {
+              "detail": "Published package documentation changed",
+              "impact": "patch",
+              "surface": "README.md"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/contracts.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/index.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/config.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/configurable.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/session.ts"
+            }
+          ],
+          "findingsDigest": "13c37d383431443a6933109455b9770e65987aad48756a105444cb81db6a3337",
+          "package": "@anarchitects/auth-contracts",
+          "requiredBump": "minor"
+        }
+      ]
+    },
+    {
+      "base": "auth-contracts@0.0.1",
+      "reports": [
+        {
+          "baseRevision": "1f8240b62b5533b136610ea44ebf16fe6b7efae4",
+          "findings": [
+            {
+              "detail": "Published package documentation changed",
+              "impact": "patch",
+              "surface": "README.md"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/contracts.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/index.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/config.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/configurable.ts"
+            },
+            {
+              "detail": "Canonical parser/type/operation source changed; generated shape alone cannot prove behavioral compatibility",
+              "impact": "breaking",
+              "surface": "packages/auth/src/schemas/session.ts"
+            }
+          ],
+          "findingsDigest": "13c37d383431443a6933109455b9770e65987aad48756a105444cb81db6a3337",
+          "package": "@anarchitects/auth-contracts",
+          "requiredBump": "minor"
+        }
+      ]
+    }
+  ],
+  "status": "draft"
+}

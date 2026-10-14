@@ -1,9 +1,9 @@
 # @anarchitects/auth-contracts
 
 Canonical Zod 4 schemas and first-class HTTP operations for the existing Auth
-session, JWT and passkey surface. This workspace is unreleased; version `0.0.0`
-is a development placeholder for the first Nx Release, not a published
-or verified deployment contract.
+session, JWT and passkey surface. Version `0.0.1` is immutable. The configurable
+factory described below is a pending addition tracked in Contracts #23; it is
+not available in `0.0.1`. Publication does not establish host conformance.
 
 ## Exports
 
@@ -67,8 +67,63 @@ remain in the inventory with normative security obligations and stay excluded fr
 OpenAPI paths until host bindings resolve. P07 reviews remain scoped and pinned;
 OpenAPI-only validation cannot replace canonical Zod parsing.
 
-First distribution is exactly `0.0.1`; pre-release development uses non-bumping
-`init(auth-contracts)` commits, and later versions use Nx Conventional Commits.
+First distribution is exactly `0.0.1`; subsequent versions use Nx Conventional Commits.
 Hosts consume exact published versions and independently prove positive/negative
 HTTP behavior, security, headers and cookies before claiming support. See
 `docs/openapi.md`, `docs/releases.md` and ADR-0005 in the source repository.
+
+## Configurable session validation
+
+The root export provides `createAuthContracts`, `DefaultAuthContractConfig`,
+`AuthContractConfigSchema`, `AuthFieldConfigSchema` and their inferred types.
+The factory accepts a complete typed configuration; consumers own merging host
+overrides with defaults. Its detached configuration is frozen at construction.
+Omitting the argument selects the default profile. Existing named schema exports
+continue to use that same default profile.
+
+```ts
+import {
+  createAuthContracts,
+  DefaultAuthContractConfig,
+} from '@anarchitects/auth-contracts';
+
+const contracts = createAuthContracts({
+  ...DefaultAuthContractConfig,
+  login: {
+    ...DefaultAuthContractConfig.login,
+    password: {
+      ...DefaultAuthContractConfig.login.password,
+      minLength: 10,
+    },
+  },
+});
+const request = contracts.loginRequestSchema.parse({
+  credential: 'reader',
+  password: '1234567890',
+});
+```
+
+The result includes all seven session request schemas, `config`, the complete
+`schemas` catalog and `operations` with those request bodies bound to the same
+schema instances. It changes no responses, paths, operation IDs, cookies or
+security requirements. JWT login keeps its fixed default rules and has a distinct
+`auth.jwt.LoginRequest` catalog ID in configured catalogs. Passkeys and policy
+representations remain unchanged.
+
+Each field supports required/optional presence and optional Unicode code-point
+length bounds. Scalar and singleton-array coercion, email grammar, open request
+extras and logout's unknown-key stripping preserve the Bricks baseline. Password
+confirmation equality remains an application rule. Invalid configurations fail
+at construction; bounds must be nonnegative integers with minimum ≤ maximum.
+The configuration's `version` identifies a host validation profile, not npm SemVer.
+
+`emptyStringPolicy` describes client payload shaping (`strip`, `reject`, `allow`).
+It does **not** strip or reject values on the server. Empty-string server acceptance
+follows presence, length and email constraints. Angular owns the actual payload
+shaping; Nest validates with the canonical schema for the chosen configuration.
+No Angular or Nest runtime dependency is introduced.
+
+Packaged default OpenAPI is not an exact description of a differently configured
+host. See the configured generation workflow in `docs/openapi.md` in the source
+repository. Canonical Zod validation remains required for disclosed projection
+limitations. No factory or artifact alone proves Bricks adoption.

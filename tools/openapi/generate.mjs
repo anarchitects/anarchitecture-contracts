@@ -11,6 +11,7 @@ import {
 
 import { generatorFiles, generatorDigest } from './projection-review.mjs';
 import { validateResolvedProfile, capabilityBlockers } from './profiles.mjs';
+import { configureAuthModels } from './auth-configuration.mjs';
 
 export function reviewProfile(models) {
   return {
@@ -38,6 +39,7 @@ export async function generate(
   models,
   { profile, proposal, review = false, verification = false },
 ) {
+  models = configureAuthModels(models, profile?.authConfig);
   models = models.toSorted((a, b) => a.domain.localeCompare(b.domain, 'en'));
   invariant(
     z.core.version.major === 4 &&
@@ -337,6 +339,9 @@ export async function generate(
     },
     'x-contract-status': status,
     'x-contract-profile': profile.id,
+    ...(profile.authConfig
+      ? { 'x-contract-auth-config': profile.authConfig }
+      : {}),
     'x-contract-versions': versions,
     'x-contract-excluded-operations': excluded,
   });
