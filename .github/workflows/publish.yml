@@ -66,7 +66,12 @@ jobs:
       - run: corepack enable
       - run: yarn install --immutable
       - name: Validate immutable contracts and packed consumers
-        run: yarn nx run contract-checks:verify
+        # All functional verify targets, including package tests and prerequisite
+        # builds/typechecks. Prose formatting belongs to CI, not immutable replay.
+        run: >-
+          yarn nx run-many
+          --projects contract-checks,auth-contracts,forms-contracts,identity-contracts,newsletter-contracts
+          --targets baseline,test,openapi,openapi-test,pack
       - name: Verify release compatibility
         env:
           RELEASE_PROJECT: ${{ steps.release.outputs.project }}

@@ -48,6 +48,22 @@ test('real Nx initial versioning regenerates canonical bytes and preserves them 
       join(directory, 'node_modules'),
       'dir',
     );
+    // This fixture models initial Auth development even after the repository
+    // itself has released. Other domains deliberately have mixed lifecycles.
+    const fixtureVersions = {
+      auth: '0.0.0',
+      forms: '0.2.3',
+      identity: '1.2.0',
+      newsletter: '0.0.0',
+    };
+    for (const [domain, version] of Object.entries(fixtureVersions)) {
+      const path = `packages/${domain}/package.json`;
+      writeFileSync(
+        join(directory, path),
+        JSON.stringify({ ...JSON.parse(read(path)), version }, null, 2) + '\n',
+      );
+    }
+    run(process.execPath, ['tools/openapi/cli.mjs', 'write']);
     writeFileSync(
       join(directory, '.gitignore'),
       'node_modules/\n.nx/\npackages/*/dist/\n',
@@ -75,7 +91,7 @@ test('real Nx initial versioning regenerates canonical bytes and preserves them 
     for (const domain of ['forms', 'identity', 'newsletter'])
       assert.equal(
         JSON.parse(read(`packages/${domain}/package.json`)).version,
-        '0.0.0',
+        fixtureVersions[domain],
       );
     run(process.execPath, ['tools/openapi/cli.mjs', 'write']);
     const paths = [

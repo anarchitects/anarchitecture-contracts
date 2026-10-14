@@ -148,3 +148,36 @@ test('the standard Nx publisher is preceded by the explicit publication gate', (
     );
   }
 });
+
+test('immutable publication retains every functional verify target and all package tests', () => {
+  const steps = workflow.jobs.publish.steps;
+  const verification = steps.findIndex(
+    (s) => s.name === 'Validate immutable contracts and packed consumers',
+  );
+  const gate = steps.findIndex((s) => s.run?.includes(':publication-check'));
+  assert.ok(verification >= 0 && verification < gate);
+  const command = steps[verification].run;
+  const targets = /--targets\s+(\S+)/.exec(command)[1].split(',');
+  const projects = /--projects\s+(\S+)/.exec(command)[1].split(',');
+  const config = JSON.parse(
+    readFileSync('tools/workspace/project.json', 'utf8'),
+  );
+  const functional = config.targets.verify.dependsOn.filter(
+    (target) => !['format-check', 'lint'].includes(target),
+  );
+  assert.deepEqual(
+    targets.toSorted(),
+    [...new Set(functional.map((t) => t.replace(/^\^/, '')))].toSorted(),
+  );
+  assert.deepEqual(
+    projects.toSorted(),
+    ['contract-checks', ...Object.keys(releaseProjects)].toSorted(),
+  );
+  assert.deepEqual(workflow.on.release.types, ['published']);
+  // Replay uses the reviewed workflow on main but still checks out the signed
+  // tag's resolved SHA, never current main's package contents.
+  assert.equal(
+    steps.find((s) => s.uses?.startsWith('actions/checkout@')).with.ref,
+    '${{ steps.release.outputs.sha }}',
+  );
+});

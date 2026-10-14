@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
-import { releaseVersion, releaseChangelog } from 'nx/release';
+import { releaseVersion, ReleaseClient } from 'nx/release';
 import { invariant, readJson } from '../openapi/common.mjs';
 import { releaseProjects } from './projects.mjs';
 import {
@@ -14,6 +14,15 @@ import { checkCompatibility } from './compatibility.mjs';
 import { loadDomains } from '../openapi/model.mjs';
 import { assertPublishable } from './publication-gate.mjs';
 import { canonicalArtifacts } from '../openapi/artifacts.mjs';
+
+// createRelease is configuration, not a provider-valued changelog argument.
+// Keep generic Nx commands inert in nx.json; only this release client enables
+// remote releases. Nx requires push enabled in its config for remote releases.
+// The guarded runner below controls actual git actions and dry-run behavior.
+export const { releaseChangelog } = new ReleaseClient({
+  changelog: { projectChangelogs: { createRelease: 'github' } },
+  git: { push: true },
+});
 
 export function releaseOptions(values) {
   const projects = values.projects
@@ -141,14 +150,14 @@ export async function runRelease(options) {
     ...options,
     projects: Object.keys(result.projectsVersionData),
     versionData: result.projectsVersionData,
-    releaseGraph: result.releaseGraph,
+    // Rebuild the graph with this client's remote-release configuration. The
+    // version client's graph contains the inert nx.json changelog settings.
     gitCommit: true,
     gitCommitArgs: ['-S'],
     gitTag: true,
     gitTagArgs: ['-s'],
     stageChanges: true,
     gitPush: !options.dryRun,
-    createRelease: options.dryRun ? false : 'github',
   });
   return result;
 }
