@@ -6,6 +6,23 @@ version-plan creation and consumption have been removed. The historical record
 below describes the previous implementation, not the active release procedure.
 Use the [release runbook](releases.md) for current commands.
 
+## Independent publication correction (#20)
+
+[ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md)
+refines the historical host-dependent publication gate described below. Canonical
+contract validity now gates package publication; implementation conformance and
+deployment compliance are separately evidenced downstream. The existing Nx
+versioning architecture and all ADR-0004 rules remain unchanged.
+
+Package generation and regeneration after versioning produce canonical format-2
+manifests and canonical OpenAPI exports, retaining diagnostic exports. Protected
+operations stay excluded from paths until bindings resolve; all normative
+obligations remain in the inventory. Gate A verifies source-derived exact bytes;
+Gate B preserves real host evidence, approvals and Forms D05/D08 restrictions.
+P07 source/generator pins and projection code are unchanged; canonical presentation
+has its own generator digest. The historical records below are not current gate
+instructions. No historical plan or Changesets input becomes active again.
+
 ## Architecture review and inventory
 
 Reviewed all four local ADRs at Contracts `3de3645ba90a5d659d01bd824d8a19d612f895db`

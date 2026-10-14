@@ -132,7 +132,10 @@ baseline's `core`, `guarded`, `newsletter` and `native` fixture labels are test
 configurations, not approved deployment profiles. Do not promote its unguarded
 core 200s into anonymous capability claims.
 
-A generated domain artifact describes one fully resolved profile. Disabled routes
+A host-resolved domain artifact describes one fully resolved profile. Canonical
+artifacts under [ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md)
+are separately publishable: they retain unresolved obligations and exclude
+unbound protected paths without claiming support. Disabled routes
 are omitted, and unsupported capabilities stay explicit in the support manifest.
 Diagnostic inventories may contain unresolved operations, but cannot be released
 as a deployable conformance profile. A deployment must name the exact contract
@@ -148,7 +151,8 @@ persistence before subscriber calls, ordered policy mapping and cookie forwardin
 The metadata expresses obligations, not an implementation of them. Provider
 configuration and business invariants remain in their owning bounded context.
 
-Issue #7 must reject unresolved schemas/profiles, missing error/security/header
+Generation rejects unresolved schemas and, for host mode, unresolved profiles;
+it also rejects missing error/security/header
 definitions, invalid path parameters, duplicate IDs/routes and unsupported schema
 conversion. Its generator uses Zod schema objects and this operation registry;
 it must not boot Nest or scrape decorators. Emit deterministic OpenAPI 3.1 JSON

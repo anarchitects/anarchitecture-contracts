@@ -79,8 +79,10 @@ P07 cannot approve anonymous protection, missing HMAC, unchecked dynamic Forms
 fields or delivery-secret exposure. Profiles independently require exact-version
 host configuration and reviewed positive/negative HTTP evidence. Synthetic
 profiles exercise those gates and remain `test-only`, with no supported capability
-claim. Current checked-in artifacts remain `review-only` because real host
-bindings are unresolved.
+claim. Under [ADR-0005](../adr/0005-independent-contract-publication-and-implementation-conformance.md),
+checked-in canonical artifacts can be packaged with unresolved bindings and no
+host-support claim. Diagnostic review exports remain nondeployable. Gate A reuses
+this unchanged projection engine and its pins; Gate B still requires host evidence.
 
 Issue #7 is complete when this generator and its fail-closed gates are implemented
 and tested. Actual host evidence belongs to the relevant Bricks capabilities;

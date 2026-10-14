@@ -2,7 +2,7 @@
 
 Zod-first HTTP schemas, inferred types and operation definitions for the existing
 Forms definition, submission and read surface. This package is unreleased at
-`0.0.0`, pending an initial Nx minor release. Both stable capabilities
+`0.0.0`, pending the explicit first Nx release at `0.0.1`. Both stable capabilities
 remain blocked by the recorded D05/D08 security dispositions.
 
 The root, `./schemas` and `./operations` provide ESM and CommonJS exports with
@@ -32,18 +32,26 @@ source repository for exact scope, source revisions and remaining gates.
 OpenAPI/profile generation is implemented by #7; #8 owns publication, and
 runtime integration belongs to Bricks adoption work.
 
-## Generated review artifacts
+## Canonical artifacts and separate host conformance
 
-Explicit file exports now include `./openapi/forms-review.json`,
-`./openapi/forms-review.yaml`, `./openapi/inventory.json` and `./manifest.json`.
-They are generated from these canonical schemas and operations and are verified
-in clean tarballs. Runtime imports do not load the files.
+Explicit exports include `./openapi/forms-canonical.json` and its YAML
+sibling, `./openapi/inventory.json` and `./manifest.json`. Existing
+`./openapi/forms-review.json`/YAML exports remain diagnostic. Runtime imports
+do not load these files; clean tarball consumers verify them independently.
 
-The files are **review-only** and claim no supported deployment capabilities.
-P07 exceptions are reviewed per operation and pinned to source/generator bytes.
-Real host evidence remains unresolved; protected routes remain in the inventory
-until host security bindings are resolved. Review `docs/openapi.md` and
-`docs/openapi-projection-proposal.md` in the source repository before using them.
+Canonical artifacts are implementation-independent and publishable without a host
+after contract validity, compatibility and package checks. Format-2 manifests
+separate publication validity, implementation conformance and deployment compliance.
+They claim no supported capabilities or deployment readiness. Protected operations
+remain in the inventory with normative security obligations and stay excluded from
+OpenAPI paths until host bindings resolve. P07 reviews remain scoped and pinned;
+OpenAPI-only validation cannot replace canonical Zod parsing.
+
+First distribution is exactly `0.0.1`; pre-release development uses non-bumping
+`init(forms-contracts)` commits, and later versions use Nx Conventional Commits.
+Hosts consume exact published versions and independently prove positive/negative
+HTTP behavior, security, headers and cookies before claiming support. See
+`docs/openapi.md`, `docs/releases.md` and ADR-0005 in the source repository.
 
 The additive `PublicFormDefinitionResponseSchema` and
 `PublicFormDefinitionEnvelopeResponseSchema` are D08 migration targets without

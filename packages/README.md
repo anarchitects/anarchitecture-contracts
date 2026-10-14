@@ -6,9 +6,9 @@ published packages or reserved npm names. Issue #5 implements [Auth](auth/README
 and [Identity](identity/README.md), with real schemas, operations and tests.
 Issue #6 implements [Forms](forms/README.md) and [Newsletter](newsletter/README.md).
 All four remain unreleased; compatibility records describe explicit release gates.
-Issue #7 adds [generated review artifacts](../docs/openapi.md), explicit file exports,
-manifests and compatibility gates. These artifacts claim no supported capabilities
-until real host profiles are resolved; scoped projection reviews remain pinned.
+Issue #7 adds generation; #20 separates [canonical and host artifacts](../docs/openapi.md), with explicit file exports,
+manifests and compatibility gates. Canonical artifacts claim no supported capabilities and may be published without
+a host; only separate resolved host artifacts carry verified support; scoped projection reviews remain pinned.
 
 ## Ownership and public entry points
 
@@ -33,7 +33,7 @@ conformance runners are development tools, not dependencies of schema consumers.
 
 ## Layout and module artifacts
 
-Implemented workspaces follow this layout, including #7 review artifacts:
+Implemented workspaces follow this layout, including canonical and diagnostic artifacts:
 
 ```text
 packages/<domain>/
@@ -46,7 +46,7 @@ packages/<domain>/
   dist/
     esm/              .js and .d.ts; package type is module
     cjs/              .cjs and .d.cts
-  openapi/            generated JSON/YAML per resolved profile, starting in #7
+  openapi/            generated canonical and retained diagnostic JSON/YAML
   contract-manifest.json  generated package/version/profile/digest metadata (#7)
   package.json
   README.md

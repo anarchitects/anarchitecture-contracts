@@ -1,0 +1,4260 @@
+components:
+  schemas:
+    auth.ActivateUserRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.ActivateUserRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.ActivateUserRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.ActivateUserRequest.Input/$defs/__schema0"
+      properties:
+        token:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - token
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.token
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.token/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: activateUser.auth.ActivateUserRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.BadRequestError.Output:
+      anyOf:
+        - additionalProperties: false
+          properties:
+            message:
+              type: string
+            statusCode:
+              const: 400
+              type: number
+          required:
+            - statusCode
+            - message
+          type: object
+        - additionalProperties: false
+          properties:
+            error:
+              type: string
+            message:
+              type: string
+            statusCode:
+              const: 400
+              type: number
+          required:
+            - statusCode
+            - message
+            - error
+          type: object
+    auth.ChangePasswordRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.ChangePasswordRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.ChangePasswordRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.ChangePasswordRequest.Input/$defs/__schema0"
+      properties:
+        confirmPassword:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        currentPassword:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        newPassword:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - currentPassword
+        - newPassword
+        - confirmPassword
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.currentPassword
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.currentPassword/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: changePassword.auth.ChangePasswordRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.ForbiddenError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 403
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    auth.ForgotPasswordRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.ForgotPasswordRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.ForgotPasswordRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.ForgotPasswordRequest.Input/$defs/__schema0"
+      properties:
+        email:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - email
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.email
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.email/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: forgotPassword.auth.ForgotPasswordRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.InternalServerError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 500
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    auth.LoggedInUserInfoResponse.Output:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+        __schema1:
+          anyOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output/$defs/__schema1"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output/$defs/__schema1"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties: false
+      properties:
+        rbac:
+          items:
+            additionalProperties: false
+            properties:
+              action:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+              conditions:
+                additionalProperties:
+                  $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output/$defs/__schema1"
+                propertyNames:
+                  type: string
+                type: object
+              fields:
+                items:
+                  pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                  type: string
+                type: array
+              inverted:
+                type: boolean
+              reason:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+              subject:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            required:
+              - action
+              - subject
+            type: object
+          type: array
+        user:
+          $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output/$defs/__schema0"
+      required:
+        - user
+        - rbac
+      type: object
+    auth.LoginRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.LoginRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.LoginRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.LoginRequest.Input/$defs/__schema0"
+      properties:
+        credential:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){2,100}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){2,100}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        password:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - credential
+        - password
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.credential
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.credential/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.password
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.password/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: login.auth.LoginRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: loginWithJwt.auth.LoginRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.LogoutRequest.Input:
+      properties: {}
+      type: object
+    auth.RegisterRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.RegisterRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.RegisterRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.RegisterRequest.Input/$defs/__schema0"
+      properties:
+        confirmPassword:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        email:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        name:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){2,100}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){2,100}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        password:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - email
+        - password
+        - confirmPassword
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.email
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.email/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.password
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.password/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.name/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.name/innerType/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: registerUser.auth.RegisterRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.ResetPasswordRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.ResetPasswordRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.ResetPasswordRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.ResetPasswordRequest.Input/$defs/__schema0"
+      properties:
+        confirmPassword:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        password:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        token:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - token
+        - password
+        - confirmPassword
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.token
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.token/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.password
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.password/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: resetPassword.auth.ResetPasswordRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.SetCookieHeader.Output:
+      type: string
+    auth.SuccessResponse.Output:
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+      type: object
+    auth.UnauthorizedError.Output:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        statusCode:
+          const: 401
+          type: number
+      required:
+        - statusCode
+        - message
+        - error
+      type: object
+    auth.UpdateEmailRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.UpdateEmailRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.UpdateEmailRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.UpdateEmailRequest.Input/$defs/__schema0"
+      properties:
+        newEmail:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        password:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){6,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - false
+                  - true
+                  - - null
+                  - - false
+                  - - true
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - newEmail
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.newEmail
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.newEmail/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.password/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.password/innerType/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: updateEmail.auth.UpdateEmailRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.UserIdParams.node.70726f70657274792e757365724964.Input:
+      allOf:
+        - if:
+            type: string
+          then:
+            type: string
+        - if:
+            maxItems: 1
+            minItems: 1
+            prefixItems:
+              - type: string
+            type: array
+          then:
+            prefixItems:
+              - type: string
+      anyOf:
+        - anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+        - items: false
+          maxItems: 1
+          minItems: 1
+          prefixItems:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+          type: array
+      x-contract-fidelity:
+        constraint: string-coercion-preimage
+        exactBranches:
+          - string
+          - singleton-string
+          - boolean
+          - "null"
+        remaining: Numeric stringification remains a scoped projection exception.
+      x-contract-projection:
+        limitations:
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: ""
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: in
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: in/in/options.0/options.1/options.1
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: changePassword.auth.UserIdParams.node.70726f70657274792e757365724964.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: updateEmail.auth.UserIdParams.node.70726f70657274792e757365724964.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.VerifyEmailRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.VerifyEmailRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.VerifyEmailRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.VerifyEmailRequest.Input/$defs/__schema0"
+      properties:
+        token:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - token
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.token
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.token/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: verifyEmail.auth.VerifyEmailRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.jwt.JwtLogoutRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.jwt.JwtLogoutRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.jwt.JwtLogoutRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.jwt.JwtLogoutRequest.Input/$defs/__schema0"
+      properties:
+        accessToken:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        refreshToken:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - refreshToken
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.refreshToken
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.refreshToken/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.accessToken/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.accessToken/innerType/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: logoutWithJwt.auth.jwt.JwtLogoutRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.jwt.JwtRefreshRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.jwt.JwtRefreshRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.jwt.JwtRefreshRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties:
+        $ref: "#/components/schemas/auth.jwt.JwtRefreshRequest.Input/$defs/__schema0"
+      properties:
+        refreshToken:
+          allOf:
+            - if:
+                type: string
+              then:
+                pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+      required:
+        - refreshToken
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: catchall/lazy/options.1/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.refreshToken
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.refreshToken/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: refreshJwtTokens.auth.jwt.JwtRefreshRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.jwt.JwtTokensResponse.Output:
+      additionalProperties: false
+      properties:
+        accessToken:
+          pattern: ^(?:[\s\S]){1,}(?![\s\S])
+          type: string
+        refreshToken:
+          pattern: ^(?:[\s\S]){1,}(?![\s\S])
+          type: string
+      required:
+        - accessToken
+        - refreshToken
+      type: object
+    auth.passkeys.PasskeyAuthenticationBeginRequest.Input:
+      properties: {}
+      type: object
+    auth.passkeys.PasskeyAuthenticationBeginResponse.Output:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationBeginResponse.Output/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationBeginResponse.Output/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties: false
+      properties:
+        allowCredentials:
+          items:
+            additionalProperties: false
+            properties:
+              id:
+                pattern: ^[A-Za-z0-9_-]+$
+                type: string
+              transports:
+                items:
+                  pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                  type: string
+                type: array
+              type:
+                const: public-key
+                type: string
+            required:
+              - id
+              - type
+            type: object
+          type: array
+        challenge:
+          pattern: ^[A-Za-z0-9_-]+$
+          type: string
+        extensions:
+          additionalProperties:
+            $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationBeginResponse.Output/$defs/__schema0"
+          propertyNames:
+            type: string
+          type: object
+        hints:
+          items:
+            pattern: ^(?:[\s\S]){1,}(?![\s\S])
+            type: string
+          type: array
+        rpId:
+          pattern: ^(?:[\s\S]){1,}(?![\s\S])
+          type: string
+        timeout:
+          minimum: 0
+          multipleOf: 1
+          type: number
+        userVerification:
+          enum:
+            - required
+            - preferred
+            - discouraged
+          type: string
+      required:
+        - challenge
+      type: object
+    auth.passkeys.PasskeyAuthenticationFinishRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationFinishRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationFinishRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      properties:
+        response:
+          properties:
+            authenticatorAttachment:
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+            clientExtensionResults:
+              additionalProperties:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationFinishRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+            id:
+              allOf:
+                - if:
+                    type: string
+                  then:
+                    pattern: ^[A-Za-z0-9_-]+$
+                    type: string
+                - if:
+                    maxItems: 1
+                    minItems: 1
+                    prefixItems:
+                      - type: string
+                    type: array
+                  then:
+                    prefixItems:
+                      - pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                - not:
+                    enum:
+                      - null
+                      - - null
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+              x-contract-fidelity:
+                constraint: string-coercion-preimage
+                exactBranches:
+                  - string
+                  - singleton-string
+                  - boolean
+                  - "null"
+                remaining: Numeric stringification remains a scoped projection exception.
+            rawId:
+              allOf:
+                - if:
+                    type: string
+                  then:
+                    pattern: ^[A-Za-z0-9_-]+$
+                    type: string
+                - if:
+                    maxItems: 1
+                    minItems: 1
+                    prefixItems:
+                      - type: string
+                    type: array
+                  then:
+                    prefixItems:
+                      - pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                - not:
+                    enum:
+                      - null
+                      - - null
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+              x-contract-fidelity:
+                constraint: string-coercion-preimage
+                exactBranches:
+                  - string
+                  - singleton-string
+                  - boolean
+                  - "null"
+                remaining: Numeric stringification remains a scoped projection exception.
+            response:
+              properties:
+                authenticatorData:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                clientDataJSON:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                signature:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                userHandle:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - type: string
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+              required:
+                - clientDataJSON
+                - authenticatorData
+                - signature
+              type: object
+            type:
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+          required:
+            - id
+            - rawId
+            - type
+            - clientExtensionResults
+            - response
+          type: object
+      required:
+        - response
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.response/property.id
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.id/in
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: property.response/property.id/in/in/options.0/options.1/options.1
+          - implementation: a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42
+            kind: input-pipeline
+            path: property.response/property.type
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.type/in
+          - implementation: ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654
+            kind: input-pipeline
+            path: property.response/property.authenticatorAttachment/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.authenticatorAttachment/innerType/in
+          - implementation: 9fa88652403646385e328b834b932ecd9d9052a910d43c48da6f23204136a68a
+            kind: input-pipeline
+            path: property.response/property.response/property.userHandle/innerType
+          - implementation: 8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae
+            kind: input-pipeline
+            path: property.response/property.response/property.userHandle/innerType/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.response/property.response/property.userHandle/innerType/in/in
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.response/property.userHandle/innerType/in/in/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: finishAuthentication.auth.passkeys.PasskeyAuthenticationFinishRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.passkeys.PasskeyRegistrationBeginRequest.Input:
+      properties:
+        authenticatorAttachment:
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654
+            kind: input-pipeline
+            path: property.authenticatorAttachment/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.authenticatorAttachment/innerType/in
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: property.authenticatorAttachment/innerType/in/in/options.0/options.1/options.1
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: beginRegistration.auth.passkeys.PasskeyRegistrationBeginRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+    auth.passkeys.PasskeyRegistrationBeginResponse.Output:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyRegistrationBeginResponse.Output/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyRegistrationBeginResponse.Output/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      additionalProperties: false
+      properties:
+        attestation:
+          enum:
+            - none
+            - indirect
+            - direct
+            - enterprise
+          type: string
+        attestationFormats:
+          items:
+            pattern: ^(?:[\s\S]){1,}(?![\s\S])
+            type: string
+          type: array
+        authenticatorSelection:
+          additionalProperties: false
+          properties:
+            authenticatorAttachment:
+              enum:
+                - platform
+                - cross-platform
+              type: string
+            requireResidentKey:
+              type: boolean
+            residentKey:
+              enum:
+                - required
+                - preferred
+                - discouraged
+              type: string
+            userVerification:
+              enum:
+                - required
+                - preferred
+                - discouraged
+              type: string
+          type: object
+        challenge:
+          pattern: ^[A-Za-z0-9_-]+$
+          type: string
+        excludeCredentials:
+          items:
+            additionalProperties: false
+            properties:
+              id:
+                pattern: ^[A-Za-z0-9_-]+$
+                type: string
+              transports:
+                items:
+                  pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                  type: string
+                type: array
+              type:
+                const: public-key
+                type: string
+            required:
+              - id
+              - type
+            type: object
+          type: array
+        extensions:
+          additionalProperties:
+            $ref: "#/components/schemas/auth.passkeys.PasskeyRegistrationBeginResponse.Output/$defs/__schema0"
+          propertyNames:
+            type: string
+          type: object
+        hints:
+          items:
+            pattern: ^(?:[\s\S]){1,}(?![\s\S])
+            type: string
+          type: array
+        pubKeyCredParams:
+          items:
+            additionalProperties: false
+            properties:
+              alg:
+                multipleOf: 1
+                type: number
+              type:
+                const: public-key
+                type: string
+            required:
+              - type
+              - alg
+            type: object
+          minItems: 1
+          type: array
+        rp:
+          additionalProperties: false
+          properties:
+            id:
+              pattern: ^(?:[\s\S]){1,}(?![\s\S])
+              type: string
+            name:
+              pattern: ^(?:[\s\S]){1,}(?![\s\S])
+              type: string
+          required:
+            - name
+          type: object
+        timeout:
+          minimum: 0
+          multipleOf: 1
+          type: number
+        user:
+          additionalProperties: false
+          properties:
+            displayName:
+              type: string
+            id:
+              allOf:
+                - pattern: ^[A-Za-z0-9_-]+$
+                  type: string
+                - pattern: ^(?:[\s\S]){1,86}(?![\s\S])
+                  type: string
+            name:
+              type: string
+          required:
+            - id
+            - name
+            - displayName
+          type: object
+      required:
+        - rp
+        - user
+        - challenge
+        - pubKeyCredParams
+      type: object
+    auth.passkeys.PasskeyRegistrationFinishRequest.Input:
+      $defs:
+        __schema0:
+          anyOf:
+            - type: string
+            - anyOf:
+                - type: number
+                - $schema: https://json-schema.org/draft/2020-12/schema
+                  type: number
+            - type: boolean
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyRegistrationFinishRequest.Input/$defs/__schema0"
+              type: array
+            - additionalProperties:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyRegistrationFinishRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+      properties:
+        name:
+          allOf:
+            - if:
+                type: string
+              then:
+                allOf:
+                  - pattern: ^(?:[\s\S]){1,255}(?![\s\S])
+                  - pattern: \S
+                type: string
+            - if:
+                maxItems: 1
+                minItems: 1
+                prefixItems:
+                  - type: string
+                type: array
+              then:
+                prefixItems:
+                  - allOf:
+                      - pattern: ^(?:[\s\S]){1,255}(?![\s\S])
+                      - pattern: \S
+                    type: string
+            - not:
+                enum:
+                  - null
+                  - - null
+          anyOf:
+            - anyOf:
+                - type: string
+                - anyOf:
+                    - type: number
+                    - $schema: https://json-schema.org/draft/2020-12/schema
+                      type: number
+                - type: boolean
+                - type: "null"
+            - items: false
+              maxItems: 1
+              minItems: 1
+              prefixItems:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+              type: array
+          x-contract-fidelity:
+            constraint: string-coercion-preimage
+            exactBranches:
+              - string
+              - singleton-string
+              - boolean
+              - "null"
+            remaining: Numeric stringification remains a scoped projection exception.
+        response:
+          properties:
+            authenticatorAttachment:
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+            clientExtensionResults:
+              additionalProperties:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyRegistrationFinishRequest.Input/$defs/__schema0"
+              propertyNames:
+                type: string
+              type: object
+            id:
+              allOf:
+                - if:
+                    type: string
+                  then:
+                    pattern: ^[A-Za-z0-9_-]+$
+                    type: string
+                - if:
+                    maxItems: 1
+                    minItems: 1
+                    prefixItems:
+                      - type: string
+                    type: array
+                  then:
+                    prefixItems:
+                      - pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                - not:
+                    enum:
+                      - null
+                      - - null
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+              x-contract-fidelity:
+                constraint: string-coercion-preimage
+                exactBranches:
+                  - string
+                  - singleton-string
+                  - boolean
+                  - "null"
+                remaining: Numeric stringification remains a scoped projection exception.
+            rawId:
+              allOf:
+                - if:
+                    type: string
+                  then:
+                    pattern: ^[A-Za-z0-9_-]+$
+                    type: string
+                - if:
+                    maxItems: 1
+                    minItems: 1
+                    prefixItems:
+                      - type: string
+                    type: array
+                  then:
+                    prefixItems:
+                      - pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                - not:
+                    enum:
+                      - null
+                      - - null
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+              x-contract-fidelity:
+                constraint: string-coercion-preimage
+                exactBranches:
+                  - string
+                  - singleton-string
+                  - boolean
+                  - "null"
+                remaining: Numeric stringification remains a scoped projection exception.
+            response:
+              properties:
+                attestationObject:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                authenticatorData:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                clientDataJSON:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                publicKey:
+                  allOf:
+                    - if:
+                        type: string
+                      then:
+                        pattern: ^[A-Za-z0-9_-]+$
+                        type: string
+                    - if:
+                        maxItems: 1
+                        minItems: 1
+                        prefixItems:
+                          - type: string
+                        type: array
+                      then:
+                        prefixItems:
+                          - pattern: ^[A-Za-z0-9_-]+$
+                            type: string
+                    - not:
+                        enum:
+                          - null
+                          - - null
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                  x-contract-fidelity:
+                    constraint: string-coercion-preimage
+                    exactBranches:
+                      - string
+                      - singleton-string
+                      - boolean
+                      - "null"
+                    remaining: Numeric stringification remains a scoped projection exception.
+                publicKeyAlgorithm:
+                  anyOf:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                    - items: false
+                      maxItems: 1
+                      minItems: 1
+                      prefixItems:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                      type: array
+                transports:
+                  anyOf:
+                    - items:
+                        allOf:
+                          - if:
+                              type: string
+                            then:
+                              pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                              type: string
+                          - if:
+                              maxItems: 1
+                              minItems: 1
+                              prefixItems:
+                                - type: string
+                              type: array
+                            then:
+                              prefixItems:
+                                - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                                  type: string
+                          - not:
+                              enum:
+                                - null
+                                - - null
+                        anyOf:
+                          - anyOf:
+                              - type: string
+                              - anyOf:
+                                  - type: number
+                                  - $schema: https://json-schema.org/draft/2020-12/schema
+                                    type: number
+                              - type: boolean
+                              - type: "null"
+                          - items: false
+                            maxItems: 1
+                            minItems: 1
+                            prefixItems:
+                              - anyOf:
+                                  - type: string
+                                  - anyOf:
+                                      - type: number
+                                      - $schema: https://json-schema.org/draft/2020-12/schema
+                                        type: number
+                                  - type: boolean
+                                  - type: "null"
+                            type: array
+                        x-contract-fidelity:
+                          constraint: string-coercion-preimage
+                          exactBranches:
+                            - string
+                            - singleton-string
+                            - boolean
+                            - "null"
+                          remaining: Numeric stringification remains a scoped projection exception.
+                      type: array
+                    - allOf:
+                        - if:
+                            type: string
+                          then:
+                            pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                            type: string
+                        - if:
+                            maxItems: 1
+                            minItems: 1
+                            prefixItems:
+                              - type: string
+                            type: array
+                          then:
+                            prefixItems:
+                              - pattern: ^(?:[\s\S]){1,}(?![\s\S])
+                                type: string
+                        - not:
+                            enum:
+                              - null
+                              - - null
+                      anyOf:
+                        - anyOf:
+                            - type: string
+                            - anyOf:
+                                - type: number
+                                - $schema: https://json-schema.org/draft/2020-12/schema
+                                  type: number
+                            - type: boolean
+                            - type: "null"
+                        - items: false
+                          maxItems: 1
+                          minItems: 1
+                          prefixItems:
+                            - anyOf:
+                                - type: string
+                                - anyOf:
+                                    - type: number
+                                    - $schema: https://json-schema.org/draft/2020-12/schema
+                                      type: number
+                                - type: boolean
+                                - type: "null"
+                          type: array
+                      x-contract-fidelity:
+                        constraint: string-coercion-preimage
+                        exactBranches:
+                          - string
+                          - singleton-string
+                          - boolean
+                          - "null"
+                        remaining: Numeric stringification remains a scoped projection exception.
+              required:
+                - clientDataJSON
+                - attestationObject
+              type: object
+            type:
+              anyOf:
+                - anyOf:
+                    - type: string
+                    - anyOf:
+                        - type: number
+                        - $schema: https://json-schema.org/draft/2020-12/schema
+                          type: number
+                    - type: boolean
+                    - type: "null"
+                - items: false
+                  maxItems: 1
+                  minItems: 1
+                  prefixItems:
+                    - anyOf:
+                        - type: string
+                        - anyOf:
+                            - type: number
+                            - $schema: https://json-schema.org/draft/2020-12/schema
+                              type: number
+                        - type: boolean
+                        - type: "null"
+                  type: array
+          required:
+            - id
+            - rawId
+            - type
+            - clientExtensionResults
+            - response
+          type: object
+      required:
+        - response
+      type: object
+      x-contract-projection:
+        limitations:
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.response/property.id
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.id/in
+          - implementation: 70f304add40bd8c4f4e50803fbc5aa54c2dc1d8d097354c00288c227c1766231
+            kind: custom-value
+            path: property.response/property.id/in/in/options.0/options.1/options.1
+          - implementation: a46ef829412ef6618a9ec716200abd81624100994b6e2f1af52e6ecf4a6bdc42
+            kind: input-pipeline
+            path: property.response/property.type
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.type/in
+          - implementation: ae90da278aa008b10cd2e3c9d6fa51b462b1ec7b1fa4adf596b3314e0dd8f654
+            kind: input-pipeline
+            path: property.response/property.authenticatorAttachment/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.authenticatorAttachment/innerType/in
+          - implementation: 25863f77b8136cd3be1ab2637962dc59eb6e3611343345761fc63a3abad3edea
+            kind: input-pipeline
+            path: property.response/property.response/property.publicKeyAlgorithm/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.response/property.publicKeyAlgorithm/innerType/in
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.response/property.response/property.transports/innerType/options.0/element
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.response/property.response/property.transports/innerType/options.0/element/in
+          - implementation: 8a0d08549534f7e93a08683dca701d622284830967703c5a9d9f444eb8064eae
+            kind: input-pipeline
+            path: property.response/property.response/property.transports/innerType/options.1
+          - implementation: 30d6930d722d2fd19b60fde110a75bcdcd2438723c963a14a03f8382f03cf62e
+            kind: input-pipeline
+            path: property.name/innerType
+          - implementation: b8147d0e275b47051ca4f3bb1dc289c75b36f116988a65062987f9abd0b16464
+            kind: input-pipeline
+            path: property.name/innerType/in
+        reviews:
+          - decision: https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328
+            evidence:
+              - tools/openapi/openapi.test.mjs
+              - tools/openapi/fidelity.test.mjs
+              - tools/openapi/profiles.test.mjs
+              - tools/contract-authoring/compatibility.test.mjs
+              - tools/contract-authoring/forms-newsletter.test.mjs
+              - docs/openapi-projection-proposal.md
+            generatorDigest: e5f0ab101cd78b56b35db55d72a3fb6757b42b438cf0281e17774d063079cc0a
+            id: finishRegistration.auth.passkeys.PasskeyRegistrationFinishRequest.input
+            kind: bounded-exception
+            owner: Contracts architecture and affected domain maintainers
+            rationale: Retain the canonical accepted wire language and parsed values. Exact JavaScript overflow, normalization and cross-field/runtime refinements are not completely expressible in portable OpenAPI 3.1. Representable constraints are retained; the remaining graph locations are disclosed. Canonical Zod validation is mandatory.
+            sourceDigest: fabdc0b42a286e32e4ae9a94a111d28b65b78b9f90772d0aa2395f38128b9763
+        runtimeValidationRequired: true
+        status: reviewed-exception
+        warning: OpenAPI-only validators and generated clients cannot substitute for canonical runtime Zod validation.
+  securitySchemes: {}
+info:
+  description: Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.
+  title: CANONICAL — Anarchitecture auth-canonical
+  version: 0.0.0
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+openapi: 3.1.1
+paths:
+  /auth/activate:
+    patch:
+      deprecated: false
+      description: Activation token verification belongs to the authentication service.
+      operationId: activateUser
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.ActivateUserRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.SuccessResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Activate a user
+      tags:
+        - Auth
+      x-contract-capability: auth.session
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - auth-activate
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: PATCH /auth/activate
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Activation token verification belongs to the authentication service.
+          fixtures:
+            - auth-activate
+          id: auth.activateUser.outcome
+          phase: application outcome
+  /auth/forgot-password:
+    post:
+      deprecated: false
+      description: Recovery processing belongs to the engine; do not disclose provider internals in the response.
+      operationId: forgotPassword
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.ForgotPasswordRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.SuccessResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Request password recovery
+      tags:
+        - Auth
+      x-contract-capability: auth.session
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - auth-forgot-password
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/forgot-password
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Recovery processing belongs to the engine; do not disclose provider internals in the response.
+          fixtures:
+            - auth-forgot-password
+          id: auth.forgotPassword.outcome
+          phase: application outcome
+  /auth/jwt/login:
+    post:
+      deprecated: false
+      description: Verify credentials in the engine; invalid credentials return 400. No session cookies are promised.
+      operationId: loginWithJwt
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.LoginRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.jwt.JwtTokensResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Issue JWT tokens
+      tags:
+        - Auth
+      x-contract-capability: auth.jwt
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+          - D01
+        fixtures:
+          - jwt-login
+          - jwt-invalid-password
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/jwt/login
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Verify credentials in the engine; invalid credentials return 400. No session cookies are promised.
+          fixtures:
+            - jwt-login
+            - jwt-invalid-password
+          id: auth.loginWithJwt.outcome
+          phase: application outcome
+  /auth/jwt/logout:
+    post:
+      deprecated: false
+      description: Verify the refresh token and invalidate tokens through the owning service; invalid token returns 400.
+      operationId: logoutWithJwt
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.jwt.JwtLogoutRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.SuccessResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Invalidate JWT tokens
+      tags:
+        - Auth
+      x-contract-capability: auth.jwt
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+          - D01
+        fixtures:
+          - jwt-logout-invalid-token
+          - jwt-logout
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/jwt/logout
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Verify the refresh token and invalidate tokens through the owning service; invalid token returns 400.
+          fixtures:
+            - jwt-logout-invalid-token
+            - jwt-logout
+          id: auth.logoutWithJwt.outcome
+          phase: application outcome
+  /auth/jwt/refresh:
+    post:
+      deprecated: false
+      description: Verify signature and invalidation state; invalid or invalidated refresh token returns 400.
+      operationId: refreshJwtTokens
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.jwt.JwtRefreshRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.jwt.JwtTokensResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Refresh JWT tokens
+      tags:
+        - Auth
+      x-contract-capability: auth.jwt
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+          - D01
+        fixtures:
+          - jwt-refresh-invalid-token
+          - jwt-refresh
+          - jwt-refresh-invalidated
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/jwt/refresh
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Verify signature and invalidation state; invalid or invalidated refresh token returns 400.
+          fixtures:
+            - jwt-refresh-invalid-token
+            - jwt-refresh
+            - jwt-refresh-invalidated
+          id: auth.refreshJwtTokens.outcome
+          phase: application outcome
+  /auth/login:
+    post:
+      deprecated: false
+      description: Rejected credentials return 401; success is a user/RBAC envelope, not JWT tokens.
+      operationId: login
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.LoginRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output"
+          description: Successful operation.
+          headers:
+            set-cookie:
+              description: Forward every value returned by the authentication engine; issuance and cookie names are host-bound.
+              schema:
+                $ref: "#/components/schemas/auth.SetCookieHeader.Output"
+              x-contract-cardinality: repeated
+              x-contract-presence: Forward every value returned by the authentication engine; issuance and cookie names are host-bound.
+          x-contract-outcome: success
+          x-contract-semantics:
+            - auth.cookie-forwarding
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.UnauthorizedError.Output"
+          description: Authentication or credential verification failed.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Start a session
+      tags:
+        - Auth
+      x-contract-capability: auth.session
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+          - D07
+        fixtures:
+          - auth-login
+          - auth-login-engine-denial
+          - auth-login-policy-wire-order
+          - auth-login-number-coercion
+          - auth-login-short-password
+          - auth-guard-public-login
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/login
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Forward incoming Cookie and all engine Set-Cookie values separately. Preserve logout expiry. Never infer production cookie names, CSRF policy or issuance from fixture values.
+          fixtures:
+            - auth-login
+            - auth-logout
+            - passkey-registration-begin
+          id: auth.cookie-forwarding
+          phase: response
+        - description: Preserve user JSON and ordered RBAC conditions, fields, inverted flags and reasons. Map without loss to auth-ts; do not evaluate policies here. The me controller does not forward engine response headers.
+          fixtures:
+            - auth-login-policy-wire-order
+            - auth-me
+          id: auth.policy-wire
+          phase: response
+        - description: Rejected credentials return 401; success is a user/RBAC envelope, not JWT tokens.
+          fixtures:
+            - auth-login
+            - auth-login-engine-denial
+            - auth-login-policy-wire-order
+            - auth-login-number-coercion
+            - auth-login-short-password
+            - auth-guard-public-login
+          id: auth.login.outcome
+          phase: application outcome
+  /auth/passkeys/authentication/begin:
+    post:
+      deprecated: false
+      description: Public authentication initiation returns challenge options and any engine cookies.
+      operationId: beginAuthentication
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationBeginRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationBeginResponse.Output"
+          description: Successful operation.
+          headers:
+            set-cookie:
+              description: Forward every value returned by the authentication engine; issuance and cookie names are host-bound.
+              schema:
+                $ref: "#/components/schemas/auth.SetCookieHeader.Output"
+              x-contract-cardinality: repeated
+              x-contract-presence: Forward every value returned by the authentication engine; issuance and cookie names are host-bound.
+          x-contract-outcome: success
+          x-contract-semantics:
+            - auth.cookie-forwarding
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Begin passkey authentication
+      tags:
+        - Auth
+      x-contract-capability: auth.passkeys
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - passkey-guard-public-authentication
+          - passkey-authentication-begin
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/passkeys/authentication/begin
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Forward incoming Cookie and all engine Set-Cookie values separately. Preserve logout expiry. Never infer production cookie names, CSRF policy or issuance from fixture values.
+          fixtures:
+            - auth-login
+            - auth-logout
+            - passkey-registration-begin
+          id: auth.cookie-forwarding
+          phase: response
+        - description: JSON parsing is not WebAuthn verification. The engine verifies challenge, trusted origin/RP, user verification and credential binding. Preserve optional/null userHandle and strip injected registration identity fields.
+          fixtures:
+            - passkey-authentication-verifier-rejects
+            - passkey-authentication-finish-null-handle
+            - passkey-registration-strips-user-id
+          id: auth.passkey-verification
+          phase: authentication/authorization
+        - description: Public authentication initiation returns challenge options and any engine cookies.
+          fixtures:
+            - passkey-guard-public-authentication
+            - passkey-authentication-begin
+          id: auth.beginAuthentication.outcome
+          phase: application outcome
+  /auth/passkeys/authentication/finish:
+    post:
+      deprecated: false
+      description: Rejected assertion returns 401; success returns session user/RBAC and engine cookies.
+      operationId: finishAuthentication
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.passkeys.PasskeyAuthenticationFinishRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.LoggedInUserInfoResponse.Output"
+          description: Successful operation.
+          headers:
+            set-cookie:
+              description: Forward every value returned by the authentication engine; issuance and cookie names are host-bound.
+              schema:
+                $ref: "#/components/schemas/auth.SetCookieHeader.Output"
+              x-contract-cardinality: repeated
+              x-contract-presence: Forward every value returned by the authentication engine; issuance and cookie names are host-bound.
+          x-contract-outcome: success
+          x-contract-semantics:
+            - auth.cookie-forwarding
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.UnauthorizedError.Output"
+          description: Authentication or credential verification failed.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Finish passkey authentication
+      tags:
+        - Auth
+      x-contract-capability: auth.passkeys
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - passkey-authentication-finish-null-handle
+          - passkey-authentication-verifier-rejects
+          - passkey-authentication-invalid-base64url
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/passkeys/authentication/finish
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Forward incoming Cookie and all engine Set-Cookie values separately. Preserve logout expiry. Never infer production cookie names, CSRF policy or issuance from fixture values.
+          fixtures:
+            - auth-login
+            - auth-logout
+            - passkey-registration-begin
+          id: auth.cookie-forwarding
+          phase: response
+        - description: Preserve user JSON and ordered RBAC conditions, fields, inverted flags and reasons. Map without loss to auth-ts; do not evaluate policies here. The me controller does not forward engine response headers.
+          fixtures:
+            - auth-login-policy-wire-order
+            - auth-me
+          id: auth.policy-wire
+          phase: response
+        - description: JSON parsing is not WebAuthn verification. The engine verifies challenge, trusted origin/RP, user verification and credential binding. Preserve optional/null userHandle and strip injected registration identity fields.
+          fixtures:
+            - passkey-authentication-verifier-rejects
+            - passkey-authentication-finish-null-handle
+            - passkey-registration-strips-user-id
+          id: auth.passkey-verification
+          phase: authentication/authorization
+        - description: Rejected assertion returns 401; success returns session user/RBAC and engine cookies.
+          fixtures:
+            - passkey-authentication-finish-null-handle
+            - passkey-authentication-verifier-rejects
+            - passkey-authentication-invalid-base64url
+          id: auth.finishAuthentication.outcome
+          phase: application outcome
+  /auth/register:
+    post:
+      deprecated: false
+      description: Passwords must match; existing users fail with 400; successful registration returns success, not a session.
+      operationId: registerUser
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.RegisterRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.SuccessResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Register a user
+      tags:
+        - Auth
+      x-contract-capability: auth.session
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - auth-register
+          - auth-register-empty-optional-name
+          - auth-register-missing-password
+          - auth-register-short-password
+          - auth-register-mismatch
+          - auth-register-malformed-email
+          - auth-register-null-name
+          - auth-register-unknown-property
+          - auth-register-existing
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/register
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Passwords must match; existing users fail with 400; successful registration returns success, not a session.
+          fixtures:
+            - auth-register
+            - auth-register-empty-optional-name
+            - auth-register-missing-password
+            - auth-register-short-password
+            - auth-register-mismatch
+            - auth-register-malformed-email
+            - auth-register-null-name
+            - auth-register-unknown-property
+            - auth-register-existing
+          id: auth.registerUser.outcome
+          phase: application outcome
+  /auth/reset-password:
+    post:
+      deprecated: false
+      description: Password mismatch returns 400; rejected engine reset tokens map to 400 Invalid token.
+      operationId: resetPassword
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.ResetPasswordRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.SuccessResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Reset a password
+      tags:
+        - Auth
+      x-contract-capability: auth.session
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - auth-reset-password
+          - auth-reset-mismatch
+          - auth-reset-invalid-token
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/reset-password
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Password mismatch returns 400; rejected engine reset tokens map to 400 Invalid token.
+          fixtures:
+            - auth-reset-password
+            - auth-reset-mismatch
+            - auth-reset-invalid-token
+          id: auth.resetPassword.outcome
+          phase: application outcome
+  /auth/verify-email:
+    post:
+      deprecated: false
+      description: Rejected engine verification tokens map to 400 Invalid token.
+      operationId: verifyEmail
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/auth.VerifyEmailRequest.Input"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.SuccessResponse.Output"
+          description: Successful operation.
+          headers: {}
+          x-contract-outcome: success
+          x-contract-semantics: []
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.BadRequestError.Output"
+          description: Invalid transport input or rejected application request; preserve the applicable legacy envelope and message.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/auth.InternalServerError.Output"
+          description: Unhandled failure; host exception boundary returns a sanitized internal error.
+          headers: {}
+          x-contract-outcome: error
+          x-contract-semantics: []
+      security: []
+      summary: Verify an email address
+      tags:
+        - Auth
+      x-contract-capability: auth.session
+      x-contract-compatibility:
+        discrepancies:
+          - D03
+          - D04
+        fixtures:
+          - auth-verify-email
+          - auth-verify-invalid-token
+        migrations: []
+        revision: ecda1b6e0d9bc39c66373452a92dce91e06abee0
+        route: POST /auth/verify-email
+      x-contract-domain: auth
+      x-contract-semantics:
+        - description: Preserve audited JSON primitive/single-item-array coercion and per-object unknown-key handling. Apply field constraints after conversion. JSON Schema input projection alone cannot express every post-conversion constraint.
+          fixtures:
+            - auth-login-number-coercion
+            - auth-register-unknown-property
+            - auth-logout-strips-unknown
+          id: auth.legacy-normalization
+          phase: normalization
+        - description: Rejected engine verification tokens map to 400 Invalid token.
+          fixtures:
+            - auth-verify-email
+            - auth-verify-invalid-token
+          id: auth.verifyEmail.outcome
+          phase: application outcome
+tags:
+  - name: Auth
+x-contract-artifact-kind: canonical-contract
+x-contract-deployment-ready: false
+x-contract-excluded-operations:
+  - binding: auth.protected
+    operationId: beginRegistration
+    reason: unresolved-security
+  - binding: auth.protected
+    operationId: changePassword
+    reason: unresolved-security
+  - binding: auth.protected
+    operationId: finishRegistration
+    reason: unresolved-security
+  - binding: auth.protected
+    operationId: getLoggedInUserInfo
+    reason: unresolved-security
+  - binding: auth.protected
+    operationId: logout
+    reason: unresolved-security
+  - binding: auth.protected
+    operationId: updateEmail
+    reason: unresolved-security
+x-contract-host-conformance-blockers:
+  - capability: auth.jwt
+    issues:
+      - https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488
+      - https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490
+      - https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23
+    owner: Implementing host maintainers
+    requirement: "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence."
+    status: host-evidence-required
+  - capability: auth.passkeys
+    issues:
+      - https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488
+      - https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490
+      - https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23
+    owner: Implementing host maintainers
+    requirement: "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence."
+    status: host-evidence-required
+  - capability: auth.session
+    issues:
+      - https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/488
+      - https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490
+      - https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23
+    owner: Implementing host maintainers
+    requirement: "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence."
+    status: host-evidence-required
+x-contract-profile: auth-canonical
+x-contract-security-obligations:
+  activateUser:
+    kind: public
+  beginAuthentication:
+    kind: public
+  beginRegistration:
+    binding: auth.protected
+    kind: profile
+  changePassword:
+    binding: auth.protected
+    kind: profile
+  finishAuthentication:
+    kind: public
+  finishRegistration:
+    binding: auth.protected
+    kind: profile
+  forgotPassword:
+    kind: public
+  getLoggedInUserInfo:
+    binding: auth.protected
+    kind: profile
+  login:
+    kind: public
+  loginWithJwt:
+    kind: public
+  logout:
+    binding: auth.protected
+    kind: profile
+  logoutWithJwt:
+    kind: public
+  refreshJwtTokens:
+    kind: public
+  registerUser:
+    kind: public
+  resetPassword:
+    kind: public
+  updateEmail:
+    binding: auth.protected
+    kind: profile
+  verifyEmail:
+    kind: public
+x-contract-status: canonical
+x-contract-versions:
+  "@anarchitects/auth-contracts": 0.0.0

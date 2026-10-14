@@ -2,7 +2,7 @@
 
 Zod-first HTTP schemas, inferred types and four operation definitions for the
 existing Newsletter subscription, native action and signed webhook surface.
-This package is unreleased at `0.0.0`, pending an initial Nx minor release.
+This package is unreleased at `0.0.0`, pending the explicit first Nx release at `0.0.1`.
 It does not implement consent storage, subscription delivery or token lifecycle.
 
 The root exports schemas, `newsletterSchemas`, `newsletterOperations` and
@@ -38,15 +38,23 @@ and limits. Request generation has explicit #7 gates for UTF-16 lengths, decoded
 numeric overflow and conditional webhook refinements. Publication/conformance
 remains #8; package existence does not establish runtime adoption.
 
-## Generated review artifacts
+## Canonical artifacts and separate host conformance
 
-Explicit file exports now include `./openapi/newsletter-review.json`,
-`./openapi/newsletter-review.yaml`, `./openapi/inventory.json` and `./manifest.json`.
-They are generated from these canonical schemas and operations and are verified
-in clean tarballs. Runtime imports do not load the files.
+Explicit exports include `./openapi/newsletter-canonical.json` and its YAML
+sibling, `./openapi/inventory.json` and `./manifest.json`. Existing
+`./openapi/newsletter-review.json`/YAML exports remain diagnostic. Runtime imports
+do not load these files; clean tarball consumers verify them independently.
 
-The files are **review-only** and claim no supported deployment capabilities.
-P07 exceptions are reviewed per operation and pinned to source/generator bytes.
-Real host evidence remains unresolved; protected routes remain in the inventory
-until host security bindings are resolved. Review `docs/openapi.md` and
-`docs/openapi-projection-proposal.md` in the source repository before using them.
+Canonical artifacts are implementation-independent and publishable without a host
+after contract validity, compatibility and package checks. Format-2 manifests
+separate publication validity, implementation conformance and deployment compliance.
+They claim no supported capabilities or deployment readiness. Protected operations
+remain in the inventory with normative security obligations and stay excluded from
+OpenAPI paths until host bindings resolve. P07 reviews remain scoped and pinned;
+OpenAPI-only validation cannot replace canonical Zod parsing.
+
+First distribution is exactly `0.0.1`; pre-release development uses non-bumping
+`init(newsletter-contracts)` commits, and later versions use Nx Conventional Commits.
+Hosts consume exact published versions and independently prove positive/negative
+HTTP behavior, security, headers and cookies before claiming support. See
+`docs/openapi.md`, `docs/releases.md` and ADR-0005 in the source repository.

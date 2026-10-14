@@ -1,9 +1,13 @@
 {
+  "artifactKind": "canonical-contract",
   "artifacts": {
-    "inventory.json": "782ef8a345a6b6f449b855977324598fc26d18022a5088a1fcbc760b8ad9de0c",
+    "inventory.json": "7fe5dcbc16fa73f9acccb02e77dc65c32a4edd640c19b4537e3f6d85f081d1e8",
+    "newsletter-canonical.json": "6bf88bf2e8a4c424ead4a80f4e6e1e76d1af85d04b67f672634bc050bd1dafc5",
+    "newsletter-canonical.yaml": "02ef50ca84185c607590c5f42e0714aacfb2d017ad3955fcb35c03d9ca69368e",
     "newsletter-review.json": "065e8600018ee353b0c29939025f7cecd0e43a9ca270f6ae5917b38847776571",
     "newsletter-review.yaml": "2d7b3b4af2c5e3c1b82ce9705134c9edb22ec1ab48f997a12a945153a847741d"
   },
+  "blockerScope": "implementation-and-deployment",
   "capabilityBlockers": [
     {
       "capability": "newsletter.native",
@@ -39,10 +43,17 @@
       "status": "host-evidence-required"
     }
   ],
+  "contractPublication": {
+    "scope": "canonical-source-and-artifacts",
+    "status": "validated"
+  },
   "dependencies": {
     "@anarchitects/newsletter-contracts": {
       "zod": "4.5.0"
     }
+  },
+  "deploymentCompliance": {
+    "status": "unverified"
   },
   "documentedOperationCount": 3,
   "excludedOperations": [
@@ -52,8 +63,9 @@
       "reason": "unresolved-security"
     }
   ],
-  "formatVersion": 1,
+  "formatVersion": 2,
   "generator": {
+    "tools/openapi/artifacts.mjs": "a36a453ef9bc9ee073478bf502d0d4eb193a3c290006c0b77e5c4086fb1b8413",
     "tools/openapi/common.mjs": "e01f8f6aa051a5b9b01e1f06f9ef96b97a8ed674ed288152cffc6f8cd0004db4",
     "tools/openapi/fidelity.mjs": "1c98680e75b1e2281df7e740cb5fdd6f8e3ea98aef3c3e4dba34fc854d1ad690",
     "tools/openapi/generate.mjs": "5a9bb337026070945a6cff02b8b3210d55ed68df5526bca5744de83c9ccf4673",
@@ -61,6 +73,45 @@
     "tools/openapi/profiles.mjs": "c5eacfc78543db7c70bca7aa0f35053a8b57bfd94c24db481617fc4a34e06e6a",
     "tools/openapi/projection-review.mjs": "46a932cae49f881daa3253e260410bd8015e6edbbdf0e930805f75970bff95b6",
     "tools/openapi/validate.mjs": "7dde5900d7c74f18271d5181dec3af34b95d448054e396396030918f58d475ab"
+  },
+  "hostConformanceBlockers": [
+    {
+      "capability": "newsletter.native",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.subscription",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    },
+    {
+      "capability": "newsletter.webhook",
+      "issues": [
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489",
+        "https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/490",
+        "https://github.com/anarchitects/anarchitecture-bricks-ddd/issues/23"
+      ],
+      "owner": "Implementing host maintainers",
+      "requirement": "Approved exact-version host configuration and positive/negative/security HTTP evidence. Contracts #8 packages verified results; it does not create host evidence.",
+      "status": "host-evidence-required"
+    }
+  ],
+  "implementationConformance": {
+    "status": "unverified",
+    "supportedCapabilities": []
   },
   "operationCount": 4,
   "packages": {
@@ -72,12 +123,12 @@
       "newsletter.subscription",
       "newsletter.webhook"
     ],
-    "description": "Diagnostic projection for review. Protected operations remain in the inventory and are excluded from paths until security bindings are resolved. No deployment or compatibility claim.",
+    "description": "Implementation-independent canonical contract. Not a deployment profile. Protected operations with unresolved bindings are described in inventory.json and excluded from paths. Canonical Zod validation and normative security obligations remain required; publication claims no implementation support.",
     "hostBindings": {},
-    "id": "newsletter-review",
+    "id": "newsletter-canonical",
     "securityBindings": {},
     "securitySchemes": {},
-    "status": "review-only",
+    "status": "canonical",
     "variants": [
       "newsletter.native",
       "newsletter.subscription",
@@ -304,7 +355,7 @@
     },
     "revision": "sha256:2ded05cce54654bfa2e78c35e545224f45747b8a07b2d4a6f8874a544ac96543"
   },
-  "status": "review-only",
+  "status": "canonical",
   "supportedCapabilities": [],
   "tools": {
     "@apidevtools/swagger-parser": "13.1.0",

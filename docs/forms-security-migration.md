@@ -4,7 +4,7 @@ Status: security direction accepted; implementation and host evidence outstandin
 The [Contracts #7 decision](https://github.com/anarchitects/anarchitecture-contracts/issues/7#issuecomment-6146764328)
 and [Bricks #489 decision](https://github.com/anarchitects/anarchitecture-bricks-3tier/issues/489#issuecomment-6146772001)
 require remediation. Neither constrained legacy acceptance nor continued public
-secret exposure is a release option. Contracts preserves the frozen observations
+secret exposure is an implementation/deployment release option. Contracts preserves the frozen observations
 so the migration remains measurable.
 
 ## D05: submissions
@@ -60,7 +60,9 @@ Roll out by updating consumers to handle the existing 400 envelope and consume
 the public target, exercising a candidate host against both migration fixtures
 and retained baseline evidence, then reviewing immutable configuration/HTTP reports.
 Only then switch canonical route metadata in that versioned migration and remove
-the corresponding blocker. Publication #8 consumes that approved evidence.
+the corresponding blocker. Host-conformance Gate B consumes that approved evidence. Under ADR-0005,
+canonical contract publication can precede remediation while disclosing these
+limitations; it never establishes Forms support.
 
 Rollback must disable the affected capability or return to a previously verified
 secure version; it must not restore dynamic-validation bypass or public secrets.

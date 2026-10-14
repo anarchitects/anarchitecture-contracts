@@ -25,11 +25,12 @@ test('large historical inventories are compared rather than silently treated as 
   assert.throws(() => gitFile('no-such-contract-revision', path));
 });
 
-test('current review-only packages cannot pass the Nx publication gate', () => {
+test('canonical packages pass the integrity gate without host capabilities', async () => {
   for (const project of Object.keys(releaseProjects)) {
-    assert.throws(() => assertPublishable(project), /publication blocked/);
+    const manifest = await assertPublishable(project);
+    assert.deepEqual(manifest.supportedCapabilities, []);
   }
-  assert.throws(() => assertPublishable('contract-checks'), /Ineligible/);
+  await assert.rejects(assertPublishable('contract-checks'), /Ineligible/);
 });
 
 test('historical rationale is archived exactly and never becomes executable version input', () => {

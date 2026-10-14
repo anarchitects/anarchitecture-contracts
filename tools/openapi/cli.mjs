@@ -7,7 +7,7 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 import { loadDomains } from './model.mjs';
-import { generate, reviewProfile } from './generate.mjs';
+import { canonicalArtifacts, hostArtifacts } from './artifacts.mjs';
 import { compareLegacy } from './compatibility.mjs';
 import { json, readJson, invariant } from './common.mjs';
 
@@ -20,7 +20,7 @@ if (command === 'release' || command === 'verify-profile') {
     args.length === 2,
     'Usage: release <approved-profile.json> <output-directory>',
   );
-  const result = await generate(models, {
+  const result = await hostArtifacts(models, {
     profile: readJson(args[0]),
     proposal,
     verification: command === 'verify-profile',
@@ -48,22 +48,17 @@ if (command === 'release' || command === 'verify-profile') {
   );
   const inventories = [];
   for (const group of [...models.map((model) => [model]), models]) {
-    const result = await generate(group, {
-      profile: reviewProfile(group),
-      proposal,
-      review: true,
-    });
+    const result = await canonicalArtifacts(group, proposal);
     const directory =
       group.length === 1 ? `packages/${group[0].domain}` : 'generated';
     const base = `${directory}/openapi`,
       id = result.manifest.profile.id;
-    expected.set(`${base}/${id}.json`, result.jsonText);
-    expected.set(`${base}/${id}.yaml`, result.yamlText);
-    expected.set(`${base}/inventory.json`, result.inventoryText);
+    for (const [name, bytes] of result.artifacts)
+      expected.set(`${base}/${name}`, bytes);
     expected.set(`${directory}/contract-manifest.json`, json(result.manifest));
     if (group.length === 1) inventories.push(result.inventory);
     console.log(
-      `${id}: ${result.manifest.operationCount} inventoried, ${result.manifest.documentedOperationCount} in paths, release blocked`,
+      `${id}: ${result.manifest.operationCount} inventoried, ${result.manifest.documentedOperationCount} in paths, canonical contract; no host support claimed`,
     );
   }
   const comparison = compareLegacy(

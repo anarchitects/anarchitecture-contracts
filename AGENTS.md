@@ -55,16 +55,24 @@ packages evolve;
 do not add placeholder checks that claim conformance without exercising it.
 Keep each epic subissue in a separate PR and report validation gaps accurately.
 
-## OpenAPI review artifacts
+## Canonical publication and host conformance
 
-Use [the generation guide](docs/openapi.md) for #7 commands and compatibility gates.
-Current generated OpenAPI and manifests are review-only while real host bindings
-remain unresolved. [P07](docs/openapi-projection-proposal.md) now implements the
-accepted #7 decision through source/generator-pinned, operation-scoped reviews.
-Never broaden those reviews, infer deployment approval from synthetic evidence,
-infer anonymous protection, or remove Forms D05/D08 blockers to make checks pass.
-Issue #7's tested mechanism can complete independently of host remediation and #8
-publication; preserve outstanding capability blockers in manifests.
+[Accepted ADR-0005](adr/0005-independent-contract-publication-and-implementation-conformance.md)
+separates contract validity, implementation conformance and deployment compliance.
+Use [the generation guide](docs/openapi.md): canonical packages are publishable
+without a host after contract checks; publication never proves implementation
+support. Format-2 canonical manifests must retain empty supported capabilities,
+unverified host/deployment states, unresolved bindings and known limitations.
+Generate artifacts from sources; never edit manifest statuses or copy host output
+into a package to bypass validation. Regeneration after Nx versioning must preserve
+canonical mode. Existing review exports remain diagnostic, not deployment profiles.
+
+P07 remains operation/source/generator-pinned; no broad exceptions or anonymous
+fallbacks. Real host profiles require strict approval, exact-version runtime
+security/conformance evidence and resolved bindings. Synthetic evidence stays
+unverified. D05/D08 remain Forms host-conformance blockers; never canonize unsafe
+legacy behavior or claim support without separately reviewed migration/remediation.
+They do not block unrelated canonical publication.
 
 ## Nx Release migration in progress
 
@@ -87,8 +95,10 @@ changes. Contract-impact gates must validate the actual Nx-derived version and
 retain pinned migration approval for breaks. First-release and publication
 checks must inspect distribution history, not only the local manifest version.
 
-Issue #8 is not complete: live signed release verification, standalone conformance,
-trusted publication and downstream clean-install evidence remain required.
-Current review-only manifests must continue to fail publication checks. Never
-remove a capability blocker or treat a dry run as deployment approval.
+Issue #20 corrects the #8 publication prerequisite. Live signed release verification,
+trusted publication and downstream clean-install evidence remain external work.
+Standalone HTTP conformance and host evidence belong to downstream claims; they
+are not prerequisites for canonical publication. Review-only/test-only artifacts
+still fail the canonical publication gate. Never remove a host capability blocker
+or treat a dry run as deployment approval.
 Contract runtimes and the standalone conformance CLI must not acquire Nx as a dependency.

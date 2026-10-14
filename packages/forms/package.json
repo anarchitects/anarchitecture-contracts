@@ -54,7 +54,9 @@
     "./openapi/forms-review.json": "./openapi/forms-review.json",
     "./openapi/forms-review.yaml": "./openapi/forms-review.yaml",
     "./openapi/inventory.json": "./openapi/inventory.json",
-    "./manifest.json": "./contract-manifest.json"
+    "./manifest.json": "./contract-manifest.json",
+    "./openapi/forms-canonical.json": "./openapi/forms-canonical.json",
+    "./openapi/forms-canonical.yaml": "./openapi/forms-canonical.yaml"
   },
   "dependencies": {
     "zod": "4.5.0"

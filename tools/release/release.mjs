@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import { releaseVersion, releaseChangelog } from 'nx/release';
-import { invariant } from '../openapi/common.mjs';
+import { invariant, readJson } from '../openapi/common.mjs';
 import { releaseProjects } from './projects.mjs';
 import {
   localHistory,
@@ -13,6 +13,7 @@ import { previewVersions, validateSpecifier } from './versions.mjs';
 import { checkCompatibility } from './compatibility.mjs';
 import { loadDomains } from '../openapi/model.mjs';
 import { assertPublishable } from './publication-gate.mjs';
+import { canonicalArtifacts } from '../openapi/artifacts.mjs';
 
 export function releaseOptions(values) {
   const projects = values.projects
@@ -59,6 +60,22 @@ export async function runRelease(options) {
     );
     return preview;
   }
+  // Verify current packaged bytes, then prepare the Nx-proposed canonical
+  // versions in memory, including for dry runs. No host evidence is involved.
+  const models = await loadDomains();
+  for (const [project, data] of Object.entries(preview.projectsVersionData)) {
+    if (!data.newVersion) continue;
+    await assertPublishable(project);
+    const model = models.find((m) => `${m.domain}-contracts` === project);
+    const prepared = await canonicalArtifacts(
+      [{ ...model, package: { ...model.package, version: data.newVersion } }],
+      readJson('tools/openapi/projection-proposal.json'),
+    );
+    invariant(
+      prepared.manifest.packages[model.package.name] === data.newVersion,
+      `${project}: canonical preparation version mismatch`,
+    );
+  }
   await checkCompatibility(
     (await loadDomains()).filter((model) =>
       Object.hasOwn(preview.projectsVersionData, `${model.domain}-contracts`),
@@ -86,9 +103,6 @@ export async function runRelease(options) {
         git('config', 'tag.gpgsign') === 'true',
       'Configure the approved release signing key; unsigned releases are disabled',
     );
-    Object.entries(preview.projectsVersionData)
-      .filter(([, data]) => data.newVersion)
-      .forEach(([project]) => assertPublishable(project));
   }
   const result = await releaseVersion({
     ...options,
@@ -119,9 +133,8 @@ export async function runRelease(options) {
       { versions, history },
       { cumulative: true },
     );
-    Object.entries(result.projectsVersionData)
-      .filter(([, v]) => v.newVersion)
-      .forEach(([project]) => assertPublishable(project));
+    for (const [project, data] of Object.entries(result.projectsVersionData))
+      if (data.newVersion) await assertPublishable(project);
     run('git', ['add', '--', 'packages', 'generated', 'yarn.lock']);
   }
   await releaseChangelog({

@@ -8,6 +8,8 @@
 - Refines: [ADR-0001](0001-contract-workspace-and-release-foundations.md)
 - Release-tooling override: [ADR-0003](0003-nx-workspace-and-release-governance.md) supersedes Changesets-specific versioning; package boundaries and wire compatibility rules remain Accepted.
 
+- Publication refinement: [ADR-0005](0005-independent-contract-publication-and-implementation-conformance.md) separates canonical publication from implementation conformance and deployment compliance. Host evidence gates host claims, not canonical package distribution. ADR-0004 remains the release/version authority.
+
 ## Context and reviewed evidence
 
 The [frozen legacy baseline](../baselines/legacy-3tier/README.md) inventories 29

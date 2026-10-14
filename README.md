@@ -25,16 +25,24 @@ packages: 21 operations with inferred types and compatibility tests.
 Issue #6 adds [Forms](packages/forms/README.md) and
 [Newsletter](packages/newsletter/README.md), completing the 29-operation inventory.
 Forms security dispositions and request-generation/profile gaps remain explicit
-release gates; no stable capability or deployment adoption is implied.
+host-conformance gates; canonical publication implies no implementation support.
 
 Issue #7 adds [OpenAPI generation and compatibility checks](docs/openapi.md),
-including 29-operation diagnostic inventories, JSON/YAML review artifacts,
-package manifests and CI release-plan checks. The
+including 29-operation inventories, canonical and diagnostic JSON/YAML artifacts,
+package manifests and CI compatibility checks. The
 [scoped projection register](docs/openapi-projection-proposal.md) implements the accepted
 decision for #7. Real host bindings remain unresolved; artifacts are not deployable profiles.
 
 Before writing code, read [AGENTS.md](AGENTS.md), every Meta and local ADR, and
 the relevant engineering guides.
+
+[Accepted ADR-0005](adr/0005-independent-contract-publication-and-implementation-conformance.md)
+implements [#20](https://github.com/anarchitects/anarchitecture-contracts/issues/20):
+**contract validity ≠ implementation conformance ≠ deployment compliance**.
+Canonical packages can be published before a Bricks implementation exists. Their
+manifests claim no supported host capabilities. Protected operations remain in
+the canonical inventory with explicit security obligations; unresolved bindings
+never become anonymous OpenAPI paths. Hosts independently prove their support.
 
 ## Development
 
@@ -59,7 +67,7 @@ full Git history on pull requests and pushes to `main`. Actual legacy HTTP repla
 is available with `yarn baseline:verify ../anarchitecture-bricks-3tier`; see its
 [prerequisites and limits](baselines/legacy-3tier/README.md#reproduce).
 CI also runs packed consumers on Node 22 and 24. Independent deployment
-conformance and publication remain #8; approved host profiles remain a release gate.
+conformance remains host-owned. ADR-0005 separates it from canonical publication.
 
 Nx 23.3.0 and `@nx/js` provide per-package builds and inferred typechecks.
 Use `yarn nx show projects`, `yarn nx graph` and `yarn nx run auth-contracts:build`
@@ -67,7 +75,7 @@ to inspect or run the graph. `yarn commits:check <base-ref>` validates Conventio
 `yarn release:dry-run` previews the initial independent releases without publication.
 Root scripts delegate to Nx targets. Manual release and tag-based publication use
 the [Community-style workflows](docs/releases.md#workflow-operation), with current
-host-profile blockers enforced before publication.
+contract validity and integrity checks enforced before publication.
 See the [migration record](docs/nx-migration.md) for preserved Changesets intent
 and the remaining #8 gates. No Nx Cloud account is needed.
 
@@ -95,8 +103,9 @@ and business logic remain in their owning bounded contexts.
 
 ## Next delivery steps
 
-1. Obtain approved real host profiles and conformance evidence; preserve Forms D05/D08 blockers.
-2. [#8](https://github.com/anarchitects/anarchitecture-contracts/issues/8): publish verified packages and independent conformance tooling.
+1. Complete external signing/npm setup and review the first canonical `0.0.1` publication.
+2. Bricks consumes immutable packages and supplies actual HTTP conformance evidence.
+3. Hosts resolve deployment profiles; Forms D05/D08 remain blockers for affected claims.
 
 See [ADR-0001](adr/0001-contract-workspace-and-release-foundations.md),
 [ADR-0002](adr/0002-domain-contract-authoring-and-publishing-boundaries.md),
