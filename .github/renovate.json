@@ -1,0 +1,84 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)"
+  ],
+  "enabledManagers": ["npm", "github-actions"],
+  "includePaths": [
+    "package.json",
+    "packages/auth/package.json",
+    "packages/forms/package.json",
+    "packages/identity/package.json",
+    "packages/newsletter/package.json",
+    ".yarnrc.yml",
+    "yarn.lock",
+    ".github/workflows/**",
+    ".github/actions/**"
+  ],
+  "timezone": "Europe/Brussels",
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "semanticCommitScope": null,
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 1,
+  "automerge": false,
+  "platformAutomerge": false,
+  "vulnerabilityAlerts": {
+    "enabled": false
+  },
+  "osvVulnerabilityAlerts": false,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"],
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "description": "Override preset grouping; keep production updates and majors separate unless explicitly grouped below.",
+      "matchManagers": ["npm", "github-actions"],
+      "groupName": null,
+      "automerge": false
+    },
+    {
+      "description": "Group ordinary development tools only for minor and patch updates.",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "matchPackageNames": [
+        "esbuild",
+        "markdownlint-cli2",
+        "prettier",
+        "tsup",
+        "typescript"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "development-updates"
+    },
+    {
+      "description": "Keep first-party Nx packages aligned; review and run required Nx migrations.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["nx", "@nx/**"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "nx-updates"
+    },
+    {
+      "description": "Preserve the intentional TypeScript 5.5 compatibility-test baseline.",
+      "matchDepNames": ["typescript-5-5"],
+      "enabled": false
+    },
+    {
+      "description": "Keep major upgrades separate and require manual review for every update.",
+      "matchManagers": ["npm", "github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": null,
+      "automerge": false
+    }
+  ],
+  "prBodyNotes": [
+    "Manual review required. Preserve existing runtime compatibility; package upgrades do not perform Nx migrations or authorize a Nest 12/Native migration.",
+    "For published packages, review the affected Nx projects and correct Conventional Commit/release intent before merging. No automatic publishing or merging."
+  ]
+}
