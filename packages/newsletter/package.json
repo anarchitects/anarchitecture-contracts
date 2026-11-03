@@ -79,6 +79,6 @@
     "./openapi/newsletter-canonical.yaml": "./openapi/newsletter-canonical.yaml"
   },
   "dependencies": {
-    "zod": "4.5.0"
+    "zod": "4.6.6"
   }
 }
