@@ -432,6 +432,32 @@ signing secrets. Rotate the signing key before expiry and update the GitHub
 public key and Actions secrets together. This credential coordination does not
 authorize weakening signed-commit rules or granting a branch bypass.
 
+### Verify protected signing without releasing
+
+After provisioning or rotating signing credentials, use **Verify release signing**
+(`verify-release-signing.yml`) on reviewed `main`, with the approved primary GPG
+fingerprint. Obtain explicit permission for the hosted check and approve
+`shared-bot-release`; only attempt 1 is permitted. The initial fingerprint
+`254873688B3D6A503B23E68D9959A0F1C14F3B38` belongs to the existing
+`Johan Vrolix <johan@anarchitects.dev>` release identity, independently verified
+against the latest four package tags and their release commit.
+
+The job imports the protected key into an isolated temporary keyring, requires
+exactly the expected primary secret-key fingerprint, signs a run-specific text
+file using the supplied passphrase, verifies the signature and removes the
+temporary keyring. It has no checkout, dependency installation, GitHub App token,
+repository-write permission, cache, distributed execution or publication step.
+Fresh credential evidence cannot be cached (Meta ADR-0015); Johan owns this
+exception and should revisit it when the signing verification route changes.
+
+Success proves the stored key/passphrase can sign with the expected identity.
+It does not prove branch push permissions, GitHub signature recognition, release
+workflow completion or publication. Keep repository-level signing copies until
+this protected check succeeds and recovery custody is confirmed, then remove
+those copies and independently read back secret names. Do not run a live release
+or create a tag just to test credentials. The ordinary release dry run skips
+signing and cannot supply this evidence.
+
 The shared App cutover is tracked in [Community #722](https://github.com/anarchitects/anarchitecture-community/issues/722).
 Johan approved protected execution in all four consumer repositories, replacement
 key custody and eventual revocation of both old App keys. Merge the workflow,
