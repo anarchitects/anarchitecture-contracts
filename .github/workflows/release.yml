@@ -28,11 +28,15 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  NX_NO_CLOUD: 'true'
+  NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
   NX_DAEMON: 'false'
   NX_TUI: 'false'
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    environment: shared-bot-release
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -41,17 +45,21 @@ jobs:
         run: |
           echo 'Release must run from reviewed main.'
           exit 1
-      - name: Check live release credentials
-        if: ${{ !inputs.dry_run }}
-        env:
-          APP_ID: ${{ secrets.ANARCHITECTS_BOT_CLIENT_ID }}
-          APP_KEY: ${{ secrets.ANARCHITECTS_BOT_PRIVATE_KEY }}
-          SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
-        run: |
-          if [ -z "$APP_ID" ] || [ -z "$APP_KEY" ] || [ -z "$SIGNING_KEY" ]; then
-            echo 'Configure the GitHub App and approved GitHub-registered release signing key; see docs/releases.md. Do not bypass branch protection.'
-            exit 1
-          fi
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Attach approved revision to local main
+        run: git switch --force-create main "$GITHUB_SHA"
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Validate workspace
+        run: yarn nx run contract-checks:check
       - name: Generate GitHub App token
         if: ${{ !inputs.dry_run }}
         id: app-token
@@ -59,18 +67,12 @@ jobs:
         with:
           client-id: ${{ secrets.ANARCHITECTS_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ANARCHITECTS_BOT_PRIVATE_KEY }}
-      - uses: actions/checkout@v6
-        with:
-          ref: main
-          fetch-depth: 0
-          token: ${{ steps.app-token.outputs.token || github.token }}
-          persist-credentials: ${{ !inputs.dry_run }}
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          package-manager-cache: false
-      - run: corepack enable
-      - run: yarn install --immutable
+          permission-contents: write
+      - name: Configure release push authentication
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: gh auth setup-git
       - name: Configure verified signing identity
         if: ${{ !inputs.dry_run }}
         uses: crazy-max/ghaction-import-gpg@e89d40939c28e39f97cf32126055eeae86ba74ec # v6
@@ -81,8 +83,6 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
           git_tag_gpgsign: true
-      - name: Validate workspace
-        run: yarn nx run contract-checks:check
       - name: Release through Nx (never publishes npm)
         run: yarn nx run contract-checks:release
         env:
@@ -92,3 +92,4 @@ jobs:
           RELEASE_FIRST: ${{ inputs.first_release }}
           RELEASE_DRY_RUN: ${{ inputs.dry_run }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
