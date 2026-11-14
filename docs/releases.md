@@ -168,7 +168,13 @@ existed at this migration, so there is no grandfathered version exception here.
 
 ## Workflow operation
 
-Use **Release (Manual)** on `main`. Select comma-separated eligible Nx projects;
+Use **Release (Manual)** on `main`. The job uses the dispatch's immutable SHA and requires Johan's approval in
+`shared-bot-release`, including dry runs. Reruns are rejected; dispatch a fresh
+run for a new approval. Configure this environment with reviewer `vrxj81`
+(`5003361`), self-review allowed, administrator approval bypass disabled and
+only branch `main` (no tag policy).
+
+Select comma-separated eligible Nx projects;
 an empty selection considers all four. Ordinary releases consider already
 released projects only. An explicit `first_release` selection must contain only
 unreleased packages and always produces `0.0.1`. Release packages in different
@@ -306,7 +312,7 @@ and [workflow ref selection](https://cli.github.com/manual/gh_workflow_run).
 Required setup before the first live run:
 
 - GitHub App secrets `ANARCHITECTS_BOT_CLIENT_ID` and
-  `ANARCHITECTS_BOT_PRIVATE_KEY`, with repository contents access. The App token
+  `ANARCHITECTS_BOT_PRIVATE_KEY` in `shared-bot-release`, with repository contents access. The App token
   also lets the GitHub Release event trigger the separate publish workflow.
 - `RELEASE_GPG_PRIVATE_KEY` and, if needed, `RELEASE_GPG_PASSPHRASE`. Use an
   approved signing identity whose public key and email are registered with GitHub.
@@ -393,19 +399,19 @@ personal account.
      gh gpg-key add --title 'Contracts release signing'
    ```
 
-4. Export the **private** key straight into a repository Actions secret. This
+4. Export the **private** key straight into a protected environment Actions secret. This
    avoids writing a private-key file or displaying its contents. GPG may prompt
    for the passphrase while exporting; `gh` encrypts the secret before upload.
 
    ```sh
    gpg --armor --export-secret-keys "$RELEASE_KEY_FPR" |
-     gh secret set RELEASE_GPG_PRIVATE_KEY --app actions --repo "$CONTRACTS_REPO"
+     gh secret set RELEASE_GPG_PRIVATE_KEY --app actions --repo "$CONTRACTS_REPO" --env shared-bot-release
    ```
 
 5. Store the same passphrase using the CLI's hidden interactive prompt:
 
    ```sh
-   gh secret set RELEASE_GPG_PASSPHRASE --app actions --repo "$CONTRACTS_REPO"
+   gh secret set RELEASE_GPG_PASSPHRASE --app actions --repo "$CONTRACTS_REPO" --env shared-bot-release
    ```
 
    Paste the passphrase at the prompt, not as a command argument. This secret is
@@ -416,13 +422,29 @@ personal account.
 
    ```sh
    gh gpg-key list
-   gh secret list --app actions --repo "$CONTRACTS_REPO"
+   gh secret list --app actions --repo "$CONTRACTS_REPO" --env shared-bot-release
    ```
 
-These are repository secrets, not secrets on the `npm` environment: signing runs
-in `release.yml`, while `npm` belongs to the separate publish job. Keep the App
-credentials listed above configured as well. Rotate the signing key before its
-expiry and update both the GitHub public key and Actions secrets together.
+These secrets belong to `shared-bot-release`; `npm` belongs to the separate
+publish job. Keep App credentials in that same protected release environment.
+Provision and verify protected replacements before removing existing repository
+signing secrets. Rotate the signing key before expiry and update the GitHub
+public key and Actions secrets together. This credential coordination does not
+authorize weakening signed-commit rules or granting a branch bypass.
+
+The shared App cutover is tracked in [Community #722](https://github.com/anarchitects/anarchitecture-community/issues/722).
+Johan approved protected execution in all four consumer repositories, replacement
+key custody and eventual revocation of both old App keys. Merge the workflow,
+verify environment protections and replacement credentials, then remove unguarded
+copies and revoke old keys. Never expose secret values or publish/tag as a probe.
+Keep a protected recovery copy under Johan's custody; a failed cutover stops
+releases rather than restoring broad credential access. Community remains paused
+until its remaining controls are accepted.
+
+Approval trusts this repository's release code and dependencies. Installation and
+validation precede token creation, but execute on the same runner; this is not
+isolation from malicious hooks. The shared App key retains cross-repository
+authority. Community's artifact-only controller has not been adopted here.
 
 After the workflow is merged to `main`, preview the initial release with:
 

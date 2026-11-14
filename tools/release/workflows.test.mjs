@@ -149,6 +149,39 @@ test('the standard Nx publisher is preceded by the explicit publication gate', (
   }
 });
 
+test('release credentials require protected main approval and follow validation', () => {
+  const release = YAML.parse(
+    readFileSync('.github/workflows/release.yml', 'utf8'),
+  );
+  const job = release.jobs.release;
+  assert.equal(job.environment, 'shared-bot-release');
+  assert.equal(
+    job.if,
+    "github.ref == 'refs/heads/main' && github.run_attempt == 1",
+  );
+  const steps = job.steps;
+  const checkout = steps.find((s) => s.uses?.startsWith('actions/checkout@'));
+  assert.equal(checkout.with.ref, '${{ github.sha }}');
+  assert.equal(checkout.with['persist-credentials'], false);
+  assert.equal(checkout.with.token, undefined);
+  assert.equal(
+    steps.find((s) => s.name === 'Attach approved revision to local main').run,
+    'git switch --force-create main "$GITHUB_SHA"',
+  );
+  const validate = steps.findIndex((s) => s.name === 'Validate workspace');
+  const token = steps.findIndex((s) => s.id === 'app-token');
+  const signing = steps.findIndex((s) =>
+    s.uses?.startsWith('crazy-max/ghaction-import-gpg@'),
+  );
+  assert.ok(validate >= 0 && token > validate && signing > token);
+  for (const i of [token, signing])
+    assert.equal(steps[i].if, '${{ !inputs.dry_run }}');
+  assert.equal(steps[token].with['permission-contents'], 'write');
+  assert.equal(steps[signing].with.git_commit_gpgsign, true);
+  assert.equal(steps[signing].with.git_tag_gpgsign, true);
+  assert.equal(release.env.NX_NO_CLOUD, 'true');
+});
+
 test('immutable publication retains every functional verify target and all package tests', () => {
   const steps = workflow.jobs.publish.steps;
   const verification = steps.findIndex(
