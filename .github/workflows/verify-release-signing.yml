@@ -1,0 +1,66 @@
+name: Verify release signing
+run-name: 'Verify release signing — ${{ inputs.expected_fingerprint }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_fingerprint:
+        description: Approved GPG primary signing fingerprint
+        required: true
+        type: string
+        default: '254873688B3D6A503B23E68D9959A0F1C14F3B38'
+
+permissions: {}
+
+concurrency:
+  group: verify-release-signing
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    environment: shared-bot-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify protected signing credentials
+        shell: bash
+        env:
+          SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          SIGNING_PASSPHRASE: ${{ secrets.RELEASE_GPG_PASSPHRASE }}
+          EXPECTED_FINGERPRINT: ${{ inputs.expected_fingerprint }}
+        run: |
+          set -euo pipefail
+          fail() { echo 'Protected signing verification failed.' >&2; exit 1; }
+          [[ "$EXPECTED_FINGERPRINT" =~ ^[A-F0-9]{40}$ ]] || fail
+          [[ -n "$SIGNING_KEY" ]] || fail
+          export GNUPGHOME
+          GNUPGHOME="$(mktemp -d "$RUNNER_TEMP/signing-check.XXXXXX")"
+          cleanup() {
+            gpgconf --homedir "$GNUPGHOME" --kill gpg-agent >/dev/null 2>&1 || true
+            rm -rf -- "$GNUPGHOME"
+          }
+          trap cleanup EXIT
+          printf '%s' "$SIGNING_KEY" | gpg --batch --import >/dev/null 2>&1 || fail
+          unset SIGNING_KEY
+          actual="$(gpg --batch --with-colons --list-secret-keys 2>/dev/null |
+            awk -F: '$1 == "sec" { primary = 1; next } primary && $1 == "fpr" { print $10; primary = 0 }')"
+          [[ "$actual" == "$EXPECTED_FINGERPRINT" ]] || fail
+          printf 'Contracts signing verification only\nRepository: %s\nRun: %s\n' \
+            "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > "$GNUPGHOME/challenge"
+          printf '%s\n' "$SIGNING_PASSPHRASE" |
+            gpg --batch --pinentry-mode loopback --passphrase-fd 0 \
+              --local-user "$EXPECTED_FINGERPRINT!" --detach-sign \
+              --output "$GNUPGHOME/challenge.sig" "$GNUPGHOME/challenge" \
+              >/dev/null 2>&1 || fail
+          unset SIGNING_PASSPHRASE
+          gpg --batch --no-auto-key-retrieve --status-fd 1 \
+            --verify "$GNUPGHOME/challenge.sig" "$GNUPGHOME/challenge" \
+            > "$GNUPGHOME/status" 2>/dev/null || fail
+          awk -v expected="$EXPECTED_FINGERPRINT" \
+            '$1 == "[GNUPG:]" && $2 == "VALIDSIG" && $3 == expected { valid = 1 } END { exit !valid }' \
+            "$GNUPGHOME/status" || fail
+          cleanup
+          trap - EXIT
+          printf 'Verified signing fingerprint: %s\n' "$EXPECTED_FINGERPRINT"
+          echo 'Temporary signature verified; temporary keyring removed.'
